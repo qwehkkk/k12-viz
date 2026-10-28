@@ -32,6 +32,10 @@
       else if (cfg.type === 'tree') VIZ.treeLab(el, cfg);
       else if (cfg.type === 'coin') VIZ.coinLab(el, cfg);
       else if (cfg.type === 'dart') VIZ.dartLab(el, cfg);
+      else if (cfg.type === 'inverse') VIZ.inverseLab(el, cfg);
+      else if (cfg.type === 'k-area') VIZ.kAreaLab(el, cfg);
+      else if (cfg.type === 'inverse-cross') VIZ.inverseCrossLab(el, cfg);
+      else if (cfg.type === 'inverse-use') VIZ.inverseUseLab(el, cfg);
     });
   });
 })();

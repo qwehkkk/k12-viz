@@ -3048,7 +3048,278 @@ ul.lesson-list li::before {
     draw();
   }
 
-  window.VIZ = { renderPlot: renderPlot, parabolaLab: parabolaLab, stepLab: stepLab, bridgeLab: bridgeLab, profitLab: profitLab, fenceLab: fenceLab, fountainLab: fountainLab, shotLab: shotLab, completeSquareLab: completeSquareLab, equationLab: equationLab, growthLab: growthLab, rotateLab: rotateLab, coordRotLab: coordRotLab, patternLab: patternLab, clockLab: clockLab, anatomyLab: anatomyLab, chordLab: chordLab, inscribedLab: inscribedLab, positionLab: positionLab, tangentLab: tangentLab, sectorLab: sectorLab, eventScaleLab: eventScaleLab, bagLab: bagLab, sumTableLab: sumTableLab, treeLab: treeLab, coinLab: coinLab, dartLab: dartLab };
+  /* ============================================================
+   * 反比例函数章组件
+   * ============================================================ */
+
+  /* 带逆映射的坐标映射（区域着色需要把像素换回数据坐标） */
+  function xyMap(cv, view, pad) {
+    var s = setupCanvas(cv);
+    if (pad == null) pad = 26;
+    var sc = Math.min((s.w - pad * 2) / (view.xmax - view.xmin), (s.h - pad * 2) / (view.ymax - view.ymin));
+    var ox = s.w / 2 - (view.xmin + view.xmax) / 2 * sc;
+    var oy = s.h / 2 + (view.ymin + view.ymax) / 2 * sc;
+    return {
+      ctx: s.ctx, w: s.w, h: s.h, sc: sc,
+      px: function (u) { return ox + u * sc; },
+      py: function (v) { return oy - v * sc; },
+      ux: function (q) { return (q - ox) / sc; },
+      vy: function (q) { return (oy - q) / sc; }
+    };
+  }
+
+  /* 坐标系：网格 + 双轴 + 轴标 */
+  function xyAxes(m, view) {
+    var ctx = m.ctx;
+    ctx.fillStyle = '#ffffff'; ctx.fillRect(0, 0, m.w, m.h);
+    ctx.strokeStyle = '#eef2f6'; ctx.lineWidth = 1;
+    var g;
+    for (g = Math.ceil(view.xmin); g <= view.xmax; g++) {
+      ctx.beginPath(); ctx.moveTo(m.px(g), 0); ctx.lineTo(m.px(g), m.h); ctx.stroke();
+    }
+    for (g = Math.ceil(view.ymin); g <= view.ymax; g++) {
+      ctx.beginPath(); ctx.moveTo(0, m.py(g)); ctx.lineTo(m.w, m.py(g)); ctx.stroke();
+    }
+    ctx.strokeStyle = '#9aa7b4'; ctx.lineWidth = 1.4;
+    ctx.beginPath(); ctx.moveTo(0, m.py(0)); ctx.lineTo(m.w, m.py(0)); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(m.px(0), 0); ctx.lineTo(m.px(0), m.h); ctx.stroke();
+    ctx.fillStyle = '#6b7a89';
+    ctx.font = '12px "PingFang SC","Microsoft YaHei",sans-serif';
+    ctx.textAlign = 'left'; ctx.textBaseline = 'bottom';
+    ctx.fillText('x', m.w - 14, m.py(0) - 6);
+    ctx.fillText('y', m.px(0) + 8, 18);
+    ctx.textAlign = 'right'; ctx.textBaseline = 'top';
+    ctx.fillText('O', m.px(0) - 5, m.py(0) + 4);
+  }
+
+  /* 双曲线一支：近 x=0 处采样更密，跳跃处断开 */
+  function hyperbolaPath(m, view, k, sign) {
+    var ctx = m.ctx;
+    var xEnd = Math.max(Math.abs(view.xmin), Math.abs(view.xmax)) * 1.05;
+    var yLim = Math.max(Math.abs(view.ymin), Math.abs(view.ymax)) * 2.4;
+    var first = true;
+    for (var i = 0; i <= 340; i++) {
+      var t = i / 340;
+      var x = sign * (0.035 + (xEnd - 0.035) * Math.pow(t, 1.75));
+      var y = k / x;
+      if (Math.abs(y) > yLim) { first = true; continue; }
+      if (first) { ctx.moveTo(m.px(x), m.py(y)); first = false; }
+      else ctx.lineTo(m.px(x), m.py(y));
+    }
+  }
+
+  function clipPlot(m, view) {
+    m.ctx.save();
+    m.ctx.beginPath();
+    m.ctx.rect(m.px(view.xmin), m.py(view.ymax), (view.xmax - view.xmin) * m.sc, (view.ymax - view.ymin) * m.sc);
+    m.ctx.clip();
+  }
+
+  /* 反比例函数图象与性质：拖 k 看两支的位置，拖点看 xy = k */
+  function inverseLab(el, cfg) {
+    var s0 = circleScaffold(el);
+    var view = { xmin: -6.6, xmax: 6.6, ymin: -5, ymax: 5 };
+    var p = { k: 6, x: 2 };
+    if (cfg.values) for (var key in cfg.values) p[key] = cfg.values[key];
+
+    function draw() {
+      var m = xyMap(s0.cv, view), ctx = m.ctx;
+      xyAxes(m, view);
+      if (p.k > 0) {
+        ctx.fillStyle = 'rgba(24,95,165,.05)';
+        ctx.fillRect(m.px(0), 0, m.w - m.px(0), m.py(0));
+        ctx.fillRect(0, m.py(0), m.px(0), m.h - m.py(0));
+      } else {
+        ctx.fillStyle = 'rgba(192,57,43,.05)';
+        ctx.fillRect(0, 0, m.px(0), m.py(0));
+        ctx.fillRect(m.px(0), m.py(0), m.w - m.px(0), m.h - m.py(0));
+      }
+      clipPlot(m, view);
+      ctx.strokeStyle = '#185fa5'; ctx.lineWidth = 2.3;
+      hyperbolaPath(m, view, p.k, 1); ctx.stroke();
+      hyperbolaPath(m, view, p.k, -1); ctx.stroke();
+      ctx.restore();
+      // 动点
+      var px0 = Math.abs(p.x) < 0.45 ? 0.45 * (p.x < 0 ? -1 : 1) : p.x;
+      var py0 = p.k / px0;
+      if (Math.abs(py0) <= view.ymax * 1.02) {
+        ctx.setLineDash([4, 4]);
+        ctx.strokeStyle = '#c0392b'; ctx.lineWidth = 1.3;
+        ctx.beginPath(); ctx.moveTo(m.px(px0), m.py(0)); ctx.lineTo(m.px(px0), m.py(py0)); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(m.px(0), m.py(py0)); ctx.lineTo(m.px(px0), m.py(py0)); ctx.stroke();
+        ctx.setLineDash([]);
+        cDot(m, px0, py0, '#c0392b', 4.5);
+        cTag(m, px0, py0, 'P', '#c0392b', 10, -11);
+      }
+      var quad = p.k > 0 ? '第一、三象限' : '第二、四象限';
+      var trend = p.k > 0 ? '每一支上，y 随 x 的增大而减小' : '每一支上，y 随 x 的增大而增大';
+      s0.info.innerHTML = '<span class="viz-meta">k = ' + cFmt(p.k) + '　图象是双曲线，位于' + quad + '，' + trend + '</span>' +
+        '<span class="viz-meta">动点验证：P(' + cFmt(px0) + ', ' + cFmt(py0) + ')，x·y = ' + cFmt(px0 * py0) + ' = k。把 k 拖成负数，两支立刻跳到' + (p.k > 0 ? '二、四' : '一、三') + '象限——k 的符号决定图象在哪儿，|k| 决定离原点多远。</span>';
+    }
+    cSlider(s0.ctrl, 'k 的值', p.k, -8, 8, 0.5, function (v) {
+      p.k = v === 0 ? (p.k >= 0 ? 0.5 : -0.5) : v;
+      draw();
+    });
+    cSlider(s0.ctrl, '动点 P 的横坐标 x', p.x, -6, 6, 0.2, function (v) {
+      p.x = Math.abs(v) < 0.45 ? (v < 0 ? -0.45 : 0.45) : v;
+      draw();
+    });
+    draw();
+  }
+
+  /* k 的几何意义：矩形面积恒为 |k|，三角形恒为 |k|/2，点动面积不动 */
+  function kAreaLab(el, cfg) {
+    var s0 = circleScaffold(el);
+    var view = { xmin: -1.2, xmax: 8.4, ymin: -1.2, ymax: 8.4 };
+    var p = { k: 6, x: 2 };
+    if (cfg.values) for (var key in cfg.values) p[key] = cfg.values[key];
+
+    function draw() {
+      var m = xyMap(s0.cv, view), ctx = m.ctx;
+      xyAxes(m, view);
+      var px0 = Math.max(0.5, p.x), py0 = p.k / px0;
+      clipPlot(m, view);
+      ctx.strokeStyle = '#185fa5'; ctx.lineWidth = 2.3;
+      hyperbolaPath(m, view, p.k, 1); ctx.stroke();
+      ctx.restore();
+      // 矩形 O-(x,0)-(x,y)-(0,y)
+      ctx.fillStyle = 'rgba(192,57,43,.14)';
+      ctx.fillRect(m.px(0), m.py(py0), (px0) * m.sc, py0 * m.sc);
+      ctx.strokeStyle = 'rgba(192,57,43,.55)'; ctx.lineWidth = 1.3;
+      ctx.strokeRect(m.px(0), m.py(py0), px0 * m.sc, py0 * m.sc);
+      // 三角形 O-(x,0)-P
+      ctx.beginPath();
+      ctx.moveTo(m.px(0), m.py(0)); ctx.lineTo(m.px(px0), m.py(0)); ctx.lineTo(m.px(px0), m.py(py0));
+      ctx.closePath();
+      ctx.fillStyle = 'rgba(24,95,165,.18)'; ctx.fill();
+      ctx.strokeStyle = 'rgba(24,95,165,.6)'; ctx.stroke();
+      cDot(m, px0, py0, '#c0392b', 4.5);
+      cTag(m, px0, py0, 'P', '#c0392b', 11, -11);
+      cTag(m, px0 / 2, 0, 'x', '#6b7a89', 0, 14);
+      cTag(m, 0, py0 / 2, 'y', '#6b7a89', -13, 0);
+      s0.info.innerHTML = '<span class="viz-meta">P(' + cFmt(px0) + ', ' + cFmt(py0) + ')　矩形面积 = x·y = ' + cFmt(px0 * py0) + ' = |k|　三角形面积 = ½xy = ' + cFmt(px0 * py0 / 2) + ' = |k|/2</span>' +
+        '<span class="viz-meta">拖 P 的横坐标：矩形变高变窄、变矮变宽，但红框面积一动不动——这就是 k 的几何意义。题目给「矩形面积 6」等于直接告诉你 |k| = 6；给「三角形面积 3」就是 |k| = 6。</span>';
+    }
+    cSlider(s0.ctrl, 'k 的值', p.k, 1, 12, 0.5, function (v) { p.k = v; draw(); });
+    cSlider(s0.ctrl, '动点 P 的横坐标 x', p.x, 0.5, 8, 0.25, function (v) { p.x = v; draw(); });
+    draw();
+  }
+
+  /* 与一次函数的交叉：交点个数随 k 变，阴影是不等式 k/x > ax+b 的解集 */
+  function inverseCrossLab(el, cfg) {
+    var s0 = circleScaffold(el);
+    var view = { xmin: -7, xmax: 7, ymin: -7, ymax: 7 };
+    var p = { k: 4, b: 5 };
+    if (cfg.values) for (var key in cfg.values) p[key] = cfg.values[key];
+
+    function mergeIntervals(xs) {
+      var out = [], i;
+      for (i = 0; i < xs.length; i++) {
+        if (!out.length || xs[i][0] - out[out.length - 1][1] > 0.12) out.push([xs[i][0], xs[i][1]]);
+        else out[out.length - 1][1] = xs[i][1];
+      }
+      return out;
+    }
+    function fmtIntervals(iv) {
+      if (!iv.length) return '空集';
+      var parts = [];
+      for (var i = 0; i < iv.length; i++) {
+        var a = iv[i][0], b2 = iv[i][1];
+        if (a <= -6.95 && b2 >= 6.95) return '全体实数';
+        if (a <= -6.95) parts.push('x < ' + cFmt(b2).toFixed(2));
+        else if (b2 >= 6.95) parts.push('x > ' + cFmt(a).toFixed(2));
+        else parts.push(cFmt(a).toFixed(2) + ' < x < ' + cFmt(b2).toFixed(2));
+      }
+      return parts.join(' 或 ');
+    }
+
+    function draw() {
+      var m = xyMap(s0.cv, view), ctx = m.ctx;
+      xyAxes(m, view);
+      // 阴影：k/x > -x + b（8px 粗扫，量小够看）
+      var step = 8, sx, sy;
+      ctx.fillStyle = 'rgba(24,95,165,.07)';
+      for (sx = 0; sx < m.w; sx += step) {
+        for (sy = 0; sy < m.h; sy += step) {
+          var u = m.ux(sx + step / 2), v = m.vy(sy + step / 2);
+          if (Math.abs(u) < 0.05) continue;
+          if (p.k / u > -u + p.b) ctx.fillRect(sx, sy, step, step);
+        }
+      }
+      clipPlot(m, view);
+      ctx.strokeStyle = '#185fa5'; ctx.lineWidth = 2.2;
+      hyperbolaPath(m, view, p.k, 1); ctx.stroke();
+      hyperbolaPath(m, view, p.k, -1); ctx.stroke();
+      ctx.strokeStyle = '#0f6e56'; ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(m.px(view.xmin), m.py(view.xmin + p.b));
+      ctx.lineTo(m.px(view.xmax), m.py(view.xmax + p.b));
+      ctx.stroke();
+      ctx.restore();
+      // 交点
+      var disc = p.b * p.b - 4 * p.k;
+      var roots = [];
+      if (disc > 0) {
+        roots.push((p.b - Math.sqrt(disc)) / 2, (p.b + Math.sqrt(disc)) / 2);
+      } else if (Math.abs(disc) < 1e-9) {
+        roots.push(p.b / 2);
+      }
+      for (var i = 0; i < roots.length; i++) {
+        var x = roots[i], y = p.k / x;
+        cDot(m, x, y, '#c0392b', 4.5);
+        cTag(m, x, y, '(' + cFmt(x) + ', ' + cFmt(y) + ')', '#c0392b', 0, -14);
+      }
+      // 数值扫描解集
+      var iv = [], cur = null;
+      for (var xx = -7; xx <= 7; xx += 0.02) {
+        var ok = Math.abs(xx) > 0.06 && p.k / xx > -xx + p.b;
+        if (ok && !cur) cur = [xx, xx];
+        else if (ok) cur[1] = xx;
+        else if (cur) { iv.push(cur); cur = null; }
+      }
+      if (cur) iv.push(cur);
+      iv = mergeIntervals(iv);
+      s0.info.innerHTML = '<span class="viz-meta">y = ' + cFmt(p.k) + '/x 与 y = −x + ' + cFmt(p.b) + '：' +
+        (disc > 0 ? '两个交点' : (Math.abs(disc) < 1e-9 ? '一个交点（相切）' : '没有交点')) + '　Δ = b² − 4k = ' + cFmt(disc) + '</span>' +
+        '<span class="viz-meta">蓝色阴影 = 满足 k/x > −x + b 的区域，其横坐标范围（解集）：' + fmtIntervals(iv) + '。拖 b 看 Δ 由正变负，交点「消失」，解集随之换成另一侧——交点个数全靠 Δ = b² − 4k 判断。</span>';
+    }
+    cSlider(s0.ctrl, '反比例系数 k', p.k, 1, 10, 0.5, function (v) { p.k = v; draw(); });
+    cSlider(s0.ctrl, '直线截距 b（y = −x + b）', p.b, -6, 6, 0.5, function (v) { p.b = v; draw(); });
+    draw();
+  }
+
+  /* 实际建模：面积固定，长宽成反比例 */
+  function inverseUseLab(el, cfg) {
+    var s0 = circleScaffold(el);
+    var view = { xmin: -1.2, xmax: 14, ymin: -1.2, ymax: 13.6 };
+    var p = { S: 12, x: 3 };
+    if (cfg.values) for (var key in cfg.values) p[key] = cfg.values[key];
+
+    function draw() {
+      var m = xyMap(s0.cv, view), ctx = m.ctx;
+      xyAxes(m, view);
+      var x = Math.max(0.6, p.x), y = p.S / x;
+      clipPlot(m, view);
+      ctx.strokeStyle = '#185fa5'; ctx.lineWidth = 2.3;
+      hyperbolaPath(m, view, p.S, 1); ctx.stroke();
+      ctx.restore();
+      // 矩形
+      ctx.fillStyle = 'rgba(15,110,86,.13)';
+      ctx.fillRect(m.px(0), m.py(y), x * m.sc, y * m.sc);
+      ctx.strokeStyle = 'rgba(15,110,86,.65)'; ctx.lineWidth = 1.5;
+      ctx.strokeRect(m.px(0), m.py(y), x * m.sc, y * m.sc);
+      cDot(m, x, y, '#0f6e56', 4.5);
+      cTag(m, x, y, '宽 ' + cFmt(y) + ' m', '#0f6e56', 0, -14);
+      cTag(m, x / 2, 0, '长 ' + cFmt(x) + ' m', '#0f6e56', 0, 15);
+      s0.info.innerHTML = '<span class="viz-meta">面积 S = ' + p.S + ' m²，长 x = ' + cFmt(x) + ' m，宽 y = ' + cFmt(y) + ' m，x·y = ' + cFmt(x * y) + ' ＝ S（恒定）</span>' +
+        '<span class="viz-meta">长拖得越长，宽就被压得越窄——这就是反比例：y = ' + p.S + '/x（x > 0）。它和 k > 0 的双曲线第一象限那一支是同一个东西，只不过单位从「数」变成了「米」。围栏面积固定、路程固定求速度、工作量固定求人数，全是这一条曲线。</span>';
+    }
+    cSlider(s0.ctrl, '矩形的面积 S（m²）', p.S, 4, 24, 1, function (v) { p.S = v; draw(); });
+    cSlider(s0.ctrl, '矩形的长 x（m）', p.x, 1, 12, 0.5, function (v) { p.x = v; draw(); });
+    draw();
+  }
+
+  window.VIZ = { renderPlot: renderPlot, parabolaLab: parabolaLab, stepLab: stepLab, bridgeLab: bridgeLab, profitLab: profitLab, fenceLab: fenceLab, fountainLab: fountainLab, shotLab: shotLab, completeSquareLab: completeSquareLab, equationLab: equationLab, growthLab: growthLab, rotateLab: rotateLab, coordRotLab: coordRotLab, patternLab: patternLab, clockLab: clockLab, anatomyLab: anatomyLab, chordLab: chordLab, inscribedLab: inscribedLab, positionLab: positionLab, tangentLab: tangentLab, sectorLab: sectorLab, eventScaleLab: eventScaleLab, bagLab: bagLab, sumTableLab: sumTableLab, treeLab: treeLab, coinLab: coinLab, dartLab: dartLab, inverseLab: inverseLab, kAreaLab: kAreaLab, inverseCrossLab: inverseCrossLab, inverseUseLab: inverseUseLab };
 })();
 
 </script>
@@ -3087,6 +3358,10 @@ ul.lesson-list li::before {
       else if (cfg.type === 'tree') VIZ.treeLab(el, cfg);
       else if (cfg.type === 'coin') VIZ.coinLab(el, cfg);
       else if (cfg.type === 'dart') VIZ.dartLab(el, cfg);
+      else if (cfg.type === 'inverse') VIZ.inverseLab(el, cfg);
+      else if (cfg.type === 'k-area') VIZ.kAreaLab(el, cfg);
+      else if (cfg.type === 'inverse-cross') VIZ.inverseCrossLab(el, cfg);
+      else if (cfg.type === 'inverse-use') VIZ.inverseUseLab(el, cfg);
     });
   });
 })();
