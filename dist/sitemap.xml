@@ -73,6 +73,22 @@
   <url><loc>https://teach.toolona.com/geo-intro/pattern/geo-degree-change.html</loc><priority>0.7</priority></url>
   <url><loc>https://teach.toolona.com/geo-intro/pattern/geo-bisect-calc.html</loc><priority>0.7</priority></url>
   <url><loc>https://teach.toolona.com/geo-intro/pattern/geo-comp-calc.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/realnum/index.html</loc><priority>0.9</priority></url>
+  <url><loc>https://teach.toolona.com/realnum/rn-sqrt.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/realnum/rn-cube.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/realnum/rn-irr.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/realnum/rn-est.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/realnum/rn-ops.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/realnum/patterns.html</loc><priority>0.9</priority></url>
+  <url><loc>https://teach.toolona.com/realnum/locate.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/realnum/pattern/rn-basic-sqrt.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/realnum/pattern/rn-basic-cube.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/realnum/pattern/rn-basic-class.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/realnum/pattern/rn-adv-est.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/realnum/pattern/rn-adv-nonneg.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/realnum/pattern/rn-adv-letter.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/realnum/pattern/rn-app-geom.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/realnum/pattern/rn-app-shift.html</loc><priority>0.7</priority></url>
   <url><loc>https://teach.toolona.com/eq-system/index.html</loc><priority>0.9</priority></url>
   <url><loc>https://teach.toolona.com/eq-system/sys-concept.html</loc><priority>0.8</priority></url>
   <url><loc>https://teach.toolona.com/eq-system/sys-solution.html</loc><priority>0.8</priority></url>
@@ -107,6 +123,22 @@
   <url><loc>https://teach.toolona.com/inequality/pattern/ineq-adv-nosol.html</loc><priority>0.7</priority></url>
   <url><loc>https://teach.toolona.com/inequality/pattern/ineq-app-score.html</loc><priority>0.7</priority></url>
   <url><loc>https://teach.toolona.com/inequality/pattern/ineq-app-plan.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/datacollect/index.html</loc><priority>0.9</priority></url>
+  <url><loc>https://teach.toolona.com/datacollect/dc-survey.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/datacollect/dc-chart.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/datacollect/dc-pie.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/datacollect/dc-hist.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/datacollect/dc-read.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/datacollect/patterns.html</loc><priority>0.9</priority></url>
+  <url><loc>https://teach.toolona.com/datacollect/locate.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/datacollect/pattern/dc-basic-concept.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/datacollect/pattern/dc-basic-choose.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/datacollect/pattern/dc-basic-pie.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/datacollect/pattern/dc-adv-two-charts.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/datacollect/pattern/dc-adv-hist.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/datacollect/pattern/dc-adv-estimate.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/datacollect/pattern/dc-app-comprehensive.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/datacollect/pattern/dc-app-mislead.html</loc><priority>0.7</priority></url>
   <url><loc>https://teach.toolona.com/triangle/index.html</loc><priority>0.9</priority></url>
   <url><loc>https://teach.toolona.com/triangle/tri-side.html</loc><priority>0.8</priority></url>
   <url><loc>https://teach.toolona.com/triangle/tri-lines.html</loc><priority>0.8</priority></url>
@@ -168,6 +200,22 @@
   <url><loc>https://teach.toolona.com/axis-symmetry/pattern/ax-equi-30.html</loc><priority>0.7</priority></url>
   <url><loc>https://teach.toolona.com/axis-symmetry/pattern/ax-path-min.html</loc><priority>0.7</priority></url>
   <url><loc>https://teach.toolona.com/axis-symmetry/pattern/ax-path-coord.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/polymul/index.html</loc><priority>0.9</priority></url>
+  <url><loc>https://teach.toolona.com/polymul/pm-power.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/polymul/pm-multiply.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/polymul/pm-formula.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/polymul/pm-factor.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/polymul/pm-formula-factor.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/polymul/patterns.html</loc><priority>0.9</priority></url>
+  <url><loc>https://teach.toolona.com/polymul/locate.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/polymul/pattern/pm-basic-power.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/polymul/pattern/pm-basic-multiply.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/polymul/pattern/pm-basic-formula.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/polymul/pattern/pm-adv-chain.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/polymul/pattern/pm-adv-perfect-param.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/polymul/pattern/pm-adv-factor.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/polymul/pattern/pm-app-fast.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/polymul/pattern/pm-app-area.html</loc><priority>0.7</priority></url>
   <url><loc>https://teach.toolona.com/radical/index.html</loc><priority>0.9</priority></url>
   <url><loc>https://teach.toolona.com/radical/radical-def.html</loc><priority>0.8</priority></url>
   <url><loc>https://teach.toolona.com/radical/radical-prop.html</loc><priority>0.8</priority></url>

@@ -39,16 +39,17 @@ srv.listen(8139, async () => {
     await send('Page.enable');
     await send('Emulation.setDeviceMetricsOverride', { width: 1200, height: 2600, deviceScaleFactor: 1, mobile: false });
     const pages = [
-      ['/inequality/ineq-concept.html', 'ineq-concept.png'],
-      ['/inequality/ineq-props.html', 'ineq-props.png'],
-      ['/inequality/ineq-solve.html', 'ineq-solve.png'],
-      ['/inequality/ineq-set.html', 'ineq-set.png'],
-      ['/inequality/ineq-apply.html', 'ineq-apply.png'],
-      ['/poly-arith/ia-term.html', 'ia-term.png'],
-      ['/poly-arith/ia-like.html', 'ia-like.png'],
-      ['/poly-arith/ia-merge.html', 'ia-merge.png'],
-      ['/poly-arith/ia-paren.html', 'ia-paren.png'],
-      ['/poly-arith/ia-eval.html', 'ia-eval.png']
+      ['/realnum/rn-sqrt.html', 'rn-sqrt.png'],
+      ['/realnum/rn-cube.html', 'rn-cube.png'],
+      ['/realnum/rn-est.html', 'rn-est.png'],
+      ['/realnum/rn-class.html', 'rn-class.png'],
+      ['/polymul/pm-power.html', 'pm-power.png'],
+      ['/polymul/pm-formula.html', 'pm-sqdiff.png'],
+      ['/polymul/pm-formula-factor.html', 'pm-xtile.png'],
+      ['/datacollect/dc-survey.html', 'dc-sample.png'],
+      ['/datacollect/dc-chart.html', 'dc-chart.png'],
+      ['/datacollect/dc-hist.html', 'dc-hist.png'],
+      ['/datacollect/dc-read.html', 'dc-trunc.png']
     ];
     for (const [u, f] of pages) {
       await send('Page.navigate', { url: 'http://127.0.0.1:8139' + u });

@@ -8844,7 +8844,751 @@ function iaEvalLab(el, cfg) {
   cSlider(s0.ctrl, 'x（代入的值）', p.x, -3, 3, 1, function (v) { p.x = v; draw(); });
   draw();
 }
-  window.VIZ = { ineqDefLab: ineqDefLab, ineqFlipLab: ineqFlipLab, ineqSolveLab: ineqSolveLab, ineqSetLab: ineqSetLab, ineqApplyLab: ineqApplyLab, iaTermLab: iaTermLab, iaLikeLab: iaLikeLab, iaMergeLab: iaMergeLab, iaParenLab: iaParenLab, iaEvalLab: iaEvalLab, renderPlot: renderPlot, parabolaLab: parabolaLab, stepLab: stepLab, bridgeLab: bridgeLab, profitLab: profitLab, fenceLab: fenceLab, fountainLab: fountainLab, shotLab: shotLab, completeSquareLab: completeSquareLab, equationLab: equationLab, growthLab: growthLab, rotateLab: rotateLab, coordRotLab: coordRotLab, patternLab: patternLab, clockLab: clockLab, anatomyLab: anatomyLab, chordLab: chordLab, inscribedLab: inscribedLab, positionLab: positionLab, tangentLab: tangentLab, sectorLab: sectorLab, eventScaleLab: eventScaleLab, bagLab: bagLab, sumTableLab: sumTableLab, treeLab: treeLab, coinLab: coinLab, dartLab: dartLab, inverseLab: inverseLab, kAreaLab: kAreaLab, inverseCrossLab: inverseCrossLab, inverseUseLab: inverseUseLab, trigRatioLab: trigRatioLab, trigSpecialLab: trigSpecialLab, trigSolveLab: trigSolveLab, trigHeightLab: trigHeightLab, trigSlopeLab: trigSlopeLab, trigAltitudeLab: trigAltitudeLab, simGoldenLab: simGoldenLab, simParallelLab: simParallelLab, simJudgeLab: simJudgeLab, simAreaLab: simAreaLab, simNestedLab: simNestedLab, simHomothetyLab: simHomothetyLab, simShadowLab: simShadowLab, projShadowLab: projShadowLab, projOrthLab: projOrthLab, viewThreeLab: viewThreeLab, viewBlocksLab: viewBlocksLab, viewSolidLab: viewSolidLab, pythagSquaresLab: pythagSquaresLab, pythagPuzzleLab: pythagPuzzleLab, pythagSolveLab: pythagSolveLab, pythagInverseLab: pythagInverseLab, pythagLadderLab: pythagLadderLab, linearLab: linearLab, linearQuadLab: linearQuadLab, linearCrossLab: linearCrossLab, linearModelLab: linearModelLab, linearTranslateLab: linearTranslateLab, linearFitLab: linearFitLab, pgPropLab: pgPropLab, pgDiagLab: pgDiagLab, pgJudgeLab: pgJudgeLab, pgMidlineLab: pgMidlineLab, pgRectLab: pgRectLab, pgRhombusLab: pgRhombusLab, pgSquareLab: pgSquareLab, pgAreaLab: pgAreaLab, triSidesLab: triSidesLab, triLinesLab: triLinesLab, triAngleLab: triAngleLab, triExteriorLab: triExteriorLab, polyAngleLab: polyAngleLab, congMapLab: congMapLab, congJudgeLab: congJudgeLab, congSsaLab: congSsaLab, bisectorLab: bisectorLab, axFoldLab: axFoldLab, axBisectorLab: axBisectorLab, axCoordLab: axCoordLab, axDrawLab: axDrawLab, axIsoscelesLab: axIsoscelesLab, axIsoJudgeLab: axIsoJudgeLab, axEquiLab: axEquiLab, axPathLab: axPathLab, sqrtDefLab: sqrtDefLab, sqrtPropLab: sqrtPropLab, sqrtMulLab: sqrtMulLab, sqrtDivLab: sqrtDivLab, sqrtAddLab: sqrtAddLab, sqrtEstLab: sqrtEstLab, statMeanLab: statMeanLab, statMedianLab: statMedianLab, statModeLab: statModeLab, statVarLab: statVarLab, statChoiceLab: statChoiceLab, ratLineLab: ratLineLab, ratAbsLab: ratAbsLab, ratAddLab: ratAddLab, ratMulLab: ratMulLab, ratPowerLab: ratPowerLab, eqBalanceLab: eqBalanceLab, eqStepsLab: eqStepsLab, eqMotionLab: eqMotionLab, eqDistroLab: eqDistroLab, eqPctLab: eqPctLab, geoSolidsLab: geoSolidsLab, geoMotionLab: geoMotionLab, geoView3Lab: geoView3Lab, geoSegLab: geoSegLab, geoMidLab: geoMidLab, geoAngleLab: geoAngleLab, geoCompLab: geoCompLab, sysDefLab: sysDefLab, sysSubstLab: sysSubstLab, sysElimLab: sysElimLab, sysSolLab: sysSolLab, sysCaseLab: sysCaseLab, sysFarmLab: sysFarmLab };
+/* ================= 七下 6 · 实数 ================= */
+
+/* 平方根：面积反推边长 */
+function rnSqrtLab(el, cfg) {
+  var s0 = circleScaffold(el);
+  var p = { S: 9 };
+  if (cfg.values) for (var key in cfg.values) p[key] = cfg.values[key];
+  function draw() {
+    var side = Math.sqrt(p.S);
+    var view = { xmin: -1.8, xmax: side + 2.2, ymin: -2.2, ymax: side + 2.2 };
+    var m = circleMap(s0.cv, view), ctx = m.ctx;
+    cGrid(m, view);
+    var perfect = Math.abs(side - Math.round(side)) < 1e-9;
+    /* 正方形 */
+    ctx.fillStyle = perfect ? 'rgba(15,110,86,0.25)' : 'rgba(185,90,20,0.22)';
+    ctx.fillRect(m.px(0), m.py(side), side * m.sc, side * m.sc);
+    ctx.strokeStyle = perfect ? '#0f6e56' : '#b95a14'; ctx.lineWidth = 2.4;
+    ctx.strokeRect(m.px(0), m.py(side), side * m.sc, side * m.sc);
+    /* 边长标注 */
+    tBracketH(m, 0, side, -0.9, perfect ? '#0f6e56' : '#b95a14', '边长 ' + (perfect ? String(Math.round(side)) : '√' + p.S + ' ≈ ' + cFmt(side)));
+    cTag(m, side / 2, side + 0.7, '面积 S = ' + cFmt(p.S), '#333', 0, 0);
+    if (perfect) cTag(m, side / 2, side + 1.7, '√' + p.S + ' = ' + Math.round(side) + '（开尽了！）', '#0f6e56', 0, 0);
+    s0.info.innerHTML = '<span class="viz-meta">面积 S = ' + cFmt(p.S) + ' 的正方形，边长是 <b>' + (perfect ? Math.round(side) : '√' + p.S + ' ≈ ' + cFmt(side)) + '</b>。'
+      + (perfect ? 'S 是完全平方数，边长是整数——√' + p.S + ' 是有理数。注意它还有个孪生兄弟：边长取 −' + Math.round(side) + ' 平方后面积不变，所以 ' + p.S + ' 的<b>平方根</b>是 ±' + Math.round(side) + '，而正的这个 ' + Math.round(side) + ' 叫<b>算术平方根</b>。' : 'S 不是完全平方数，边长是<b>无限不循环小数</b>——它写不成分数，是无理数（下一节的主角）。')
+      + '</span>'
+      + '<span class="viz-meta">两条铁律随滑块一起记：① 被开方数 S ≥ 0，负数没有平方根；② √S 本身也 ≥ 0——「双重非负」是后面非负性题的引擎。0 的算术平方根是 0。</span>'
+      + '<span class="viz-meta">拖动 S 到 1、4、9、16 看绿色（开尽了），拖到 2、5、8 看橙色（开不尽）——「带根号」和「无理数」不是一回事，开尽了就是有理数。</span>';
+  }
+  cSlider(s0.ctrl, 'S（正方形的面积）', p.S, 1, 16, 0.5, function (v) { p.S = v; draw(); });
+  draw();
+}
+
+/* 立方根：体积反推棱长 */
+function rnCubeLab(el, cfg) {
+  var s0 = circleScaffold(el);
+  var p = { V: 8 };
+  if (cfg.values) for (var key in cfg.values) p[key] = cfg.values[key];
+  function draw() {
+    var side = Math.cbrt(p.V);
+    var view = { xmin: -1.8, xmax: side + 2.4, ymin: -2.4, ymax: side + 2.6 };
+    var m = circleMap(s0.cv, view), ctx = m.ctx;
+    cGrid(m, view);
+    var perfect = Math.abs(side - Math.round(side)) < 1e-9;
+    var d = Math.min(1.1, side * 0.35);   /* 伪 3D 偏移 */
+    var col = perfect ? 'rgba(15,110,86,0.25)' : 'rgba(185,90,20,0.22)';
+    var st = perfect ? '#0f6e56' : '#b95a14';
+    /* 正面 + 顶面 + 侧面 */
+    ctx.fillStyle = col;
+    ctx.fillRect(m.px(0), m.py(side), side * m.sc, side * m.sc);
+    ctx.beginPath();
+    ctx.moveTo(m.px(0), m.py(side)); ctx.lineTo(m.px(d), m.py(side + d)); ctx.lineTo(m.px(side + d), m.py(side + d)); ctx.lineTo(m.px(side), m.py(side));
+    ctx.closePath(); ctx.fillStyle = 'rgba(255,255,255,0.65)'; ctx.fill(); ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(m.px(side), m.py(side)); ctx.lineTo(m.px(side + d), m.py(side + d)); ctx.lineTo(m.px(side + d), m.py(d)); ctx.lineTo(m.px(side), m.py(0));
+    ctx.closePath(); ctx.fillStyle = 'rgba(255,255,255,0.4)'; ctx.fill(); ctx.stroke();
+    ctx.strokeStyle = st; ctx.lineWidth = 2.2;
+    ctx.strokeRect(m.px(0), m.py(side), side * m.sc, side * m.sc);
+    tBracketH(m, 0, side, -0.9, st, '棱长 ' + (perfect ? String(Math.round(side)) : '∛' + p.V + ' ≈ ' + cFmt(side)));
+    cTag(m, side / 2, side + d + 0.7, '体积 V = ' + p.V, '#333', 0, 0);
+    s0.info.innerHTML = '<span class="viz-meta">体积 V = ' + p.V + ' 的正方体，棱长是 <b>' + (perfect ? Math.round(side) : '∛' + p.V + ' ≈ ' + cFmt(side)) + '</b>。'
+      + (perfect ? '棱长 ' + Math.round(side) + ' 是唯一的——立方根没有 ± 之分。' : '棱长是无理数，但依然<b>只有这一个</b>。')
+      + '</span>'
+      + '<span class="viz-meta">立方根和平方根的性格对比：<b>平方根「双胞胎」（正数有两个、负数没有），立方根「独生子」（任何数都有且只有一个）</b>。负数也能开立方：∛(−8) = −2，因为 (−2)³ = −8；∛(−a) = −∛a，负号可以直接提出根号。</span>'
+      + '<span class="viz-meta">拖动 V 到 8、27、64 看整数棱长（2、3、4），拖到 10、30 看开不尽的情况——开不尽也是无理数，但照样开得出唯一值。</span>';
+  }
+  cSlider(s0.ctrl, 'V（正方体的体积）', p.V, 1, 64, 1, function (v) { p.V = v; draw(); });
+  draw();
+}
+
+/* 无理数上数轴 */
+function rnAxisLab(el, cfg) {
+  var s0 = circleScaffold(el);
+  var p = { k: 0 };
+  if (cfg.values) for (var key in cfg.values) p[key] = cfg.values[key];
+  var NUMS = [
+    { v: Math.SQRT2, t: '√2', d: '1.41421356…' },
+    { v: Math.sqrt(3), t: '√3', d: '1.73205081…' },
+    { v: Math.sqrt(5), t: '√5', d: '2.23606798…' },
+    { v: Math.PI, t: 'π', d: '3.14159265…' },
+    { v: Math.sqrt(7), t: '√7', d: '2.64575131…' },
+    { v: 2, t: '2', d: '2（有理数对照）' },
+    { v: -Math.SQRT2, t: '−√2', d: '−1.41421356…' }
+  ];
+  function draw() {
+    var cur = NUMS[p.k] || NUMS[0];
+    var view = { xmin: -4.4, xmax: 7.4, ymin: -3.6, ymax: 3.6 };
+    var m = circleMap(s0.cv, view), ctx = m.ctx;
+    cGrid(m, view);
+    var y0 = 0;
+    tNumAxis(m, y0, -4, 7, '#333');
+    /* 其他数淡显 */
+    NUMS.forEach(function (o, i) {
+      if (i === p.k) return;
+      cDot(m, o.v, y0, 'rgba(154,167,181,0.55)', 4);
+      cTag(m, o.v, y0 + 0.75, o.t, 'rgba(107,122,137,0.8)', 0, 0);
+    });
+    /* 当前数 */
+    cDot(m, cur.v, y0, '#c0392b', 7);
+    ctx.beginPath(); ctx.moveTo(m.px(cur.v), m.py(y0 - 0.1)); ctx.lineTo(m.px(cur.v), m.py(1.7)); ctx.stroke();
+    cTag(m, cur.v, 2.1, cur.t + ' = ' + cur.d, '#c0392b', 0, 0);
+    cTag(m, cur.v, y0 - 1.1, cFmt(cur.v), '#c0392b', 0, 0);
+    s0.info.innerHTML = '<span class="viz-meta"><b>' + cur.t + '</b> 的小数展开是 <b>' + cur.d + '</b>——'
+      + (cur.t === '2' ? '有限小数，是<b>有理数</b>（每个整数都住在数轴上）。' : '无限且不循环，是<b>无理数</b>：写不成分数 p/q。')
+      + '每个实数都能在数轴上找到自己的座位——「实数与数轴上的点一一对应」。</span>'
+      + '<span class="viz-meta">看它们的座位：√2 ≈ 1.414 挤在 1 和 2 之间，√3 ≈ 1.732 再往右一点，π ≈ 3.14 过了 3。无理数不是「虚无缥缈」，位置精确得很，只是十进制写不尽。</span>'
+      + '<span class="viz-meta">几何作图也行：边长 1 的正方形对角线就是 √2，两直角边 1、2 的直角三角形斜边就是 √5——圆规一开，无理数点就钉在数轴上了。</span>';
+  }
+  cSlider(s0.ctrl, '选一个数（0→√2，1→√3，2→√5，3→π，4→√7，5→2，6→−√2）', p.k, 0, NUMS.length - 1, 1, function (v) { p.k = v; draw(); });
+  draw();
+}
+
+/* 估算：夹逼 √n */
+function rnEstLab(el, cfg) {
+  var s0 = circleScaffold(el);
+  var p = { n: 10 };
+  if (cfg.values) for (var key in cfg.values) p[key] = cfg.values[key];
+  function draw() {
+    var a = Math.floor(Math.sqrt(p.n));
+    var lo = a * a, hi = (a + 1) * (a + 1);
+    var view = { xmin: a - 1.6, xmax: a + 2.6, ymin: -3.2, ymax: 3.2 };
+    var m = circleMap(s0.cv, view), ctx = m.ctx;
+    cGrid(m, view);
+    var y0 = 0;
+    tNumAxis(m, y0, Math.ceil(view.xmin), Math.floor(view.xmax), '#333');
+    /* 两个夹子 */
+    tSeg(m, lo, y0 - 0.5, lo, y0 + 0.5, '#185fa5', 2.4);
+    tSeg(m, hi, y0 - 0.5, hi, y0 + 0.5, '#185fa5', 2.4);
+    cTag(m, lo, y0 + 1.0, a + '² = ' + lo, '#185fa5', 0, 0);
+    cTag(m, hi, y0 + 1.0, (a + 1) + '² = ' + hi, '#185fa5', 0, 0);
+    cTag(m, lo, y0 - 1.0, String(a), '#185fa5', 0, 0);
+    cTag(m, hi, y0 - 1.0, String(a + 1), '#185fa5', 0, 0);
+    /* n 的位置 */
+    var rel = (p.n - lo) / (hi - lo);
+    cDot(m, a + rel, y0, '#c0392b', 6.5);
+    cTag(m, a + rel, y0 - 1.9, '√' + p.n + ' ≈ ' + cFmt(Math.sqrt(p.n)) + '，整数部分 ' + a, '#c0392b', 0, 0);
+    /* 一位小数再夹 */
+    var t = a;
+    while ((t + 0.1) * (t + 0.1) <= p.n) t += 0.1;
+    tSeg(m, t, y0 + 0.3, t, y0 - 0.3, '#0f6e56', 2);
+    tSeg(m, t + 0.1, y0 + 0.3, t + 0.1, y0 - 0.3, '#0f6e56', 2);
+    cTag(m, (t + t + 0.1) / 2, y0 + 2.0, cFmt(t) + ' < √' + p.n + ' < ' + cFmt(t + 0.1), '#0f6e56', 0, 0);
+    s0.info.innerHTML = '<span class="viz-meta">夹逼两步：<b>' + a + '² = ' + lo + ' < ' + p.n + ' < ' + hi + ' = ' + (a + 1) + '²</b> → ' + a + ' < √' + p.n + ' < ' + (a + 1) + '，整数部分是 <b>' + a + '</b>。再用一位小数细夹：<b>' + cFmt(t) + ' < √' + p.n + ' < ' + cFmt(t + 0.1) + '</b>。</span>'
+      + '<span class="viz-meta">不需要算出 √' + p.n + ' 的真值就能圈住它——这就是估算。比较大小同一招：√' + p.n + ' 和 ' + (a + 0.5) + ' 谁大？比 ' + p.n + ' 和 ' + cFmt((a + 0.5) * (a + 0.5)) + '（即 ' + (a + 0.5) + '²）就够。</span>'
+      + '<span class="viz-meta">拖动 n：越过某个完全平方数的瞬间（比如从 15 到 16），夹子整体平移一格——整数部分跳变。这正好解释「√n 的整数部分 = 最大的平方不超过 n 的那个数」。</span>';
+  }
+  cSlider(s0.ctrl, 'n（被开方数）', p.n, 2, 200, 1, function (v) { p.n = v; draw(); });
+  draw();
+}
+
+/* 实数分类 */
+function rnClassLab(el, cfg) {
+  var s0 = circleScaffold(el);
+  var p = { k: 0 };
+  if (cfg.values) for (var key in cfg.values) p[key] = cfg.values[key];
+  var LIST = [
+    { t: '√2', cls: 'irr', why: '开不尽方，无限不循环' },
+    { t: '−3', cls: 'rat-int', why: '整数 → 有理数' },
+    { t: '0', cls: 'rat-int', why: '整数 → 有理数' },
+    { t: '22/7', cls: 'rat-frac', why: '分数 → 有理数（别被它「长得像 π」骗了）' },
+    { t: '∛27', cls: 'rat-int', why: '开尽了：∛27 = 3 → 有理数' },
+    { t: 'π/2', cls: 'irr', why: 'π 无理，除以 2 仍无理' },
+    { t: '√16', cls: 'rat-int', why: '开尽了：√16 = 4 → 有理数' },
+    { t: '0.1010010001…', cls: 'irr', why: '无限不循环构造 → 无理数' }
+  ];
+  function draw() {
+    var cur = LIST[p.k] || LIST[0];
+    var isRat = cur.cls.indexOf('rat') === 0;
+    var view = { xmin: -9.5, xmax: 9.5, ymin: -5.0, ymax: 5.0 };
+    var m = circleMap(s0.cv, view), ctx = m.ctx;
+    cGrid(m, view);
+    /* 分类树 */
+    tBox(m, 0, 3.4, 3.4, 1.1, 'rgba(51,51,51,0.9)', '#333', '实数');
+    tSeg(m, 0, 2.85, -4.4, 1.55, '#6b7a89', 1.6);
+    tSeg(m, 0, 2.85, 4.4, 1.55, '#6b7a89', 1.6);
+    tBox(m, -4.4, 1.0, 4.4, 1.1, 'rgba(24,95,165,0.75)', '#185fa5', '有理数（整数 + 分数）');
+    tBox(m, 4.4, 1.0, 4.4, 1.1, 'rgba(192,57,43,0.75)', '#c0392b', '无理数（无限不循环）');
+    /* 当前数 */
+    var bx = isRat ? -4.4 : 4.4;
+    tBox(m, bx, -1.6, 5.4, 1.2, isRat ? 'rgba(24,95,165,0.16)' : 'rgba(192,57,43,0.16)', isRat ? '#185fa5' : '#c0392b', cur.t);
+    cTag(m, 0, -1.6, '→', '#333', 0, 0);
+    tSeg(m, -1.6, -1.6, bx - 2.7, -1.6, isRat ? '#185fa5' : '#c0392b', 2.4);
+    cTag(m, 0, -3.3, cur.why, isRat ? '#185fa5' : '#c0392b', 0, 0);
+    s0.info.innerHTML = '<span class="viz-meta"><b>' + cur.t + '</b> → ' + (isRat ? '<b style="color:#185fa5">有理数</b>' : '<b style="color:#c0392b">无理数</b>') + '。' + cur.why + '</span>'
+      + '<span class="viz-meta">判断口诀：能写成分数 p/q（p、q 整数，q ≠ 0）→ 有理数；无限不循环 → 无理数。无理数三大户口：<b>π 家族、开不尽方的根号、无限不循环构造</b>。</span>'
+      + '<span class="viz-meta">三个经典陷阱都在列表里：√16 带根号却是有理数（开尽了）；22/7 是分数不是 π；π/2 没有根号却仍无理。拖动滑块把 8 个数全部过一遍。</span>';
+  }
+  cSlider(s0.ctrl, '选一个数（0→√2，1→−3，2→0，3→22/7，4→∛27，5→π/2，6→√16，7→0.101001…）', p.k, 0, LIST.length - 1, 1, function (v) { p.k = v; draw(); });
+  draw();
+}
+
+/* ================= 八上 14 · 整式的乘法与因式分解 ================= */
+
+/* 幂的运算：数个数 */
+function pmPowerLab(el, cfg) {
+  var s0 = circleScaffold(el);
+  var p = { m: 3, n: 2 };
+  if (cfg.values) for (var key in cfg.values) p[key] = cfg.values[key];
+  function draw() {
+    var tot = p.m + p.n;
+    var view = { xmin: -3.4, xmax: tot * 1.0 + 2.2, ymin: -1.4, ymax: 8.6 };
+    var m = circleMap(s0.cv, view), ctx = m.ctx;
+    cGrid(m, view);
+    function sup(x) { return ['', '', '²', '³', '⁴', '⁵', '⁶', '⁷', '⁸', '⁹', '¹⁰', '¹¹', '¹²', '¹³', '¹⁴', '¹⁵', '¹⁶'][x] || ('^' + x); }
+    function row(y, cnt, label, color) {
+      cTag(m, -2.4, y, label, '#333', 0, 0);
+      for (var i = 0; i < cnt; i++) tBox(m, 0.5 + i, y, 0.8, 0.8, color, '#333', '2');
+    }
+    row(7.2, p.m, '2' + sup(p.m) + ' 的展开', 'rgba(24,95,165,0.8)');
+    row(5.4, p.n, '2' + sup(p.n) + ' 的展开', 'rgba(192,57,43,0.8)');
+    row(3.0, p.m + p.n, '接龙后：2 的 ' + (p.m + p.n) + ' 个连乘', 'rgba(15,110,86,0.8)');
+    cTag(m, 0.5 + (p.m + p.n) / 2, 1.6, '2' + sup(p.m) + ' × 2' + sup(p.n) + ' = 2' + sup(p.m + p.n) + ' = ' + Math.pow(2, p.m + p.n), '#0f6e56', 0, 0);
+    cTag(m, 0.5 + tot / 2, 0.2, '指数相加：' + p.m + ' + ' + p.n + ' = ' + (p.m + p.n), '#6b7a89', 0, 0);
+    s0.info.innerHTML = '<span class="viz-meta"><b>同底数幂相乘：底数不变、指数相加</b>——2' + sup(p.m) + ' × 2' + sup(p.n) + ' = 2' + sup(p.m + p.n) + ' = ' + Math.pow(2, p.m + p.n) + '。本质是数 2 的个数：' + p.m + ' 个接 ' + p.n + ' 个，共 ' + (p.m + p.n) + ' 个。</span>'
+      + '<span class="viz-meta">另外两条对照记：<b>幂的乘方指数相乘</b>：(2' + sup(p.m) + ')' + sup(p.n) + ' = 2' + sup(p.m * p.n) + ' = ' + Math.pow(2, p.m * p.n) + '（整队复制 ' + p.n + ' 遍）；<b>积的乘方各自乘方</b>：(2×3)' + sup(p.n) + ' = 2' + sup(p.n) + ' × 3' + sup(p.n) + '。</span>'
+      + '<span class="viz-meta">辨析题就考「加 vs 乘」：2' + sup(p.m) + ' × 2' + sup(p.n) + ' 的指数 ' + (p.m + p.n) + '（加），(2' + sup(p.m) + ')' + sup(p.n) + ' 的指数 ' + (p.m * p.n) + '（乘）。底数不同（2ᵐ × 3ⁿ）谁也帮不了谁。</span>';
+  }
+  cSlider(s0.ctrl, 'm（第一组的个数）', p.m, 1, 4, 1, function (v) { p.m = v; draw(); });
+  cSlider(s0.ctrl, 'n（第二组的个数）', p.n, 1, 4, 1, function (v) { p.n = v; draw(); });
+  draw();
+}
+
+/* 多项式乘多项式：面积模型 */
+function pmDistroLab(el, cfg) {
+  var s0 = circleScaffold(el);
+  var p = { a: 3, b: 2, c: 4, d: 1 };
+  if (cfg.values) for (var key in cfg.values) p[key] = cfg.values[key];
+  function draw() {
+    var W = p.a + p.b, H = p.c + p.d;
+    var view = { xmin: -2.6, xmax: W + 2.6, ymin: -2.6, ymax: H + 3.0 };
+    var m = circleMap(s0.cv, view), ctx = m.ctx;
+    cGrid(m, view);
+    var y0 = 0;
+    /* 四块 */
+    function cell(x, y, w, h, fill, label) {
+      ctx.fillStyle = fill;
+      ctx.fillRect(m.px(x), m.py(y + h), w * m.sc, h * m.sc);
+      ctx.strokeStyle = '#fff'; ctx.lineWidth = 2;
+      ctx.strokeRect(m.px(x), m.py(y + h), w * m.sc, h * m.sc);
+      cTag(m, x + w / 2, y + h / 2, label, '#333', 0, 0);
+    }
+    cell(0, 0, p.a, p.c, 'rgba(24,95,165,0.30)', 'ac = ' + (p.a * p.c));
+    cell(p.a, 0, p.b, p.c, 'rgba(15,110,86,0.30)', 'bc = ' + (p.b * p.c));
+    cell(0, p.c, p.a, p.d, 'rgba(138,90,0,0.30)', 'ad = ' + (p.a * p.d));
+    cell(p.a, p.c, p.b, p.d, 'rgba(192,57,43,0.30)', 'bd = ' + (p.b * p.d));
+    tBracketH(m, 0, p.a, H + 0.7, '#185fa5', 'a = ' + p.a);
+    tBracketH(m, p.a, W, H + 0.7, '#0f6e56', 'b = ' + p.b);
+    tSeg(m, W + 0.7, 0, W + 0.7, p.c, '#185fa5', 1.6);
+    tSeg(m, W + 0.7, p.c, W + 0.7, H, '#13890f', 1.6);
+    cTag(m, W + 1.3, p.c / 2, 'c = ' + p.c, '#185fa5', 0, 0);
+    cTag(m, W + 1.3, p.c + p.d / 2, 'd = ' + p.d, '#13890f', 0, 0);
+    cTag(m, W / 2, H + 2.0, '(' + p.a + ' + ' + p.b + ')(' + p.c + ' + ' + p.d + ') = ' + (p.a * p.c) + ' + ' + (p.a * p.d) + ' + ' + (p.b * p.c) + ' + ' + (p.b * p.d) + ' = ' + (W * H), '#333', 0, 0);
+    s0.info.innerHTML = '<span class="viz-meta">宽 (a + b)、高 (c + d) 的长方形切四块：<b>每一块就是「左边一项 × 下面一项」</b>。展开共 4 项：ac、ad、bc、bd——「每一项乘遍每一项」的面积版本。</span>'
+      + '<span class="viz-meta">单项式乘多项式是它的一半：m(a + b) 只切两刀 = ma + mb。数项数查漏：2×2 起步 4 项，2×1 两项——展开后项数不够就是漏乘。</span>'
+      + '<span class="viz-meta">代数里 a、b 可以是含负号的项：(x − 3)(x + 2) 里「−3」照样乘遍——面积模型记结构，符号按代数算。</span>';
+  }
+  cSlider(s0.ctrl, 'a', p.a, 1, 4, 1, function (v) { p.a = v; draw(); });
+  cSlider(s0.ctrl, 'b', p.b, 1, 3, 1, function (v) { p.b = v; draw(); });
+  cSlider(s0.ctrl, 'c', p.c, 1, 4, 1, function (v) { p.c = v; draw(); });
+  cSlider(s0.ctrl, 'd', p.d, 1, 3, 1, function (v) { p.d = v; draw(); });
+  draw();
+}
+
+/* 平方差：L 形拼割 */
+function pmSqdiffLab(el, cfg) {
+  var s0 = circleScaffold(el);
+  var p = { a: 5, b: 2, t: 2 };
+  if (cfg.values) for (var key in cfg.values) p[key] = cfg.values[key];
+  function draw() {
+    var a = p.a, b = Math.min(p.b, p.a - 1);
+    var view = { xmin: -2.6, xmax: a + 2.6, ymin: -2.6, ymax: a + 2.8 };
+    var m = circleMap(s0.cv, view), ctx = m.ctx;
+    cGrid(m, view);
+    if (p.t === 0) {
+      /* 大正方形 + 小正方形 */
+      ctx.fillStyle = 'rgba(24,95,165,0.28)';
+      ctx.fillRect(m.px(0), m.py(a), a * m.sc, a * m.sc);
+      ctx.strokeStyle = '#185fa5'; ctx.lineWidth = 2.2;
+      ctx.strokeRect(m.px(0), m.py(a), a * m.sc, a * m.sc);
+      ctx.fillStyle = 'rgba(192,57,43,0.4)';
+      ctx.fillRect(m.px(a - b), m.py(a), b * m.sc, b * m.sc);
+      ctx.strokeStyle = '#c0392b';
+      ctx.strokeRect(m.px(a - b), m.py(a), b * m.sc, b * m.sc);
+      cTag(m, a - b / 2, a - b / 2, 'b²', '#c0392b', 0, 0);
+      cTag(m, b / 2, b / 2, 'a² = ' + (a * a), '#185fa5', 0, 0);
+      cTag(m, 0, a + 1.6, '大正方形挖掉 b² 的小角', '#333', 0, 0);
+    } else if (p.t === 1) {
+      /* L 形切成两块 */
+      ctx.fillStyle = 'rgba(24,95,165,0.28)';
+      ctx.fillRect(m.px(0), m.py(a), (a - b) * m.sc, a * m.sc);
+      ctx.strokeRect(m.px(0), m.py(a), (a - b) * m.sc, a * m.sc);
+      ctx.fillStyle = 'rgba(15,110,86,0.32)';
+      ctx.fillRect(m.px(a - b), m.py(a - b), b * m.sc, (a - b) * m.sc);
+      ctx.strokeRect(m.px(a - b), m.py(a - b), b * m.sc, (a - b) * m.sc);
+      cTag(m, (a - b) / 2, a / 2, 'a×(a−b)', '#185fa5', 0, 0);
+      cTag(m, a - b / 2, (a - b) / 2, 'b×(a−b)', '#0f6e56', 0, 0);
+      cTag(m, 0, a + 1.6, 'L 形沿虚线剪成两长条', '#333', 0, 0);
+    } else {
+      /* 拼成薄长方形 */
+      ctx.fillStyle = 'rgba(15,110,86,0.30)';
+      ctx.fillRect(m.px(0), m.py(a - b), a * m.sc, (a - b) * m.sc);
+      ctx.strokeStyle = '#0f6e56'; ctx.lineWidth = 2.2;
+      ctx.strokeRect(m.px(0), m.py(a - b), a * m.sc, (a - b) * m.sc);
+      ctx.fillStyle = 'rgba(24,95,165,0.30)';
+      ctx.fillRect(m.px(a), m.py(a - b), b * m.sc, (a - b) * m.sc);
+      ctx.strokeRect(m.px(a), m.py(a - b), b * m.sc, (a - b) * m.sc);
+      cTag(m, a / 2, (a - b) / 2, 'a × (a−b)', '#185fa5', 0, 0);
+      cTag(m, a + b / 2, (a - b) / 2, 'b × (a−b)', '#0f6e56', 0, 0);
+      tBracketH(m, 0, a + b, -1.1, '#333', 'a + b = ' + (a + b));
+      cTag(m, a + b + 1.2, (a - b) / 2, '高 a−b = ' + (a - b), '#333', 0, 0);
+      cTag(m, 0, a + 1.6, '两块拼成 (a+b)×(a−b) 的薄长方形', '#333', 0, 0);
+    }
+    cTag(m, 0, view.ymin + 1.0, a + '² − ' + b + '² = ' + (a * a - b * b) + ' = (' + a + ' + ' + b + ')(' + a + ' − ' + b + ')', '#8a5a00', 0, 0);
+    s0.info.innerHTML = '<span class="viz-meta">三步看完平方差的几何证明：大正方形 a² 挖掉小角 b² → L 形剪成两长条 → 拼成宽 (a+b)、高 (a−b) 的薄长方形。<b>a² − b² = (a + b)(a − b)</b>，数字版：' + a + '² − ' + b + '² = ' + (a * a - b * b) + '。</span>'
+      + '<span class="viz-meta">公式识别标志：两个二项式里<b>一项完全相同、另一项互为相反数</b>。速算应用：102 × 98 = (100+2)(100−2) = 10000 − 4 = 9996。</span>'
+      + '<span class="viz-meta">拖动 a、b：挖的角越大，拼出的长方形越薄——高 (a−b) 趋近 0 时面积趋近 0，公式自动「破产」，和代数一致。</span>';
+  }
+  cSlider(s0.ctrl, 'a（大正方形边长）', p.a, 2, 6, 1, function (v) { p.a = v; draw(); });
+  cSlider(s0.ctrl, 'b（挖掉的角）', p.b, 1, 3, 1, function (v) { p.b = v; draw(); });
+  cSlider(s0.ctrl, '步骤（0 挖角 → 1 剪开 → 2 拼合）', p.t, 0, 2, 1, function (v) { p.t = v; draw(); });
+  draw();
+}
+
+/* 完全平方：四块拼图 */
+function pmPerfectLab(el, cfg) {
+  var s0 = circleScaffold(el);
+  var p = { a: 4, b: 2 };
+  if (cfg.values) for (var key in cfg.values) p[key] = cfg.values[key];
+  function draw() {
+    var a = p.a, b = p.b, S = a + b;
+    var view = { xmin: -2.6, xmax: S + 2.8, ymin: -2.8, ymax: S + 2.8 };
+    var m = circleMap(s0.cv, view), ctx = m.ctx;
+    cGrid(m, view);
+    function cell(x, y, w, h, fill, label, tc) {
+      ctx.fillStyle = fill;
+      ctx.fillRect(m.px(x), m.py(y + h), w * m.sc, h * m.sc);
+      ctx.strokeStyle = '#fff'; ctx.lineWidth = 2;
+      ctx.strokeRect(m.px(x), m.py(y + h), w * m.sc, h * m.sc);
+      cTag(m, x + w / 2, y + h / 2, label, tc || '#333', 0, 0);
+    }
+    cell(0, 0, a, a, 'rgba(24,95,165,0.30)', 'a² = ' + (a * a));
+    cell(a, 0, b, a, 'rgba(15,110,86,0.30)', 'ab = ' + (a * b));
+    cell(0, a, a, b, 'rgba(15,110,86,0.30)', 'ab = ' + (a * b));
+    cell(a, a, b, b, 'rgba(192,57,43,0.30)', 'b² = ' + (b * b));
+    tBracketH(m, 0, a, S + 0.7, '#185fa5', 'a = ' + a);
+    tBracketH(m, a, S, S + 0.7, '#c0392b', 'b = ' + b);
+    cTag(m, S / 2, S + 2.0, '(' + a + ' + ' + b + ')² = ' + (a * a) + ' + 2×' + (a * b) + ' + ' + (b * b) + ' = ' + (S * S), '#333', 0, 0);
+    s0.info.innerHTML = '<span class="viz-meta">边长 (a + b) 的大正方形切四块：a²、<b>两块 ab</b>、b²——所以 <b>(a + b)² = a² + 2ab + b²</b>。数字版：(' + a + '+' + b + ')² = ' + (a * a) + ' + 2×' + (a * b) + ' + ' + (b * b) + ' = ' + (S * S) + '。</span>'
+      + '<span class="viz-meta">中间项 2ab 正是那<b>两条绿条</b>——它只出现一次但被数成两块。「(a+b)² = a² + b²」的错误 = 丢了两条绿条；中间项 <b>2ab</b> 是完全平方和「加法」的分水岭。</span>'
+      + '<span class="viz-meta">减号版：(a − b)² = a² − 2ab + b²——四块结构一样，只是两条绿条从大正方形里「减」出去。识别口诀：头平方、尾平方、中间 2 倍头尾放中央。</span>';
+  }
+  cSlider(s0.ctrl, 'a', p.a, 1, 5, 1, function (v) { p.a = v; draw(); });
+  cSlider(s0.ctrl, 'b', p.b, 1, 3, 1, function (v) { p.b = v; draw(); });
+  draw();
+}
+
+/* 提公因式：面积反过来 */
+function pmCommonLab(el, cfg) {
+  var s0 = circleScaffold(el);
+  var p = { m: 3, a: 2, b: 1 };
+  if (cfg.values) for (var key in cfg.values) p[key] = cfg.values[key];
+  function draw() {
+    var H = p.a + p.b;
+    var view = { xmin: -3.0, xmax: p.m + 2.8, ymin: -2.8, ymax: H + 3.0 };
+    var m = circleMap(s0.cv, view), ctx = m.ctx;
+    cGrid(m, view);
+    function cell(y, h, fill, label) {
+      ctx.fillStyle = fill;
+      ctx.fillRect(m.px(0), m.py(y + h), p.m * m.sc, h * m.sc);
+      ctx.strokeStyle = '#fff'; ctx.lineWidth = 2;
+      ctx.strokeRect(m.px(0), m.py(y + h), p.m * m.sc, h * m.sc);
+      cTag(m, p.m / 2, y + h / 2, label, '#333', 0, 0);
+    }
+    cell(0, p.a, 'rgba(24,95,165,0.30)', 'ma = ' + (p.m * p.a));
+    cell(p.a, p.b, 'rgba(15,110,86,0.30)', 'mb = ' + (p.m * p.b));
+    tSeg(m, 0, p.a, p.m, p.a, '#c0392b', 2.4, [6, 4]);
+    tBracketH(m, 0, p.m, -0.8, '#c0392b', '公共的 m = ' + p.m);
+    tBracketH(m, 0, p.m, H + 0.6, '#8a5a00', '宽 m');
+    cTag(m, p.m + 1.2, p.a / 2, 'a = ' + p.a, '#185fa5', 0, 0);
+    cTag(m, p.m + 1.2, p.a + p.b / 2, 'b = ' + p.b, '#0f6e56', 0, 0);
+    cTag(m, p.m / 2, H + 2.0, p.m + '×' + p.a + ' + ' + p.m + '×' + p.b + ' = ' + p.m + '(' + p.a + ' + ' + p.b + ') = ' + (p.m * H), '#333', 0, 0);
+    s0.info.innerHTML = '<span class="viz-meta">同一块长方形两种面积写法：横着看是 <b>ma + mb</b>（两块相加），整着看是 <b>m(a + b)</b>（宽 × 高）。<b>提公因式 = 从右往左读</b>：把公共的 ' + p.m + ' 提出来。</span>'
+      + '<span class="viz-meta">提公因式的标准：系数取<b>最大公约数</b>、每个字母取<b>最低次幂</b>。4x³ − 8x² + 2x 提 2x（不是 x 也不是 2x²）——提干净了，括号里 2x² − 4x + 1 的常数项 1 别丢。</span>'
+      + '<span class="viz-meta">因式分解与整式乘法方向相反、结果恒等——检验方法是免费的：把 (m)(a+b) 乘回去看等不等于 ma + mb。</span>';
+  }
+  cSlider(s0.ctrl, 'm（公因式）', p.m, 2, 5, 1, function (v) { p.m = v; draw(); });
+  cSlider(s0.ctrl, 'a', p.a, 1, 4, 1, function (v) { p.a = v; draw(); });
+  cSlider(s0.ctrl, 'b', p.b, 1, 3, 1, function (v) { p.b = v; draw(); });
+  draw();
+}
+
+/* x² + bx + c 拼图分解 */
+function pmXtileLab(el, cfg) {
+  var s0 = circleScaffold(el);
+  var p = { b: 5, c: 6 };
+  if (cfg.values) for (var key in cfg.values) p[key] = cfg.values[key];
+  function draw() {
+    var disc = p.b * p.b - 4 * p.c;
+    var sq = Math.round(Math.sqrt(Math.abs(disc)));
+    var ok = disc >= 0 && sq * sq === disc;
+    var pp = 0, qq = 0;
+    if (ok) { pp = (-p.b + sq) / 2; qq = (-p.b - sq) / 2; }
+    var side = 4;
+    var w = side + Math.max(Math.abs(Math.min(pp, 0)), Math.abs(pp), 2) + 1.2;
+    var h = side + Math.max(qq, 2) + 1.4;
+    var view = { xmin: -2.4, xmax: w, ymin: -2.4, ymax: h };
+    var m = circleMap(s0.cv, view), ctx = m.ctx;
+    cGrid(m, view);
+    if (!ok) {
+      ctx.fillStyle = 'rgba(192,57,43,0.10)';
+      ctx.fillRect(m.px(0), m.py(side), side * m.sc, side * m.sc);
+      ctx.strokeStyle = '#c0392b'; ctx.lineWidth = 2.2;
+      ctx.strokeRect(m.px(0), m.py(side), side * m.sc, side * m.sc);
+      cTag(m, side / 2, side / 2, 'x²', '#c0392b', 0, 0);
+      cTag(m, side / 2, side + 0.8, '拼不上', '#c0392b', 0, 0);
+      s0.info.innerHTML = '<span class="viz-meta">x² + ' + cFmt(p.b) + 'x + ' + cFmt(p.c) + ' <b>不能在有理数范围内分解</b>：需要找两数「和 ' + cFmt(p.b) + '、积 ' + cFmt(p.c) + '」，但没有任何整数对满足（判别 ' + cFmt(p.b) + '² − 4×' + cFmt(p.c) + ' = ' + cFmt(disc) + ' 不是完全平方数）。</span>'
+        + '<span class="viz-meta">拖动 b、c 到能拼的组合试试：比如 b = 5、c = 6（2 和 3），或 b = −7、c = 12（−3 和 −4）。「和凑 b、积凑 c」不是万能的——拼不上就承认拼不上，也是这道实验台教的。</span>';
+      return;
+    }
+    function cell(x, y, ww, hh, fill, label) {
+      ctx.fillStyle = fill;
+      ctx.fillRect(m.px(x), m.py(y + hh), ww * m.sc, hh * m.sc);
+      ctx.strokeStyle = '#fff'; ctx.lineWidth = 2;
+      ctx.strokeRect(m.px(x), m.py(y + hh), ww * m.sc, hh * m.sc);
+      cTag(m, x + ww / 2, y + hh / 2, label, '#333', 0, 0);
+    }
+    var px = Math.max(pp, 0), qx = Math.max(qq, 0);
+    var pw = Math.abs(pp), qw = Math.abs(qq);
+    cell(0, 0, side, side, 'rgba(24,95,165,0.30)', 'x²');
+    if (pp >= 0) cell(side, 0, pw, side, 'rgba(15,110,86,0.30)', pp + 'x');
+    else cell(side, 0, pw, side, 'rgba(192,57,43,0.30)', pp + 'x');
+    if (qq >= 0) cell(0, side, side, qw, 'rgba(138,90,0,0.30)', qq + 'x');
+    else cell(0, side, side, qw, 'rgba(192,57,43,0.30)', qq + 'x');
+    cell(side, side, pw, qw, (pp * qq >= 0 ? 'rgba(107,122,137,0.35)' : 'rgba(192,57,43,0.35)'), String(pp * qq));
+    tBracketH(m, 0, side + pw, side + qw + 0.7, '#333', 'x + (' + pp + ')');
+    cTag(m, side + pw + 1.1, (side + qw) / 2, '高 x + (' + qq + ')', '#333', 0, 0);
+    cTag(m, side / 2, -1.2, 'x² + ' + cFmt(p.b) + 'x + ' + cFmt(p.c) + ' = (x ' + (pp >= 0 ? '+ ' : '− ') + Math.abs(pp) + ')(x ' + (qq >= 0 ? '+ ' : '− ') + Math.abs(qq) + ')', '#8a5a00', 0, 0);
+    s0.info.innerHTML = '<span class="viz-meta">找两数：<b>和 = ' + cFmt(p.b) + '、积 = ' + cFmt(p.c) + '</b> → ' + pp + ' 和 ' + qq + '。长方形宽 (x ' + (pp >= 0 ? '+' : '−') + ' ' + Math.abs(pp) + ')、高 (x ' + (qq >= 0 ? '+' : '−') + ' ' + Math.abs(qq) + ')，四块面积 x²、' + pp + 'x、' + qq + 'x、' + (pp * qq) + ' 加起来正是 x² + ' + cFmt(p.b) + 'x + ' + cFmt(p.c) + '。</span>'
+      + '<span class="viz-meta">拆完用十字检验：交叉相乘 ' + pp + '×x 与 ' + qq + 'x 之和 = ' + cFmt(p.b) + 'x ✓（这就是「十字相乘法」）。乘回去验算免费又保险。</span>'
+      + '<span class="viz-meta">拖动 c 为负数：两数一正一负、和还是 b——矩形的高会「翻」到负方向，图上红色的块表示负面积。b、c 同时为负（如 b = −7、c = 12）也大量可拼——多试几组感受「和凑 b、积凑 c」。</span>';
+  }
+  cSlider(s0.ctrl, 'b（一次项系数）', p.b, -7, 7, 1, function (v) { p.b = v; draw(); });
+  cSlider(s0.ctrl, 'c（常数项）', p.c, -12, 12, 1, function (v) { p.c = v; draw(); });
+  draw();
+}
+
+/* ================= 七下 10 · 数据的收集、整理与描述 ================= */
+
+/* 抽样模拟 */
+function dcSampleLab(el, cfg) {
+  var s0 = circleScaffold(el);
+  var p = { n: 20 };
+  if (cfg.values) for (var key in cfg.values) p[key] = cfg.values[key];
+  /* 固定伪随机洗牌的总体：200 人，40% 近视 */
+  function mulberry32(seed) {
+    return function () {
+      seed |= 0; seed = seed + 0x6D2B79F5 | 0;
+      var t = Math.imul(seed ^ seed >>> 15, 1 | seed);
+      t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+      return ((t ^ t >>> 14) >>> 0) / 4294967296;
+    };
+  }
+  var order = [];
+  (function () {
+    var i, arr = [];
+    for (i = 0; i < 200; i++) arr.push(i < 80);   /* 80 人近视 */
+    var rnd = mulberry32(20261028);
+    for (i = 199; i > 0; i--) {
+      var j = Math.floor(rnd() * (i + 1));
+      var tmp = arr[i]; arr[i] = arr[j]; arr[j] = tmp;
+    }
+    order = arr;
+  })();
+  function draw() {
+    var view = { xmin: -3.4, xmax: 21.4, ymin: -6.2, ymax: 13.2 };
+    var m = circleMap(s0.cv, view), ctx = m.ctx;
+    cGrid(m, view);
+    /* 总体网格：20 列 × 10 行 */
+    var cols = 20, rows = 10, i;
+    for (i = 0; i < 200; i++) {
+      var cx = 0.55 + (i % cols) * 1.05;
+      var cy = 11.5 - Math.floor(i / cols) * 1.15;
+      var inSample = i < p.n;
+      cDot(m, cx, cy, inSample ? (order[i] ? '#c0392b' : 'rgba(24,95,165,0.75)') : 'rgba(0,0,0,0.10)', inSample ? 4.5 : 3);
+    }
+    cTag(m, 10.5, 13.0, '总体 200 人（红 = 近视，真实 80 人 = 40%）', '#333', 0, 0);
+    cTag(m, 10.5, -1.2, '已抽前 ' + p.n + ' 人（彩色）', '#6b7a89', 0, 0);
+    /* 样本估计 */
+    var red = 0;
+    for (i = 0; i < p.n; i++) if (order[i]) red++;
+    var est = red / p.n;
+    /* 估计条 */
+    var y0 = -3.6;
+    tNumAxis(m, y0, 0, 20, '#333');
+    cTag(m, 10, y0 + 1.15, '百分比刻度 ×5（0~100%）', '#6b7a89', 0, 0);
+    tSeg(m, 8, y0 - 0.45, 8, y0 + 0.45, '#0f6e56', 2.6);
+    cTag(m, 8, y0 - 1.1, '真实 40%', '#0f6e56', 0, 0);
+    ctx.fillStyle = 'rgba(192,57,43,0.55)';
+    ctx.fillRect(m.px(0), m.py(y0 + 0.5), est * 20 * m.sc, 0.45 * m.sc);
+    cDot(m, est * 20, y0 + 0.25, '#c0392b', 6);
+    cTag(m, est * 20, y0 + 1.9, '样本估计 ' + Math.round(est * 100) + '%', '#c0392b', 0, 0);
+    s0.info.innerHTML = '<span class="viz-meta">样本中近视 <b>' + red + ' / ' + p.n + '</b>，估计近视率 <b>' + Math.round(est * 100) + '%</b>；真实值 40%（虚线）。偏差 ' + Math.round(Math.abs(est - 0.4) * 100) + ' 个百分点。</span>'
+      + '<span class="viz-meta">拖动 n：小样本（20 左右）的估计值在 25%~55% 之间乱晃；拉到 150 以上，估计值紧紧贴住 40%——<b>样本容量越大，估计越稳</b>。这就是「用样本估计总体」的可靠性来源。</span>'
+      + '<span class="viz-meta">概念对照：总体 = 这 200 人的视力状况全体；个体 = 每人的视力状况；样本 = 抽出的 ' + p.n + ' 人；样本容量 = ' + p.n + '（不带单位）。抽样必须随机——只抽篮球队式的「方便样本」会系统性跑偏。</span>';
+  }
+  cSlider(s0.ctrl, 'n（样本容量）', p.n, 10, 200, 10, function (v) { p.n = v; draw(); });
+  draw();
+}
+
+/* 统计图选择：一批数据四种图 */
+function dcChartLab(el, cfg) {
+  var s0 = circleScaffold(el);
+  var p = { k: 1 };
+  if (cfg.values) for (var key in cfg.values) p[key] = cfg.values[key];
+  var DATA = [12, 18, 8, 15, 22, 30, 26];
+  var DAYS = ['一', '二', '三', '四', '五', '六', '日'];
+  var total = 149;
+  function draw() {
+    var view = { xmin: -2.6, xmax: 14.6, ymin: -3.0, ymax: 12.6 };
+    var m = circleMap(s0.cv, view), ctx = m.ctx;
+    cGrid(m, view);
+    var i, sum = 0;
+    for (i = 0; i < DATA.length; i++) sum += DATA[i];
+    if (p.k === 0) {
+      /* 表格 */
+      cTag(m, 6, 11.6, '一周奶茶销量表（划记法整理）', '#333', 0, 0);
+      for (i = 0; i < 7; i++) {
+        var ry = 9.5 - i * 1.5;
+        ctx.fillStyle = i % 2 ? 'rgba(0,0,0,0.04)' : 'rgba(0,0,0,0.07)';
+        ctx.fillRect(m.px(-1.4), m.py(ry + 0.65), 13.6 * m.sc, 1.3 * m.sc);
+        cTag(m, 0.6, ry, '周' + DAYS[i], '#333', 0, 0);
+        cTag(m, 5.4, ry, DATA[i] + ' 杯', '#185fa5', 0, 0);
+        cTag(m, 9.6, ry, (DATA[i] / sum * 100).toFixed(1) + '%', '#8a5a00', 0, 0);
+      }
+      cTag(m, 9.6, 11.0, '占比', '#8a5a00', 0, 0);
+      cTag(m, 5.4, 11.0, '销量', '#185fa5', 0, 0);
+    } else if (p.k === 1) {
+      /* 条形 */
+      tNumAxis(m, 0, -1, 14, '#333');
+      for (i = 0; i < 7; i++) {
+        ctx.fillStyle = 'rgba(24,95,165,0.6)';
+        ctx.fillRect(m.px(i * 2 + 0.35), m.py(DATA[i]), 1.3 * m.sc, DATA[i] * (9 / 30) * m.sc);
+        cTag(m, i * 2 + 1, -1.0, DAYS[i], '#6b7a89', 0, 0);
+        cTag(m, i * 2 + 1, DATA[i] * (9 / 30) + 0.6, String(DATA[i]), '#185fa5', 0, 0);
+      }
+      cTag(m, 6, 11.6, '条形图：周六最高（30 杯），一眼比多少', '#333', 0, 0);
+    } else if (p.k === 2) {
+      /* 折线 */
+      tNumAxis(m, 0, -1, 14, '#333');
+      var px = [], py = [];
+      for (i = 0; i < 7; i++) {
+        px.push(i * 2 + 1); py.push(DATA[i] * (9 / 30));
+        cDot(m, px[i], py[i], '#c0392b', 5);
+        cTag(m, px[i], -1.0, DAYS[i], '#6b7a89', 0, 0);
+      }
+      for (i = 0; i < 6; i++) tSeg(m, px[i], py[i], px[i + 1], py[i + 1], '#c0392b', 2.4);
+      cTag(m, 6, 11.6, '折线图：从周三低谷到周六高峰的变化趋势', '#333', 0, 0);
+    } else {
+      /* 扇形 */
+      var ang = -Math.PI / 2, cx = 6, cy = 4.6, R = 4.4;
+      var COLS = ['rgba(24,95,165,0.7)', 'rgba(15,110,86,0.7)', 'rgba(138,90,0,0.7)', 'rgba(192,57,43,0.7)', 'rgba(109,60,150,0.7)', 'rgba(20,120,130,0.7)', 'rgba(180,100,20,0.7)'];
+      for (i = 0; i < 7; i++) {
+        var a2 = ang + DATA[i] / sum * Math.PI * 2;
+        ctx.beginPath();
+        ctx.moveTo(m.px(cx), m.py(cy));
+        ctx.arc(m.px(cx), m.py(cy), R * m.sc, ang, a2);
+        ctx.closePath();
+        ctx.fillStyle = COLS[i]; ctx.fill();
+        ctx.strokeStyle = '#fff'; ctx.lineWidth = 1.6; ctx.stroke();
+        var mid = (ang + a2) / 2;
+        cTag(m, cx + Math.cos(mid) * R * 0.62, cy - Math.sin(mid) * R * 0.62, Math.round(DATA[i] / sum * 100) + '%', '#fff', 0, 0);
+        ang = a2;
+      }
+      cTag(m, 6, 11.6, '扇形图：各天占一周总量（六日合计 37.6%）', '#333', 0, 0);
+      cTag(m, 6, 0.2, '圆心角 = 占比 × 360°（周六 72.5°）', '#6b7a89', 0, 0);
+    }
+    s0.info.innerHTML = '<span class="viz-meta">同一批数据（一周奶茶销量 12、18、8、15、22、30、26，共 149 杯），四种讲法各答一个问题：<b>表格查细节、条形比多少、折线看趋势、扇形看占比</b>。</span>'
+      + '<span class="viz-meta">切换滑块感受差异：想知道「周六比周五多几杯」只有条形/表格读得出；想知道「周末生意占一周几成」只有扇形图给得出（约 37.6%）。<b>选图 = 选想回答的问题</b>。</span>'
+      + '<span class="viz-meta">扇形的圆心角 = 占比 × 360°：周六 30/149 ≈ 20.1% → 约 72.5°。所有扇形圆心角之和恒为 360°，占比之和恒为 100%。</span>';
+  }
+  cSlider(s0.ctrl, '图类型（0 表格，1 条形，2 折线，3 扇形）', p.k, 0, 3, 1, function (v) { p.k = v; draw(); });
+  draw();
+}
+
+/* 扇形图圆心角 */
+function dcPieLab(el, cfg) {
+  var s0 = circleScaffold(el);
+  var p = { p1: 40, p2: 25 };
+  if (cfg.values) for (var key in cfg.values) p[key] = cfg.values[key];
+  function draw() {
+    if (p.p1 + p.p2 > 85) p.p2 = 85 - p.p1;
+    var rest = 100 - p.p1 - p.p2;
+    var r3 = Math.round(rest * 0.6 * 10) / 10, r4 = Math.round((rest - rest * 0.6) * 10) / 10;
+    var parts = [
+      { t: '篮球', v: p.p1, col: 'rgba(24,95,165,0.75)' },
+      { t: '足球', v: p.p2, col: 'rgba(15,110,86,0.75)' },
+      { t: '羽毛球', v: r3, col: 'rgba(138,90,0,0.75)' },
+      { t: '乒乓球', v: r4, col: 'rgba(192,57,43,0.75)' }
+    ];
+    var view = { xmin: -2.6, xmax: 14.6, ymin: -6.0, ymax: 8.6 };
+    var m = circleMap(s0.cv, view), ctx = m.ctx;
+    cGrid(m, view);
+    var ang = Math.PI / 2, cx = 5.4, cy = 1.4, R = 5.6;
+    var i;
+    for (i = 0; i < 4; i++) {
+      var a2 = ang - parts[i].v / 100 * Math.PI * 2;
+      ctx.beginPath();
+      ctx.moveTo(m.px(cx), m.py(cy));
+      ctx.arc(m.px(cx), m.py(cy), R * m.sc, a2, ang, false);
+      ctx.closePath();
+      ctx.fillStyle = parts[i].col; ctx.fill();
+      ctx.strokeStyle = '#fff'; ctx.lineWidth = 1.8; ctx.stroke();
+      var mid = (ang + a2) / 2;
+      cTag(m, cx + Math.cos(mid) * R * 0.6, cy - Math.sin(mid) * R * 0.6, parts[i].t + '\n' + parts[i].v + '%', '#fff', 0, 0);
+      /* 角度标注 */
+      cTag(m, cx + Math.cos(mid) * (R + 1.1), cy - Math.sin(mid) * (R + 1.1), '圆心角 ' + Math.round(parts[i].v * 3.6) + '°', '#333', 0, 0);
+      ang = a2;
+    }
+    cTag(m, 12.4, 6.6, '圆心角 = 占比 × 360°', '#333', 0, 0);
+    cTag(m, 12.4, 5.4, '篮球 ' + p.p1 + '% → ' + Math.round(p.p1 * 3.6) + '°', '#185fa5', 0, 0);
+    cTag(m, 12.4, 4.2, '足球 ' + p.p2 + '% → ' + Math.round(p.p2 * 3.6) + '°', '#0f6e56', 0, 0);
+    cTag(m, 12.4, 3.0, '羽毛球 ' + r3 + '% → ' + Math.round(r3 * 3.6) + '°', '#8a5a00', 0, 0);
+    cTag(m, 12.4, 1.8, '乒乓球 ' + r4 + '% → ' + Math.round(r4 * 3.6) + '°', '#c0392b', 0, 0);
+    cTag(m, 12.4, 0.2, '角度和 = ' + (Math.round(p.p1 * 3.6) + Math.round(p.p2 * 3.6) + Math.round(r3 * 3.6) + Math.round(r4 * 3.6)) + '°（恒 360°）', '#6b7a89', 0, 0);
+    s0.info.innerHTML = '<span class="viz-meta">社团 40 人的项目占比。篮球 <b>' + p.p1 + '% × 360° = ' + Math.round(p.p1 * 3.6) + '°</b>——占比变角度就乘 360。四块角度之和永远 360°、占比之和永远 100%。</span>'
+      + '<span class="viz-meta">反方向也会算：知道扇形圆心角 144°，占比 = 144 ÷ 360 = 40%，人数 = 40 × 40% = 16 人。<b>频数、百分比、圆心角三位一体，知道一个就能推另外两个</b>。</span>'
+      + '<span class="viz-meta">扇形图只能读占比、读不出具体数量——除非知道总数。中考的「条形 + 扇形」联用题正是利用这一点：条形给数量、扇形给占比，先求出总数再推其余。</span>';
+  }
+  cSlider(s0.ctrl, '篮球占比（%）', p.p1, 20, 60, 5, function (v) { p.p1 = v; draw(); });
+  cSlider(s0.ctrl, '足球占比（%）', p.p2, 10, 40, 5, function (v) { p.p2 = v; draw(); });
+  draw();
+}
+
+/* 频数分布直方图 */
+function dcHistLab(el, cfg) {
+  var s0 = circleScaffold(el);
+  var p = { w: 5 };
+  if (cfg.values) for (var key in cfg.values) p[key] = cfg.values[key];
+  /* 60 个立定跳远成绩（cm，150~210），固定伪随机 */
+  function mulberry32(seed) {
+    return function () {
+      seed |= 0; seed = seed + 0x6D2B79F5 | 0;
+      var t = Math.imul(seed ^ seed >>> 15, 1 | seed);
+      t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+      return ((t ^ t >>> 14) >>> 0) / 4294967296;
+    };
+  }
+  var SCORES = (function () {
+    var rnd = mulberry32(777), arr = [], i;
+    for (i = 0; i < 60; i++) {
+      var v = 152 + Math.floor(rnd() * 56);   /* 152~207 */
+      arr.push(v);
+    }
+    return arr;
+  })();
+  function draw() {
+    var mn = Math.min.apply(null, SCORES), mx = Math.max.apply(null, SCORES);
+    var ws = [2, 4, 5, 10];
+    var w = ws[p.w];
+    var start = Math.floor(mn / w) * w;
+    var nb = Math.ceil((mx - start) / w);
+    var cnt = [], i;
+    for (i = 0; i < nb; i++) cnt.push(0);
+    SCORES.forEach(function (v) { cnt[Math.min(nb - 1, Math.floor((v - start) / w))]++; });
+    var maxC = Math.max.apply(null, cnt);
+    var view = { xmin: -3.2, xmax: nb * 1.6 + 2.4, ymin: -4.0, ymax: maxC * 0.42 + 4.2 };
+    var m = circleMap(s0.cv, view), ctx = m.ctx;
+    cGrid(m, view);
+    tNumAxis(m, 0, -1, nb * 1.6 - 0.2, '#333');
+    for (i = 0; i < nb; i++) {
+      var h = cnt[i] * 0.42;
+      ctx.fillStyle = 'rgba(24,95,165,0.55)';
+      ctx.fillRect(m.px(i * 1.6 + 0.1), m.py(h), 1.4 * m.sc, h * m.sc);
+      ctx.strokeStyle = '#185fa5'; ctx.lineWidth = 1.4;
+      ctx.strokeRect(m.px(i * 1.6 + 0.1), m.py(h), 1.4 * m.sc, h * m.sc);
+      cTag(m, i * 1.6 + 0.8, h + 0.5, String(cnt[i]), '#185fa5', 0, 0);
+      cTag(m, i * 1.6 + 0.8, -1.0, (start + i * w) + '~' + (start + (i + 1) * w), '#6b7a89', 0, 0);
+    }
+    var rng = mx - mn;
+    cTag(m, nb * 0.8, maxC * 0.42 + 3.0, '极差 ' + rng + ' ÷ 组距 ' + w + ' = ' + cFmt(rng / w) + ' → 进一取 ' + nb + ' 组', '#333', 0, 0);
+    s0.info.innerHTML = '<span class="viz-meta">60 个立定跳远成绩（' + mn + '~' + mx + ' cm），组距 <b>' + w + ' cm</b> 时分成 <b>' + nb + ' 组</b>：极差 ' + rng + ' ÷ 组距 ' + w + ' = ' + cFmt(rng / w) + '，有小数一律<b>进一</b>。各矩形紧挨着站（区间连续）——这是直方图和条形图的外形区别。</span>'
+      + '<span class="viz-meta">拖动组距感受取舍：组距 2 → 组多、细节全但柱子零碎；组距 10 → 只剩几根大柱、轮廓清楚但细节糊。<b>组距的选择在「太碎」与「太糊」之间</b>，没有唯一正确答案。</span>'
+      + '<span class="viz-meta">补表三把钥匙：各频数之和 = 60 ✓（图上自己加一遍）；频率 = 频数 ÷ 60；各频率之和 = 1。中考补图题全靠这三条互推。</span>';
+  }
+  cSlider(s0.ctrl, '组距（0→2cm，1→4cm，2→5cm，3→10cm）', p.w, 0, 3, 1, function (v) { p.w = v; draw(); });
+  draw();
+}
+
+/* 纵轴截断的误导 */
+function dcTruncLab(el, cfg) {
+  var s0 = circleScaffold(el);
+  var p = { y0: 0 };
+  if (cfg.values) for (var key in cfg.values) p[key] = cfg.values[key];
+  function draw() {
+    var A = 80, B = 100;
+    var top = 110;
+    var hA = A - p.y0, hB = B - p.y0;
+    var view = { xmin: -2.8, xmax: 12.8, ymin: -3.4, ymax: 12.4 };
+    var m = circleMap(s0.cv, view), ctx = m.ctx;
+    cGrid(m, view);
+    var y0 = 1.0;
+    /* 纵轴从 y0 开始的刻度（压缩显示） */
+    tSeg(m, 0, y0 - 0.4, 0, 10.6, '#333', 1.8);
+    var i;
+    for (i = 0; i <= 4; i++) {
+      var v = p.y0 + (top - p.y0) * i / 4;
+      var yy = y0 + i * 2.4;
+      tSeg(m, 0, yy, 0.22, yy, '#333', 1.4);
+      cTag(m, -0.75, yy, String(Math.round(v)), '#6b7a89', 0, 0);
+    }
+    if (p.y0 > 0) {
+      /* 截断波浪记号 */
+      cTag(m, -1.6, y0 + 1.2, '⚠ 截断', '#c0392b', 0, 0);
+      tSeg(m, -0.35, y0 + 1.05, 0.35, y0 + 1.35, '#c0392b', 2);
+      tSeg(m, -0.35, y0 + 1.35, 0.35, y0 + 1.05, '#c0392b', 2);
+    }
+    /* 两根柱子（视觉高度正比于 hA, hB） */
+    var scale = 9.6 / (top - p.y0);
+    ctx.fillStyle = 'rgba(24,95,165,0.6)';
+    ctx.fillRect(m.px(1.4), m.py(y0 + hA * scale), 2.2 * m.sc, hA * scale * m.sc);
+    ctx.strokeRect(m.px(1.4), m.py(y0 + hA * scale), 2.2 * m.sc, hA * scale * m.sc);
+    ctx.fillStyle = 'rgba(192,57,43,0.6)';
+    ctx.fillRect(m.px(5.4), m.py(y0 + hB * scale), 2.2 * m.sc, hB * scale * m.sc);
+    ctx.strokeRect(m.px(5.4), m.py(y0 + hB * scale), 2.2 * m.sc, hB * scale * m.sc);
+    cTag(m, 2.5, y0 + hA * scale - 0.5, 'A 牌 80 万', '#185fa5', 0, 0);
+    cTag(m, 6.5, y0 + hB * scale - 0.5, 'B 牌 100 万', '#c0392b', 0, 0);
+    cTag(m, 2.5, y0 - 0.6, '甲', '#6b7a89', 0, 0);
+    cTag(m, 6.5, y0 - 0.6, '乙', '#6b7a89', 0, 0);
+    /* 视觉比例 vs 真实比例 */
+    var vis = hB / hA;
+    cTag(m, 10.6, 9.4, '视觉高度比', '#333', 0, 0);
+    cTag(m, 10.6, 8.2, cFmt(vis) + ' 倍', '#c0392b', 0, 0);
+    cTag(m, 10.6, 6.4, '真实数据比', '#333', 0, 0);
+    cTag(m, 10.6, 5.2, '100/80 = 1.25 倍', '#0f6e56', 0, 0);
+    cTag(m, 10.6, 3.4, '纵轴起点', '#333', 0, 0);
+    cTag(m, 10.6, 2.2, String(p.y0), p.y0 > 0 ? '#c0392b' : '#0f6e56', 0, 0);
+    s0.info.innerHTML = '<span class="viz-meta">A 牌月销 80 万、B 牌 100 万——真实只差 <b>25%</b>。纵轴起点拖到 ' + p.y0 + ' 时，图上 B 的高度是 A 的 <b>' + cFmt(vis) + ' 倍</b>：'
+      + (p.y0 === 0 ? '起点 0，视觉比例 = 真实比例，图是诚实的。' : '柱子的「身高」被截断放大了——数据没变，<b>图在撒谎</b>。')
+      + '</span>'
+      + '<span class="viz-meta">识别口诀：<b>条形图纵轴必须从 0 开始</b>，否则柱高比例失真。读任何柱状图先扫一眼纵轴起点，再看刻度是否等距——这一眼能挡掉大多数「图形夸大」。</span>'
+      + '<span class="viz-meta">广告里「销量领先 3 倍」可能只是纵轴从 80% 开始画的把戏。图表会说谎，但数据不会——用数值自己重算比例，永远是最硬的核实。</span>';
+  }
+  cSlider(s0.ctrl, '纵轴起点（0 = 诚实，60 = 重度截断）', p.y0, 0, 60, 5, function (v) { p.y0 = v; draw(); });
+  draw();
+}
+  window.VIZ = { ineqDefLab: ineqDefLab, ineqFlipLab: ineqFlipLab, ineqSolveLab: ineqSolveLab, ineqSetLab: ineqSetLab, ineqApplyLab: ineqApplyLab, iaTermLab: iaTermLab, iaLikeLab: iaLikeLab, iaMergeLab: iaMergeLab, iaParenLab: iaParenLab, iaEvalLab: iaEvalLab, rnSqrtLab: rnSqrtLab, rnCubeLab: rnCubeLab, rnAxisLab: rnAxisLab, rnEstLab: rnEstLab, rnClassLab: rnClassLab, pmPowerLab: pmPowerLab, pmDistroLab: pmDistroLab, pmSqdiffLab: pmSqdiffLab, pmPerfectLab: pmPerfectLab, pmCommonLab: pmCommonLab, pmXtileLab: pmXtileLab, dcSampleLab: dcSampleLab, dcChartLab: dcChartLab, dcPieLab: dcPieLab, dcHistLab: dcHistLab, dcTruncLab: dcTruncLab, renderPlot: renderPlot, parabolaLab: parabolaLab, stepLab: stepLab, bridgeLab: bridgeLab, profitLab: profitLab, fenceLab: fenceLab, fountainLab: fountainLab, shotLab: shotLab, completeSquareLab: completeSquareLab, equationLab: equationLab, growthLab: growthLab, rotateLab: rotateLab, coordRotLab: coordRotLab, patternLab: patternLab, clockLab: clockLab, anatomyLab: anatomyLab, chordLab: chordLab, inscribedLab: inscribedLab, positionLab: positionLab, tangentLab: tangentLab, sectorLab: sectorLab, eventScaleLab: eventScaleLab, bagLab: bagLab, sumTableLab: sumTableLab, treeLab: treeLab, coinLab: coinLab, dartLab: dartLab, inverseLab: inverseLab, kAreaLab: kAreaLab, inverseCrossLab: inverseCrossLab, inverseUseLab: inverseUseLab, trigRatioLab: trigRatioLab, trigSpecialLab: trigSpecialLab, trigSolveLab: trigSolveLab, trigHeightLab: trigHeightLab, trigSlopeLab: trigSlopeLab, trigAltitudeLab: trigAltitudeLab, simGoldenLab: simGoldenLab, simParallelLab: simParallelLab, simJudgeLab: simJudgeLab, simAreaLab: simAreaLab, simNestedLab: simNestedLab, simHomothetyLab: simHomothetyLab, simShadowLab: simShadowLab, projShadowLab: projShadowLab, projOrthLab: projOrthLab, viewThreeLab: viewThreeLab, viewBlocksLab: viewBlocksLab, viewSolidLab: viewSolidLab, pythagSquaresLab: pythagSquaresLab, pythagPuzzleLab: pythagPuzzleLab, pythagSolveLab: pythagSolveLab, pythagInverseLab: pythagInverseLab, pythagLadderLab: pythagLadderLab, linearLab: linearLab, linearQuadLab: linearQuadLab, linearCrossLab: linearCrossLab, linearModelLab: linearModelLab, linearTranslateLab: linearTranslateLab, linearFitLab: linearFitLab, pgPropLab: pgPropLab, pgDiagLab: pgDiagLab, pgJudgeLab: pgJudgeLab, pgMidlineLab: pgMidlineLab, pgRectLab: pgRectLab, pgRhombusLab: pgRhombusLab, pgSquareLab: pgSquareLab, pgAreaLab: pgAreaLab, triSidesLab: triSidesLab, triLinesLab: triLinesLab, triAngleLab: triAngleLab, triExteriorLab: triExteriorLab, polyAngleLab: polyAngleLab, congMapLab: congMapLab, congJudgeLab: congJudgeLab, congSsaLab: congSsaLab, bisectorLab: bisectorLab, axFoldLab: axFoldLab, axBisectorLab: axBisectorLab, axCoordLab: axCoordLab, axDrawLab: axDrawLab, axIsoscelesLab: axIsoscelesLab, axIsoJudgeLab: axIsoJudgeLab, axEquiLab: axEquiLab, axPathLab: axPathLab, sqrtDefLab: sqrtDefLab, sqrtPropLab: sqrtPropLab, sqrtMulLab: sqrtMulLab, sqrtDivLab: sqrtDivLab, sqrtAddLab: sqrtAddLab, sqrtEstLab: sqrtEstLab, statMeanLab: statMeanLab, statMedianLab: statMedianLab, statModeLab: statModeLab, statVarLab: statVarLab, statChoiceLab: statChoiceLab, ratLineLab: ratLineLab, ratAbsLab: ratAbsLab, ratAddLab: ratAddLab, ratMulLab: ratMulLab, ratPowerLab: ratPowerLab, eqBalanceLab: eqBalanceLab, eqStepsLab: eqStepsLab, eqMotionLab: eqMotionLab, eqDistroLab: eqDistroLab, eqPctLab: eqPctLab, geoSolidsLab: geoSolidsLab, geoMotionLab: geoMotionLab, geoView3Lab: geoView3Lab, geoSegLab: geoSegLab, geoMidLab: geoMidLab, geoAngleLab: geoAngleLab, geoCompLab: geoCompLab, sysDefLab: sysDefLab, sysSubstLab: sysSubstLab, sysElimLab: sysElimLab, sysSolLab: sysSolLab, sysCaseLab: sysCaseLab, sysFarmLab: sysFarmLab };
 })();
 
 </script>
@@ -8985,6 +9729,22 @@ function iaEvalLab(el, cfg) {
       else if (cfg.type === 'ia-merge') VIZ.iaMergeLab(el, cfg);
       else if (cfg.type === 'ia-paren') VIZ.iaParenLab(el, cfg);
       else if (cfg.type === 'ia-eval') VIZ.iaEvalLab(el, cfg);
+      else if (cfg.type === 'rn-sqrt') VIZ.rnSqrtLab(el, cfg);
+      else if (cfg.type === 'rn-cube') VIZ.rnCubeLab(el, cfg);
+      else if (cfg.type === 'rn-axis') VIZ.rnAxisLab(el, cfg);
+      else if (cfg.type === 'rn-est') VIZ.rnEstLab(el, cfg);
+      else if (cfg.type === 'rn-class') VIZ.rnClassLab(el, cfg);
+      else if (cfg.type === 'pm-power') VIZ.pmPowerLab(el, cfg);
+      else if (cfg.type === 'pm-distro') VIZ.pmDistroLab(el, cfg);
+      else if (cfg.type === 'pm-sqdiff') VIZ.pmSqdiffLab(el, cfg);
+      else if (cfg.type === 'pm-perfect') VIZ.pmPerfectLab(el, cfg);
+      else if (cfg.type === 'pm-common') VIZ.pmCommonLab(el, cfg);
+      else if (cfg.type === 'pm-xtile') VIZ.pmXtileLab(el, cfg);
+      else if (cfg.type === 'dc-sample') VIZ.dcSampleLab(el, cfg);
+      else if (cfg.type === 'dc-chart') VIZ.dcChartLab(el, cfg);
+      else if (cfg.type === 'dc-pie') VIZ.dcPieLab(el, cfg);
+      else if (cfg.type === 'dc-hist') VIZ.dcHistLab(el, cfg);
+      else if (cfg.type === 'dc-trunc') VIZ.dcTruncLab(el, cfg);
     });
   });
 })();
