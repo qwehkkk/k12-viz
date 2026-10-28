@@ -2366,7 +2366,7 @@ ul.lesson-list li::before {
     var cx0 = s.w / 2 - (view.xmin + view.xmax) / 2 * sc;
     var cy0 = s.h / 2 + (view.ymin + view.ymax) / 2 * sc;
     return {
-      ctx: s.ctx, w: s.w, h: s.h,
+      ctx: s.ctx, w: s.w, h: s.h, sc: sc,
       px: function (u) { return cx0 + u * sc; },
       py: function (v) { return cy0 - v * sc; }
     };
@@ -3325,7 +3325,303 @@ ul.lesson-list li::before {
     draw();
   }
 
-  window.VIZ = { renderPlot: renderPlot, parabolaLab: parabolaLab, stepLab: stepLab, bridgeLab: bridgeLab, profitLab: profitLab, fenceLab: fenceLab, fountainLab: fountainLab, shotLab: shotLab, completeSquareLab: completeSquareLab, equationLab: equationLab, growthLab: growthLab, rotateLab: rotateLab, coordRotLab: coordRotLab, patternLab: patternLab, clockLab: clockLab, anatomyLab: anatomyLab, chordLab: chordLab, inscribedLab: inscribedLab, positionLab: positionLab, tangentLab: tangentLab, sectorLab: sectorLab, eventScaleLab: eventScaleLab, bagLab: bagLab, sumTableLab: sumTableLab, treeLab: treeLab, coinLab: coinLab, dartLab: dartLab, inverseLab: inverseLab, kAreaLab: kAreaLab, inverseCrossLab: inverseCrossLab, inverseUseLab: inverseUseLab };
+  /* ============================================================
+   * 锐角三角函数章组件
+   * ============================================================ */
+
+  var T_D2R = Math.PI / 180;
+
+  /* 线段（数学坐标） */
+  function tSeg(m, x1, y1, x2, y2, color, w, dash) {
+    var ctx = m.ctx;
+    ctx.save();
+    if (dash) ctx.setLineDash(dash);
+    ctx.strokeStyle = color || '#333';
+    ctx.lineWidth = w || 1.6;
+    ctx.lineCap = 'round';
+    ctx.beginPath();
+    ctx.moveTo(m.px(x1), m.py(y1));
+    ctx.lineTo(m.px(x2), m.py(y2));
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  /* 边中点标注：沿法线偏移 off 像素，避免压线 */
+  function tEdgeLabel(m, x1, y1, x2, y2, text, color, off) {
+    var ctx = m.ctx;
+    var dx = m.px(x2) - m.px(x1), dy = m.py(y2) - m.py(y1);
+    var len = Math.sqrt(dx * dx + dy * dy) || 1;
+    var nx = -dy / len, ny = dx / len;
+    var o = off == null ? 14 : off;
+    ctx.fillStyle = color || '#333';
+    ctx.font = '12px "PingFang SC","Microsoft YaHei",sans-serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(text, m.px((x1 + x2) / 2) + nx * o, m.py((y1 + y2) / 2) + ny * o);
+  }
+
+  /* 角弧 + 角标注（数学角，逆时针） */
+  function tAngle(m, cx, cy, r, a1, a2, color, label) {
+    cArc(m, cx, cy, r, a1, a2, false);
+    m.ctx.strokeStyle = color;
+    m.ctx.lineWidth = 1.6;
+    m.ctx.stroke();
+    if (label) {
+      var mid = (a1 + a2) / 2;
+      m.ctx.fillStyle = color;
+      m.ctx.font = '12px "PingFang SC","Microsoft YaHei",sans-serif';
+      m.ctx.textAlign = 'center';
+      m.ctx.textBaseline = 'middle';
+      m.ctx.fillText(label, m.px(cx) + Math.cos(mid) * (r * m.sc + 18), m.py(cy) - Math.sin(mid) * (r * m.sc + 18));
+    }
+  }
+
+  /* 直角三角形：拖角度与斜边，看三个比值谁变谁不变 */
+  function trigRatioLab(el, cfg) {
+    var s0 = circleScaffold(el);
+    var p = { ang: 40, c: 8 };
+    if (cfg.values) for (var key in cfg.values) p[key] = cfg.values[key];
+    var view = { xmin: -1.8, xmax: 12.6, ymin: -2.4, ymax: 11.8 };
+
+    function draw() {
+      var A = p.ang * T_D2R;
+      var c = p.c, opp = c * Math.sin(A), adj = c * Math.cos(A);
+      var m = circleMap(s0.cv, view), ctx = m.ctx;
+      cGrid(m, view);
+      ctx.beginPath();
+      ctx.moveTo(m.px(0), m.py(0));
+      ctx.lineTo(m.px(adj), m.py(0));
+      ctx.lineTo(m.px(adj), m.py(opp));
+      ctx.closePath();
+      ctx.fillStyle = 'rgba(24,95,165,.06)';
+      ctx.fill();
+      tSeg(m, 0, 0, adj, 0, '#185fa5', 3);
+      tSeg(m, adj, 0, adj, opp, '#c0392b', 3);
+      tSeg(m, 0, 0, adj, opp, '#0f6e56', 3);
+      cRightAngle(m, adj, 0, [-1, 0], [0, -1], '#8a5a00');
+      tAngle(m, 0, 0, Math.min(1.6, c * 0.24), 0, A, '#8a5a00', Math.round(p.ang) + '°');
+      cDot(m, adj, opp, '#0f6e56', 4);
+      cTag(m, adj, opp, 'B', '#0f6e56', 14, -11);
+      cTag(m, adj, 0, 'C', '#555', 11, 14);
+      cTag(m, 0, 0, 'A', '#555', -12, 13);
+      tEdgeLabel(m, 0, 0, adj, 0, 'b = ' + cFmt(adj), '#185fa5', 16);
+      tEdgeLabel(m, adj, 0, adj, opp, 'a = ' + cFmt(opp), '#c0392b', 20);
+      tEdgeLabel(m, 0, 0, adj, opp, 'c = ' + cFmt(c), '#0f6e56', 18);
+      s0.info.innerHTML = '<span class="viz-meta">∠A = ' + Math.round(p.ang) + '°　sinA = a/c = ' + cFmt(opp) + ' / ' + cFmt(c) + ' = ' + cFmt(opp / c) +
+        '　cosA = b/c = ' + cFmt(adj / c) + '　tanA = a/b = ' + cFmt(opp / adj) + '</span>' +
+        '<span class="viz-meta">对边 a 是「∠A 正对着的那条」，邻边 b 是「夹着 ∠A 的另一条直角边」，斜边 c 永远对着直角。拖斜边 c：三边同比例放大缩小，三个比值一位都不变——比值只由角决定，这是整章的地基。拖 ∠A：比值才跟着变。</span>';
+    }
+    cSlider(s0.ctrl, '∠A 的度数', p.ang, 20, 70, 1, function (v) { p.ang = v; draw(); });
+    cSlider(s0.ctrl, '斜边 c 的长度', p.c, 3, 11, 0.5, function (v) { p.c = v; draw(); });
+    draw();
+  }
+
+  /* 两个特殊三角形：30°/45°/60° 的比值从图形里直接读出来 */
+  function trigSpecialLab(el, cfg) {
+    var s0 = circleScaffold(el);
+    var p = { k: 2.4 };
+    if (cfg.values) for (var key in cfg.values) p[key] = cfg.values[key];
+    var view = { xmin: -1.4, xmax: 14.8, ymin: -3, ymax: 6.4 };
+
+    function draw() {
+      var m = circleMap(s0.cv, view), ctx = m.ctx;
+      cGrid(m, view);
+      var k = p.k;
+      // 45°-45°-90°
+      var ax = 0.8, ay = 0.8, bx = ax + k, by = ay + k;
+      ctx.beginPath();
+      ctx.moveTo(m.px(ax), m.py(ay)); ctx.lineTo(m.px(bx), m.py(ay)); ctx.lineTo(m.px(bx), m.py(by));
+      ctx.closePath();
+      ctx.fillStyle = 'rgba(24,95,165,.06)'; ctx.fill();
+      tSeg(m, ax, ay, bx, ay, '#185fa5', 2.6);
+      tSeg(m, bx, ay, bx, by, '#185fa5', 2.6);
+      tSeg(m, ax, ay, bx, by, '#0f6e56', 2.6);
+      cRightAngle(m, bx, ay, [-1, 0], [0, -1], '#8a5a00');
+      tAngle(m, ax, ay, k * 0.36, 0, Math.PI / 4, '#8a5a00', '45°');
+      tAngle(m, bx, by, k * 0.34, Math.PI * 1.25, Math.PI * 1.5, '#8a5a00', '');
+      tEdgeLabel(m, ax, ay, bx, ay, 'k', '#185fa5', 15);
+      tEdgeLabel(m, bx, ay, bx, by, 'k', '#185fa5', 16);
+      tEdgeLabel(m, ax, ay, bx, by, '√2·k', '#0f6e56', 17);
+
+      // 30°-60°-90°
+      var ax2 = 7.4, ay2 = 0.8, cx2 = ax2 + k * Math.sqrt(3), by2 = ay2 + k;
+      ctx.beginPath();
+      ctx.moveTo(m.px(ax2), m.py(ay2)); ctx.lineTo(m.px(cx2), m.py(ay2)); ctx.lineTo(m.px(cx2), m.py(by2));
+      ctx.closePath();
+      ctx.fillStyle = 'rgba(192,57,43,.05)'; ctx.fill();
+      tSeg(m, ax2, ay2, cx2, ay2, '#185fa5', 2.6);
+      tSeg(m, cx2, ay2, cx2, by2, '#c0392b', 2.6);
+      tSeg(m, ax2, ay2, cx2, by2, '#0f6e56', 2.6);
+      cRightAngle(m, cx2, ay2, [-1, 0], [0, -1], '#8a5a00');
+      tAngle(m, ax2, ay2, k * 0.44, 0, Math.PI / 6, '#8a5a00', '30°');
+      tAngle(m, cx2, by2, k * 0.34, Math.PI * 7 / 6, Math.PI * 1.5, '#8a5a00', '60°');
+      tEdgeLabel(m, ax2, ay2, cx2, ay2, '√3·k', '#185fa5', 16);
+      tEdgeLabel(m, cx2, ay2, cx2, by2, 'k', '#c0392b', 14);
+      tEdgeLabel(m, ax2, ay2, cx2, by2, '2k', '#0f6e56', 17);
+
+      s0.info.innerHTML = '<span class="viz-meta">45°：三边比 1 : 1 : √2　→　sin45° = cos45° = √2/2 ≈ 0.707，tan45° = 1</span>' +
+        '<span class="viz-meta">30°、60°：三边比 1 : √3 : 2　→　sin30° = cos60° = 1/2，cos30° = sin60° = √3/2 ≈ 0.866，tan30° = √3/3 ≈ 0.577，tan60° = √3 ≈ 1.732</span>' +
+        '<span class="viz-meta">拖 k：两条直角边一起变长，比值纹丝不动。特殊角的值其实不用背——脑子里装这两个三角形，忘了就现场推：30° 的对边是斜边的一半。</span>';
+    }
+    cSlider(s0.ctrl, '直角边单位长度 k', p.k, 1.6, 2.9, 0.1, function (v) { p.k = v; draw(); });
+    draw();
+  }
+
+  /* 解直角三角形：已知一边一角，把另外两个量算出来 */
+  function trigSolveLab(el, cfg) {
+    var s0 = circleScaffold(el);
+    var p = { ang: 35, b: 5 };
+    if (cfg.values) for (var key in cfg.values) p[key] = cfg.values[key];
+
+    function draw() {
+      var A = p.ang * T_D2R;
+      var a = p.b * Math.tan(A), c = p.b / Math.cos(A);
+      var view = { xmin: -1.6, xmax: p.b * 1.2 + 1.8, ymin: -2.4, ymax: a * 1.2 + 2 };
+      var m = circleMap(s0.cv, view), ctx = m.ctx;
+      cGrid(m, view);
+      ctx.beginPath();
+      ctx.moveTo(m.px(0), m.py(0)); ctx.lineTo(m.px(p.b), m.py(0)); ctx.lineTo(m.px(p.b), m.py(a));
+      ctx.closePath();
+      ctx.fillStyle = 'rgba(24,95,165,.06)'; ctx.fill();
+      tSeg(m, 0, 0, p.b, 0, '#185fa5', 3);
+      tSeg(m, p.b, 0, p.b, a, '#c0392b', 3);
+      tSeg(m, 0, 0, p.b, a, '#0f6e56', 3);
+      cRightAngle(m, p.b, 0, [-1, 0], [0, -1], '#8a5a00');
+      tAngle(m, 0, 0, Math.min(1.5, p.b * 0.3), 0, A, '#8a5a00', Math.round(p.ang) + '°');
+      cTag(m, p.b, a, 'B', '#0f6e56', 14, -11);
+      cTag(m, p.b, 0, 'C', '#555', 11, 14);
+      cTag(m, 0, 0, 'A', '#555', -12, 13);
+      tEdgeLabel(m, 0, 0, p.b, 0, 'b = ' + cFmt(p.b) + '（已知）', '#185fa5', 18);
+      tEdgeLabel(m, p.b, 0, p.b, a, 'a = ' + cFmt(a), '#c0392b', 24);
+      tEdgeLabel(m, 0, 0, p.b, a, 'c = ' + cFmt(c), '#0f6e56', 22);
+      s0.info.innerHTML = '<span class="viz-meta">已知 ∠A = ' + Math.round(p.ang) + '°、邻边 b = ' + cFmt(p.b) + '（AC）　→　对边 a = b·tanA = ' + cFmt(a) + '，斜边 c = b ÷ cosA = ' + cFmt(c) + '</span>' +
+        '<span class="viz-meta">两条式子都是从定义反解出来的：tanA = a/b 把 a 解出来，cosA = b/c 把 c 解出来。检验勾股：a² + b² = ' + cFmt(a * a) + ' + ' + cFmt(p.b * p.b) + ' = ' + cFmt(a * a + p.b * p.b) + '，c² = ' + cFmt(c * c) + '。</span>' +
+        '<span class="viz-meta">解直角三角形本质是「知二求三」：除直角外再给两个条件（至少含一条边）就唯一确定。已知两边 → 勾股求第三边 + 三角比求角；已知一边一角 → 三角比求另两边。能用原始数据的别用算出来的中间值，误差会累积。</span>';
+    }
+    cSlider(s0.ctrl, '∠A 的度数', p.ang, 15, 70, 1, function (v) { p.ang = v; draw(); });
+    cSlider(s0.ctrl, '邻边 b 的长度', p.b, 2.5, 8, 0.5, function (v) { p.b = v; draw(); });
+    draw();
+  }
+
+  /* 仰角俯角测高：d、α 一拖，塔高跟着变 */
+  function trigHeightLab(el, cfg) {
+    var s0 = circleScaffold(el);
+    var p = { d: 18, ang: 32 };
+    if (cfg.values) for (var key in cfg.values) p[key] = cfg.values[key];
+    var h0 = 1.6;
+
+    function draw() {
+      var A = p.ang * T_D2R;
+      var H = h0 + p.d * Math.tan(A);
+      var W = Math.max(p.d * 1.3, H * 1.7) + 5;
+      var VH = Math.max(H * 1.15, W / 2.3) + 2;
+      var view = { xmin: -3.2, xmax: W, ymin: -3.6, ymax: VH };
+      var m = circleMap(s0.cv, view), ctx = m.ctx;
+      cGrid(m, view);
+      tSeg(m, -3.2, 0, W, 0, '#6b7a89', 2.4);
+      var g;
+      for (g = -2.4; g < W; g += 1.8) tSeg(m, g, 0, g - 1, -1, '#c9d2dc', 1.2);
+      var tw = Math.max(1.2, W * 0.045);
+      ctx.fillStyle = 'rgba(24,95,165,.12)';
+      ctx.fillRect(m.px(p.d), m.py(H), tw * m.sc, H * m.sc);
+      ctx.strokeStyle = '#185fa5'; ctx.lineWidth = 2;
+      ctx.strokeRect(m.px(p.d), m.py(H), tw * m.sc, H * m.sc);
+      tSeg(m, 0, 0, 0, h0, '#333', 3.4);
+      cDot(m, 0, h0, '#333', 4.2);
+      tSeg(m, 0, h0, p.d + tw, h0, '#9aa7b4', 1.3, [5, 4]);
+      tSeg(m, 0, h0, p.d + tw / 2, H, '#c0392b', 2.2);
+      var r = Math.min(p.d * 0.3, H * 0.42, 5);
+      tAngle(m, 0, h0, r, 0, A, '#c0392b', '仰角 ' + Math.round(p.ang) + '°');
+      tSeg(m, 0, H, p.d, H, '#9aa7b4', 1.3, [5, 4]);
+      tAngle(m, p.d + tw / 2, H, r, Math.PI, Math.PI + A, '#0f6e56', '');
+      cTag(m, p.d / 2, -1.5, 'd = ' + cFmt(p.d) + ' m', '#0f6e56', 0, 0);
+      cTag(m, p.d + tw, H / 2, 'H = ' + cFmt(H) + ' m', '#185fa5', 38, 0);
+      s0.info.innerHTML = '<span class="viz-meta">塔高 H = 眼高 + d·tanα = ' + cFmt(h0) + ' + ' + cFmt(p.d) + ' × tan' + Math.round(p.ang) + '° = ' + cFmt(h0) + ' + ' + cFmt(p.d * Math.tan(A)) + ' = ' + cFmt(H) + ' m</span>' +
+        '<span class="viz-meta">仰角是眼睛看塔顶时视线与水平线的夹角；塔顶看你的俯角是视线与另一条水平线的夹角。两条水平线平行、视线是截线，内错角相等——所以俯角恒等于仰角，题目给哪个都能用。</span>' +
+        '<span class="viz-meta">两个坑：一是忘了加仪器高（眼睛/测角仪离地的高度），算出的 d·tanα 只是「塔顶比眼睛高多少」；二是把 d 当成斜边——d 是水平距离，斜边是视线长度 d ÷ cosα。若观测点不可达，就在同一直线上测两次仰角（相距 a 的两点 α、β），h = a·tanα·tanβ ÷ (tanβ − tanα)。</span>';
+    }
+    cSlider(s0.ctrl, '观测点到塔底的距离 d（m）', p.d, 8, 34, 1, function (v) { p.d = v; draw(); });
+    cSlider(s0.ctrl, '仰角 α（度）', p.ang, 12, 55, 1, function (v) { p.ang = v; draw(); });
+    draw();
+  }
+
+  /* 坡度坡角：i = h/l = tanα */
+  function trigSlopeLab(el, cfg) {
+    var s0 = circleScaffold(el);
+    var p = { ang: 25, l: 8 };
+    if (cfg.values) for (var key in cfg.values) p[key] = cfg.values[key];
+
+    function draw() {
+      var A = p.ang * T_D2R;
+      var h = p.l * Math.tan(A);
+      var W = Math.max(p.l * 1.25, h * 1.7) + 3.4;
+      var VH = Math.max(h * 1.3, W / 2.6) + 2;
+      var view = { xmin: -2.6, xmax: W, ymin: -3.6, ymax: VH };
+      var m = circleMap(s0.cv, view), ctx = m.ctx;
+      cGrid(m, view);
+      tSeg(m, -2.6, 0, W, 0, '#6b7a89', 2.4);
+      tSeg(m, 0, 0, p.l, 0, '#185fa5', 2, [6, 4]);
+      tSeg(m, p.l, 0, p.l, h, '#c0392b', 2, [6, 4]);
+      tSeg(m, 0, 0, p.l, h, '#0f6e56', 3.2);
+      cRightAngle(m, p.l, 0, [-1, 0], [0, -1], '#8a5a00');
+      tAngle(m, 0, 0, Math.min(2, p.l * 0.4), 0, A, '#8a5a00', Math.round(p.ang) + '°');
+      cDot(m, 0, 0, '#555', 4);
+      cDot(m, p.l, h, '#0f6e56', 4);
+      tEdgeLabel(m, 0, 0, p.l, 0, '水平宽度 l = ' + cFmt(p.l) + ' m', '#185fa5', 18);
+      tEdgeLabel(m, p.l, 0, p.l, h, '铅直高度 h = ' + cFmt(h) + ' m', '#c0392b', 30);
+      var i = Math.tan(A);
+      s0.info.innerHTML = '<span class="viz-meta">坡角 α = ' + Math.round(p.ang) + '°，水平宽度 l = ' + cFmt(p.l) + ' m，铅直高度 h = l·tanα = ' + cFmt(h) + ' m，坡面长 = l ÷ cosα = ' + cFmt(p.l / Math.cos(A)) + ' m</span>' +
+        '<span class="viz-meta">坡度 i = h : l = tanα = ' + cFmt(i) + '，即 ' + Math.round(i * 1000) / 10 + '%（也可写成 1 : ' + cFmt(1 / i) + '）。坡度是「铅直高比水平宽」，不是角度也不是坡面长度——三个量分清楚，题就不容易错。</span>' +
+        '<span class="viz-meta">坡角越大越陡。沿坡面走 100 m 是斜边，水平只前进了 100·cosα；题目说「坡长为 100 m」时，要先用 sinα 求高、cosα 求水平距离，别直接拿 100 当水平距离。</span>';
+    }
+    cSlider(s0.ctrl, '坡角 α（度）', p.ang, 5, 55, 1, function (v) { p.ang = v; draw(); });
+    cSlider(s0.ctrl, '水平宽度 l（m）', p.l, 3, 12, 0.5, function (v) { p.l = v; draw(); });
+    draw();
+  }
+
+  /* 作高：把非直角三角形拆成两个直角三角形 */
+  function trigAltitudeLab(el, cfg) {
+    var s0 = circleScaffold(el);
+    var p = { ang: 65, b: 5, c: 6 };
+    if (cfg.values) for (var key in cfg.values) p[key] = cfg.values[key];
+
+    function draw() {
+      var A = p.ang * T_D2R;
+      var fx = p.b * Math.cos(A), h = p.b * Math.sin(A);
+      var xmin = Math.min(0, fx, p.c) - 1.8;
+      var xmax = Math.max(0, fx, p.c) + 1.8;
+      var view = { xmin: xmin, xmax: xmax, ymin: -2.8, ymax: h + 2.4 };
+      var m = circleMap(s0.cv, view), ctx = m.ctx;
+      cGrid(m, view);
+      tSeg(m, 0, 0, p.c, 0, '#185fa5', 3);
+      tSeg(m, 0, 0, fx, h, '#185fa5', 3);
+      tSeg(m, p.c, 0, fx, h, '#0f6e56', 3);
+      tSeg(m, fx, 0, fx, h, '#c0392b', 2, [6, 4]);
+      if (fx < -0.01) tSeg(m, fx, 0, 0, 0, '#c9d2dc', 1.8, [4, 4]);
+      if (fx > p.c + 0.01) tSeg(m, p.c, 0, fx, 0, '#c9d2dc', 1.8, [4, 4]);
+      cRightAngle(m, fx, 0, [0, -1], [fx >= 0 ? -1 : 1, 0], '#8a5a00');
+      tAngle(m, 0, 0, Math.min(1.7, h * 0.52), 0, A, '#8a5a00', Math.round(p.ang) + '°');
+      cTag(m, 0, 0, 'A', '#555', -13, 13);
+      cTag(m, p.c, 0, 'B', '#555', 13, 13);
+      cTag(m, fx, h, 'C', '#0f6e56', 3, -14);
+      cTag(m, fx, 0, 'D', '#c0392b', -12, 14);
+      tEdgeLabel(m, 0, 0, p.c, 0, 'AB = ' + cFmt(p.c), '#185fa5', 17);
+      tEdgeLabel(m, 0, 0, fx, h, 'AC = ' + cFmt(p.b), '#185fa5', -20);
+      tEdgeLabel(m, p.c, 0, fx, h, 'BC', '#0f6e56', 20);
+      tEdgeLabel(m, fx, 0, fx, h, 'h = ' + cFmt(h), '#c0392b', 22);
+      var S = 0.5 * p.c * h;
+      var outside = (fx < -0.01 || fx > p.c + 0.01);
+      s0.info.innerHTML = '<span class="viz-meta">作高 CD ⊥ AB：Rt△ACD 中 h = AC·sin∠A = ' + cFmt(p.b) + ' × sin' + Math.round(p.ang) + '° = ' + cFmt(h) + '，AD = AC·cos∠A = ' + cFmt(fx) + '</span>' +
+        '<span class="viz-meta">面积 S = ½·AB·h = ½ × ' + cFmt(p.c) + ' × ' + cFmt(h) + ' = ' + cFmt(S) + '　也可以写成 S = ½·AB·AC·sin∠A。' + (outside ? '∠A 是钝角，垂足 D 落在 AB 的延长线上，补一条虚线照样能算。' : '左右两个直角三角形，各自用 sin/cos/tan 就够了。') + '</span>' +
+        '<span class="viz-meta">三角函数的定义只认直角三角形。碰上非直角三角形，第一反应就是「作高」：从顶点向对边作垂线，把它劈成两个直角三角形。15°、75° 这类怪角，也是先作高拆成 30°、45° 的组合再算。</span>';
+    }
+    cSlider(s0.ctrl, '∠A 的度数', p.ang, 30, 135, 5, function (v) { p.ang = v; draw(); });
+    cSlider(s0.ctrl, 'AB 的长度 c', p.c, 3, 9, 0.5, function (v) { p.c = v; draw(); });
+    cSlider(s0.ctrl, 'AC 的长度 b', p.b, 3, 8, 0.5, function (v) { p.b = v; draw(); });
+    draw();
+  }
+
+  window.VIZ = { renderPlot: renderPlot, parabolaLab: parabolaLab, stepLab: stepLab, bridgeLab: bridgeLab, profitLab: profitLab, fenceLab: fenceLab, fountainLab: fountainLab, shotLab: shotLab, completeSquareLab: completeSquareLab, equationLab: equationLab, growthLab: growthLab, rotateLab: rotateLab, coordRotLab: coordRotLab, patternLab: patternLab, clockLab: clockLab, anatomyLab: anatomyLab, chordLab: chordLab, inscribedLab: inscribedLab, positionLab: positionLab, tangentLab: tangentLab, sectorLab: sectorLab, eventScaleLab: eventScaleLab, bagLab: bagLab, sumTableLab: sumTableLab, treeLab: treeLab, coinLab: coinLab, dartLab: dartLab, inverseLab: inverseLab, kAreaLab: kAreaLab, inverseCrossLab: inverseCrossLab, inverseUseLab: inverseUseLab, trigRatioLab: trigRatioLab, trigSpecialLab: trigSpecialLab, trigSolveLab: trigSolveLab, trigHeightLab: trigHeightLab, trigSlopeLab: trigSlopeLab, trigAltitudeLab: trigAltitudeLab };
 })();
 
 </script>
@@ -3368,6 +3664,12 @@ ul.lesson-list li::before {
       else if (cfg.type === 'k-area') VIZ.kAreaLab(el, cfg);
       else if (cfg.type === 'inverse-cross') VIZ.inverseCrossLab(el, cfg);
       else if (cfg.type === 'inverse-use') VIZ.inverseUseLab(el, cfg);
+      else if (cfg.type === 'trig-ratio') VIZ.trigRatioLab(el, cfg);
+      else if (cfg.type === 'trig-special') VIZ.trigSpecialLab(el, cfg);
+      else if (cfg.type === 'trig-solve') VIZ.trigSolveLab(el, cfg);
+      else if (cfg.type === 'trig-height') VIZ.trigHeightLab(el, cfg);
+      else if (cfg.type === 'trig-slope') VIZ.trigSlopeLab(el, cfg);
+      else if (cfg.type === 'trig-altitude') VIZ.trigAltitudeLab(el, cfg);
     });
   });
 })();

@@ -1,6 +1,8 @@
 # 开发/测试产物
 .shots/*.png
 .shots/cdp-*
+.shots/prof/
+.shots/trig/
 Thumbs.db
 Desktop.ini
 node_modules/

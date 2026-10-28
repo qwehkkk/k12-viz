@@ -36,6 +36,12 @@
       else if (cfg.type === 'k-area') VIZ.kAreaLab(el, cfg);
       else if (cfg.type === 'inverse-cross') VIZ.inverseCrossLab(el, cfg);
       else if (cfg.type === 'inverse-use') VIZ.inverseUseLab(el, cfg);
+      else if (cfg.type === 'trig-ratio') VIZ.trigRatioLab(el, cfg);
+      else if (cfg.type === 'trig-special') VIZ.trigSpecialLab(el, cfg);
+      else if (cfg.type === 'trig-solve') VIZ.trigSolveLab(el, cfg);
+      else if (cfg.type === 'trig-height') VIZ.trigHeightLab(el, cfg);
+      else if (cfg.type === 'trig-slope') VIZ.trigSlopeLab(el, cfg);
+      else if (cfg.type === 'trig-altitude') VIZ.trigAltitudeLab(el, cfg);
     });
   });
 })();
