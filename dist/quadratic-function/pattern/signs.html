@@ -7081,7 +7081,549 @@ ul.lesson-list li::before {
     draw();
   }
 
-  window.VIZ = { renderPlot: renderPlot, parabolaLab: parabolaLab, stepLab: stepLab, bridgeLab: bridgeLab, profitLab: profitLab, fenceLab: fenceLab, fountainLab: fountainLab, shotLab: shotLab, completeSquareLab: completeSquareLab, equationLab: equationLab, growthLab: growthLab, rotateLab: rotateLab, coordRotLab: coordRotLab, patternLab: patternLab, clockLab: clockLab, anatomyLab: anatomyLab, chordLab: chordLab, inscribedLab: inscribedLab, positionLab: positionLab, tangentLab: tangentLab, sectorLab: sectorLab, eventScaleLab: eventScaleLab, bagLab: bagLab, sumTableLab: sumTableLab, treeLab: treeLab, coinLab: coinLab, dartLab: dartLab, inverseLab: inverseLab, kAreaLab: kAreaLab, inverseCrossLab: inverseCrossLab, inverseUseLab: inverseUseLab, trigRatioLab: trigRatioLab, trigSpecialLab: trigSpecialLab, trigSolveLab: trigSolveLab, trigHeightLab: trigHeightLab, trigSlopeLab: trigSlopeLab, trigAltitudeLab: trigAltitudeLab, simGoldenLab: simGoldenLab, simParallelLab: simParallelLab, simJudgeLab: simJudgeLab, simAreaLab: simAreaLab, simNestedLab: simNestedLab, simHomothetyLab: simHomothetyLab, simShadowLab: simShadowLab, projShadowLab: projShadowLab, projOrthLab: projOrthLab, viewThreeLab: viewThreeLab, viewBlocksLab: viewBlocksLab, viewSolidLab: viewSolidLab, pythagSquaresLab: pythagSquaresLab, pythagPuzzleLab: pythagPuzzleLab, pythagSolveLab: pythagSolveLab, pythagInverseLab: pythagInverseLab, pythagLadderLab: pythagLadderLab, linearLab: linearLab, linearQuadLab: linearQuadLab, linearCrossLab: linearCrossLab, linearModelLab: linearModelLab, linearTranslateLab: linearTranslateLab, linearFitLab: linearFitLab, pgPropLab: pgPropLab, pgDiagLab: pgDiagLab, pgJudgeLab: pgJudgeLab, pgMidlineLab: pgMidlineLab, pgRectLab: pgRectLab, pgRhombusLab: pgRhombusLab, pgSquareLab: pgSquareLab, pgAreaLab: pgAreaLab, triSidesLab: triSidesLab, triLinesLab: triLinesLab, triAngleLab: triAngleLab, triExteriorLab: triExteriorLab, polyAngleLab: polyAngleLab, congMapLab: congMapLab, congJudgeLab: congJudgeLab, congSsaLab: congSsaLab, bisectorLab: bisectorLab, axFoldLab: axFoldLab, axBisectorLab: axBisectorLab, axCoordLab: axCoordLab, axDrawLab: axDrawLab, axIsoscelesLab: axIsoscelesLab, axIsoJudgeLab: axIsoJudgeLab, axEquiLab: axEquiLab, axPathLab: axPathLab, sqrtDefLab: sqrtDefLab, sqrtPropLab: sqrtPropLab, sqrtMulLab: sqrtMulLab, sqrtDivLab: sqrtDivLab, sqrtAddLab: sqrtAddLab, sqrtEstLab: sqrtEstLab, statMeanLab: statMeanLab, statMedianLab: statMedianLab, statModeLab: statModeLab, statVarLab: statVarLab, statChoiceLab: statChoiceLab };
+  /* ===== 七年级上：有理数 ===== */
+
+  /* 水平箭头（数轴上的移动）：从 x1 指向 x2，画在高度 y */
+  function tArrowH(m, x1, x2, y, color, w) {
+    var ctx = m.ctx;
+    var sgn = x2 >= x1 ? 1 : -1;
+    if (Math.abs(x2 - x1) > 0.4) tSeg(m, x1, y, x2 - sgn * 0.3, y, color, w || 2.4);
+    ctx.beginPath();
+    ctx.moveTo(m.px(x2), m.py(y));
+    ctx.lineTo(m.px(x2) - sgn * 8, m.py(y) - 4.5);
+    ctx.lineTo(m.px(x2) - sgn * 8, m.py(y) + 4.5);
+    ctx.closePath();
+    ctx.fillStyle = color;
+    ctx.fill();
+  }
+
+  /* 画一个"未知数盒"或"单位块"：中心 (cx,cy)，宽高为数学单位 */
+  function tBox(m, cx, cy, w, h, fill, stroke, label) {
+    var ctx = m.ctx;
+    ctx.fillStyle = fill;
+    ctx.strokeStyle = stroke;
+    ctx.lineWidth = 1.4;
+    ctx.beginPath();
+    ctx.rect(m.px(cx - w / 2), m.py(cy + h / 2), w * m.sc, h * m.sc);
+    ctx.fill();
+    ctx.stroke();
+    if (label) {
+      ctx.fillStyle = '#fff';
+      ctx.font = 'bold 12px "PingFang SC","Microsoft YaHei",sans-serif';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(label, m.px(cx), m.py(cy));
+    }
+  }
+
+  /* 水平跨度的标注括线：在高度 y 上从 a 到 b，带端点竖线和文字 */
+  function tBracketH(m, a, b, y, color, label) {
+    if (Math.abs(b - a) < 0.25) return;
+    tSeg(m, a, y, b, y, color, 1.6);
+    tSeg(m, a, y - 0.16, a, y + 0.16, color, 1.6);
+    tSeg(m, b, y - 0.16, b, y + 0.16, color, 1.6);
+    cTag(m, (a + b) / 2, y + 0.42, label, color, 0, 0);
+  }
+
+  /* 数轴：原点、正方向、单位长度——一个点引出坐标 / 相反数 / 绝对值 */
+  function ratLineLab(el, cfg) {
+    var s0 = circleScaffold(el);
+    var p = { x: -3 };
+    if (cfg.values) for (var key in cfg.values) p[key] = cfg.values[key];
+    var view = { xmin: -9.5, xmax: 9.5, ymin: -2.6, ymax: 3.8 };
+
+    function draw() {
+      var m = circleMap(s0.cv, view), ctx = m.ctx;
+      cGrid(m, view);
+      var x = p.x, ax = -x;
+      tNumAxis(m, 0, -9, 9, '#333');
+      /* 正方向箭头 */
+      ctx.beginPath();
+      ctx.moveTo(m.px(9), m.py(0));
+      ctx.lineTo(m.px(9) - 11, m.py(0) - 5);
+      ctx.lineTo(m.px(9) - 11, m.py(0) + 5);
+      ctx.closePath();
+      ctx.fillStyle = '#333';
+      ctx.fill();
+      cTag(m, 8.4, 0.55, '正方向', '#6b7a89', 0, 0);
+      cTag(m, 0, 0.5, 'O', '#333', -10, 0);
+      /* 点与相反数 */
+      cDot(m, x, 0, '#185fa5', 6);
+      cTag(m, x, -0.62, 'P (' + cFmt(x) + ')', '#185fa5', 0, 0);
+      cDot(m, ax, 0, '#c0392b', 5);
+      cTag(m, ax, 0.55, "P' (" + cFmt(ax) + ')', '#c0392b', 0, 0);
+      /* 到原点的距离（绝对值） */
+      tBracketH(m, 0, x, 2.0, '#185fa5', '|x| = ' + cFmt(Math.abs(x)));
+      tBracketH(m, 0, ax, 2.9, '#c0392b', "|−x| = " + cFmt(Math.abs(ax)));
+      /* 对称虚线：连线被原点平分 */
+      tSeg(m, x, 0, ax, 0, 'rgba(107,122,137,0.5)', 1.2, [4, 3]);
+
+      s0.info.innerHTML =
+        '<span class="viz-meta">规定了<b>原点、正方向、单位长度</b>的直线叫数轴。现在的点 P 坐标是 <b>' + cFmt(x) + '</b>，它的<b>相反数</b>是 ' + cFmt(ax) + '——两个点到原点的距离都等于 ' + cFmt(Math.abs(x)) + '，只是符号相反，所以它们关于原点对称。</span>' +
+        '<span class="viz-meta"><b>绝对值 = 到原点的距离</b>：|' + cFmt(x) + '| = ' + cFmt(Math.abs(x)) + '。距离永远不小于 0，所以任何数的绝对值都 ≥ 0；正数的绝对值是它自己，负数的绝对值是它的相反数，0 的绝对值是 0。</span>' +
+        '<span class="viz-meta">数轴上右边的点总比左边的大：试试把 x 拖成正数再拖成负数，比较 P 和 P′ 谁在右。</span>';
+    }
+    cSlider(s0.ctrl, '点 P 的坐标 x', p.x, -8, 8, 0.5, function (v) { p.x = v; draw(); });
+    draw();
+  }
+
+  /* 绝对值函数的 V 形：|x| = x（x≥0）与 |x| = −x（x<0） */
+  function ratAbsLab(el, cfg) {
+    var s0 = circleScaffold(el);
+    var p = { x: -3 };
+    if (cfg.values) for (var key in cfg.values) p[key] = cfg.values[key];
+    var view = { xmin: -5.6, xmax: 5.6, ymin: -1.8, ymax: 6.4 };
+
+    function draw() {
+      var m = circleMap(s0.cv, view), ctx = m.ctx;
+      xyAxes(m, view);
+      /* y = x 参考线（灰虚线）与 y = |x| 折线 */
+      tLineIn(m, view, [0, 0], [1, 1], 'rgba(107,122,137,0.55)', 1.4, [5, 4]);
+      cTag(m, 3.6, 4.9, 'y = x', '#6b7a89', 0, 0);
+      tSeg(m, -5, 5, 0, 0, '#0f6e56', 2.6);
+      tSeg(m, 0, 0, 5, 5, '#c0392b', 2.6);
+      cTag(m, -3.2, 4.5, 'y = |x|（x<0 时 = −x）', '#0f6e56', 0, 0);
+      cTag(m, 3.1, 2.0, 'y = |x|（x≥0 时 = x）', '#c0392b', 0, 0);
+      /* 当前点 */
+      var y = Math.abs(p.x);
+      tSeg(m, p.x, 0, p.x, y, 'rgba(24,95,165,0.6)', 1.4, [4, 3]);
+      cDot(m, p.x, y, '#185fa5', 6);
+      cTag(m, p.x + (p.x >= 0 ? -1.15 : 1.15), y + 0.15, '(' + cFmt(p.x) + ', ' + cFmt(y) + ')', '#185fa5', 0, 0);
+      cDot(m, 0, 0, '#8a5a00', 5);
+      cTag(m, 0.75, 0.32, '折点 O：|0| = 0', '#8a5a00', 0, 0);
+
+      s0.info.innerHTML =
+        '<span class="viz-meta">把 |x| 画成图像就是这条 <b>V 形折线</b>：x ≥ 0 时它和 y = x 重合（红），x < 0 时它把 y = x 的部分沿 x 轴"翻上来"（绿）。翻折的位置就是原点——这正是绝对值"去掉符号、只留距离"的图像含义。</span>' +
+        '<span class="viz-meta">当前 x = ' + cFmt(p.x) + '，落在' + (p.x >= 0 ? '右半支：|x| = x = ' + cFmt(y) : '左半支：|x| = −x = ' + cFmt(y)) + '。注意不管 x 取什么，纵坐标 <b>y = |x| ≥ 0</b>，V 形最低点就是原点。</span>' +
+        '<span class="viz-meta">灰虚线是 y = x 本尊。负半轴上 V 形和它"分家"——这就是化简 |x| 时必须先讨论符号的原因：|−3| ≠ −3。</span>';
+    }
+    cSlider(s0.ctrl, 'x 的值', p.x, -5, 5, 0.5, function (v) { p.x = v; draw(); });
+    draw();
+  }
+
+  /* 数轴上的加法：先走 a，再走 b，落在 a+b */
+  function ratAddLab(el, cfg) {
+    var s0 = circleScaffold(el);
+    var p = { a: -3, b: 5 };
+    if (cfg.values) for (var key in cfg.values) p[key] = cfg.values[key];
+    var view = { xmin: -9.5, xmax: 9.5, ymin: -2.4, ymax: 2.8 };
+    var sum = p.a + p.b;
+
+    function draw() {
+      sum = p.a + p.b;
+      /* 视野随结果动态扩展，避免落在数轴两端时出画布 */
+      view = {
+        xmin: Math.min(-9.5, sum - 2.6),
+        xmax: Math.max(9.5, sum + 2.6),
+        ymin: -2.4, ymax: 2.8
+      };
+      var m = circleMap(s0.cv, view), ctx = m.ctx;
+      cGrid(m, view);
+      sum = p.a + p.b;
+      tNumAxis(m, 0, -9, 9, '#333');
+      cDot(m, 0, 0, '#333', 3.5);
+      cTag(m, 0, -0.6, '0', '#333', 0, 0);
+      /* 第一步：从 0 走 a */
+      tArrowH(m, 0, p.a, 0.5, '#c0392b', 2.6);
+      cTag(m, p.a / 2, 0.95, '先走 ' + cFmt(p.a), '#c0392b', 0, 0);
+      cDot(m, p.a, 0, '#c0392b', 4);
+      /* 第二步：从 a 走 b */
+      tArrowH(m, p.a, sum, 0.5, '#185fa5', 2.6);
+      cTag(m, (p.a + sum) / 2, 0.95, '再走 ' + (p.b >= 0 ? '+' : '') + cFmt(p.b), '#185fa5', 0, 0);
+      /* 结果 */
+      cDot(m, sum, 0, '#0f6e56', 6.5);
+      cTag(m, sum, -0.68, 'a + b = ' + cFmt(sum), '#0f6e56', 0, 0);
+
+      s0.info.innerHTML =
+        '<span class="viz-meta">加法就是<b>沿数轴走路</b>：正数向右、负数向左。现在 0 → ' + cFmt(p.a) + ' → ' + cFmt(sum) + '，所以 (' + cFmt(p.a) + ') + (' + cFmt(p.b) + ') = <b>' + cFmt(sum) + '</b>。</span>' +
+        '<span class="viz-meta">' + ((p.a >= 0) === (p.b >= 0)
+          ? '两个数<b>同号</b>：符号不变，绝对值相加（|' + cFmt(p.a) + '| + |' + cFmt(p.b) + '| = ' + cFmt(Math.abs(p.a) + Math.abs(p.b)) + '），结果取原来的符号。'
+          : '两个数<b>异号</b>：结果取绝对值较大的符号（|' + cFmt(p.a) + '| = ' + cFmt(Math.abs(p.a)) + (Math.abs(p.a) >= Math.abs(p.b) ? ' ≥ ' : ' < ') + '|' + cFmt(p.b) + '| = ' + cFmt(Math.abs(p.b)) + '），再用较大的绝对值减去较小的。') + '</span>' +
+        '<span class="viz-meta">特殊值试一试：b 拖到 −a 时回到原点（互为相反数相加得 0）；加 0 不动。减法不用另记：a − b = a + (−b)，把减 b 换成加它的相反数，还是这套走路规则。</span>';
+    }
+    cSlider(s0.ctrl, 'a', p.a, -6, 6, 1, function (v) { p.a = v; draw(); });
+    cSlider(s0.ctrl, 'b', p.b, -6, 6, 1, function (v) { p.b = v; draw(); });
+    draw();
+  }
+
+  /* 乘法的符号法则：符号盘 + 数轴上的乘积 */
+  function ratMulLab(el, cfg) {
+    var s0 = circleScaffold(el);
+    var p = { a: -2, b: 3 };
+    if (cfg.values) for (var key in cfg.values) p[key] = cfg.values[key];
+    var ab = p.a * p.b;
+    var view = { xmin: -13.8, xmax: 13.8, ymin: -2.4, ymax: 4.6 };
+
+    function draw() {
+      ab = p.a * p.b;
+      view = {
+        xmin: Math.min(-13.8, ab - 2.8),
+        xmax: Math.max(13.8, ab + 2.8),
+        ymin: -2.4, ymax: 4.6
+      };
+      var m = circleMap(s0.cv, view), ctx = m.ctx;
+      cGrid(m, view);
+      tNumAxis(m, 0, -13, 13, '#333');
+      /* a、b、ab 三个点 */
+      cDot(m, p.a, 0, '#185fa5', 5);
+      cTag(m, p.a, -0.62, 'a = ' + cFmt(p.a), '#185fa5', 0, 0);
+      cDot(m, p.b, 0, '#8a5a00', 5);
+      cTag(m, p.b, 0.55, 'b = ' + cFmt(p.b), '#8a5a00', 0, 0);
+      var pc = ab > 0 ? '#0f6e56' : (ab < 0 ? '#c0392b' : '#6b7a89');
+      cDot(m, ab, 0, pc, 6.5);
+      cTag(m, ab, -0.68, 'a×b = ' + cFmt(ab), pc, 0, 0);
+
+      /* 符号盘 2×2：行为 a 的符号，列为 b 的符号 */
+      var gx = -12.6, gy = 1.7, cw = 1.35, ch = 1.0;
+      var ra = p.a >= 0 ? 0 : 1, cb = p.b >= 0 ? 0 : 1;
+      var i, j;
+      for (i = 0; i < 2; i++) {
+        for (j = 0; j < 2; j++) {
+          var cur = (i === ra && j === cb);
+          var val = ((i === 0) === (j === 0)) ? '+' : '−';
+          ctx.fillStyle = cur ? (val === '+' ? 'rgba(15,110,86,0.35)' : 'rgba(192,57,43,0.35)') : 'rgba(107,122,137,0.12)';
+          ctx.strokeStyle = cur ? '#333' : '#d7dee6';
+          ctx.lineWidth = cur ? 1.8 : 1;
+          ctx.beginPath();
+          ctx.rect(m.px(gx + j * cw), m.py(gy + (1 - i) * ch + ch), cw, ch);
+          ctx.fill(); ctx.stroke();
+          ctx.fillStyle = cur ? (val === '+' ? '#0f6e56' : '#c0392b') : '#8a93a0';
+          ctx.font = (cur ? 'bold ' : '') + '13px "PingFang SC","Microsoft YaHei",sans-serif';
+          ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+          ctx.fillText(val, m.px(gx + j * cw + cw / 2), m.py(gy + (1 - i) * ch + ch / 2));
+        }
+      }
+      ctx.fillStyle = '#6b7a89';
+      ctx.font = '12px "PingFang SC","Microsoft YaHei",sans-serif';
+      ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
+      ctx.fillText('a>0', m.px(gx) - 4, m.py(gy + 2 * ch - ch / 2));
+      ctx.fillText('a<0', m.px(gx) - 4, m.py(gy + ch / 2));
+      ctx.fillText('b>0', m.px(gx + cw / 2), m.py(gy + 2 * ch + 0.4));
+      ctx.fillText('b<0', m.px(gx + 3 * cw / 2), m.py(gy + 2 * ch + 0.4));
+      cTag(m, gx + 1.35, gy - 0.45, '符号盘', '#6b7a89', 0, 0);
+
+      s0.info.innerHTML =
+        '<span class="viz-meta">乘法先定<b>符号</b>，再算绝对值：<b>同号得正、异号得负</b>。现在 a = ' + cFmt(p.a) + '、b = ' + cFmt(p.b) + '，符号盘高亮的格子里是 ' + (ab > 0 ? '+' : (ab < 0 ? '−' : '0')) + '，所以 (' + cFmt(p.a) + ')×(' + cFmt(p.b) + ') = <b>' + cFmt(ab) + '</b>。</span>' +
+        '<span class="viz-meta">除法完全套用同一张符号盘：同号得正、异号得负，再算绝对值相除。把 b 拖到 0 看看：任何数乘 0 都得 0，而除以 0 没有意义——这就是"0 不能当除数"。</span>' +
+        '<span class="viz-meta">多个因数相乘时数负号个数：<b>负因数有偶数个结果为正，奇数个为负</b>。乘法交换律、结合律、分配律对负数照样成立，运算律不挑数的正负。</span>';
+    }
+    cSlider(s0.ctrl, 'a', p.a, -4, 4, 1, function (v) { p.a = v; draw(); });
+    cSlider(s0.ctrl, 'b', p.b, -4, 4, 1, function (v) { p.b = v; draw(); });
+    draw();
+  }
+
+  /* 乘方：n^k 拆成 k 个因数连乘，符号规律看得见 */
+  function ratPowerLab(el, cfg) {
+    var s0 = circleScaffold(el);
+    var p = { n: -2, k: 3 };
+    if (cfg.values) for (var key in cfg.values) p[key] = cfg.values[key];
+    var view = { xmin: -10.5, xmax: 10.5, ymin: -3.0, ymax: 3.4 };
+
+    function draw() {
+      var m = circleMap(s0.cv, view), ctx = m.ctx;
+      cGrid(m, view);
+      var n = p.n, k = p.k;
+      var val = Math.pow(n, k);
+      var neg = n < 0 && k % 2 === 1;
+      var pc = val > 0 ? '#0f6e56' : (val < 0 ? '#c0392b' : '#6b7a89');
+      /* k 个因数盒 */
+      var i;
+      var pitch = 1.35;
+      for (i = 0; i < k; i++) {
+        var bx = (i - (k - 1) / 2) * pitch;
+        tBox(m, bx, 0.9, 1.0, 0.85, n < 0 ? 'rgba(192,57,43,0.55)' : 'rgba(24,95,165,0.55)', n < 0 ? '#c0392b' : '#185fa5', String(n));
+        if (i < k - 1) cTag(m, bx + pitch / 2, 0.9, '×', '#6b7a89', 0, 0);
+      }
+      /* 结果 */
+      cTag(m, 0, -0.7, '(' + (n < 0 ? '(' + n + ')' : n) + ')' + (k === 1 ? '' : '^' + k) + ' = ' + val, pc, 0, 0);
+      cTag(m, 0, -1.75, neg ? '负因数有奇数 ' + k + ' 个 → 结果为负' : (n < 0 ? '负因数有偶数 ' + k + ' 个 → 结果为正' : '底数为正，结果恒为正'), neg ? '#c0392b' : '#0f6e56', 0, 0);
+
+      s0.info.innerHTML =
+        '<span class="viz-meta">乘方是<b>相同因数的乘法</b>：aⁿ 读作 a 的 n 次方，a 是底数、n 是指数。现在是把 <b>' + k + ' 个 ' + n + '</b> 连乘，等于 ' + val + '。</span>' +
+        '<span class="viz-meta">符号规律在图上一眼可见：底数为负时，<b>指数是奇数结果为负、偶数结果为正</b>——因为每两个 (−a)(−a) 凑成一个 +a²。把 n 拖成正数试试：正数的任何次方都是正的。</span>' +
+        '<span class="viz-meta">注意区分 <b>(−2)⁴ = 16</b> 和 <b>−2⁴ = −16</b>：括号在，负号也一起乘；括号不在，负号在乘方外面。混合运算顺序：先乘方，再乘除，后加减，有括号先算括号。</span>';
+    }
+    cSlider(s0.ctrl, '底数 n', p.n, -3, 3, 1, function (v) { p.n = v; draw(); });
+    cSlider(s0.ctrl, '指数 k', p.k, 1, 6, 1, function (v) { p.k = v; draw(); });
+    draw();
+  }
+
+  /* ===== 七年级上：一元一次方程 ===== */
+
+  /* 天平实验：ax + b = c（c 按 x=4 算出），拖 x 找平衡点 */
+  function eqBalanceLab(el, cfg) {
+    var s0 = circleScaffold(el);
+    var p = { a: 2, b: 3, x: 3 };
+    if (cfg.values) for (var key in cfg.values) p[key] = cfg.values[key];
+    var view = { xmin: -8.0, xmax: 8.0, ymin: -4.0, ymax: 4.0 };
+
+    function draw() {
+      var m = circleMap(s0.cv, view), ctx = m.ctx;
+      cGrid(m, view);
+      var a = Math.round(p.a), b = Math.round(p.b);
+      var c = a * 4 + b;
+      var L = a * p.x + b;
+      var diff = L - c;
+      var th = Math.max(-0.35, Math.min(0.35, diff * 0.035));
+      var px1 = -4.5 * Math.cos(th), py1 = 0.6 - 4.5 * Math.sin(th);
+      var px2 = 4.5 * Math.cos(th), py2 = 0.6 + 4.5 * Math.sin(th);
+
+      /* 底座与支点 */
+      tSeg(m, -1.2, -1.6, 1.2, -1.6, '#8a5a00', 3);
+      tSeg(m, -0.7, -1.6, 0, 0.6, '#8a5a00', 2);
+      tSeg(m, 0.7, -1.6, 0, 0.6, '#8a5a00', 2);
+      /* 横梁 */
+      tSeg(m, px1, py1, px2, py2, '#c0392b', 3.2);
+      cDot(m, 0, 0.6, '#8a5a00', 4);
+
+      /* 吊盘与砝码 */
+      function pan(cx, endY, items, cap, color) {
+        var plateY = endY - 1.0;
+        tSeg(m, cx, endY, cx, plateY, '#8a93a0', 1.2);
+        tSeg(m, cx - 2.7, plateY, cx + 2.7, plateY, '#8a5a00', 2.4);
+        var i, per = 8, pitch = 0.64;
+        for (i = 0; i < items.length; i++) {
+          var row = Math.floor(i / per), col = i % per;
+          var rowCount = Math.min(per, items.length - row * per);
+          var ix = cx - (rowCount - 1) * pitch / 2 + col * pitch;
+          var iy = plateY + 0.3 + row * 0.62;
+          if (items[i]) tBox(m, ix, iy + 0.28, 0.58, 0.56, 'rgba(24,95,165,0.75)', '#185fa5', 'x');
+          else tBox(m, ix, iy + 0.23, 0.46, 0.46, 'rgba(107,122,137,0.3)', '#8a93a0', '');
+        }
+        cTag(m, cx, plateY - 0.55, cap, color, 0, 0);
+      }
+      var li, ri;
+      var leftItems = [];
+      for (li = 0; li < a; li++) leftItems.push(1);
+      for (li = 0; li < b; li++) leftItems.push(0);
+      var rightItems = [];
+      for (ri = 0; ri < c; ri++) rightItems.push(0);
+      pan(px1, py1, leftItems, '左 = ' + a + 'x + ' + b + ' = ' + cFmt(L), '#185fa5');
+      pan(px2, py2, rightItems, '右 = ' + c, '#8a5a00');
+
+      /* 平衡状态 */
+      var ok = Math.abs(diff) < 0.01;
+      cTag(m, 0, 3.3, ok ? '平衡！解就是 x = 4' : (diff > 0 ? '左边重 → x 还太大' : '右边重 → x 还太小'), ok ? '#0f6e56' : '#6b7a89', 0, 0);
+
+      s0.info.innerHTML =
+        '<span class="viz-meta">方程 <b>' + a + 'x + ' + b + ' = ' + c + '</b> 就是一架天平：左盘 ' + a + ' 个未知数盒加 ' + b + ' 个砝码，右盘 ' + c + ' 个砝码。当前 x = ' + cFmt(p.x) + '，左 = ' + cFmt(L) + '，' + (ok ? '<b>两边正好相等</b>。' : '两边差 ' + cFmt(Math.abs(diff)) + '，天平歪向' + (diff > 0 ? '左' : '右') + '。') + '</span>' +
+        '<span class="viz-meta">注意一件巧事：右盘的 ' + c + ' 是按 <b>x = 4</b> 算出来的，所以无论把 a、b 调成多少，<b>x = 4 都能让天平平衡</b>。解方程的过程——移项、系数化 1——就是在反推这个让两边相等的数。</span>' +
+        '<span class="viz-meta">等式的两条性质对应两种操作：<b>两边同加（减）同一个数</b>天平仍平，<b>两边同乘（除以）同一个非零数</b>天平也仍平。整个解方程只用这两条，没有新东西。</span>';
+    }
+    cSlider(s0.ctrl, 'a（x 盒个数）', p.a, 1, 3, 1, function (v) { p.a = v; draw(); });
+    cSlider(s0.ctrl, 'b（砝码个数）', p.b, 1, 4, 1, function (v) { p.b = v; draw(); });
+    cSlider(s0.ctrl, 'x（猜猜看）', p.x, 0, 6, 0.25, function (v) { p.x = v; draw(); });
+    draw();
+  }
+
+  /* 解方程三步：3x + 5 = 11，一步一步"动手" */
+  function eqStepsLab(el, cfg) {
+    var s0 = circleScaffold(el);
+    var p = { t: 0 };
+    if (cfg.values) for (var key in cfg.values) p[key] = cfg.values[key];
+    var view = { xmin: -9.2, xmax: 9.2, ymin: -2.8, ymax: 3.6 };
+    var stageNames = ['原方程：3x + 5 = 11', '第①步：两边同时 − 5（移项）', '第②步：两边同时 ÷ 3（系数化 1）'];
+
+    function draw() {
+      var m = circleMap(s0.cv, view), ctx = m.ctx;
+      cGrid(m, view);
+      var st = Math.round(p.t);
+      var boxesL = st === 2 ? 1 : 3;
+      var unitsL = st === 0 ? 5 : 0;
+      var unitsR = st === 0 ? 11 : (st === 1 ? 6 : 2);
+
+      /* 操作说明 */
+      ctx.fillStyle = st === 0 ? '#333' : '#0f6e56';
+      ctx.font = 'bold 15px "PingFang SC","Microsoft YaHei",sans-serif';
+      ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      ctx.fillText(stageNames[st], m.px(0), m.py(2.9));
+
+      function group(cx, boxes, units, ghost) {
+        var i, pitch = 1.0;
+        for (i = 0; i < boxes; i++) {
+          tBox(m, cx - (boxes - 1) * pitch / 2 + i * pitch, 1.1, 0.72, 0.68, 'rgba(24,95,165,0.75)', '#185fa5', 'x');
+        }
+        var per = 6, up = 0.55, gpitch = 0.56;
+        for (i = 0; i < units; i++) {
+          var row = Math.floor(i / per), col = i % per;
+          var rowCount = Math.min(per, units - row * per);
+          tBox(m, cx - (rowCount - 1) * gpitch / 2 + col * gpitch, up - row * 0.62, 0.44, 0.44, 'rgba(107,122,137,0.3)', '#8a93a0', '');
+        }
+        if (ghost > 0) {
+          /* 被划掉的砝码 */
+          for (i = 0; i < ghost; i++) {
+            var gx = cx - (ghost - 1) * 0.56 / 2 + i * 0.56;
+            tBox(m, gx, -1.35, 0.44, 0.44, 'rgba(192,57,43,0.08)', 'rgba(192,57,43,0.6)', '');
+            tSeg(m, gx - 0.3, -1.65, gx + 0.3, -1.05, 'rgba(192,57,43,0.8)', 1.6);
+            tSeg(m, gx + 0.3, -1.65, gx - 0.3, -1.05, 'rgba(192,57,43,0.8)', 1.6);
+          }
+          cTag(m, cx, -2.15, '同时拿走 ' + ghost + ' 个', '#c0392b', 0, 0);
+        }
+      }
+      /* 左右两组 + 等号 */
+      group(-4.6, boxesL, unitsL, st === 1 ? 5 : 0);
+      group(4.6, 0, unitsR, st === 1 ? 5 : 0);
+      ctx.fillStyle = '#333';
+      ctx.font = 'bold 26px "PingFang SC","Microsoft YaHei",sans-serif';
+      ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      ctx.fillText(st === 2 ? '÷3' : '=', m.px(0), m.py(0.9));
+
+      s0.info.innerHTML =
+        (st === 0
+          ? '<span class="viz-meta">起点：3x + 5 = 11。左边是 3 个未知数盒加 5 个砝码，右边 11 个砝码。目标：让左边<b>只剩一个 x 盒</b>，就求出 x 了。</span>'
+          : (st === 1
+            ? '<span class="viz-meta"><b>两边同时 − 5</b>：左右两边各拿走 5 个砝码（红叉），天平照样平，得到 3x = 6。这就是「移项」：+5 从左边挪到右边变成 −5——<b>移项要变号</b>，因为本质是两边同减。</span>'
+            : '<span class="viz-meta"><b>两边同时 ÷ 3</b>：3 个盒变成 1 个盒，6 个砝码变成 2 个，得 <b>x = 2</b>。这一步叫「系数化 1」，依据是等式性质 2：两边同除以一个不为 0 的数。</span>')) +
+        '<span class="viz-meta">检验的好习惯：把 x = 2 代回原方程，3×2 + 5 = 11 ✓。以后学更复杂的方程（去括号、去分母），也只是这两步操作前面多做几遍准备而已。</span>';
+    }
+    cSlider(s0.ctrl, '步骤', p.t, 0, 2, 1, function (v) { p.t = v; draw(); });
+    draw();
+  }
+
+  /* 行程问题：相向而行的相遇，方程 v₁t + v₂t = s */
+  function eqMotionLab(el, cfg) {
+    var s0 = circleScaffold(el);
+    var p = { t: 0 };
+    if (cfg.values) for (var key in cfg.values) p[key] = cfg.values[key];
+    var view = { xmin: -6, xmax: 66, ymin: -3.4, ymax: 4.2 };
+    var S = 60, V1 = 4, V2 = 5;
+
+    function draw() {
+      var m = circleMap(s0.cv, view), ctx = m.ctx;
+      cGrid(m, view);
+      var t = p.t;
+      var p1 = V1 * t, p2 = S - V2 * t;
+      /* 基线与刻度 */
+      tSeg(m, 0, 0, S, 0, '#333', 2);
+      var g;
+      for (g = 0; g <= S; g += 10) {
+        tSeg(m, g, 0, g, 0.35, '#333', 1.2);
+        cTag(m, g, -0.55, String(g), '#6b7a89', 0, 0);
+      }
+      /* 两端 */
+      cTag(m, 0, 1.0, 'A（甲出发点）', '#185fa5', 0, 0);
+      cTag(m, S, 1.0, 'B（乙出发点）', '#c0392b', 0, 0);
+      /* 走过的路程着色 */
+      if (p1 > 0.2) {
+        ctx.fillStyle = 'rgba(24,95,165,0.25)';
+        ctx.fillRect(m.px(0), m.py(-0.28), p1 * m.sc, 0.28 * m.sc);
+      }
+      if (S - p2 > 0.2) {
+        ctx.fillStyle = 'rgba(192,57,43,0.25)';
+        ctx.fillRect(m.px(p2), m.py(-0.28), (S - p2) * m.sc, 0.28 * m.sc);
+      }
+      /* 两人 */
+      var crossed = p1 > p2;
+      cDot(m, p1, 0, '#185fa5', 6.5);
+      cTag(m, p1, 1.0, '甲 ' + cFmt(p1), '#185fa5', 0, 0);
+      cDot(m, p2, 0, '#c0392b', 6.5);
+      cTag(m, p2, -1.25, '乙 ' + cFmt(p2), '#c0392b', 0, 0);
+      /* 剩余距离 / 相遇 */
+      if (!crossed) tBracketH(m, p1, p2, 1.9, '#8a5a00', '还差 ' + cFmt(p2 - p1));
+      else cTag(m, (p1 + p2) / 2, 1.9, '已经擦肩而过', '#c0392b', 0, 0);
+      /* 相遇点 */
+      var tm = S / (V1 + V2), pm = V1 * tm;
+      tSeg(m, pm, -0.5, pm, 2.6, 'rgba(15,110,86,0.6)', 1.4, [5, 4]);
+      cTag(m, pm, 3.0, '相遇点 ' + cFmt(pm) + '（t = 60/9）', '#0f6e56', 0, 0);
+
+      s0.info.innerHTML =
+        '<span class="viz-meta">甲从 A 以 4 单位/时向右，乙从 B 以 5 单位/时向左，相向而行。当前 t = ' + cFmt(t) + ' 时：甲走了 <b>4t = ' + cFmt(p1) + '</b>，乙走了 <b>5t = ' + cFmt(S - p2) + '</b>，两人' + (crossed ? '合计已超过全程' : '合计走了 ' + cFmt(p1 + (S - p2)) + '，还差 ' + cFmt(p2 - p1)) + '。</span>' +
+        '<span class="viz-meta"><b>相遇 ⟺ 两人走的路程合起来恰好是全程</b>，这就是列方程的等量关系：4t + 5t = 60，即 9t = 60，t = 60/9 ≈ 6.67 小时，相遇点离 A 有 4×60/9 ≈ 26.7。把 t 拖过 6.67 看看"走过头"是什么样。</span>' +
+        '<span class="viz-meta">行程问题的三种基本型都是这一个模型的变体：<b>相遇</b>（路程相加）、<b>追及</b>（路程相减：快者路程 = 慢者路程 + 初始差距）、<b>顺逆流</b>（速度相加减水速）。列方程的关键永远是先写清楚「等量关系」这句话。</span>';
+    }
+    cSlider(s0.ctrl, '时间 t（小时）', p.t, 0, 8, 0.1, function (v) { p.t = v; draw(); });
+    draw();
+  }
+
+  /* 去括号 = 分配律：k(x+2) 拆开看 */
+  function eqDistroLab(el, cfg) {
+    var s0 = circleScaffold(el);
+    var p = { k: 3 };
+    if (cfg.values) for (var key in cfg.values) p[key] = cfg.values[key];
+
+    function draw() {
+      var k = Math.round(p.k);
+      var view = { xmin: -7.4, xmax: 6.8, ymin: -2.2, ymax: k * 0.9 + 2.2 };
+      var m = circleMap(s0.cv, view), ctx = m.ctx;
+      cGrid(m, view);
+      var i;
+      var pitch = 0.9;
+      for (i = 0; i < k; i++) {
+        var ry = 0.7 + i * pitch;
+        /* 左组：一个 x 盒 + 2 个单位块 */
+        tBox(m, -4.7, ry, 0.72, 0.66, 'rgba(24,95,165,0.75)', '#185fa5', 'x');
+        cTag(m, -3.85, ry, '+', '#6b7a89', 0, 0);
+        tBox(m, -3.25, ry, 0.42, 0.42, 'rgba(107,122,137,0.3)', '#8a93a0', '');
+        tBox(m, -2.65, ry, 0.42, 0.42, 'rgba(107,122,137,0.3)', '#8a93a0', '');
+        /* 右组：一个 x 盒 + 2 个单位块（同排） */
+        tBox(m, 1.0, ry, 0.72, 0.66, 'rgba(15,110,86,0.5)', '#0f6e56', 'x');
+        tBox(m, 2.2, ry, 0.42, 0.42, 'rgba(15,110,86,0.25)', '#0f6e56', '');
+        tBox(m, 2.8, ry, 0.42, 0.42, 'rgba(15,110,86,0.25)', '#0f6e56', '');
+      }
+      /* 大括号示意每行都要乘 */
+      cTag(m, -5.7, 0.7 + (k - 1) * pitch / 2, 'k 行都要乘', '#8a5a00', 0, 0);
+      ctx.fillStyle = '#333';
+      ctx.font = 'bold 26px "PingFang SC","Microsoft YaHei",sans-serif';
+      ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      ctx.fillText('=', m.px(-0.85), m.py(0.7 + (k - 1) * pitch / 2));
+      cTag(m, -3.7, 0.7 + (k - 1) * pitch / 2 + 1.15, k + ' × (x + 2)', '#185fa5', 0, 0);
+      cTag(m, 1.9, 0.7 + (k - 1) * pitch / 2 + 1.15, k + 'x + ' + 2 * k, '#0f6e56', 0, 0);
+
+      s0.info.innerHTML =
+        '<span class="viz-meta">去括号就是<b>分配律</b>：括号外的数要乘括号里的<b>每一项</b>。' + k + '(x + 2) 拆成 ' + k + ' 行，每行 1 个 x 盒加 2 个块，合起来是 <b>' + k + ' 个 x 盒加 ' + (2 * k) + ' 个块</b>，也就是 ' + k + 'x + ' + (2 * k) + '。</span>' +
+        '<span class="viz-meta"><b>最容易错的是负号</b>：−(x − 2) 相当于 (−1)×(x − 2) = −x + 2——负号要乘每一项，<b>每一项都变号</b>，不是只变第一项。去括号漏乘、忘变号是解方程的头号失分点。</span>' +
+        '<span class="viz-meta">去分母是同一件事：方程两边同乘各分母的最小公倍数，<b>每一项都要乘</b>（包括不含分母的项）。分子是多项式时，去分母后要补上括号。</span>';
+    }
+    cSlider(s0.ctrl, '括号外的系数 k', p.k, 1, 5, 1, function (v) { p.k = v; draw(); });
+    draw();
+  }
+
+  /* 利润率模型：售价 = 进价 ×(1 + 利润率) */
+  function eqPctLab(el, cfg) {
+    var s0 = circleScaffold(el);
+    var p = { a: 80, r: 25 };
+    if (cfg.values) for (var key in cfg.values) p[key] = cfg.values[key];
+    var T = 100;
+
+    function draw() {
+      var sell = p.a * (1 + p.r / 100);
+      var xmax = Math.max(sell, T, p.a) * 1.15 + 4;
+      var view = { xmin: -3, xmax: xmax, ymin: -2.6, ymax: 4.0 };
+      var m = circleMap(s0.cv, view), ctx = m.ctx;
+      cGrid(m, view);
+      /* 进价 + 利润 堆叠条 */
+      var bh = 0.7, by = 1.0;
+      ctx.fillStyle = 'rgba(24,95,165,0.55)';
+      ctx.fillRect(m.px(0), m.py(by + bh / 2), p.a * m.sc, bh * m.sc);
+      cTag(m, p.a / 2, by + 0.02, '进价 ' + cFmt(p.a), '#185fa5', 0, 0);
+      if (Math.abs(sell - p.a) > 0.5) {
+        var x1 = Math.min(p.a, sell), x2 = Math.max(p.a, sell);
+        ctx.fillStyle = p.r >= 0 ? 'rgba(15,110,86,0.5)' : 'rgba(192,57,43,0.45)';
+        ctx.fillRect(m.px(x1), m.py(by + bh / 2), (x2 - x1) * m.sc, bh * m.sc);
+        var lx = (x1 + x2) / 2;
+        if (lx > xmax * 0.86) lx = xmax * 0.86;
+        cTag(m, lx, p.r >= 0 ? by + 0.02 : by - 0.85, '利润 ' + (p.r >= 0 ? '+' : '') + cFmt(sell - p.a), p.r >= 0 ? '#0f6e56' : '#c0392b', 0, 0);
+      }
+      /* 售价总括线 */
+      tBracketH(m, 0, sell, by + 1.5, '#8a5a00', '售价 = ' + cFmt(sell));
+      /* 目标线 */
+      tSeg(m, T, -0.4, T, 3.3, '#c0392b', 1.6, [6, 4]);
+      cTag(m, T, 3.6, '目标售价 ' + T, '#c0392b', 0, 0);
+      /* 方程 */
+      var ok = Math.abs(sell - T) < 0.6;
+      cTag(m, (Math.max(sell, T)) / 2, -0.9, cFmt(p.a) + ' × (1 ' + (p.r >= 0 ? '+ ' : '− ') + Math.abs(p.r) + '%) = ' + cFmt(sell) + (ok ? '  ✓ 正好达标' : ''), ok ? '#0f6e56' : '#333', 0, 0);
+
+      s0.info.innerHTML =
+        '<span class="viz-meta">进价 ' + cFmt(p.a) + '、利润率 ' + cFmt(p.r) + '% 时，售价 = 进价 × (1 + 利润率) = <b>' + cFmt(sell) + '</b>。图上蓝条是进价、绿（红）条是利润，拼起来就是售价——这就是"进价 × (1 + r%)"的图形含义。</span>' +
+        '<span class="viz-meta">反过来的题才是方程题：知道进价 ' + cFmt(p.a) + ' 和目标售价 ' + T + '，<b>设利润率为 x</b>，列方程 ' + cFmt(p.a) + '(1 + x) = ' + T + '。当前 r = ' + cFmt(p.r) + '%，' + (ok ? '售价正好达标——把 r 换成 x，解出来就是它。' : '离目标 ' + T + (sell > T ? ' 高了 ' + cFmt(sell - T) : ' 还差 ' + cFmt(T - sell)) + '，拖到正好压线就是方程的解。') + '</span>' +
+        '<span class="viz-meta">同族公式还有：利润 = 售价 − 进价；打折时售价 = 标价 × 折扣/10。所有"增长率、打折、储蓄"问题都是 a(1 + x) = b 的变体——先画条形图分清各量，再设未知数。</span>';
+    }
+    cSlider(s0.ctrl, '进价 a（元）', p.a, 50, 150, 5, function (v) { p.a = v; draw(); });
+    cSlider(s0.ctrl, '利润率 r（%）', p.r, -30, 60, 5, function (v) { p.r = v; draw(); });
+    draw();
+  }
+
+  window.VIZ = { renderPlot: renderPlot, parabolaLab: parabolaLab, stepLab: stepLab, bridgeLab: bridgeLab, profitLab: profitLab, fenceLab: fenceLab, fountainLab: fountainLab, shotLab: shotLab, completeSquareLab: completeSquareLab, equationLab: equationLab, growthLab: growthLab, rotateLab: rotateLab, coordRotLab: coordRotLab, patternLab: patternLab, clockLab: clockLab, anatomyLab: anatomyLab, chordLab: chordLab, inscribedLab: inscribedLab, positionLab: positionLab, tangentLab: tangentLab, sectorLab: sectorLab, eventScaleLab: eventScaleLab, bagLab: bagLab, sumTableLab: sumTableLab, treeLab: treeLab, coinLab: coinLab, dartLab: dartLab, inverseLab: inverseLab, kAreaLab: kAreaLab, inverseCrossLab: inverseCrossLab, inverseUseLab: inverseUseLab, trigRatioLab: trigRatioLab, trigSpecialLab: trigSpecialLab, trigSolveLab: trigSolveLab, trigHeightLab: trigHeightLab, trigSlopeLab: trigSlopeLab, trigAltitudeLab: trigAltitudeLab, simGoldenLab: simGoldenLab, simParallelLab: simParallelLab, simJudgeLab: simJudgeLab, simAreaLab: simAreaLab, simNestedLab: simNestedLab, simHomothetyLab: simHomothetyLab, simShadowLab: simShadowLab, projShadowLab: projShadowLab, projOrthLab: projOrthLab, viewThreeLab: viewThreeLab, viewBlocksLab: viewBlocksLab, viewSolidLab: viewSolidLab, pythagSquaresLab: pythagSquaresLab, pythagPuzzleLab: pythagPuzzleLab, pythagSolveLab: pythagSolveLab, pythagInverseLab: pythagInverseLab, pythagLadderLab: pythagLadderLab, linearLab: linearLab, linearQuadLab: linearQuadLab, linearCrossLab: linearCrossLab, linearModelLab: linearModelLab, linearTranslateLab: linearTranslateLab, linearFitLab: linearFitLab, pgPropLab: pgPropLab, pgDiagLab: pgDiagLab, pgJudgeLab: pgJudgeLab, pgMidlineLab: pgMidlineLab, pgRectLab: pgRectLab, pgRhombusLab: pgRhombusLab, pgSquareLab: pgSquareLab, pgAreaLab: pgAreaLab, triSidesLab: triSidesLab, triLinesLab: triLinesLab, triAngleLab: triAngleLab, triExteriorLab: triExteriorLab, polyAngleLab: polyAngleLab, congMapLab: congMapLab, congJudgeLab: congJudgeLab, congSsaLab: congSsaLab, bisectorLab: bisectorLab, axFoldLab: axFoldLab, axBisectorLab: axBisectorLab, axCoordLab: axCoordLab, axDrawLab: axDrawLab, axIsoscelesLab: axIsoscelesLab, axIsoJudgeLab: axIsoJudgeLab, axEquiLab: axEquiLab, axPathLab: axPathLab, sqrtDefLab: sqrtDefLab, sqrtPropLab: sqrtPropLab, sqrtMulLab: sqrtMulLab, sqrtDivLab: sqrtDivLab, sqrtAddLab: sqrtAddLab, sqrtEstLab: sqrtEstLab, statMeanLab: statMeanLab, statMedianLab: statMedianLab, statModeLab: statModeLab, statVarLab: statVarLab, statChoiceLab: statChoiceLab, ratLineLab: ratLineLab, ratAbsLab: ratAbsLab, ratAddLab: ratAddLab, ratMulLab: ratMulLab, ratPowerLab: ratPowerLab, eqBalanceLab: eqBalanceLab, eqStepsLab: eqStepsLab, eqMotionLab: eqMotionLab, eqDistroLab: eqDistroLab, eqPctLab: eqPctLab };
 })();
 
 </script>
@@ -7189,6 +7731,16 @@ ul.lesson-list li::before {
       else if (cfg.type === 'stat-mode') VIZ.statModeLab(el, cfg);
       else if (cfg.type === 'stat-var') VIZ.statVarLab(el, cfg);
       else if (cfg.type === 'stat-choice') VIZ.statChoiceLab(el, cfg);
+      else if (cfg.type === 'rat-line') VIZ.ratLineLab(el, cfg);
+      else if (cfg.type === 'rat-abs') VIZ.ratAbsLab(el, cfg);
+      else if (cfg.type === 'rat-add') VIZ.ratAddLab(el, cfg);
+      else if (cfg.type === 'rat-mul') VIZ.ratMulLab(el, cfg);
+      else if (cfg.type === 'rat-power') VIZ.ratPowerLab(el, cfg);
+      else if (cfg.type === 'eq-balance') VIZ.eqBalanceLab(el, cfg);
+      else if (cfg.type === 'eq-steps') VIZ.eqStepsLab(el, cfg);
+      else if (cfg.type === 'eq-motion') VIZ.eqMotionLab(el, cfg);
+      else if (cfg.type === 'eq-distro') VIZ.eqDistroLab(el, cfg);
+      else if (cfg.type === 'eq-pct') VIZ.eqPctLab(el, cfg);
     });
   });
 })();

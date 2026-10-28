@@ -26,6 +26,25 @@
   <url><loc>https://teach.toolona.com/quadratic-equation/pattern/profit-equation.html</loc><priority>0.7</priority></url>
   <url><loc>https://teach.toolona.com/quadratic-equation/pattern/parameter-roots.html</loc><priority>0.7</priority></url>
   <url><loc>https://teach.toolona.com/quadratic-equation/pattern/parameter-proof.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/rational/index.html</loc><priority>0.9</priority></url>
+  <url><loc>https://teach.toolona.com/rational/rat-posneg.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/rational/rat-nums.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/rational/rat-line.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/rational/rat-opposite.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/rational/rat-abs.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/rational/rat-addsub.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/rational/rat-muldiv.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/rational/rat-power.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/rational/patterns.html</loc><priority>0.9</priority></url>
+  <url><loc>https://teach.toolona.com/rational/locate.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/rational/pattern/r-posneg-apply.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/rational/pattern/r-classify.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/rational/pattern/r-axis-compare.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/rational/pattern/r-opposite-simplify.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/rational/pattern/r-abs-simplify.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/rational/pattern/r-abs-equation.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/rational/pattern/r-add-sub-mixed.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/rational/pattern/r-mul-power-order.html</loc><priority>0.7</priority></url>
   <url><loc>https://teach.toolona.com/quadratic-function/index.html</loc><priority>0.9</priority></url>
   <url><loc>https://teach.toolona.com/quadratic-function/concept.html</loc><priority>0.8</priority></url>
   <url><loc>https://teach.toolona.com/quadratic-function/parabola-a.html</loc><priority>0.8</priority></url>
@@ -51,6 +70,23 @@
   <url><loc>https://teach.toolona.com/quadratic-function/pattern/max-profit.html</loc><priority>0.7</priority></url>
   <url><loc>https://teach.toolona.com/quadratic-function/pattern/modeling.html</loc><priority>0.7</priority></url>
   <url><loc>https://teach.toolona.com/quadratic-function/pattern/parameter.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/linear-eq/index.html</loc><priority>0.9</priority></url>
+  <url><loc>https://teach.toolona.com/linear-eq/eq-def.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/linear-eq/eq-prop.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/linear-eq/eq-solve.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/linear-eq/eq-bracket.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/linear-eq/eq-motion.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/linear-eq/eq-profit.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/linear-eq/patterns.html</loc><priority>0.9</priority></url>
+  <url><loc>https://teach.toolona.com/linear-eq/locate.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/linear-eq/pattern/le-check-solution.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/linear-eq/pattern/le-move-solve.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/linear-eq/pattern/le-bracket-solve.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/linear-eq/pattern/le-denominator-solve.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/linear-eq/pattern/le-motion-meet.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/linear-eq/pattern/le-motion-catch.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/linear-eq/pattern/le-profit-discount.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/linear-eq/pattern/le-match-ratio.html</loc><priority>0.7</priority></url>
   <url><loc>https://teach.toolona.com/rotate/index.html</loc><priority>0.9</priority></url>
   <url><loc>https://teach.toolona.com/rotate/rotation-concept.html</loc><priority>0.8</priority></url>
   <url><loc>https://teach.toolona.com/rotate/rotation-properties.html</loc><priority>0.8</priority></url>

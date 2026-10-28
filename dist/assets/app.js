@@ -101,6 +101,16 @@
       else if (cfg.type === 'stat-mode') VIZ.statModeLab(el, cfg);
       else if (cfg.type === 'stat-var') VIZ.statVarLab(el, cfg);
       else if (cfg.type === 'stat-choice') VIZ.statChoiceLab(el, cfg);
+      else if (cfg.type === 'rat-line') VIZ.ratLineLab(el, cfg);
+      else if (cfg.type === 'rat-abs') VIZ.ratAbsLab(el, cfg);
+      else if (cfg.type === 'rat-add') VIZ.ratAddLab(el, cfg);
+      else if (cfg.type === 'rat-mul') VIZ.ratMulLab(el, cfg);
+      else if (cfg.type === 'rat-power') VIZ.ratPowerLab(el, cfg);
+      else if (cfg.type === 'eq-balance') VIZ.eqBalanceLab(el, cfg);
+      else if (cfg.type === 'eq-steps') VIZ.eqStepsLab(el, cfg);
+      else if (cfg.type === 'eq-motion') VIZ.eqMotionLab(el, cfg);
+      else if (cfg.type === 'eq-distro') VIZ.eqDistroLab(el, cfg);
+      else if (cfg.type === 'eq-pct') VIZ.eqPctLab(el, cfg);
     });
   });
 })();
