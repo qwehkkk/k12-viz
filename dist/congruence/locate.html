@@ -5997,7 +5997,514 @@ window.__LOCATE_DATA__ = {"asks":[{"k":"找对应关系","label":"由全等求�
     draw();
   }
 
-  window.VIZ = { renderPlot: renderPlot, parabolaLab: parabolaLab, stepLab: stepLab, bridgeLab: bridgeLab, profitLab: profitLab, fenceLab: fenceLab, fountainLab: fountainLab, shotLab: shotLab, completeSquareLab: completeSquareLab, equationLab: equationLab, growthLab: growthLab, rotateLab: rotateLab, coordRotLab: coordRotLab, patternLab: patternLab, clockLab: clockLab, anatomyLab: anatomyLab, chordLab: chordLab, inscribedLab: inscribedLab, positionLab: positionLab, tangentLab: tangentLab, sectorLab: sectorLab, eventScaleLab: eventScaleLab, bagLab: bagLab, sumTableLab: sumTableLab, treeLab: treeLab, coinLab: coinLab, dartLab: dartLab, inverseLab: inverseLab, kAreaLab: kAreaLab, inverseCrossLab: inverseCrossLab, inverseUseLab: inverseUseLab, trigRatioLab: trigRatioLab, trigSpecialLab: trigSpecialLab, trigSolveLab: trigSolveLab, trigHeightLab: trigHeightLab, trigSlopeLab: trigSlopeLab, trigAltitudeLab: trigAltitudeLab, simGoldenLab: simGoldenLab, simParallelLab: simParallelLab, simJudgeLab: simJudgeLab, simAreaLab: simAreaLab, simNestedLab: simNestedLab, simHomothetyLab: simHomothetyLab, simShadowLab: simShadowLab, projShadowLab: projShadowLab, projOrthLab: projOrthLab, viewThreeLab: viewThreeLab, viewBlocksLab: viewBlocksLab, viewSolidLab: viewSolidLab, pythagSquaresLab: pythagSquaresLab, pythagPuzzleLab: pythagPuzzleLab, pythagSolveLab: pythagSolveLab, pythagInverseLab: pythagInverseLab, pythagLadderLab: pythagLadderLab, linearLab: linearLab, linearQuadLab: linearQuadLab, linearCrossLab: linearCrossLab, linearModelLab: linearModelLab, linearTranslateLab: linearTranslateLab, linearFitLab: linearFitLab, pgPropLab: pgPropLab, pgDiagLab: pgDiagLab, pgJudgeLab: pgJudgeLab, pgMidlineLab: pgMidlineLab, pgRectLab: pgRectLab, pgRhombusLab: pgRhombusLab, pgSquareLab: pgSquareLab, pgAreaLab: pgAreaLab, triSidesLab: triSidesLab, triLinesLab: triLinesLab, triAngleLab: triAngleLab, triExteriorLab: triExteriorLab, polyAngleLab: polyAngleLab, congMapLab: congMapLab, congJudgeLab: congJudgeLab, congSsaLab: congSsaLab, bisectorLab: bisectorLab };
+  /* ==================== 第十四章：轴对称（八上 13 章） ==================== */
+
+  /* 点 p 关于直线 p1p2 的对称点 */
+  function tReflect(p, p1, p2) {
+    var f = tFoot(p, p1, p2);
+    return [2 * f[0] - p[0], 2 * f[1] - p[1]];
+  }
+
+  function tMidOf(p, q) { return [(p[0] + q[0]) / 2, (p[1] + q[1]) / 2]; }
+
+  /* 过 P 沿方向 dir 的整条直线，裁剪到视野内再画 */
+  function tLineIn(m, view, P, dir, color, w, dash) {
+    var L = 80;
+    var seg = clipSeg(view, P[0] - dir[0] * L, P[1] - dir[1] * L, P[0] + dir[0] * L, P[1] + dir[1] * L);
+    if (seg) tSeg(m, seg[0], seg[1], seg[2], seg[3], color, w, dash);
+  }
+
+  /* 射线 QP、QR 之间较小的那个角（数学角）：返回 [a1, a2] 且 a1 <= a2 */
+  function tAngPair(p, q, r) {
+    var a1 = Math.atan2(p[1] - q[1], p[0] - q[0]);
+    var a2 = Math.atan2(r[1] - q[1], r[0] - q[0]);
+    while (a2 - a1 > Math.PI) a2 -= 2 * Math.PI;
+    while (a1 - a2 > Math.PI) a2 += 2 * Math.PI;
+    return a2 >= a1 ? [a1, a2] : [a2, a1];
+  }
+
+  /* ∠p q r 的度数 */
+  function tAngAt(p, q, r) {
+    var ux = p[0] - q[0], uy = p[1] - q[1], vx = r[0] - q[0], vy = r[1] - q[1];
+    var lu = Math.sqrt(ux * ux + uy * uy) || 1, lv = Math.sqrt(vx * vx + vy * vy) || 1;
+    var d = (ux * vx + uy * vy) / (lu * lv);
+    d = Math.max(-1, Math.min(1, d));
+    return Math.acos(d) / T_D2R;
+  }
+
+  /* 在顶点 q 画 ∠pqr 的弧 + 度数 */
+  function tAngleAt(m, p, q, r, rad, color) {
+    var pr = tAngPair(p, q, r), R = rad == null ? 0.75 : rad;
+    var c = color || '#c0392b';
+    tAngle(m, q[0], q[1], R, pr[0], pr[1], c, '');
+    var mid = (pr[0] + pr[1]) / 2;
+    m.ctx.fillStyle = c;
+    m.ctx.font = '12px "PingFang SC","Microsoft YaHei",sans-serif';
+    m.ctx.textAlign = 'center';
+    m.ctx.textBaseline = 'middle';
+    m.ctx.fillText(cFmt(tAngAt(p, q, r)) + '\u00b0', m.px(q[0]) + Math.cos(mid) * (R * m.sc + 17), m.py(q[1]) - Math.sin(mid) * (R * m.sc + 17));
+  }
+
+  /* 轴对称：把图形沿轴折过去，演示「翻折」「轴对称图形」「两个图形成轴对称」 */
+  function axFoldLab(el, cfg) {
+    var s0 = circleScaffold(el);
+    var p = { d: 4.2, ang: 0, t: 1 };
+    if (cfg.values) for (var key in cfg.values) p[key] = cfg.values[key];
+    var poly = [[-1.0, 0.5], [2.0, -0.6], [3.3, 1.4], [1.3, 3.8], [-0.9, 2.8]];
+    var names = ['A', 'B', 'C', 'D', 'E'];
+
+    function draw() {
+      var th = p.ang * T_D2R;
+      /* th=0 对应竖直对称轴：方向向量取 (−sinθ, cosθ) */
+      var dir = [-Math.sin(th), Math.cos(th)];
+      var O = [p.d, 0];
+      var Q1 = [O[0] - dir[0], O[1] - dir[1]], Q2 = [O[0] + dir[0], O[1] + dir[1]];
+      var img = [], i, q, r;
+      for (i = 0; i < poly.length; i++) {
+        q = poly[i];
+        r = tReflect(q, Q1, Q2);
+        img.push([q[0] + p.t * (r[0] - q[0]), q[1] + p.t * (r[1] - q[1])]);
+      }
+      var view = tViewOf(poly.concat(img).concat([O]), 2.2);
+      var m = circleMap(s0.cv, view);
+      cGrid(m, view);
+      tLineIn(m, view, O, dir, '#185fa5', 2.2, [9, 5]);
+
+      for (i = 0; i < poly.length; i++) {
+        tSeg(m, poly[i][0], poly[i][1], img[i][0], img[i][1], 'rgba(120,130,140,0.55)', 1.2, [4, 4]);
+      }
+      tPoly(m, poly, '#185fa5', 2.4, 'rgba(24,95,165,0.10)');
+      tPoly(m, img, '#c0392b', 2.4, 'rgba(192,57,43,0.10)');
+      for (i = 0; i < poly.length; i++) {
+        var mid = tMidOf(poly[i], img[i]);
+        cDot(m, mid[0], mid[1], '#8a5a00', 3.2);
+        cDot(m, poly[i][0], poly[i][1], '#185fa5', 3.8);
+        cDot(m, img[i][0], img[i][1], '#c0392b', 3.8);
+        cTag(m, poly[i][0], poly[i][1], names[i], '#185fa5', -13, -11);
+        cTag(m, img[i][0], img[i][1], names[i] + '\u2032', '#c0392b', 17, 11);
+      }
+      if (p.t > 0.35) {
+        for (i = 0; i < 2; i++) {
+          var f = tFoot(poly[i], Q1, Q2);
+          tTicks(m, poly[i][0], poly[i][1], f[0], f[1], 1, '#8a5a00');
+          tTicks(m, f[0], f[1], img[i][0], img[i][1], 1, '#8a5a00');
+        }
+      }
+      m.ctx.fillStyle = '#185fa5';
+      m.ctx.font = '12px "PingFang SC","Microsoft YaHei",sans-serif';
+      m.ctx.textAlign = 'left';
+      m.ctx.textBaseline = 'middle';
+      m.ctx.fillText('\u5bf9\u79f0\u8f74 l', m.px(O[0]) + 9, m.py(O[1]) + (dir[1] > 0.2 ? 17 : -15));
+
+      var d0 = tDist(poly[0], tFoot(poly[0], Q1, Q2));
+      var d1 = tDist(poly[0], tFoot(poly[0], Q1, Q2));
+      s0.info.innerHTML =
+        '<span class="viz-meta">蓝色是原来的图形，红色是它沿蓝色直线<b>翻折</b>过去的位置。翻折进度 = ' + cFmt(p.t * 100) + '%：' +
+        (p.t > 0.99 ? '折到 100% 时，两个图形的每个对应点都重合，这条直线就是<b>对称轴</b>。' : '还没折到底，红色图形只是中间状态。') + '</span>' +
+        '<span class="viz-meta">关键事实只有一句：<b>对称轴垂直平分每一组对应点的连线</b>。' + (p.t > 0.98
+          ? '现在 A 到轴的距离 ' + cFmt(d0) + ' = A\u2032 到轴的距离 ' + cFmt(d1) + '，而且 AA\u2032 ⊥ 轴，轴上的黄点正好是 AA\u2032 的中点。'
+          : '现在 A 到轴的距离是 ' + cFmt(d0) + '；把进度拖到 100%，A\u2032 到轴的距离也会变成 ' + cFmt(d0) + '，那时 AA\u2032 才垂直于轴、黄点才是中点。') + '</span>' +
+        '<span class="viz-meta">两个说法其实是一回事：一个图形沿某条直线折叠后两部分能重合，就叫<b>轴对称图形</b>；两个图形沿某条直线折叠后能重合，就说这两个图形成<b>轴对称</b>。区别只在「数几个图形」，对称轴都是那条折痕所在的直线（是直线，不是线段）。</span>';
+    }
+    cSlider(s0.ctrl, '对称轴的位置', p.d, 3.6, 7.4, 0.1, function (v) { p.d = v; draw(); });
+    cSlider(s0.ctrl, '对称轴倾斜（度）', p.ang, -30, 30, 1, function (v) { p.ang = v; draw(); });
+    cSlider(s0.ctrl, '翻折进度（%）', p.t, 0, 1, 0.02, function (v) { p.t = v; draw(); });
+    draw();
+  }
+
+  /* 垂直平分线：两弧交点连线 + 线上点到两端等距 */
+  function axBisectorLab(el, cfg) {
+    var s0 = circleScaffold(el);
+    var p = { r: 4.6, px: 0, py: 2.8 };
+    if (cfg.values) for (var key in cfg.values) p[key] = cfg.values[key];
+    var A = [-3.4, 0], B = [3.4, 0], half = 3.4;
+
+    function draw() {
+      var rr = Math.max(p.r, half + 0.45);
+      var hh = Math.sqrt(rr * rr - half * half);
+      var M1 = [0, hh], M2 = [0, -hh];
+      var P = [p.px, p.py];
+      var view = tViewOf([A, B, M1, M2, P], 2.0);
+      var m = circleMap(s0.cv, view);
+      cGrid(m, view);
+
+      /* 以 A、B 为圆心的两段弧（尺规作图） */
+      var aM1 = Math.atan2(M1[1] - A[1], M1[0] - A[0]);
+      var aM2 = Math.atan2(M2[1] - A[1], M2[0] - A[0]);
+      cArc(m, A[0], A[1], rr, aM1 - 0.52, aM1 + 0.52, false);
+      m.ctx.strokeStyle = 'rgba(192,57,43,0.75)'; m.ctx.lineWidth = 1.4; m.ctx.stroke();
+      cArc(m, A[0], A[1], rr, aM2 - 0.52, aM2 + 0.52, false);
+      m.ctx.strokeStyle = 'rgba(192,57,43,0.75)'; m.ctx.stroke();
+      var bM1 = Math.atan2(M1[1] - B[1], M1[0] - B[0]);
+      var bM2 = Math.atan2(M2[1] - B[1], M2[0] - B[0]);
+      cArc(m, B[0], B[1], rr, bM1 - 0.52, bM1 + 0.52, false);
+      m.ctx.strokeStyle = 'rgba(138,90,0,0.75)'; m.ctx.lineWidth = 1.4; m.ctx.stroke();
+      cArc(m, B[0], B[1], rr, bM2 - 0.52, bM2 + 0.52, false);
+      m.ctx.strokeStyle = 'rgba(138,90,0,0.75)'; m.ctx.stroke();
+
+      /* AB 与被作出的垂直平分线 */
+      tSeg(m, A[0], A[1], B[0], B[1], '#185fa5', 2.6);
+      tLineIn(m, view, [0, 0], [0, 1], '#0f6e56', 2.4);
+      tTicks(m, A[0], A[1], 0, 0, 1, '#185fa5');
+      tTicks(m, 0, 0, B[0], B[1], 1, '#185fa5');
+
+      /* P 到 A、B */
+      tSeg(m, P[0], P[1], A[0], A[1], '#c0392b', 2.4);
+      tSeg(m, P[0], P[1], B[0], B[1], '#8a5a00', 2.4);
+      tEdgeLabel(m, P[0], P[1], A[0], A[1], 'PA = ' + cFmt(tDist(P, A)), '#c0392b', 20);
+      tEdgeLabel(m, P[0], P[1], B[0], B[1], 'PB = ' + cFmt(tDist(P, B)), '#8a5a00', 20);
+
+      cDot(m, A[0], A[1], '#185fa5', 4); cDot(m, B[0], B[1], '#185fa5', 4);
+      cDot(m, M1[0], M1[1], '#0f6e56', 4); cDot(m, M2[0], M2[1], '#0f6e56', 4);
+      cDot(m, 0, 0, '#333', 3.2);
+      cDot(m, P[0], P[1], '#0f6e56', 5);
+      cTag(m, A[0], A[1], 'A', '#185fa5', -13, 10);
+      cTag(m, B[0], B[1], 'B', '#185fa5', 13, 10);
+      cTag(m, 0, 0, 'O', '#333', -12, 12);
+      cTag(m, M1[0], M1[1], 'M', '#0f6e56', 12, -10);
+      cTag(m, M2[0], M2[1], 'N', '#0f6e56', 12, 10);
+      cTag(m, P[0], P[1], 'P', '#0f6e56', 13, -12);
+
+      var pa = tDist(P, A), pb = tDist(P, B);
+      var eq = Math.abs(pa - pb) < 0.02;
+      s0.info.innerHTML =
+        '<span class="viz-meta">绿线是 AB 的<b>垂直平分线</b>（中垂线）：它同时满足「垂直于 AB」和「过 AB 中点 O」。图上那两段红、黄弧就是尺规作图的痕迹——分别以 A、B 为圆心、大于 ½AB 的同一个半径画弧，两弧的<b>两个交点 M、N</b> 的连线就是它。</span>' +
+        '<span class="viz-meta">当前 PA = ' + cFmt(pa) + '，PB = ' + cFmt(pb) + '，' + (eq ? '<b>两者相等</b>。' : '<b>两者不等</b>——因为 P 被拖离了中垂线。') + '这就是性质定理：<b>线段垂直平分线上的点与这条线段两个端点的距离相等</b>。</span>' +
+        '<span class="viz-meta">逆定理同样成立：到 A、B 距离相等的点一定在中垂线上。证明用「取中点 → 两个直角三角形全等（HL 或 SSS）」即可。两个定理合起来就是一句话：<b>PA = PB ⟺ P 在 AB 的中垂线上</b>——所以它既是「找等距点」的工具，也是「找对称轴」的工具：连接一组对应点，作它的中垂线，那条线就是对称轴。</span>';
+    }
+    cSlider(s0.ctrl, '画弧的半径 r', p.r, 3.9, 6.6, 0.1, function (v) { p.r = v; draw(); });
+    cSlider(s0.ctrl, 'P 到中点的水平偏移', p.px, -2.8, 2.8, 0.05, function (v) { p.px = v; draw(); });
+    cSlider(s0.ctrl, 'P 的高度', p.py, 0.6, 5.2, 0.1, function (v) { p.py = v; draw(); });
+    draw();
+  }
+
+  /* 坐标中的轴对称：(x,y) 关于两轴、原点的对称 */
+  function axCoordLab(el, cfg) {
+    var s0 = circleScaffold(el);
+    var p = { x: 2.4, y: 1.8 };
+    if (cfg.values) for (var key in cfg.values) p[key] = cfg.values[key];
+    var view = { xmin: -7.4, xmax: 7.4, ymin: -5.2, ymax: 5.2 };
+
+    function draw() {
+      var m = xyMap(s0.cv, view), ctx = m.ctx;
+      xyAxes(m, view);
+      var x = p.x, y = p.y;
+      var P = [x, y], Px = [x, -y], Py = [-x, y], Po = [-x, -y];
+
+      /* 虚线：对应点连线被 y 轴 / x 轴垂直平分 */
+      tSeg(m, P[0], P[1], Py[0], Py[1], 'rgba(24,95,165,0.45)', 1.2, [4, 4]);
+      tSeg(m, P[0], P[1], Px[0], Px[1], 'rgba(192,57,43,0.45)', 1.2, [4, 4]);
+      tSeg(m, Py[0], Py[1], Po[0], Po[1], 'rgba(192,57,43,0.35)', 1.1, [4, 4]);
+      tSeg(m, Px[0], Px[1], Po[0], Po[1], 'rgba(24,95,165,0.35)', 1.1, [4, 4]);
+
+      var pts = [
+        { q: P, c: '#0f6e56', t: 'P', lab: '(' + cFmt(x) + ', ' + cFmt(y) + ')', dx: 26, dy: -13 },
+        { q: Px, c: '#c0392b', t: 'P\u2081', lab: '(' + cFmt(x) + ', ' + cFmt(-y) + ')', dx: 34, dy: 14 },
+        { q: Py, c: '#185fa5', t: 'P\u2082', lab: '(' + cFmt(-x) + ', ' + cFmt(y) + ')', dx: -34, dy: -13 },
+        { q: Po, c: '#8a5a00', t: 'P\u2083', lab: '(' + cFmt(-x) + ', ' + cFmt(-y) + ')', dx: -38, dy: 14 }
+      ];
+      for (var i = 0; i < pts.length; i++) {
+        var o = pts[i];
+        cDot(m, o.q[0], o.q[1], o.c, 4.6);
+        cTag(m, o.q[0], o.q[1], o.t, o.c, o.dx > 0 ? -8 : 8, o.dy);
+        cTag(m, o.q[0], o.q[1], o.lab, o.c, o.dx, o.dy);
+      }
+      /* 折线连成矩形，说明四个点构成关于两轴都对称的图形 */
+      ctx.save();
+      ctx.strokeStyle = 'rgba(120,130,140,0.35)';
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(m.px(P[0]), m.py(P[1]));
+      ctx.lineTo(m.px(Py[0]), m.py(Py[1]));
+      ctx.lineTo(m.px(Po[0]), m.py(Po[1]));
+      ctx.lineTo(m.px(Px[0]), m.py(Px[1]));
+      ctx.closePath();
+      ctx.stroke();
+      ctx.restore();
+
+      s0.info.innerHTML =
+        '<span class="viz-meta">P 的坐标是 (' + cFmt(x) + ', ' + cFmt(y) + ')。把它沿 x 轴折下去，横坐标不变、纵坐标变号 → P\u2081(' + cFmt(x) + ', ' + cFmt(-y) + ')；沿 y 轴折过去，纵坐标不变、横坐标变号 → P\u2082(' + cFmt(-x) + ', ' + cFmt(y) + ')。</span>' +
+        '<span class="viz-meta">口诀只记「谁变号」：<b>关于 x 轴对称，y 变号；关于 y 轴对称，x 变号；关于原点对称，两个都变号</b>。原因还是那句话——对称轴垂直平分对应点的连线：关于 x 轴对称时，两点连线竖直，中点落在 x 轴上，所以 (x + x\u2032)/2 = x 且 (y + y\u2032)/2 = 0。</span>' +
+        '<span class="viz-meta">扩展开来也顺手：关于直线 x = a 对称 → (' + '2a − x' + ', y)；关于直线 y = b 对称 → (x, 2b − y)。做题时先在图上把对应点连起来，看中点落在哪条线上，公式就不用背了。</span>';
+    }
+    cSlider(s0.ctrl, 'P 的横坐标 x', p.x, -4.8, 4.8, 0.1, function (v) { p.x = v; draw(); });
+    cSlider(s0.ctrl, 'P 的纵坐标 y', p.y, -3.4, 3.4, 0.1, function (v) { p.y = v; draw(); });
+    draw();
+  }
+
+  /* 画轴对称图形：找关键点 → 作垂线 → 等长截取 → 连线 */
+  function axDrawLab(el, cfg) {
+    var s0 = circleScaffold(el);
+    var p = { t: 100 };
+    if (cfg.values) for (var key in cfg.values) p[key] = cfg.values[key];
+    var view = { xmin: -6.8, xmax: 6.8, ymin: -4.4, ymax: 4.4 };
+    var tri = [[-2.0, 1.0], [-4.4, -1.6], [-1.0, -2.0]];
+    var names = ['A', 'B', 'C'];
+    var STEPS = [[10, 26], [42, 58], [74, 90]];
+
+    function draw() {
+      var m = xyMap(s0.cv, view), ctx = m.ctx;
+      xyAxes(m, view);
+      var t = p.t, i, q, im, f;
+
+      tPoly(m, tri, '#185fa5', 2.4, 'rgba(24,95,165,0.10)');
+      for (i = 0; i < tri.length; i++) {
+        cDot(m, tri[i][0], tri[i][1], '#185fa5', 4);
+        cTag(m, tri[i][0], tri[i][1], names[i], '#185fa5', -14, -10);
+      }
+
+      var right = [];
+      for (i = 0; i < tri.length; i++) {
+        q = tri[i]; im = [-q[0], q[1]]; f = [0, q[1]];
+        if (t >= STEPS[i][0]) {
+          tSeg(m, q[0], q[1], f[0], f[1], 'rgba(120,130,140,0.8)', 1.3, [5, 4]);
+          cDot(m, f[0], f[1], '#8a94a0', 2.8);
+        }
+        if (t >= STEPS[i][1]) {
+          tSeg(m, f[0], f[1], im[0], im[1], 'rgba(192,57,43,0.85)', 1.6, [5, 4]);
+          tTicks(m, q[0], q[1], f[0], f[1], 1, '#8a5a00');
+          tTicks(m, f[0], f[1], im[0], im[1], 1, '#8a5a00');
+          cDot(m, im[0], im[1], '#c0392b', 4);
+          cTag(m, im[0], im[1], names[i] + '\u2032', '#c0392b', 15, -10);
+        }
+        right.push(im);
+      }
+      if (t >= 95) tPoly(m, right, '#c0392b', 2.4, 'rgba(192,57,43,0.10)');
+      if (t >= 95) {
+        tSeg(m, tri[0][0], tri[0][1], right[0][0], right[0][1], 'rgba(120,130,140,0.5)', 1.1, [4, 4]);
+      }
+
+      var step = t < 10 ? '拖动滑块，从第一步开始。' :
+        t < 26 ? '第 ① 步：过点 A 作对称轴（y 轴）的垂线，垂足在轴上。' :
+        t < 42 ? '第 ② 步：在垂线上截取 A\u2032，使 A\u2032 到轴的距离 = A 到轴的距离（等长标记）。' :
+        t < 58 ? '第 ③ 步：同样的办法作出 B\u2032。' :
+        t < 74 ? '第 ④ 步：作出 C\u2032。' :
+        t < 95 ? '第 ⑤ 步：关键点都找到了，最后顺次连接 A\u2032B\u2032C\u2032。' :
+        '完成：右图就是左图关于 y 轴的对称图形，对应点连线都被 y 轴垂直平分。';
+      s0.info.innerHTML =
+        '<span class="viz-meta">' + step + '</span>' +
+        '<span class="viz-meta">这就是「画轴对称图形」的全部流程，四个字概括：<b>找点、作垂、截等、连线</b>。一定要找<b>关键点</b>（顶点、端点、拐点），不要靠眼睛估位置——考试里的网格作图，判分点就在「对应点到对称轴的距离相等」这一条上。</span>' +
+        '<span class="viz-meta">如果对称轴是斜的、甚至图形被轴切开，方法完全一样：作垂线、取等长，只是垂线不再水平或竖直。若给的是坐标系，也可以直接用坐标规律：关于 y 轴对称 x 变号，关于 x 轴对称 y 变号。</span>';
+    }
+    cSlider(s0.ctrl, '作图进度（%）', p.t, 0, 100, 1, function (v) { p.t = v; draw(); });
+    draw();
+  }
+
+  /* 等腰三角形：等边对等角 + 三线合一（拖偏顶点看三条线分开） */
+  function axIsoscelesLab(el, cfg) {
+    var s0 = circleScaffold(el);
+    var p = { apex: 70, off: 0 };
+    if (cfg.values) for (var key in cfg.values) p[key] = cfg.values[key];
+    var B = [-2.6, 0], C = [2.6, 0], base = 5.2;
+
+    function draw() {
+      var h = (base / 2) / Math.tan(p.apex / 2 * T_D2R);
+      h = Math.max(0.9, Math.min(9.2, h));
+      var A = [p.off, h];
+      var D = [0, 0];
+      var H = [A[0], 0];
+      var ab = tDist(A, B), ac = tDist(A, C);
+      var E = [(B[0] * ac + C[0] * ab) / (ab + ac), 0];
+      var view = tViewOf([A, B, C, D], 2.2);
+      var m = circleMap(s0.cv, view);
+      cGrid(m, view);
+
+      tPoly(m, [A, B, C], '#185fa5', 2.6, 'rgba(24,95,165,0.08)');
+      var same = Math.abs(p.off) < 0.03;
+      if (same) {
+        tTicks(m, A[0], A[1], B[0], B[1], 1, '#0f6e56');
+        tTicks(m, A[0], A[1], C[0], C[1], 1, '#0f6e56');
+      }
+      tAngleAt(m, B, A, C, 0.7, '#c0392b');
+      tAngleAt(m, A, B, C, 0.65, '#8a5a00');
+      tAngleAt(m, C, C, A, 0.65, '#8a5a00');
+
+      if (same) {
+        tSeg(m, A[0], A[1], D[0], D[1], '#0f6e56', 2.4);
+        tTicks(m, B[0], B[1], D[0], D[1], 1, '#0f6e56');
+        tTicks(m, D[0], D[1], C[0], C[1], 1, '#0f6e56');
+        cRightAngle(m, D[0], D[1], [0, -1], [-1, 0], '#0f6e56');
+        cDot(m, D[0], D[1], '#0f6e56', 3.6);
+        cTag(m, D[0], D[1], 'D', '#0f6e56', 12, 12);
+      } else {
+        tSeg(m, A[0], A[1], H[0], H[1], '#185fa5', 2.0, [7, 4]);
+        tSeg(m, A[0], A[1], D[0], D[1], '#0f6e56', 2.0, [7, 4]);
+        tSeg(m, A[0], A[1], E[0], E[1], '#8a5a00', 2.0, [7, 4]);
+        cRightAngle(m, H[0], H[1], [0, -1], [(A[0] - H[0]) / (h || 1), -(A[1] - H[1]) / (h || 1)], '#185fa5');
+        cDot(m, H[0], H[1], '#185fa5', 3.4); cDot(m, D[0], D[1], '#0f6e56', 3.4); cDot(m, E[0], E[1], '#8a5a00', 3.4);
+        cTag(m, H[0], H[1], 'H', '#185fa5', -10, 13);
+        cTag(m, D[0], D[1], 'D', '#0f6e56', 0, 14);
+        cTag(m, E[0], E[1], 'E', '#8a5a00', 12, 13);
+      }
+
+      cDot(m, A[0], A[1], '#185fa5', 4.4);
+      cDot(m, B[0], B[1], '#185fa5', 4); cDot(m, C[0], C[1], '#185fa5', 4);
+      cTag(m, A[0], A[1], 'A', '#185fa5', 0, -14);
+      cTag(m, B[0], B[1], 'B', '#185fa5', -13, 11);
+      cTag(m, C[0], C[1], 'C', '#185fa5', 13, 11);
+
+      var angB = tAngAt(A, B, C), angC = tAngAt(A, C, B);
+      s0.info.innerHTML =
+        '<span class="viz-meta">AB = ' + cFmt(ab) + '，AC = ' + cFmt(ac) + '，∠B = ' + cFmt(angB) + '\u00b0，∠C = ' + cFmt(angC) + '\u00b0。' +
+        (same ? '两条腰相等，两个底角也相等 —— <b>等边对等角</b>。' : '腰不相等，底角也不相等：把顶点 A 拖偏之后，「等边对等角」的前提没了，结论自然不成立。') + '</span>' +
+        '<span class="viz-meta">' + (same
+          ? '注意从 A 连到 BC 中点 D 的这一条绿线：它同时是<b>高</b>（AD ⊥ BC，有直角标记）、<b>中线</b>（BD = DC，有等长标记）、<b>角平分线</b>（∠BAD = ∠DAC）。三条线其实是<b>同一条</b>，这就是「三线合一」。它只在等腰三角形里成立，是本章最有用的性质。'
+          : '现在 A 偏出了中垂线，三条线立刻分家：H 是高的垂足、D 是 BC 中点、E 是角平分线的落点，三个点互不重合。反过来说明「三线合一」是等腰三角形独有的待遇 —— 只要其中任意两条重合，这个三角形就是等腰的。') + '</span>' +
+        '<span class="viz-meta">证明「等边对等角」很简单：作顶角平分线 AD，则 △ABD ≌ △ACD（SAS），于是 ∠B = ∠C 且 BD = CD、AD ⊥ BC —— 一次全等同时拿到三个结论，这就是三线合一的来源。</span>';
+    }
+    cSlider(s0.ctrl, '顶角 ∠A（未拖偏时）', p.apex, 40, 140, 1, function (v) { p.apex = v; draw(); });
+    cSlider(s0.ctrl, '把顶点 A 拖离中垂线', p.off, -2.4, 2.4, 0.05, function (v) { p.off = v; draw(); });
+    draw();
+  }
+
+  /* 等角对等边：拖 C 点，两角相等时两边也相等 */
+  function axIsoJudgeLab(el, cfg) {
+    var s0 = circleScaffold(el);
+    var p = { cx: 3.2, cy: -1.2 };
+    if (cfg.values) for (var key in cfg.values) p[key] = cfg.values[key];
+    var A = [0, 3.2], B = [-3.2, -1.2];
+
+    function draw() {
+      var C = [p.cx, p.cy];
+      var view = tViewOf([A, B, C], 2.4);
+      var m = circleMap(s0.cv, view);
+      cGrid(m, view);
+      tPoly(m, [A, B, C], '#185fa5', 2.6, 'rgba(24,95,165,0.08)');
+
+      var ab = tDist(A, B), ac = tDist(A, C);
+      var eq = Math.abs(ab - ac) < 0.06;
+      tTicks(m, A[0], A[1], B[0], B[1], eq ? 1 : 1, '#0f6e56');
+      tTicks(m, A[0], A[1], C[0], C[1], eq ? 1 : 2, '#0f6e56');
+
+      tAngleAt(m, A, B, C, 0.72, '#c0392b');
+      tAngleAt(m, A, C, B, 0.72, '#8a5a00');
+      tEdgeLabel(m, A[0], A[1], B[0], B[1], 'AB = ' + cFmt(ab), '#0f6e56', 17);
+      tEdgeLabel(m, A[0], A[1], C[0], C[1], 'AC = ' + cFmt(ac), '#0f6e56', 17);
+
+      cDot(m, A[0], A[1], '#185fa5', 4.4);
+      cDot(m, B[0], B[1], '#185fa5', 4); cDot(m, C[0], C[1], '#c0392b', 4.6);
+      cTag(m, A[0], A[1], 'A', '#185fa5', 0, -14);
+      cTag(m, B[0], B[1], 'B', '#185fa5', -13, 9);
+      cTag(m, C[0], C[1], 'C', '#c0392b', 13, 10);
+
+      var angB = tAngAt(A, B, C), angC = tAngAt(A, C, B);
+      s0.info.innerHTML =
+        '<span class="viz-meta">当前 ∠B = ' + cFmt(angB) + '\u00b0，∠C = ' + cFmt(angC) + '\u00b0；AB = ' + cFmt(ab) + '，AC = ' + cFmt(ac) + '。' +
+        (eq ? '<b>两角相等，两条边也相等</b>，三角形是等腰的。' : '两角不相等，两条边也不相等。拖动 C 点，让两个角慢慢靠近，你会发现边也同时靠拢。') + '</span>' +
+        '<span class="viz-meta">这就是判定定理：<b>等角对等边</b>——如果一个三角形有两个角相等，那么这两个角所对的边也相等。它和性质定理「等边对等角」互为逆命题，方向相反：性质是「已知等腰 → 得出等角」，判定是「已知等角 → 得出等腰」。</span>' +
+        '<span class="viz-meta">证明只要作一条辅助线：作 ∠A 的平分线交 BC 于 D，则 △ABD ≌ △ACD（AAS：∠B = ∠C、∠BAD = ∠CAD、AD 公共），于是 AB = AC。所以看到「两个角相等」就要立刻想到「可以判定等腰」，进而用上三线合一。</span>';
+    }
+    cSlider(s0.ctrl, 'C 的横坐标', p.cx, 0.8, 5.0, 0.05, function (v) { p.cx = v; draw(); });
+    cSlider(s0.ctrl, 'C 的纵坐标', p.cy, -3.0, 1.6, 0.05, function (v) { p.cy = v; draw(); });
+    draw();
+  }
+
+  /* 等边三角形与 30° 直角三角形 */
+  function axEquiLab(el, cfg) {
+    var s0 = circleScaffold(el);
+    var p = { a: 5 };
+    if (cfg.values) for (var key in cfg.values) p[key] = cfg.values[key];
+
+    function draw() {
+      var a = p.a;
+      var B = [0, 0], C = [a, 0];
+      var A = [a / 2, a * Math.sqrt(3) / 2];
+      var D = [a / 2, 0];
+      var view = tViewOf([A, B, C], 2.2);
+      var m = circleMap(s0.cv, view);
+      cGrid(m, view);
+
+      tPoly(m, [A, B, C], '#185fa5', 2.6, 'rgba(24,95,165,0.10)');
+      tTri(m, A, B, D, 'rgba(192,57,43,0.16)');
+      tSeg(m, A[0], A[1], D[0], D[1], '#c0392b', 2.2, [7, 4]);
+      tTicks(m, B[0], B[1], D[0], D[1], 1, '#8a5a00');
+      tTicks(m, D[0], D[1], C[0], C[1], 1, '#8a5a00');
+      cRightAngle(m, D[0], D[1], [0, -1], [-1, 0], '#c0392b');
+
+      tAngleAt(m, A, B, C, 0.72, '#c0392b');
+      tAngleAt(m, A, C, B, 0.72, '#c0392b');
+      tAngleAt(m, B, A, D, 0.62, '#0f6e56');
+
+      tEdgeLabel(m, A[0], A[1], B[0], B[1], cFmt(a), '#0f6e56', 18);
+      tEdgeLabel(m, A[0], A[1], C[0], C[1], cFmt(a), '#0f6e56', -18);
+      tEdgeLabel(m, B[0], B[1], C[0], C[1], cFmt(a), '#8a5a00', -16);
+      tEdgeLabel(m, B[0], B[1], D[0], D[1], cFmt(a / 2), '#c0392b', -15);
+
+      cDot(m, A[0], A[1], '#185fa5', 4.4);
+      cDot(m, B[0], B[1], '#185fa5', 4); cDot(m, C[0], C[1], '#185fa5', 4);
+      cDot(m, D[0], D[1], '#c0392b', 3.8);
+      cTag(m, A[0], A[1], 'A', '#185fa5', 0, -14);
+      cTag(m, B[0], B[1], 'B', '#185fa5', -13, 11);
+      cTag(m, C[0], C[1], 'C', '#185fa5', 13, 11);
+      cTag(m, D[0], D[1], 'D', '#c0392b', 0, 14);
+
+      s0.info.innerHTML =
+        '<span class="viz-meta">三边都是 ' + cFmt(a) + '，三个角都是 60\u00b0，这就是<b>等边三角形</b>。作一边上的高 AD，把等边三角形劈成两个完全一样的直角三角形，看右边那个（红色）：∠B = 60\u00b0、∠A = 30\u00b0、∠D = 90\u00b0。</span>' +
+        '<span class="viz-meta">于是 BD = ' + cFmt(a / 2) + '，AB = ' + cFmt(a) + '，<b>BD 恰好是 AB 的一半</b>。这就是「30\u00b0 角所对的直角边等于斜边的一半」——它其实是等边三角形「三线合一」的直接推论：高同时也是中线，把底边一分为二。</span>' +
+        '<span class="viz-meta">三个结论要分清楚，考场上经常混：① 等边三角形的判定——三边相等，或三个角相等，或<b>有一个角是 60\u00b0 的等腰三角形</b>；② 30\u00b0 直角三角形——30\u00b0 所对的直角边 = ½ 斜边；③ 它的逆定理——直角三角形中若一条直角边等于斜边的一半，那么这条边所对的角是 30\u00b0。把边长拖大拖小，比值永远不变。</span>';
+    }
+    cSlider(s0.ctrl, '边长 a', p.a, 3, 7, 0.1, function (v) { p.a = v; draw(); });
+    draw();
+  }
+
+  /* 最短路径（将军饮马） */
+  function axPathLab(el, cfg) {
+    var s0 = circleScaffold(el);
+    var p = { t: 0.9 };
+    if (cfg.values) for (var key in cfg.values) p[key] = cfg.values[key];
+    var A = [-4.2, 3.2], B = [3.4, 1.6];
+    var Ap = [A[0], -A[1]];
+
+    function draw() {
+      var P = [p.t, 0];
+      var view = tViewOf([A, B, Ap, P, [-0.6, 0]], 2.0);
+      var m = circleMap(s0.cv, view);
+      cGrid(m, view);
+
+      /* 河岸 l */
+      tLineIn(m, view, [0, 0], [1, 0], '#185fa5', 2.6);
+      m.ctx.fillStyle = '#185fa5';
+      m.ctx.font = '12px "PingFang SC","Microsoft YaHei",sans-serif';
+      m.ctx.textAlign = 'left'; m.ctx.textBaseline = 'bottom';
+      m.ctx.fillText('l', m.px(view.xmax) - 18, m.py(0) - 6);
+
+      /* 对称点与折线 */
+      var seg = clipSeg(view, A[0], A[1], Ap[0], Ap[1]);
+      if (seg) tSeg(m, seg[0], seg[1], seg[2], seg[3], 'rgba(120,130,140,0.7)', 1.3, [5, 4]);
+
+      tSeg(m, A[0], A[1], P[0], P[1], '#c0392b', 2.8);
+      tSeg(m, P[0], P[1], B[0], B[1], '#c0392b', 2.8);
+      tSeg(m, Ap[0], Ap[1], P[0], P[1], 'rgba(15,110,86,0.9)', 2.2, [6, 4]);
+      tSeg(m, P[0], P[1], B[0], B[1], 'rgba(15,110,86,0.9)', 2.0, [6, 4]);
+
+      /* 最优 P：A'B 与 l 的交点 */
+      var t0 = -Ap[1] / (B[1] - Ap[1]);
+      var opt = [Ap[0] + t0 * (B[0] - Ap[0]), 0];
+
+      cDot(m, A[0], A[1], '#c0392b', 4.4);
+      cDot(m, B[0], B[1], '#c0392b', 4.4);
+      cDot(m, Ap[0], Ap[1], '#8a94a0', 4);
+      cDot(m, P[0], P[1], '#185fa5', 5);
+      cDot(m, opt[0], 0, '#0f6e56', 3.4);
+      cTag(m, A[0], A[1], 'A', '#c0392b', -13, -11);
+      cTag(m, B[0], B[1], 'B', '#c0392b', 13, -11);
+      cTag(m, Ap[0], Ap[1], "A\u2032", '#8a94a0', -15, 11);
+      cTag(m, P[0], P[1], 'P', '#185fa5', 0, 16);
+      cTag(m, opt[0], opt[1], 'P\u2080', '#0f6e56', 6, 17);
+
+      var len = tDist(A, P) + tDist(P, B);
+      var min = tDist(Ap, B);
+      var near = Math.abs(len - min) < 0.02;
+      s0.info.innerHTML =
+        '<span class="viz-meta">A、B 在河岸 l 的同侧，要在 l 上找一个点 P 使 AP + PB 最短。当前 AP + PB = <b>' + cFmt(len) + '</b>，理论最小值 A\u2032B = <b>' + cFmt(min) + '</b>' + (near ? '，已经取到最小值了。' : '，还差 ' + cFmt(len - min) + '。') + '</span>' +
+        '<span class="viz-meta">做法（<b>将军饮马</b>）：作 A 关于 l 的对称点 A\u2032，连接 A\u2032B 交 l 于 P\u2080，这个 P\u2080 就是所求。理由只有两句：轴对称保证 AP = A\u2032P，于是 AP + PB = A\u2032P + PB；而两点之间线段最短，所以当 A\u2032、P、B 三点共线时这条折线最短，把折线「拉直」成了线段 A\u2032B。</span>' +
+        '<span class="viz-meta">如果 A、B 本来就在河岸<b>两侧</b>，就不用作对称点了，直接连 AB，交点即 P。常见变体：在角的两边上各取一点使周长最短——用两次轴对称；两平行线间的「造桥选址」——先沿河岸平移一段再连线段。核心永远是「把折线拉直」。</span>';
+    }
+    cSlider(s0.ctrl, 'P 在河岸上的位置', p.t, -2.4, 4.4, 0.02, function (v) { p.t = v; draw(); });
+    draw();
+  }
+
+  window.VIZ = { renderPlot: renderPlot, parabolaLab: parabolaLab, stepLab: stepLab, bridgeLab: bridgeLab, profitLab: profitLab, fenceLab: fenceLab, fountainLab: fountainLab, shotLab: shotLab, completeSquareLab: completeSquareLab, equationLab: equationLab, growthLab: growthLab, rotateLab: rotateLab, coordRotLab: coordRotLab, patternLab: patternLab, clockLab: clockLab, anatomyLab: anatomyLab, chordLab: chordLab, inscribedLab: inscribedLab, positionLab: positionLab, tangentLab: tangentLab, sectorLab: sectorLab, eventScaleLab: eventScaleLab, bagLab: bagLab, sumTableLab: sumTableLab, treeLab: treeLab, coinLab: coinLab, dartLab: dartLab, inverseLab: inverseLab, kAreaLab: kAreaLab, inverseCrossLab: inverseCrossLab, inverseUseLab: inverseUseLab, trigRatioLab: trigRatioLab, trigSpecialLab: trigSpecialLab, trigSolveLab: trigSolveLab, trigHeightLab: trigHeightLab, trigSlopeLab: trigSlopeLab, trigAltitudeLab: trigAltitudeLab, simGoldenLab: simGoldenLab, simParallelLab: simParallelLab, simJudgeLab: simJudgeLab, simAreaLab: simAreaLab, simNestedLab: simNestedLab, simHomothetyLab: simHomothetyLab, simShadowLab: simShadowLab, projShadowLab: projShadowLab, projOrthLab: projOrthLab, viewThreeLab: viewThreeLab, viewBlocksLab: viewBlocksLab, viewSolidLab: viewSolidLab, pythagSquaresLab: pythagSquaresLab, pythagPuzzleLab: pythagPuzzleLab, pythagSolveLab: pythagSolveLab, pythagInverseLab: pythagInverseLab, pythagLadderLab: pythagLadderLab, linearLab: linearLab, linearQuadLab: linearQuadLab, linearCrossLab: linearCrossLab, linearModelLab: linearModelLab, linearTranslateLab: linearTranslateLab, linearFitLab: linearFitLab, pgPropLab: pgPropLab, pgDiagLab: pgDiagLab, pgJudgeLab: pgJudgeLab, pgMidlineLab: pgMidlineLab, pgRectLab: pgRectLab, pgRhombusLab: pgRhombusLab, pgSquareLab: pgSquareLab, pgAreaLab: pgAreaLab, triSidesLab: triSidesLab, triLinesLab: triLinesLab, triAngleLab: triAngleLab, triExteriorLab: triExteriorLab, polyAngleLab: polyAngleLab, congMapLab: congMapLab, congJudgeLab: congJudgeLab, congSsaLab: congSsaLab, bisectorLab: bisectorLab, axFoldLab: axFoldLab, axBisectorLab: axBisectorLab, axCoordLab: axCoordLab, axDrawLab: axDrawLab, axIsoscelesLab: axIsoscelesLab, axIsoJudgeLab: axIsoJudgeLab, axEquiLab: axEquiLab, axPathLab: axPathLab };
 })();
 
 </script>
@@ -6086,6 +6593,14 @@ window.__LOCATE_DATA__ = {"asks":[{"k":"找对应关系","label":"由全等求�
       else if (cfg.type === 'cong-judge') VIZ.congJudgeLab(el, cfg);
       else if (cfg.type === 'cong-ssa') VIZ.congSsaLab(el, cfg);
       else if (cfg.type === 'bisector') VIZ.bisectorLab(el, cfg);
+      else if (cfg.type === 'ax-fold') VIZ.axFoldLab(el, cfg);
+      else if (cfg.type === 'ax-bisector') VIZ.axBisectorLab(el, cfg);
+      else if (cfg.type === 'ax-coord') VIZ.axCoordLab(el, cfg);
+      else if (cfg.type === 'ax-draw') VIZ.axDrawLab(el, cfg);
+      else if (cfg.type === 'ax-isosceles') VIZ.axIsoscelesLab(el, cfg);
+      else if (cfg.type === 'ax-iso-judge') VIZ.axIsoJudgeLab(el, cfg);
+      else if (cfg.type === 'ax-equi') VIZ.axEquiLab(el, cfg);
+      else if (cfg.type === 'ax-path') VIZ.axPathLab(el, cfg);
     });
   });
 })();

@@ -82,6 +82,14 @@
       else if (cfg.type === 'cong-judge') VIZ.congJudgeLab(el, cfg);
       else if (cfg.type === 'cong-ssa') VIZ.congSsaLab(el, cfg);
       else if (cfg.type === 'bisector') VIZ.bisectorLab(el, cfg);
+      else if (cfg.type === 'ax-fold') VIZ.axFoldLab(el, cfg);
+      else if (cfg.type === 'ax-bisector') VIZ.axBisectorLab(el, cfg);
+      else if (cfg.type === 'ax-coord') VIZ.axCoordLab(el, cfg);
+      else if (cfg.type === 'ax-draw') VIZ.axDrawLab(el, cfg);
+      else if (cfg.type === 'ax-isosceles') VIZ.axIsoscelesLab(el, cfg);
+      else if (cfg.type === 'ax-iso-judge') VIZ.axIsoJudgeLab(el, cfg);
+      else if (cfg.type === 'ax-equi') VIZ.axEquiLab(el, cfg);
+      else if (cfg.type === 'ax-path') VIZ.axPathLab(el, cfg);
     });
   });
 })();
