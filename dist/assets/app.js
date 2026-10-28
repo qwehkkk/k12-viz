@@ -90,6 +90,17 @@
       else if (cfg.type === 'ax-iso-judge') VIZ.axIsoJudgeLab(el, cfg);
       else if (cfg.type === 'ax-equi') VIZ.axEquiLab(el, cfg);
       else if (cfg.type === 'ax-path') VIZ.axPathLab(el, cfg);
+      else if (cfg.type === 'sqrt-def') VIZ.sqrtDefLab(el, cfg);
+      else if (cfg.type === 'sqrt-prop') VIZ.sqrtPropLab(el, cfg);
+      else if (cfg.type === 'sqrt-mul') VIZ.sqrtMulLab(el, cfg);
+      else if (cfg.type === 'sqrt-div') VIZ.sqrtDivLab(el, cfg);
+      else if (cfg.type === 'sqrt-add') VIZ.sqrtAddLab(el, cfg);
+      else if (cfg.type === 'sqrt-est') VIZ.sqrtEstLab(el, cfg);
+      else if (cfg.type === 'stat-mean') VIZ.statMeanLab(el, cfg);
+      else if (cfg.type === 'stat-median') VIZ.statMedianLab(el, cfg);
+      else if (cfg.type === 'stat-mode') VIZ.statModeLab(el, cfg);
+      else if (cfg.type === 'stat-var') VIZ.statVarLab(el, cfg);
+      else if (cfg.type === 'stat-choice') VIZ.statChoiceLab(el, cfg);
     });
   });
 })();
