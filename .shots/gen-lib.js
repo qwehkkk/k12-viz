@@ -35,7 +35,11 @@ function save(id, data) {
   const asks = data.patterns.asks.map(function (a) { return a.k; });
   const prefix = '/' + data.meta.id + '/';
   data.patterns.patterns.forEach(function (t) {
-    if (t.route.length !== t.chain.length) errs.push(t.id + ' route!=chain');
+    // route 就是 chain 的 URL 化，长度必须一致——不一致时以 chain 为准自动重建
+    if (!t.route || t.route.length !== t.chain.length) {
+      t.route = t.chain.map(function (c) { return prefix + c.point; });
+      console.log('  ~ route 由 chain 重建:', t.id);
+    }
     t.chain.forEach(function (c) { if (pts.indexOf(c.point) < 0) errs.push(t.id + ' chain ' + c.point); });
     t.asks.forEach(function (a) { if (asks.indexOf(a) < 0) errs.push(t.id + ' ask ' + a); });
     t.route.forEach(function (r) {

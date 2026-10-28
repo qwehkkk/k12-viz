@@ -28,7 +28,7 @@ const SITE = {
 };
 
 /* 年级学期顺序（人教版目录分组用） */
-const GRADE_TERMS = ['七年级上册', '七年级下册', '八年级上册', '八年级下册', '九年级上册', '九年级下册', '高一上册', '高一下册', '高二上册', '高二下册'];
+const GRADE_TERMS = ['七年级上册', '七年级下册', '八年级上册', '八年级下册', '九年级上册', '九年级下册', '高一上册', '高一下册', '高二上册', '高二下册', '高三上册', '高三下册'];
 
 /* ---------- 载入所有章节 ---------- */
 const chapters = fs.readdirSync(DATA_DIR)
@@ -49,11 +49,11 @@ const STRANDS = [
     ghosts: [] },
   { id: 'fn', name: '函数', color: '#7d3c98',
     desc: '变量之间的关系：一次是直线、二次是抛物线、反比例是双曲线；高中再往上走一步——指数是翻倍、对数问翻了几次、三角函数是圆上的转动。',
-    chapters: ['linear-function', 'quadratic-function', 'inverse-function', 'function-concept', 'exp-log', 'trig-fn'],
+    chapters: ['linear-function', 'quadratic-function', 'inverse-function', 'function-concept', 'exp-log', 'trig-fn', 'sequence', 'derivative'],
     ghosts: [] },
   { id: 'geo', name: '图形与几何', color: '#0f6e56',
     desc: '从线段和角出发，经三角形、全等、四边形，一路走到圆、相似与三角函数。初中几何的主干线。',
-    chapters: ['geo-intro', 'triangle', 'congruence', 'axis-symmetry', 'pythagorean', 'parallelogram', 'rotate', 'circle', 'similarity', 'trigonometry', 'projection', 'vectors', 'solid-geo'],
+    chapters: ['geo-intro', 'triangle', 'congruence', 'axis-symmetry', 'pythagorean', 'parallelogram', 'rotate', 'circle', 'similarity', 'trigonometry', 'projection', 'vectors', 'solid-geo', 'space-vector', 'line-circle', 'conic'],
     ghosts: [] },
   { id: 'stat', name: '统计与概率', color: '#8a5a00',
     desc: '用数据说话，用概率算「运气」。中考里分值不大，但最容易拿满。',
