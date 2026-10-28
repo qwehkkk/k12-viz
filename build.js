@@ -27,11 +27,39 @@ const SITE = {
   commentApi: '/api/comments'
 };
 
+/* 年级学期顺序（人教版目录分组用） */
+const GRADE_TERMS = ['七年级上册', '七年级下册', '八年级上册', '八年级下册', '九年级上册', '九年级下册'];
+
 /* ---------- 载入所有章节 ---------- */
 const chapters = fs.readdirSync(DATA_DIR)
   .filter(f => f.endsWith('.json'))
   .map(f => JSON.parse(fs.readFileSync(path.join(DATA_DIR, f), 'utf8')))
-  .sort((a, b) => (a.meta.order || 99) - (b.meta.order || 99));
+  .sort((a, b) => GRADE_TERMS.indexOf(a.meta.grade) - GRADE_TERMS.indexOf(b.meta.grade)
+    || (a.meta.bookNo || 99) - (b.meta.bookNo || 99));
+
+/* 专项知识线：按年级学是一条路，按专项走是另一条路，两套目录指向同一批章节 */
+const STRANDS = [
+  { id: 'num', name: '数与式', color: '#c0392b',
+    desc: '从有理数到实数、从整式到二次根式——一切计算的地基。数感不通，后面全堵。',
+    chapters: ['rational', 'radical'],
+    ghosts: ['整式的加减|七年级上册', '实数|七年级下册', '整式的乘法与因式分解|八年级上册', '分式|八年级上册'] },
+  { id: 'eq', name: '方程与不等式', color: '#185fa5',
+    desc: '把「求多少」翻译成式子，再一步步解出来。一元一次方程是所有方程的娘。',
+    chapters: ['linear-eq', 'quadratic-equation'],
+    ghosts: ['二元一次方程组|七年级下册', '不等式与不等式组|七年级下册'] },
+  { id: 'fn', name: '函数', color: '#7d3c98',
+    desc: '变量之间的关系：一次是一条直线，二次是抛物线，反比例是双曲线。初中函数就这三张脸。',
+    chapters: ['linear-function', 'quadratic-function', 'inverse-function'],
+    ghosts: [] },
+  { id: 'geo', name: '图形与几何', color: '#0f6e56',
+    desc: '从线段和角出发，经三角形、全等、四边形，一路走到圆、相似与三角函数。初中几何的主干线。',
+    chapters: ['geo-intro', 'triangle', 'congruence', 'axis-symmetry', 'pythagorean', 'parallelogram', 'rotate', 'circle', 'similarity', 'trigonometry', 'projection'],
+    ghosts: [] },
+  { id: 'stat', name: '统计与概率', color: '#8a5a00',
+    desc: '用数据说话，用概率算「运气」。中考里分值不大，但最容易拿满。',
+    chapters: ['statistics', 'probability'],
+    ghosts: ['数据的收集与描述|七年级下册'] }
+];
 
 // 每章的派生数据
 chapters.forEach(ch => {
@@ -122,10 +150,14 @@ function head(title, desc, root, ch, cur) {
     nav = [
       { k: 'points', label: '知识点', href: base + 'index.html' },
       { k: 'patterns', label: '题型库', href: base + 'patterns.html' },
-      { k: 'locate', label: '题目定位器', href: base + 'locate.html' }
+      { k: 'locate', label: '题目定位器', href: base + 'locate.html' },
+      { k: 'tracks', label: '专项图谱', href: root + 'tracks/' }
     ];
   } else {
-    nav = [{ k: 'home', label: '课程目录', href: root + 'index.html' }];
+    nav = [
+      { k: 'home', label: '课程目录', href: root + 'index.html' },
+      { k: 'tracks', label: '专项图谱', href: root + 'tracks/' }
+    ];
   }
 
   return `<!DOCTYPE html>
@@ -182,13 +214,12 @@ function renderBlocks(blocks) {
   }).join('\n');
 }
 
-/* ---------- 首页：课程目录 ---------- */
-function renderHome() {
-  const cards = chapters.map(ch => {
-    const n = ch.points.length;
-    return `<a class="chapter-card" href="${ch.meta.id}/index.html">
+/* ---------- 首页：课程目录（按年级分组） ---------- */
+function chapterCard(ch) {
+  const n = ch.points.length;
+  return `<a class="chapter-card" href="${ch.meta.id}/index.html">
   <div class="cc-head">
-    <span class="cc-order">第 ${ch.meta.order} 章</span>
+    <span class="cc-order">第 ${ch.meta.bookNo || ch.meta.order} 章</span>
     <span class="cc-grade">${esc(ch.meta.grade)}</span>
   </div>
   <h3>${esc(ch.meta.title)}</h3>
@@ -198,6 +229,36 @@ function renderHome() {
     <span class="badge blue">${ch.examples.length} 道例题</span>
     <span class="badge">${ch.patterns.length} 类题型</span>
   </div>
+</a>`;
+}
+
+function renderHome() {
+  const groups = GRADE_TERMS
+    .map(g => ({ g, list: chapters.filter(c => c.meta.grade === g) }))
+    .filter(x => x.list.length);
+  const gradeHtml = GRADE_TERMS.map(g => {
+    const list = chapters.filter(c => c.meta.grade === g);
+    if (!list.length) {
+      return `<div class="grade-block">
+  <div class="grade-head"><h3>${g}</h3><span class="grade-soon">即将上线</span></div>
+  <p class="grade-empty">这一册的章节正在路上。可以先在 <a href="tracks/">专项图谱</a> 里看它属于哪条知识线。</p>
+</div>`;
+    }
+    return `<div class="grade-block">
+  <div class="grade-head"><h3>${g}</h3><span class="grade-count">${list.length} 章</span></div>
+  <div class="chapter-grid">
+${list.map(chapterCard).join('\n')}
+  </div>
+</div>`;
+  }).join('\n');
+
+  const strandHtml = STRANDS.map(st => {
+    const n = st.chapters.length;
+    return `<a class="strand-card" href="tracks/#track-${st.id}" style="--sc:${st.color}">
+  <span class="sc-dot"></span>
+  <h3>${st.name}</h3>
+  <p>${st.chapters.map(id => chapterById[id].meta.title).join(' · ')}</p>
+  <span class="sc-count">${n} 章已上线</span>
 </a>`;
   }).join('\n');
 
@@ -215,12 +276,19 @@ function renderHome() {
 </div>
 
 <div class="section-head" style="margin-top:0">
-  <h2>课程目录</h2>
-  <p>按人教版教材顺序排列，九年级上下册优先。</p>
+  <h2>课程目录 · 按年级</h2>
+  <p>跟人教版教材章节编号一致（如「九年级上册 · 第 21 章」），按学校进度找就行。</p>
 </div>
-<div class="chapter-grid">
-${cards}
+${gradeHtml}
+
+<div class="section-head">
+  <h2>按专项学习</h2>
+  <p>同一批章节的另一条走法：按知识主线串起来学，前后的因果关系看得更清楚。</p>
 </div>
+<div class="strand-grid">
+${strandHtml}
+</div>
+<p class="strand-more">五条主线之间的关系图（谁是谁的前置）在 <a href="tracks/">专项图谱</a> 页。</p>
 
 <div class="section-head">
   <h2>这个站怎么用</h2>
@@ -664,9 +732,159 @@ ${LOCATEJS}
 ${foot()}`;
 }
 
+/* ---------- 专项图谱页 ---------- */
+function renderTracks() {
+  // ---- 布局参数 ----
+  const COLW = 158, NW = 138, NH = 34, STACK = 44;
+  const PADL = 118, PADT = 58, PADR = 26, ROWGAP = 30;
+
+  // 每个（专项行 × 年级列）格子里的节点，算堆叠
+  const cells = {};   // 'si-ci' -> [{kind:'ch'|'ghost', ...}]
+  STRANDS.forEach((st, si) => {
+    st.chapters.forEach(cid => {
+      const ch = chapterById[cid];
+      const ci = GRADE_TERMS.indexOf(ch.meta.grade);
+      const key = si + '-' + ci;
+      (cells[key] = cells[key] || []).push({ kind: 'ch', cid, title: ch.meta.title });
+    });
+    st.ghosts.forEach(g => {
+      const [title, grade] = g.split('|');
+      const ci = GRADE_TERMS.indexOf(grade);
+      const key = si + '-' + ci;
+      (cells[key] = cells[key] || []).push({ kind: 'ghost', title });
+    });
+  });
+
+  // 行高与节点坐标
+  const nodePos = {};  // cid -> {x, y}
+  const ghostPos = [];
+  let y = PADT;
+  const rowBands = [];
+  STRANDS.forEach((st, si) => {
+    const bandY = y;
+    let maxStack = 1;
+    for (let ci = 0; ci < GRADE_TERMS.length; ci++) {
+      const cell = cells[si + '-' + ci] || [];
+      cell.forEach((item, k) => {
+        const x = PADL + ci * COLW + 8;
+        const ny = bandY + k * STACK;
+        if (item.kind === 'ch') nodePos[item.cid] = { x, y: ny };
+        else ghostPos.push({ x, y: ny, title: item.title });
+      });
+      if (cell.length > maxStack) maxStack = cell.length;
+    }
+    rowBands.push({ y: bandY, h: maxStack * STACK + 6 });
+    y += maxStack * STACK + ROWGAP;
+  });
+  const svgW = PADL + GRADE_TERMS.length * COLW + PADR;
+  const svgH = y;
+
+  // ---- 连线（前置 → 本章）----
+  const edges = [];
+  STRANDS.forEach(st => st.chapters.forEach(cid => {
+    const ch = chapterById[cid];
+    (ch.prereqCh || []).forEach(pc => {
+      if (!nodePos[pc.meta.id] || !nodePos[cid]) return;
+      const a = nodePos[pc.meta.id], b = nodePos[cid];
+      let x1, y1, x2, y2;
+      const aci = GRADE_TERMS.indexOf(pc.meta.grade), bci = GRADE_TERMS.indexOf(ch.meta.grade);
+      if (bci > aci) { x1 = a.x + NW; y1 = a.y + NH / 2; x2 = b.x; y2 = b.y + NH / 2; }
+      else { x1 = a.x + NW / 2; y1 = a.y + NH; x2 = b.x + NW / 2; y2 = b.y; }
+      const dx = Math.max(30, (x2 - x1) * 0.45);
+      edges.push(`M ${x1} ${y1} C ${x1 + dx} ${y1}, ${x2 - dx} ${y2}, ${x2} ${y2}`);
+    });
+  }));
+
+  // ---- SVG ----
+  const colHeaders = GRADE_TERMS.map((g, ci) =>
+    `<text x="${PADL + ci * COLW + 8 + NW / 2}" y="34" text-anchor="middle" class="tg-col">${g}</text>`).join('\n');
+  const rowLabels = STRANDS.map((st, si) => {
+    const b = rowBands[si];
+    return `<line x1="${PADL - 14}" y1="${b.y + 14}" x2="${PADL - 14}" y2="${b.y + b.h - 22}" stroke="${st.color}" stroke-width="3"/>
+<rect x="6" y="${b.y + 8}" width="${PADL - 30}" height="${b.h - 26}" rx="7" fill="${st.color}" opacity="0.09"/>
+<text x="${(PADL - 30) / 2 + 6}" y="${b.y + b.h / 2 - 4}" text-anchor="middle" class="tg-row" fill="${st.color}">${st.name}</text>`;
+  }).join('\n');
+  const edgeHtml = edges.map(d => `<path d="${d}" class="tg-edge"/>`).join('\n');
+  const nodeHtml = STRANDS.map(st => st.chapters.map(cid => {
+    const n = nodePos[cid], ch = chapterById[cid];
+    return `<a href="../${cid}/index.html">
+<rect x="${n.x}" y="${n.y}" width="${NW}" height="${NH}" rx="8" class="tg-node" style="stroke:${st.color}"/>
+<rect x="${n.x}" y="${n.y}" width="5" height="${NH}" rx="2.5" fill="${st.color}"/>
+<text x="${n.x + NW / 2 + 2}" y="${n.y + NH / 2 + 4}" text-anchor="middle" class="tg-text">${esc(ch.meta.title)}</text>
+</a>`;
+  }).join('\n')).join('\n');
+  const ghostHtml = ghostPos.map(g =>
+    `<g class="tg-ghost"><rect x="${g.x}" y="${g.y}" width="${NW}" height="${NH}" rx="8"/><text x="${g.x + NW / 2}" y="${g.y + NH / 2 + 4}" text-anchor="middle">${esc(g.title)}</text></g>`).join('\n');
+
+  const graphSvg = `<svg viewBox="0 0 ${svgW} ${svgH}" class="tg-svg" role="img" aria-label="初中数学专项知识图谱：按专项分五条横线，按年级分六列，箭头表示先学谁">
+<defs><marker id="tg-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#9aa7b5"/></marker></defs>
+${colHeaders}
+${rowLabels}
+${edgeHtml}
+${nodeHtml}
+${ghostHtml}
+</svg>`;
+
+  // ---- 每条专项的章节卡 ----
+  const strandSections = STRANDS.map(st => {
+    const cards = st.chapters.map(cid => {
+      const ch = chapterById[cid];
+      const links = (ch.prereqCh || []).map(pc => esc(pc.meta.title)).join('、') || '无（这条线的起点）';
+      return `<a class="card strand-ch-card" href="../${cid}/index.html" style="--sc:${st.color}">
+  <span class="num">${esc(ch.meta.grade)} · 第 ${ch.meta.bookNo} 章</span>
+  <h3>${esc(ch.meta.title)}</h3>
+  <p>${esc(ch.meta.tagline || '')}</p>
+  <div class="meta"><span class="badge blue">${ch.points.length} 知识点</span><span class="badge">先学：${links}</span></div>
+</a>`;
+    }).join('\n');
+    const ghosts = st.ghosts.length
+      ? `<p class="strand-ghosts">这条线还没上线的章节：${st.ghosts.map(g => esc(g.split('|')[0])).join('、')}（做完会接到图里）</p>` : '';
+    return `<div class="strand-section" id="track-${st.id}" style="--sc:${st.color}">
+  <div class="strand-head"><span class="sc-dot big"></span><h2>${st.name}</h2></div>
+  <p class="strand-desc">${st.desc}</p>
+  <div class="grid">
+${cards}
+  </div>
+  ${ghosts}
+</div>`;
+  }).join('\n');
+
+  const learnPaths = [
+    { who: '跟着学校进度学', how: '回<a href="../index.html">课程目录</a>，按年级册次找当前章——编号和教材一致。' },
+    { who: '某一块一直学不透', how: '在上面的图里找到那条专项线，从最左边的章开始补，箭头指哪就先学哪。' },
+    { who: '初三总复习', how: '图形与几何一条线有 11 章，从头过一遍比刷卷子更能看出题和题之间的联系。' }
+  ].map(x => `<div class="guide-item"><h3>${x.who}</h3><p>${x.how}</p></div>`).join('\n');
+
+  return `${head(`专项知识图谱 - ${SITE.name}`, '初中数学五条专项知识主线（数与式 / 方程与不等式 / 函数 / 图形与几何 / 统计与概率）的关系图谱：箭头指向先学的章节，既可按年级走，也可按专项走。', '../', null, 'tracks')}
+<div class="hero">
+  <h1>专项知识图谱</h1>
+  <p>初中数学其实只有五条主线。课程目录按年级排，适合跟着学校走；这张图按专项排，适合补短板和总复习。</p>
+  <p class="hero-sub">横线是专项，竖列是年级学期；<b>箭头从「先学的章」指向「后用的章」</b>。虚线框是还没上线的章节。</p>
+</div>
+
+<div class="section-head" style="margin-top:0">
+  <h2>一图看懂：谁是谁的前置</h2>
+  <p>看不懂的地方顺着箭头往回找，通常卡住的原因在几册书之前。</p>
+</div>
+<div class="tg-wrap">${graphSvg}</div>
+
+<div class="section-head">
+  <h2>五条专项线</h2>
+</div>
+${strandSections}
+
+<div class="section-head">
+  <h2>三种用法</h2>
+</div>
+<div class="guide-grid">
+${learnPaths}
+</div>
+${foot()}`;
+}
+
 /* ---------- sitemap ---------- */
 function renderSitemap() {
-  const urls = [{ loc: `${SITE.base}/`, priority: '1.0' }];
+  const urls = [{ loc: `${SITE.base}/`, priority: '1.0' }, { loc: `${SITE.base}/tracks/`, priority: '0.9' }];
   chapters.forEach(ch => {
     const base = `${SITE.base}/${ch.meta.id}`;
     urls.push({ loc: `${base}/index.html`, priority: '0.9' });
@@ -688,6 +906,9 @@ fs.mkdirSync(DIST, { recursive: true });
 fs.cpSync(path.join(ROOT, 'assets'), path.join(DIST, 'assets'), { recursive: true });
 
 fs.writeFileSync(path.join(DIST, 'index.html'), renderHome());
+
+fs.mkdirSync(path.join(DIST, 'tracks'), { recursive: true });
+fs.writeFileSync(path.join(DIST, 'tracks', 'index.html'), renderTracks());
 
 chapters.forEach(ch => {
   const dir = path.join(DIST, ch.meta.id);

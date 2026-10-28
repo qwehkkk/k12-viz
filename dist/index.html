@@ -593,6 +593,62 @@ ul.lesson-list li::before {
 .lab-card { border-left: 3px solid var(--green); }
 .lab-card .num { color: var(--green); }
 
+/* ---------- 首页：年级分组 ---------- */
+.grade-block { margin-bottom: 26px; }
+.grade-head {
+  display: flex; align-items: baseline; gap: 10px;
+  border-bottom: 2px solid var(--border); padding-bottom: 8px; margin-bottom: 14px;
+}
+.grade-head h3 { font-size: 17px; margin: 0; }
+.grade-count { font-size: 12px; color: var(--muted); }
+.grade-soon {
+  font-size: 11px; color: var(--muted); border: 1px dashed var(--border);
+  border-radius: 999px; padding: 1px 9px;
+}
+
+/* ---------- 专项入口卡片 ---------- */
+.strand-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 14px;
+}
+.strand-card {
+  border: 1px solid var(--border); border-top: 3px solid var(--sc, var(--accent));
+  border-radius: 10px; padding: 13px 15px; text-decoration: none; background: var(--surface);
+  display: block;
+}
+.strand-card:hover { border-color: var(--sc, var(--accent)); }
+.sc-dot {
+  display: inline-block; width: 10px; height: 10px; border-radius: 50%;
+  background: var(--sc, var(--accent)); margin-bottom: 4px;
+}
+.sc-dot.big { width: 13px; height: 13px; }
+.strand-card h3 { margin: 2px 0 6px; font-size: 15px; }
+.strand-card p { font-size: 12px; color: var(--muted); margin: 0 0 8px; }
+.sc-count { font-size: 11px; color: var(--sc, var(--accent)); }
+.strand-more { font-size: 13px; color: var(--muted); margin-top: 12px; }
+.strand-more a { color: var(--accent); }
+
+/* ---------- 专项图谱页 ---------- */
+.tg-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: 10px; background: var(--surface); }
+.tg-svg { display: block; min-width: 860px; width: 100%; height: auto; }
+.tg-col { font-size: 13px; fill: var(--muted); font-weight: 500; }
+.tg-row { font-size: 14px; font-weight: 600; }
+.tg-edge { fill: none; stroke: #9aa7b5; stroke-width: 1.6; marker-end: url(#tg-arrow); opacity: 0.85; }
+.tg-node { fill: var(--surface); stroke-width: 1.6; }
+a:hover .tg-node { stroke-width: 2.4; }
+.tg-text { font-size: 12.5px; fill: var(--text); }
+.tg-ghost rect { fill: transparent; stroke: var(--border); stroke-dasharray: 5 4; }
+.tg-ghost text { font-size: 12px; fill: var(--muted); opacity: 0.75; }
+
+/* ---------- 专项分区 ---------- */
+.strand-section { margin: 34px 0; scroll-margin-top: 20px; }
+.strand-head { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
+.strand-head h2 { margin: 0; }
+.strand-desc { color: var(--muted); font-size: 14px; margin: 0 0 14px; }
+.strand-ch-card { border-left: 3px solid var(--sc, var(--accent)); }
+.strand-ch-card .num { color: var(--sc, var(--accent)); }
+.strand-ghosts { font-size: 12.5px; color: var(--muted); margin-top: 10px; }
+.grade-empty { font-size: 13px; color: var(--muted); margin: 0; padding: 4px 0 6px; }
+
 </style>
 </head>
 <body>
@@ -601,6 +657,7 @@ ul.lesson-list li::before {
   <span class="site-tag">把知识点画出来</span>
   <nav class="site-nav">
     <a href="index.html" class="on">课程目录</a>
+    <a href="tracks/">专项图谱</a>
   </nav>
 </div></header>
 <main><div class="container">
@@ -617,23 +674,12 @@ ul.lesson-list li::before {
 </div>
 
 <div class="section-head" style="margin-top:0">
-  <h2>课程目录</h2>
-  <p>按人教版教材顺序排列，九年级上下册优先。</p>
+  <h2>课程目录 · 按年级</h2>
+  <p>跟人教版教材章节编号一致（如「九年级上册 · 第 21 章」），按学校进度找就行。</p>
 </div>
-<div class="chapter-grid">
-<a class="chapter-card" href="quadratic-equation/index.html">
-  <div class="cc-head">
-    <span class="cc-order">第 1 章</span>
-    <span class="cc-grade">九年级</span>
-  </div>
-  <h3>一元二次方程</h3>
-  <p class="cc-tagline">三条解法通道，各有各的用武之地</p>
-  <div class="meta">
-    <span class="badge blue">10 个知识点</span>
-    <span class="badge blue">19 道例题</span>
-    <span class="badge">12 类题型</span>
-  </div>
-</a>
+<div class="grade-block">
+  <div class="grade-head"><h3>七年级上册</h3><span class="grade-count">3 章</span></div>
+  <div class="chapter-grid">
 <a class="chapter-card" href="rational/index.html">
   <div class="cc-head">
     <span class="cc-order">第 1 章</span>
@@ -645,19 +691,6 @@ ul.lesson-list li::before {
     <span class="badge blue">8 个知识点</span>
     <span class="badge blue">12 道例题</span>
     <span class="badge">8 类题型</span>
-  </div>
-</a>
-<a class="chapter-card" href="quadratic-function/index.html">
-  <div class="cc-head">
-    <span class="cc-order">第 2 章</span>
-    <span class="cc-grade">九年级</span>
-  </div>
-  <h3>二次函数</h3>
-  <p class="cc-tagline">从 y = ax² 到实际应用，一条完整的抛物线</p>
-  <div class="meta">
-    <span class="badge blue">10 个知识点</span>
-    <span class="badge blue">21 道例题</span>
-    <span class="badge">12 类题型</span>
   </div>
 </a>
 <a class="chapter-card" href="linear-eq/index.html">
@@ -673,32 +706,6 @@ ul.lesson-list li::before {
     <span class="badge">8 类题型</span>
   </div>
 </a>
-<a class="chapter-card" href="rotate/index.html">
-  <div class="cc-head">
-    <span class="cc-order">第 3 章</span>
-    <span class="cc-grade">九年级上册</span>
-  </div>
-  <h3>旋转</h3>
-  <p class="cc-tagline">把图形绕一个点转一转：旋转把全等、对称、坐标串成一条线</p>
-  <div class="meta">
-    <span class="badge blue">7 个知识点</span>
-    <span class="badge blue">12 道例题</span>
-    <span class="badge">8 类题型</span>
-  </div>
-</a>
-<a class="chapter-card" href="circle/index.html">
-  <div class="cc-head">
-    <span class="cc-order">第 4 章</span>
-    <span class="cc-grade">九年级上册</span>
-  </div>
-  <h3>圆</h3>
-  <p class="cc-tagline">到定点距离等于定长的所有点：对称性最强的图形，几何题的富矿</p>
-  <div class="meta">
-    <span class="badge blue">8 个知识点</span>
-    <span class="badge blue">14 道例题</span>
-    <span class="badge">10 类题型</span>
-  </div>
-</a>
 <a class="chapter-card" href="geo-intro/index.html">
   <div class="cc-head">
     <span class="cc-order">第 4 章</span>
@@ -712,113 +719,18 @@ ul.lesson-list li::before {
     <span class="badge">9 类题型</span>
   </div>
 </a>
-<a class="chapter-card" href="probability/index.html">
-  <div class="cc-head">
-    <span class="cc-order">第 5 章</span>
-    <span class="cc-grade">九年级上册</span>
   </div>
-  <h3>概率初步</h3>
-  <p class="cc-tagline">给「可能性」一个数：概率把不确定性变成能算、能比、能用的数学</p>
-  <div class="meta">
-    <span class="badge blue">7 个知识点</span>
-    <span class="badge blue">14 道例题</span>
-    <span class="badge">10 类题型</span>
-  </div>
-</a>
-<a class="chapter-card" href="inverse-function/index.html">
-  <div class="cc-head">
-    <span class="cc-order">第 6 章</span>
-    <span class="cc-grade">九年级下册</span>
-  </div>
-  <h3>反比例函数</h3>
-  <p class="cc-tagline">一个 k 定一条双曲线：x 与 y 的乘积不变，图象就有了一副反着来的脾气</p>
-  <div class="meta">
-    <span class="badge blue">6 个知识点</span>
-    <span class="badge blue">12 道例题</span>
-    <span class="badge">9 类题型</span>
-  </div>
-</a>
-<a class="chapter-card" href="trigonometry/index.html">
-  <div class="cc-head">
-    <span class="cc-order">第 7 章</span>
-    <span class="cc-grade">九年级下册</span>
-  </div>
-  <h3>锐角三角函数</h3>
-  <p class="cc-tagline">角一定，比值就定 —— sin、cos、tan 是角的名字，不是边的长度</p>
-  <div class="meta">
-    <span class="badge blue">7 个知识点</span>
-    <span class="badge blue">12 道例题</span>
-    <span class="badge">10 类题型</span>
-  </div>
-</a>
-<a class="chapter-card" href="similarity/index.html">
-  <div class="cc-head">
-    <span class="cc-order">第 8 章</span>
-    <span class="cc-grade">九年级下册</span>
-  </div>
-  <h3>相似</h3>
-  <p class="cc-tagline">形状相同、大小可以不同 —— 相似比 k 是这一章唯一的钥匙</p>
-  <div class="meta">
-    <span class="badge blue">7 个知识点</span>
-    <span class="badge blue">12 道例题</span>
-    <span class="badge">10 类题型</span>
-  </div>
-</a>
-<a class="chapter-card" href="projection/index.html">
-  <div class="cc-head">
-    <span class="cc-order">第 9 章</span>
-    <span class="cc-grade">九年级下册</span>
-  </div>
-  <h3>投影与视图</h3>
-  <p class="cc-tagline">把立体世界压成平面图形 —— 三视图是工程师、建筑师和画师共同的语言</p>
-  <div class="meta">
-    <span class="badge blue">5 个知识点</span>
-    <span class="badge blue">10 道例题</span>
-    <span class="badge">8 类题型</span>
-  </div>
-</a>
-<a class="chapter-card" href="pythagorean/index.html">
-  <div class="cc-head">
-    <span class="cc-order">第 10 章</span>
-    <span class="cc-grade">八年级下册</span>
-  </div>
-  <h3>勾股定理</h3>
-  <p class="cc-tagline">直角三角形里藏着的恒等式 —— 两千五百年既是一个定理，也是一把万能的直角尺</p>
-  <div class="meta">
-    <span class="badge blue">6 个知识点</span>
-    <span class="badge blue">11 道例题</span>
-    <span class="badge">9 类题型</span>
-  </div>
-</a>
-<a class="chapter-card" href="linear-function/index.html">
-  <div class="cc-head">
-    <span class="cc-order">第 11 章</span>
-    <span class="cc-grade">八年级下册</span>
-  </div>
-  <h3>一次函数</h3>
-  <p class="cc-tagline">初中第一个「会动的式子」—— 一条直线管住了匀速运动、水电费、话费套餐和所有线性关系</p>
-  <div class="meta">
-    <span class="badge blue">6 个知识点</span>
-    <span class="badge blue">12 道例题</span>
-    <span class="badge">9 类题型</span>
-  </div>
-</a>
-<a class="chapter-card" href="parallelogram/index.html">
-  <div class="cc-head">
-    <span class="cc-order">第 12 章</span>
-    <span class="cc-grade">八年级下册</span>
-  </div>
-  <h3>平行四边形</h3>
-  <p class="cc-tagline">一个「平行」推出一整个家族 —— 从平行四边形到矩形、菱形、正方形</p>
-  <div class="meta">
-    <span class="badge blue">8 个知识点</span>
-    <span class="badge blue">17 道例题</span>
-    <span class="badge">13 类题型</span>
-  </div>
-</a>
+</div>
+<div class="grade-block">
+  <div class="grade-head"><h3>七年级下册</h3><span class="grade-soon">即将上线</span></div>
+  <p class="grade-empty">这一册的章节正在路上。可以先在 <a href="tracks/">专项图谱</a> 里看它属于哪条知识线。</p>
+</div>
+<div class="grade-block">
+  <div class="grade-head"><h3>八年级上册</h3><span class="grade-count">3 章</span></div>
+  <div class="chapter-grid">
 <a class="chapter-card" href="triangle/index.html">
   <div class="cc-head">
-    <span class="cc-order">第 13 章</span>
+    <span class="cc-order">第 11 章</span>
     <span class="cc-grade">八年级上册</span>
   </div>
   <h3>三角形</h3>
@@ -831,7 +743,7 @@ ul.lesson-list li::before {
 </a>
 <a class="chapter-card" href="congruence/index.html">
   <div class="cc-head">
-    <span class="cc-order">第 14 章</span>
+    <span class="cc-order">第 12 章</span>
     <span class="cc-grade">八年级上册</span>
   </div>
   <h3>全等三角形</h3>
@@ -844,7 +756,7 @@ ul.lesson-list li::before {
 </a>
 <a class="chapter-card" href="axis-symmetry/index.html">
   <div class="cc-head">
-    <span class="cc-order">第 15 章</span>
+    <span class="cc-order">第 13 章</span>
     <span class="cc-grade">八年级上册</span>
   </div>
   <h3>轴对称</h3>
@@ -855,6 +767,11 @@ ul.lesson-list li::before {
     <span class="badge">17 类题型</span>
   </div>
 </a>
+  </div>
+</div>
+<div class="grade-block">
+  <div class="grade-head"><h3>八年级下册</h3><span class="grade-count">5 章</span></div>
+  <div class="chapter-grid">
 <a class="chapter-card" href="radical/index.html">
   <div class="cc-head">
     <span class="cc-order">第 16 章</span>
@@ -862,6 +779,45 @@ ul.lesson-list li::before {
   </div>
   <h3>二次根式</h3>
   <p class="cc-tagline">把根号里的数拆出完全平方，运算就只剩加减同类项</p>
+  <div class="meta">
+    <span class="badge blue">6 个知识点</span>
+    <span class="badge blue">12 道例题</span>
+    <span class="badge">9 类题型</span>
+  </div>
+</a>
+<a class="chapter-card" href="pythagorean/index.html">
+  <div class="cc-head">
+    <span class="cc-order">第 17 章</span>
+    <span class="cc-grade">八年级下册</span>
+  </div>
+  <h3>勾股定理</h3>
+  <p class="cc-tagline">直角三角形里藏着的恒等式 —— 两千五百年既是一个定理，也是一把万能的直角尺</p>
+  <div class="meta">
+    <span class="badge blue">6 个知识点</span>
+    <span class="badge blue">11 道例题</span>
+    <span class="badge">9 类题型</span>
+  </div>
+</a>
+<a class="chapter-card" href="parallelogram/index.html">
+  <div class="cc-head">
+    <span class="cc-order">第 18 章</span>
+    <span class="cc-grade">八年级下册</span>
+  </div>
+  <h3>平行四边形</h3>
+  <p class="cc-tagline">一个「平行」推出一整个家族 —— 从平行四边形到矩形、菱形、正方形</p>
+  <div class="meta">
+    <span class="badge blue">8 个知识点</span>
+    <span class="badge blue">17 道例题</span>
+    <span class="badge">13 类题型</span>
+  </div>
+</a>
+<a class="chapter-card" href="linear-function/index.html">
+  <div class="cc-head">
+    <span class="cc-order">第 19 章</span>
+    <span class="cc-grade">八年级下册</span>
+  </div>
+  <h3>一次函数</h3>
+  <p class="cc-tagline">初中第一个「会动的式子」—— 一条直线管住了匀速运动、水电费、话费套餐和所有线性关系</p>
   <div class="meta">
     <span class="badge blue">6 个知识点</span>
     <span class="badge blue">12 道例题</span>
@@ -881,7 +837,173 @@ ul.lesson-list li::before {
     <span class="badge">8 类题型</span>
   </div>
 </a>
+  </div>
 </div>
+<div class="grade-block">
+  <div class="grade-head"><h3>九年级上册</h3><span class="grade-count">5 章</span></div>
+  <div class="chapter-grid">
+<a class="chapter-card" href="quadratic-equation/index.html">
+  <div class="cc-head">
+    <span class="cc-order">第 21 章</span>
+    <span class="cc-grade">九年级上册</span>
+  </div>
+  <h3>一元二次方程</h3>
+  <p class="cc-tagline">三条解法通道，各有各的用武之地</p>
+  <div class="meta">
+    <span class="badge blue">10 个知识点</span>
+    <span class="badge blue">19 道例题</span>
+    <span class="badge">12 类题型</span>
+  </div>
+</a>
+<a class="chapter-card" href="quadratic-function/index.html">
+  <div class="cc-head">
+    <span class="cc-order">第 22 章</span>
+    <span class="cc-grade">九年级上册</span>
+  </div>
+  <h3>二次函数</h3>
+  <p class="cc-tagline">从 y = ax² 到实际应用，一条完整的抛物线</p>
+  <div class="meta">
+    <span class="badge blue">10 个知识点</span>
+    <span class="badge blue">21 道例题</span>
+    <span class="badge">12 类题型</span>
+  </div>
+</a>
+<a class="chapter-card" href="rotate/index.html">
+  <div class="cc-head">
+    <span class="cc-order">第 23 章</span>
+    <span class="cc-grade">九年级上册</span>
+  </div>
+  <h3>旋转</h3>
+  <p class="cc-tagline">把图形绕一个点转一转：旋转把全等、对称、坐标串成一条线</p>
+  <div class="meta">
+    <span class="badge blue">7 个知识点</span>
+    <span class="badge blue">12 道例题</span>
+    <span class="badge">8 类题型</span>
+  </div>
+</a>
+<a class="chapter-card" href="circle/index.html">
+  <div class="cc-head">
+    <span class="cc-order">第 24 章</span>
+    <span class="cc-grade">九年级上册</span>
+  </div>
+  <h3>圆</h3>
+  <p class="cc-tagline">到定点距离等于定长的所有点：对称性最强的图形，几何题的富矿</p>
+  <div class="meta">
+    <span class="badge blue">8 个知识点</span>
+    <span class="badge blue">14 道例题</span>
+    <span class="badge">10 类题型</span>
+  </div>
+</a>
+<a class="chapter-card" href="probability/index.html">
+  <div class="cc-head">
+    <span class="cc-order">第 25 章</span>
+    <span class="cc-grade">九年级上册</span>
+  </div>
+  <h3>概率初步</h3>
+  <p class="cc-tagline">给「可能性」一个数：概率把不确定性变成能算、能比、能用的数学</p>
+  <div class="meta">
+    <span class="badge blue">7 个知识点</span>
+    <span class="badge blue">14 道例题</span>
+    <span class="badge">10 类题型</span>
+  </div>
+</a>
+  </div>
+</div>
+<div class="grade-block">
+  <div class="grade-head"><h3>九年级下册</h3><span class="grade-count">4 章</span></div>
+  <div class="chapter-grid">
+<a class="chapter-card" href="inverse-function/index.html">
+  <div class="cc-head">
+    <span class="cc-order">第 26 章</span>
+    <span class="cc-grade">九年级下册</span>
+  </div>
+  <h3>反比例函数</h3>
+  <p class="cc-tagline">一个 k 定一条双曲线：x 与 y 的乘积不变，图象就有了一副反着来的脾气</p>
+  <div class="meta">
+    <span class="badge blue">6 个知识点</span>
+    <span class="badge blue">12 道例题</span>
+    <span class="badge">9 类题型</span>
+  </div>
+</a>
+<a class="chapter-card" href="similarity/index.html">
+  <div class="cc-head">
+    <span class="cc-order">第 27 章</span>
+    <span class="cc-grade">九年级下册</span>
+  </div>
+  <h3>相似</h3>
+  <p class="cc-tagline">形状相同、大小可以不同 —— 相似比 k 是这一章唯一的钥匙</p>
+  <div class="meta">
+    <span class="badge blue">7 个知识点</span>
+    <span class="badge blue">12 道例题</span>
+    <span class="badge">10 类题型</span>
+  </div>
+</a>
+<a class="chapter-card" href="trigonometry/index.html">
+  <div class="cc-head">
+    <span class="cc-order">第 28 章</span>
+    <span class="cc-grade">九年级下册</span>
+  </div>
+  <h3>锐角三角函数</h3>
+  <p class="cc-tagline">角一定，比值就定 —— sin、cos、tan 是角的名字，不是边的长度</p>
+  <div class="meta">
+    <span class="badge blue">7 个知识点</span>
+    <span class="badge blue">12 道例题</span>
+    <span class="badge">10 类题型</span>
+  </div>
+</a>
+<a class="chapter-card" href="projection/index.html">
+  <div class="cc-head">
+    <span class="cc-order">第 29 章</span>
+    <span class="cc-grade">九年级下册</span>
+  </div>
+  <h3>投影与视图</h3>
+  <p class="cc-tagline">把立体世界压成平面图形 —— 三视图是工程师、建筑师和画师共同的语言</p>
+  <div class="meta">
+    <span class="badge blue">5 个知识点</span>
+    <span class="badge blue">10 道例题</span>
+    <span class="badge">8 类题型</span>
+  </div>
+</a>
+  </div>
+</div>
+
+<div class="section-head">
+  <h2>按专项学习</h2>
+  <p>同一批章节的另一条走法：按知识主线串起来学，前后的因果关系看得更清楚。</p>
+</div>
+<div class="strand-grid">
+<a class="strand-card" href="tracks/#track-num" style="--sc:#c0392b">
+  <span class="sc-dot"></span>
+  <h3>数与式</h3>
+  <p>有理数 · 二次根式</p>
+  <span class="sc-count">2 章已上线</span>
+</a>
+<a class="strand-card" href="tracks/#track-eq" style="--sc:#185fa5">
+  <span class="sc-dot"></span>
+  <h3>方程与不等式</h3>
+  <p>一元一次方程 · 一元二次方程</p>
+  <span class="sc-count">2 章已上线</span>
+</a>
+<a class="strand-card" href="tracks/#track-fn" style="--sc:#7d3c98">
+  <span class="sc-dot"></span>
+  <h3>函数</h3>
+  <p>一次函数 · 二次函数 · 反比例函数</p>
+  <span class="sc-count">3 章已上线</span>
+</a>
+<a class="strand-card" href="tracks/#track-geo" style="--sc:#0f6e56">
+  <span class="sc-dot"></span>
+  <h3>图形与几何</h3>
+  <p>几何图形初步 · 三角形 · 全等三角形 · 轴对称 · 勾股定理 · 平行四边形 · 旋转 · 圆 · 相似 · 锐角三角函数 · 投影与视图</p>
+  <span class="sc-count">11 章已上线</span>
+</a>
+<a class="strand-card" href="tracks/#track-stat" style="--sc:#8a5a00">
+  <span class="sc-dot"></span>
+  <h3>统计与概率</h3>
+  <p>数据的分析 · 概率初步</p>
+  <span class="sc-count">2 章已上线</span>
+</a>
+</div>
+<p class="strand-more">五条主线之间的关系图（谁是谁的前置）在 <a href="tracks/">专项图谱</a> 页。</p>
 
 <div class="section-head">
   <h2>这个站怎么用</h2>

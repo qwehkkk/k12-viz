@@ -593,6 +593,62 @@ ul.lesson-list li::before {
 .lab-card { border-left: 3px solid var(--green); }
 .lab-card .num { color: var(--green); }
 
+/* ---------- 首页：年级分组 ---------- */
+.grade-block { margin-bottom: 26px; }
+.grade-head {
+  display: flex; align-items: baseline; gap: 10px;
+  border-bottom: 2px solid var(--border); padding-bottom: 8px; margin-bottom: 14px;
+}
+.grade-head h3 { font-size: 17px; margin: 0; }
+.grade-count { font-size: 12px; color: var(--muted); }
+.grade-soon {
+  font-size: 11px; color: var(--muted); border: 1px dashed var(--border);
+  border-radius: 999px; padding: 1px 9px;
+}
+
+/* ---------- 专项入口卡片 ---------- */
+.strand-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 14px;
+}
+.strand-card {
+  border: 1px solid var(--border); border-top: 3px solid var(--sc, var(--accent));
+  border-radius: 10px; padding: 13px 15px; text-decoration: none; background: var(--surface);
+  display: block;
+}
+.strand-card:hover { border-color: var(--sc, var(--accent)); }
+.sc-dot {
+  display: inline-block; width: 10px; height: 10px; border-radius: 50%;
+  background: var(--sc, var(--accent)); margin-bottom: 4px;
+}
+.sc-dot.big { width: 13px; height: 13px; }
+.strand-card h3 { margin: 2px 0 6px; font-size: 15px; }
+.strand-card p { font-size: 12px; color: var(--muted); margin: 0 0 8px; }
+.sc-count { font-size: 11px; color: var(--sc, var(--accent)); }
+.strand-more { font-size: 13px; color: var(--muted); margin-top: 12px; }
+.strand-more a { color: var(--accent); }
+
+/* ---------- 专项图谱页 ---------- */
+.tg-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: 10px; background: var(--surface); }
+.tg-svg { display: block; min-width: 860px; width: 100%; height: auto; }
+.tg-col { font-size: 13px; fill: var(--muted); font-weight: 500; }
+.tg-row { font-size: 14px; font-weight: 600; }
+.tg-edge { fill: none; stroke: #9aa7b5; stroke-width: 1.6; marker-end: url(#tg-arrow); opacity: 0.85; }
+.tg-node { fill: var(--surface); stroke-width: 1.6; }
+a:hover .tg-node { stroke-width: 2.4; }
+.tg-text { font-size: 12.5px; fill: var(--text); }
+.tg-ghost rect { fill: transparent; stroke: var(--border); stroke-dasharray: 5 4; }
+.tg-ghost text { font-size: 12px; fill: var(--muted); opacity: 0.75; }
+
+/* ---------- 专项分区 ---------- */
+.strand-section { margin: 34px 0; scroll-margin-top: 20px; }
+.strand-head { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
+.strand-head h2 { margin: 0; }
+.strand-desc { color: var(--muted); font-size: 14px; margin: 0 0 14px; }
+.strand-ch-card { border-left: 3px solid var(--sc, var(--accent)); }
+.strand-ch-card .num { color: var(--sc, var(--accent)); }
+.strand-ghosts { font-size: 12.5px; color: var(--muted); margin-top: 10px; }
+.grade-empty { font-size: 13px; color: var(--muted); margin: 0; padding: 4px 0 6px; }
+
 </style>
 </head>
 <body>
@@ -603,13 +659,14 @@ ul.lesson-list li::before {
     <a href="../quadratic-function/index.html" class="on">知识点</a>
     <a href="../quadratic-function/patterns.html">题型库</a>
     <a href="../quadratic-function/locate.html">题目定位器</a>
+    <a href="../tracks/">专项图谱</a>
   </nav>
 </div></header>
 <main><div class="container">
 <p class="crumb"><a href="../index.html">课程目录</a> / <a href="index.html">二次函数</a> / 顶点式 y = a(x - h)² + k</p>
 <article class="point">
   <h1>顶点式 y = a(x - h)² + k</h1>
-  <p class="point-meta">九年级 · 人教版九年级上册 · 知识点 05 / 10</p>
+  <p class="point-meta">九年级上册 · 人教版九年级上册 · 知识点 05 / 10</p>
 
   <section class="blk">
     <h2>讲解</h2>
