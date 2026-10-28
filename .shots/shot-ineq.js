@@ -39,20 +39,31 @@ srv.listen(8139, async () => {
     await send('Page.enable');
     await send('Emulation.setDeviceMetricsOverride', { width: 1200, height: 2600, deviceScaleFactor: 1, mobile: false });
     const pages = [
-      ['/function-concept/fc-def.html', 'fc-def.png'],
-      ['/function-concept/fc-domain.html', 'fc-domain.png'],
-      ['/function-concept/fc-value.html', 'fc-piece.png'],
-      ['/function-concept/fc-mono.html', 'fc-mono.png'],
-      ['/function-concept/fc-parity.html', 'fc-parity.png'],
-      ['/function-concept/fc-power.html', 'fc-power.png'],
-      ['/exp-log/el-root.html', 'el-root.png'],
-      ['/exp-log/el-logcon.html', 'el-log.png'],
-      ['/exp-log/el-logop.html', 'el-logop.png'],
-      ['/trig-fn/tf-radian.html', 'tf-radian.png'],
-      ['/trig-fn/tf-def.html', 'tf-unit.png'],
-      ['/trig-fn/tf-sign.html', 'tf-induce.png'],
-      ['/trig-fn/tf-graph.html', 'tf-graph.png'],
-      ['/trig-fn/tf-apply.html', 'tf-shm.png']
+      ['/vectors/pv-concept.html', 'pv-arrow.png'],
+      ['/vectors/pv-add.html', 'pv-add.png'],
+      ['/vectors/pv-coord.html', 'pv-coord.png'],
+      ['/vectors/pv-dot.html', 'pv-dot.png'],
+      ['/vectors/pv-sine.html', 'pv-sine.png'],
+      ['/vectors/pv-cosine.html', 'pv-cosine.png'],
+      ['/complex-num/cx-concept.html', 'cx-class.png'],
+      ['/complex-num/cx-equal.html', 'cx-equal.png'],
+      ['/complex-num/cx-op.html', 'cx-op.png'],
+      ['/complex-num/cx-plane.html', 'cx-plane.png'],
+      ['/complex-num/cx-quad.html', 'cx-quad.png'],
+      ['/solid-geo/sg-solid.html', 'sg-solid.png'],
+      ['/solid-geo/sg-area.html', 'sg-net.png'],
+      ['/solid-geo/sg-volume.html', 'sg-volume.png'],
+      ['/solid-geo/sg-lines.html', 'sg-lines.png'],
+      ['/solid-geo/sg-angle.html', 'sg-angle.png'],
+      ['/stat-hs/sh-sample.html', 'sh-sample.png'],
+      ['/stat-hs/sh-hist.html', 'sh-hist.png'],
+      ['/stat-hs/sh-central.html', 'sh-central.png'],
+      ['/stat-hs/sh-spread.html', 'sh-spread.png'],
+      ['/stat-hs/sh-corr.html', 'sh-corr.png'],
+      ['/prob-hs/ph-space.html', 'ph-dice.png'],
+      ['/prob-hs/ph-props.html', 'ph-add.png'],
+      ['/prob-hs/ph-indep.html', 'ph-indep.png'],
+      ['/prob-hs/ph-freq.html', 'ph-freq.png']
     ];
     for (const [u, f] of pages) {
       await send('Page.navigate', { url: 'http://127.0.0.1:8139' + u });

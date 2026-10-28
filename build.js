@@ -41,7 +41,7 @@ const chapters = fs.readdirSync(DATA_DIR)
 const STRANDS = [
   { id: 'num', name: '数与式', color: '#c0392b',
     desc: '从有理数到实数、从整式到二次根式——一切计算的地基。数感不通，后面全堵。',
-    chapters: ['rational', 'poly-arith', 'realnum', 'polymul', 'fraction', 'radical'],
+    chapters: ['rational', 'poly-arith', 'realnum', 'polymul', 'fraction', 'radical', 'complex-num'],
     ghosts: [] },
   { id: 'eq', name: '方程与不等式', color: '#185fa5',
     desc: '把「求多少」翻译成式子，再一步步解出来。从一元一次方程一路走到集合语言与二次不等式——高中用它重新说一遍。',
@@ -53,11 +53,11 @@ const STRANDS = [
     ghosts: [] },
   { id: 'geo', name: '图形与几何', color: '#0f6e56',
     desc: '从线段和角出发，经三角形、全等、四边形，一路走到圆、相似与三角函数。初中几何的主干线。',
-    chapters: ['geo-intro', 'triangle', 'congruence', 'axis-symmetry', 'pythagorean', 'parallelogram', 'rotate', 'circle', 'similarity', 'trigonometry', 'projection'],
+    chapters: ['geo-intro', 'triangle', 'congruence', 'axis-symmetry', 'pythagorean', 'parallelogram', 'rotate', 'circle', 'similarity', 'trigonometry', 'projection', 'vectors', 'solid-geo'],
     ghosts: [] },
   { id: 'stat', name: '统计与概率', color: '#8a5a00',
     desc: '用数据说话，用概率算「运气」。中考里分值不大，但最容易拿满。',
-    chapters: ['datacollect', 'statistics', 'probability'],
+    chapters: ['datacollect', 'statistics', 'probability', 'stat-hs', 'prob-hs'],
     ghosts: [] }
 ];
 
@@ -120,6 +120,10 @@ const totalPatterns = chapters.reduce((s, c) => s + c.patterns.length, 0);
 /* ---------- 工具 ---------- */
 function esc(s) {
   return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+/* 行内强调：先转义再处理 **加粗** 与 `代码`，避免正文里出现字面星号 */
+function rich(s) {
+  return esc(s).replace(/\*\*([^*]+)\*\*/g, '<b>$1</b>').replace(/`([^`]+)`/g, '<code>$1</code>');
 }
 function attrJson(obj) { return esc(JSON.stringify(obj)); }
 function kindClass(k) { return kindGroup(k) === '组合型' ? 'combo' : (kindGroup(k) === '综合型' ? 'full' : ''); }
@@ -204,11 +208,11 @@ ${COMMENTSJS}
 /* ---------- 讲解流 ---------- */
 function renderBlocks(blocks) {
   return blocks.map(b => {
-    if (b.t === 'p') return `<p class="lesson-p">${esc(b.text)}</p>`;
+    if (b.t === 'p') return `<p class="lesson-p">${rich(b.text)}</p>`;
     if (b.t === 'viz') return `<div class="viz-wrap"><div class="viz-box"><div data-viz='${attrJson(b.viz)}'></div></div></div>`;
     if (b.t === 'list') {
       const tag = b.ordered === false ? 'ul' : 'ol';
-      return `<${tag} class="lesson-list">${b.items.map(i => `<li>${esc(i)}</li>`).join('')}</${tag}>`;
+      return `<${tag} class="lesson-list">${b.items.map(i => `<li>${rich(i)}</li>`).join('')}</${tag}>`;
     }
     return '';
   }).join('\n');
@@ -406,11 +410,11 @@ function renderPoint(ch, p, idx) {
   const examplesHtml = exs.map((e, i) => `<details class="ex"${i === 0 ? ' open' : ''}>
   <summary><span class="ex-tag">例 ${i + 1}</span><span>${esc(e.question.slice(0, 38))}${e.question.length > 38 ? '…' : ''}</span></summary>
   <div class="ex-body">
-    <div class="ex-q">${esc(e.question)}</div>
+    <div class="ex-q">${rich(e.question)}</div>
     <ol class="steps">
-      ${e.steps.map(s => `<li>${esc(s.text)}${s.math ? `<div class="step-math">${esc(s.math)}</div>` : ''}</li>`).join('\n      ')}
+      ${e.steps.map(s => `<li>${rich(s.text)}${s.math ? `<div class="step-math">${esc(s.math)}</div>` : ''}</li>`).join('\n      ')}
     </ol>
-    <div class="ex-answer">${esc(e.answer)}</div>
+    <div class="ex-answer">${rich(e.answer)}</div>
   </div>
 </details>`).join('\n');
 
@@ -613,11 +617,11 @@ function renderPattern(ch, t, idx) {
   const stepsHtml = steps.length ? `<details class="ex" open>
   <summary><span class="ex-tag">完整解答</span><span>${esc(t.stem.slice(0, 40))}${t.stem.length > 40 ? '…' : ''}</span></summary>
   <div class="ex-body">
-    <div class="ex-q">${esc(t.stem)}</div>
+    <div class="ex-q">${rich(t.stem)}</div>
     <ol class="steps">
-      ${steps.map(s => `<li>${esc(s.text)}${s.math ? `<div class="step-math">${esc(s.math)}</div>` : ''}</li>`).join('\n      ')}
+      ${steps.map(s => `<li>${rich(s.text)}${s.math ? `<div class="step-math">${esc(s.math)}</div>` : ''}</li>`).join('\n      ')}
     </ol>
-    ${t.answer ? `<div class="ex-answer">${esc(t.answer)}</div>` : ''}
+    ${t.answer ? `<div class="ex-answer">${rich(t.answer)}</div>` : ''}
   </div>
 </details>` : '';
 
