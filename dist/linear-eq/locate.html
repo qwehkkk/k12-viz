@@ -7712,7 +7712,435 @@ window.__LOCATE_DATA__ = {"asks":[{"k":"方程的解","label":"判断/检验方�
     draw();
   }
 
-  window.VIZ = { renderPlot: renderPlot, parabolaLab: parabolaLab, stepLab: stepLab, bridgeLab: bridgeLab, profitLab: profitLab, fenceLab: fenceLab, fountainLab: fountainLab, shotLab: shotLab, completeSquareLab: completeSquareLab, equationLab: equationLab, growthLab: growthLab, rotateLab: rotateLab, coordRotLab: coordRotLab, patternLab: patternLab, clockLab: clockLab, anatomyLab: anatomyLab, chordLab: chordLab, inscribedLab: inscribedLab, positionLab: positionLab, tangentLab: tangentLab, sectorLab: sectorLab, eventScaleLab: eventScaleLab, bagLab: bagLab, sumTableLab: sumTableLab, treeLab: treeLab, coinLab: coinLab, dartLab: dartLab, inverseLab: inverseLab, kAreaLab: kAreaLab, inverseCrossLab: inverseCrossLab, inverseUseLab: inverseUseLab, trigRatioLab: trigRatioLab, trigSpecialLab: trigSpecialLab, trigSolveLab: trigSolveLab, trigHeightLab: trigHeightLab, trigSlopeLab: trigSlopeLab, trigAltitudeLab: trigAltitudeLab, simGoldenLab: simGoldenLab, simParallelLab: simParallelLab, simJudgeLab: simJudgeLab, simAreaLab: simAreaLab, simNestedLab: simNestedLab, simHomothetyLab: simHomothetyLab, simShadowLab: simShadowLab, projShadowLab: projShadowLab, projOrthLab: projOrthLab, viewThreeLab: viewThreeLab, viewBlocksLab: viewBlocksLab, viewSolidLab: viewSolidLab, pythagSquaresLab: pythagSquaresLab, pythagPuzzleLab: pythagPuzzleLab, pythagSolveLab: pythagSolveLab, pythagInverseLab: pythagInverseLab, pythagLadderLab: pythagLadderLab, linearLab: linearLab, linearQuadLab: linearQuadLab, linearCrossLab: linearCrossLab, linearModelLab: linearModelLab, linearTranslateLab: linearTranslateLab, linearFitLab: linearFitLab, pgPropLab: pgPropLab, pgDiagLab: pgDiagLab, pgJudgeLab: pgJudgeLab, pgMidlineLab: pgMidlineLab, pgRectLab: pgRectLab, pgRhombusLab: pgRhombusLab, pgSquareLab: pgSquareLab, pgAreaLab: pgAreaLab, triSidesLab: triSidesLab, triLinesLab: triLinesLab, triAngleLab: triAngleLab, triExteriorLab: triExteriorLab, polyAngleLab: polyAngleLab, congMapLab: congMapLab, congJudgeLab: congJudgeLab, congSsaLab: congSsaLab, bisectorLab: bisectorLab, axFoldLab: axFoldLab, axBisectorLab: axBisectorLab, axCoordLab: axCoordLab, axDrawLab: axDrawLab, axIsoscelesLab: axIsoscelesLab, axIsoJudgeLab: axIsoJudgeLab, axEquiLab: axEquiLab, axPathLab: axPathLab, sqrtDefLab: sqrtDefLab, sqrtPropLab: sqrtPropLab, sqrtMulLab: sqrtMulLab, sqrtDivLab: sqrtDivLab, sqrtAddLab: sqrtAddLab, sqrtEstLab: sqrtEstLab, statMeanLab: statMeanLab, statMedianLab: statMedianLab, statModeLab: statModeLab, statVarLab: statVarLab, statChoiceLab: statChoiceLab, ratLineLab: ratLineLab, ratAbsLab: ratAbsLab, ratAddLab: ratAddLab, ratMulLab: ratMulLab, ratPowerLab: ratPowerLab, eqBalanceLab: eqBalanceLab, eqStepsLab: eqStepsLab, eqMotionLab: eqMotionLab, eqDistroLab: eqDistroLab, eqPctLab: eqPctLab };
+  /* ============ 几何图形初步 ============ */
+
+  /* 立体图形切换：面/棱/顶点与「平面 + 曲面」 */
+  function geoSolidsLab(el, cfg) {
+    var s0 = circleScaffold(el);
+    var p = { k: 0 };
+    if (cfg.values) for (var key in cfg.values) p[key] = cfg.values[key];
+    var names = ['长方体', '三棱柱', '四棱锥', '圆柱', '圆锥', '球'];
+    var counts = [
+      '6 个面 / 12 条棱 / 8 个顶点',
+      '5 个面 / 9 条棱 / 6 个顶点',
+      '5 个面 / 8 条棱 / 5 个顶点',
+      '3 个面（2 平 + 1 曲），没有顶点和棱',
+      '2 个面（1 平 + 1 曲），1 个顶点',
+      '1 个曲面围成，没有顶点'
+    ];
+    var view = { xmin: -6.4, xmax: 6.4, ymin: -4.4, ymax: 4.4 };
+    var OX = 0.85, OY = 0.6; /* 斜二测的深度偏移 */
+
+    function ell(m, x, y, rx, ry, color, w, dash) {
+      m.ctx.save();
+      if (dash) m.ctx.setLineDash(dash);
+      m.ctx.strokeStyle = color;
+      m.ctx.lineWidth = w || 1.8;
+      m.ctx.beginPath();
+      m.ctx.ellipse(m.px(x), m.py(y), rx * m.sc, ry * m.sc, 0, 0, Math.PI * 2);
+      m.ctx.stroke();
+      m.ctx.restore();
+    }
+
+    function draw() {
+      var m = circleMap(s0.cv, view), ctx = m.ctx;
+      cGrid(m, view);
+      var k = Math.max(0, Math.min(5, Math.round(p.k)));
+
+      if (k === 0) { /* 长方体 */
+        var w = 2.0, h = 1.3, i;
+        var F = [[-w, -h], [w, -h], [w, h], [-w, h]];
+        var B = F.map(function (q) { return [q[0] + OX, q[1] + OY]; });
+        for (i = 0; i < 4; i++) {
+          var bn = B[(i + 1) % 4];
+          tSeg(m, B[i][0], B[i][1], bn[0], bn[1], '#9aa7b5', 1.2, [4, 4]);
+          tSeg(m, F[i][0], F[i][1], B[i][0], B[i][1], '#9aa7b5', 1.2, [4, 4]);
+        }
+        tPoly(m, F, '#185fa5', 2.2, 'rgba(24,95,165,0.10)');
+      } else if (k === 1) { /* 三棱柱 */
+        var T = [[-2.0, -1.5], [2.0, -1.5], [0, 1.9]];
+        var TB = T.map(function (q) { return [q[0] + OX, q[1] + OY]; });
+        for (var j = 0; j < 3; j++) {
+          var tn = TB[(j + 1) % 3];
+          tSeg(m, TB[j][0], TB[j][1], tn[0], tn[1], '#9aa7b5', 1.2, [4, 4]);
+          tSeg(m, T[j][0], T[j][1], TB[j][0], TB[j][1], '#9aa7b5', 1.2, [4, 4]);
+        }
+        tPoly(m, T, '#185fa5', 2.2, 'rgba(24,95,165,0.10)');
+      } else if (k === 2) { /* 四棱锥 */
+        var Q = [[-2.3, -1.8], [1.3, -1.8], [2.3, -0.9], [-1.3, -0.9]];
+        var APX = [0, 2.4];
+        tSeg(m, Q[3][0], Q[3][1], Q[2][0], Q[2][1], '#9aa7b5', 1.2, [4, 4]);
+        tSeg(m, APX[0], APX[1], Q[2][0], Q[2][1], '#9aa7b5', 1.2, [4, 4]);
+        tSeg(m, APX[0], APX[1], Q[3][0], Q[3][1], '#9aa7b5', 1.2, [4, 4]);
+        tPoly(m, Q, '#185fa5', 2.0, 'rgba(24,95,165,0.10)');
+        tSeg(m, Q[0][0], Q[0][1], Q[1][0], Q[1][1], '#185fa5', 2.0);
+        tSeg(m, Q[1][0], Q[1][1], Q[2][0], Q[2][1], '#185fa5', 2.0);
+        tSeg(m, APX[0], APX[1], Q[0][0], Q[0][1], '#185fa5', 2.0);
+        tSeg(m, APX[0], APX[1], Q[1][0], Q[1][1], '#185fa5', 2.0);
+        cDot(m, APX[0], APX[1], '#c0392b', 4);
+        cTag(m, APX[0] + 0.35, APX[1] + 0.1, '顶点', '#c0392b', 0, 0);
+      } else if (k === 3) { /* 圆柱 */
+        ell(m, 0, 1.5, 2.0, 0.6, '#185fa5', 2.2);
+        ell(m, 0, -1.5, 2.0, 0.6, '#185fa5', 2.2);
+        tSeg(m, -2.0, 1.5, -2.0, -1.5, '#185fa5', 2.2);
+        tSeg(m, 2.0, 1.5, 2.0, -1.5, '#185fa5', 2.2);
+        cTag(m, 0, 0, '侧面是曲面', '#6b7a89', 0, 0);
+      } else if (k === 4) { /* 圆锥 */
+        ell(m, 0, -1.5, 2.0, 0.6, '#185fa5', 2.2);
+        tSeg(m, 0, 2.6, -2.0, -1.5, '#185fa5', 2.2);
+        tSeg(m, 0, 2.6, 2.0, -1.5, '#185fa5', 2.2);
+        cDot(m, 0, 2.6, '#c0392b', 4);
+        cTag(m, 0.6, 2.75, '顶点', '#c0392b', 0, 0);
+      } else { /* 球 */
+        ctx.beginPath();
+        ctx.arc(m.px(0), m.py(0), 2.3 * m.sc, 0, Math.PI * 2);
+        ctx.strokeStyle = '#185fa5';
+        ctx.lineWidth = 2.2;
+        ctx.stroke();
+        ell(m, 0, 0, 2.3, 0.62, '#9aa7b5', 1.3, [4, 4]);
+      }
+
+      s0.info.innerHTML =
+        '<div class="viz-line"><b>' + names[k] + '</b>：' + counts[k] + '。切换滑块可以在 6 种常见立体图形之间轮换。</div>' +
+        '<span class="viz-meta">多面体（长方体、棱柱、棱锥）由<b>平面</b>围成，能数出面、棱、顶点；圆柱、圆锥、球都带<b>曲面</b>，就不谈棱和顶点了。每种立体图形都对应着平面图形：长方体的每个面是长方形，可以从不同方向看它（下个实验台），也可以沿棱剪开摊平成展开图。</span>';
+
+      cSlider(s0.ctrl, '立体图形（6 种轮换）', p.k, 0, 5, 1, function (v) { p.k = v; draw(); });
+    }
+    draw();
+  }
+
+  /* 点动成线、线动成面、面动成体 */
+  function geoMotionLab(el, cfg) {
+    var s0 = circleScaffold(el);
+    var p = { mode: 0, t: 55, shape: 0 };
+    if (cfg.values) for (var key in cfg.values) p[key] = cfg.values[key];
+    var view = { xmin: -7.6, xmax: 7.6, ymin: -4.0, ymax: 4.4 };
+    var titles = ['点动成线', '线动成面', '面动成体'];
+
+    function draw() {
+      var m = circleMap(s0.cv, view), ctx = m.ctx;
+      cGrid(m, view);
+      var mode = Math.max(0, Math.min(2, Math.round(p.mode)));
+      var t = Math.max(0, Math.min(100, p.t)) / 100;
+
+      if (mode === 0) {
+        var A = [-4.6, -1.0], B = [4.6, 1.0];
+        var P = [A[0] + t * (B[0] - A[0]), A[1] + t * (B[1] - A[1])];
+        tSeg(m, A[0], A[1], B[0], B[1], 'rgba(24,95,165,0.22)', 6);
+        tSeg(m, A[0], A[1], P[0], P[1], '#185fa5', 3.4);
+        cDot(m, P[0], P[1], '#c0392b', 5);
+        cTag(m, A[0] - 0.2, A[1] - 0.55, '起点', '#6b7a89', 0, 0);
+        cTag(m, P[0], P[1] + 0.75, '笔尖', '#c0392b', 0, 0);
+        cTag(m, 0, -2.2, '笔尖划过，留下一条线（轨迹）', '#0f6e56', 0, 0);
+      } else if (mode === 1) {
+        var x0 = -4.6, x1 = 4.6, hgt = 1.5;
+        var xc = x0 + t * (x1 - x0);
+        ctx.fillStyle = 'rgba(24,95,165,0.12)';
+        ctx.fillRect(m.px(x0), m.py(hgt), (xc - x0) * m.sc, 2 * hgt * m.sc);
+        tSeg(m, x0, hgt + 0.45, x0, -hgt - 0.45, '#9aa7b5', 1.3, [4, 4]);
+        tSeg(m, xc, hgt, xc, -hgt, '#185fa5', 3.4);
+        cDot(m, xc, hgt, '#185fa5', 3.5);
+        cDot(m, xc, -hgt, '#185fa5', 3.5);
+        cTag(m, xc + (t > 0.5 ? -1.1 : 1.3), hgt + 0.75, '平移的线段', '#185fa5', 0, 0);
+        cTag(m, (x0 + xc) / 2, 0, '扫过的面', '#0f6e56', 0, 0);
+      } else {
+        var O = [-2.6, 0], R = 2.7;
+        var th = t * Math.PI * 2;
+        cArc(m, O[0], O[1], R, 0, th, true);
+        ctx.fillStyle = 'rgba(15,110,86,0.13)';
+        ctx.fill();
+        ctx.beginPath();
+        ctx.arc(m.px(O[0]), m.py(O[1]), R * m.sc, 0, Math.PI * 2);
+        ctx.setLineDash([4, 4]);
+        ctx.strokeStyle = '#9aa7b5';
+        ctx.lineWidth = 1.2;
+        ctx.stroke();
+        ctx.setLineDash([]);
+        tSeg(m, O[0], O[1] - R - 0.7, O[0], O[1] + R + 0.7, '#8a5a00', 1.5, [5, 4]);
+        tSeg(m, O[0], O[1], O[0] + R * Math.cos(th), O[1] + R * Math.sin(th), '#185fa5', 3.4);
+        cDot(m, O[0] + R * Math.cos(th), O[1] + R * Math.sin(th), '#c0392b', 4.5);
+        cTag(m, O[0] - 0.1, O[1] - R - 1.0, '旋转轴', '#8a5a00', 0, 0);
+        /* 右侧：旋转出来的立体图形轮廓 */
+        var CX = 4.3;
+        if (Math.round(p.shape) === 0) {
+          tSeg(m, CX - 1.6, 1.9, CX - 1.6, -1.9, '#0f6e56', 2.2);
+          tSeg(m, CX + 1.6, 1.9, CX + 1.6, -1.9, '#0f6e56', 2.2);
+          ctx.beginPath();
+          ctx.ellipse(m.px(CX), m.py(1.9), 1.6 * m.sc, 0.5 * m.sc, 0, 0, Math.PI * 2);
+          ctx.strokeStyle = '#0f6e56'; ctx.lineWidth = 2.2; ctx.stroke();
+          ctx.beginPath();
+          ctx.ellipse(m.px(CX), m.py(-1.9), 1.6 * m.sc, 0.5 * m.sc, 0, 0, Math.PI * 2);
+          ctx.stroke();
+          cTag(m, CX, 0, '圆柱', '#0f6e56', 0, 0);
+        } else {
+          tSeg(m, CX, 2.3, CX - 1.7, -1.7, '#0f6e56', 2.2);
+          tSeg(m, CX, 2.3, CX + 1.7, -1.7, '#0f6e56', 2.2);
+          ctx.beginPath();
+          ctx.ellipse(m.px(CX), m.py(-1.7), 1.7 * m.sc, 0.5 * m.sc, 0, 0, Math.PI * 2);
+          ctx.strokeStyle = '#0f6e56'; ctx.lineWidth = 2.2; ctx.stroke();
+          cTag(m, CX, 0.2, '圆锥', '#0f6e56', 0, 0);
+        }
+        cTag(m, O[0] + R * 0.5, O[1] - 0.5, '扫过的范围', '#0f6e56', 0, 0);
+      }
+
+      s0.info.innerHTML =
+        '<div class="viz-line"><b>' + titles[mode] + '</b>：' + (mode === 0
+          ? '点在纸上滑动，笔尖留下的轨迹就是线。几何里的「线」没有粗细，是点的集合。'
+          : mode === 1
+            ? '线段平移，扫过的地方留下一个面。长方形就是一条线段平移出来的。'
+            : Math.round(p.shape) === 0
+              ? '长方形绕着它的一条边旋转一周，扫出的立体是<b>圆柱</b>——旋转半径就是长方形的宽。'
+              : '直角三角形绕直角边旋转一周，扫出的是<b>圆锥</b>——旋转半径就是另一条直角边。') + '</div>' +
+        '<span class="viz-meta">几何图形都是由<b>点、线、面、体</b>组成的：点是基本粒子，点动成线、线动成面、面动成体。把进度拖到 100% 能看到完整的一轮：线段扫满长方形、旋转面扫出一整圈。「面动成体」这一招还能造出圆台、球（半圆绕直径旋转）等一大类旋转体。</span>';
+
+      cSlider(s0.ctrl, '观察对象（点 / 线 / 面）', p.mode, 0, 2, 1, function (v) { p.mode = v; draw(); });
+      cSlider(s0.ctrl, '运动进度', p.t, 0, 100, 1, function (v) { p.t = v; draw(); });
+      cSlider(s0.ctrl, '旋转的面（长方形 / 三角形）', p.shape, 0, 1, 1, function (v) { p.shape = v; draw(); });
+    }
+    draw();
+  }
+
+  /* 从不同方向看立体图形（三视图的七年级版本） */
+  function geoView3Lab(el, cfg) {
+    var s0 = circleScaffold(el);
+    var p = { dir: 0 };
+    if (cfg.values) for (var key in cfg.values) p[key] = cfg.values[key];
+    var view = { xmin: -8.8, xmax: 7.0, ymin: -3.6, ymax: 4.4 };
+    var dirs = ['从正面看（主视）', '从左面看（左视）', '从上面看（俯视）'];
+    /* 积木：底层 (i,j) 三块 + (0,0) 上叠一块 */
+    var cubes = [[0, 1, 0], [1, 0, 0], [0, 0, 0], [0, 0, 1]];
+
+    function draw() {
+      var m = circleMap(s0.cv, view), ctx = m.ctx;
+      cGrid(m, view);
+      var dir = Math.max(0, Math.min(2, Math.round(p.dir)));
+
+      /* 左：立体草图（斜二测） */
+      function cube(X, Y) {
+        var o = 0.44, u = 0.30;
+        tPoly(m, [[X, Y], [X + 1, Y], [X + 1, Y + 1], [X, Y + 1]], '#185fa5', 1.5, '#eef4fb');
+        tPoly(m, [[X, Y + 1], [X + 1, Y + 1], [X + 1 + o, Y + 1 + u], [X + o, Y + 1 + u]], '#185fa5', 1.5, '#f8fbfe');
+        tPoly(m, [[X + 1, Y], [X + 1 + o, Y + u], [X + 1 + o, Y + 1 + u], [X + 1, Y + 1]], '#185fa5', 1.5, '#dce8f4');
+      }
+      cubes.forEach(function (c) { cube(c[0] - 4.4 + c[1] * 0.44, c[2] + c[1] * 0.30 - 0.8); });
+      cTag(m, -2.8, 3.6, '立体图形', '#6b7a89', 0, 0);
+      tSeg(m, 0.4, 3.4, 0.4, -2.8, '#d5dde5', 1.2);
+
+      /* 右：所选视图的单位正方形 */
+      var cells = [];
+      if (dir === 0) { /* 正面：按 x 列取最大高度 */
+        cells = [[0, 0], [0, 1], [1, 0]];
+      } else if (dir === 1) { /* 左面：按 y 行取最大高度 */
+        cells = [[0, 0], [0, 1], [1, 0]];
+      } else { /* 俯视：底面占位 */
+        cells = [[0, 0], [1, 0], [0, 1]];
+      }
+      cells.forEach(function (c) {
+        tPoly(m, [[1.8 + c[0], -0.8 + c[1]], [2.8 + c[0], -0.8 + c[1]], [2.8 + c[0], 0.2 + c[1]], [1.8 + c[0], 0.2 + c[1]]], '#0f6e56', 1.8, 'rgba(15,110,86,0.14)');
+      });
+      cTag(m, 3.2, 3.6, dirs[dir], '#0f6e56', 0, 0);
+
+      s0.info.innerHTML =
+        '<div class="viz-line"><b>' + dirs[dir] + '</b>：看到的是' + (dir === 2
+          ? '<b>3 个正方形组成的 L 形</b>——从上面看只管「占哪儿」，不管几层。'
+          : '<b>左列 2 层、右列 1 层</b>——被挡住的那块也要算进列的最高层数。') + '</div>' +
+        '<span class="viz-meta">同一个立体图形从不同方向看，结果可能完全不同：正面和左面这里恰好一样，上面看却是 L 形。判三视图的口诀是<b>「主俯长对正、主左高平齐、俯左宽相等」</b>。这个能力在九年级「投影与视图」一章会升级成完整的三视图画法，这里先建立直觉。试试心里换一个方向再切滑块验证。</span>';
+
+      cSlider(s0.ctrl, '观察方向（正面 / 左面 / 上面）', p.dir, 0, 2, 1, function (v) { p.dir = v; draw(); });
+    }
+    draw();
+  }
+
+  /* 直线、射线、线段 */
+  function geoSegLab(el, cfg) {
+    var s0 = circleScaffold(el);
+    var p = { type: 0 };
+    if (cfg.values) for (var key in cfg.values) p[key] = cfg.values[key];
+    var view = { xmin: -8.0, xmax: 8.0, ymin: -3.8, ymax: 4.2 };
+    var A = [-3.6, -1.0], B = [2.6, 1.4];
+    var names = ['线段', '射线', '直线'];
+
+    function draw() {
+      var m = circleMap(s0.cv, view), ctx = m.ctx;
+      cGrid(m, view);
+      var tp = Math.max(0, Math.min(2, Math.round(p.type)));
+      var dx = B[0] - A[0], dy = B[1] - A[1];
+      var L = Math.sqrt(dx * dx + dy * dy);
+      var ux = dx / L, uy = dy / L;
+
+      cDot(m, A[0], A[1], '#c0392b', 4.5);
+      cDot(m, B[0], B[1], '#c0392b', 4.5);
+      cTag(m, A[0] - 0.45, A[1] - 0.55, 'A', '#c0392b', 0, 0);
+      cTag(m, B[0] + 0.45, B[1] + 0.55, 'B', '#c0392b', 0, 0);
+
+      if (tp === 0) {
+        tSeg(m, A[0], A[1], B[0], B[1], '#185fa5', 2.6);
+        cTag(m, (A[0] + B[0]) / 2, (A[1] + B[1]) / 2 - 0.65, '两个端点，长度可以量', '#185fa5', 0, 0);
+      } else if (tp === 1) {
+        tSeg(m, A[0], A[1], B[0], B[1], '#185fa5', 2.6);
+        tLineIn(m, view, B, [ux, uy], 'rgba(24,95,165,0.55)', 2.2, [7, 6]);
+        cTag(m, A[0] - 0.1, A[1] - 0.95, '端点 A（只此一个）', '#8a5a00', 0, 0);
+        cTag(m, 5.6, 2.5, '向 B 方向无限延伸 →', '#185fa5', 0, 0);
+      } else {
+        tLineIn(m, view, A, [ux, uy], '#185fa5', 2.4);
+        tSeg(m, A[0], A[1], B[0], B[1], '#185fa5', 2.6);
+        cTag(m, 5.9, 2.4, '向两方无限延伸 →', '#185fa5', 0, 0);
+        cTag(m, -6.0, -2.2, '← 两方都延伸', '#185fa5', 0, 0);
+      }
+
+      s0.info.innerHTML =
+        '<div class="viz-line"><b>' + names[tp] + (tp === 0 ? ' AB</b>：2 个端点，可度量、可比较长短。' : tp === 1 ? '（射线 A）</b>：以 A 为端点，经过 B 向一方无限延伸，不可度量。' : ' AB</b>：没有端点，向两方无限延伸，不可度量。') + '</div>' +
+        '<span class="viz-meta">三者的关系是「延长与截断」：线段向一方延伸变射线，向两方延伸变直线；反过来，直线上取两点之间的一段就是线段。还有一条基本事实要记牢：<b>过两点有且只有一条直线</b>（两点确定一条直线）——木工弹墨线、晾衣绳拉直用的都是它。表示法：线段/直线 AB（两个大写字母），射线用「端点在前 + 方向点」如射线 AB。</span>';
+
+      cSlider(s0.ctrl, '图形类型（线段 / 射线 / 直线）', p.type, 0, 2, 1, function (v) { p.type = v; draw(); });
+    }
+    draw();
+  }
+
+  /* 线段的比较与运算：叠合比较 + 中点 */
+  function geoMidLab(el, cfg) {
+    var s0 = circleScaffold(el);
+    var p = { c: 4 };
+    if (cfg.values) for (var key in cfg.values) p[key] = cfg.values[key];
+    var view = { xmin: -7.2, xmax: 6.8, ymin: -3.6, ymax: 4.6 };
+    var A = [-4.8, 1.5], B = [1.2, 1.5]; /* AB = 6 */
+    var M = [(A[0] + B[0]) / 2, A[1]];
+    var C = [-4.8, -1.7];
+
+    function draw() {
+      var m = circleMap(s0.cv, view), ctx = m.ctx;
+      cGrid(m, view);
+      var c = Math.max(0.5, Math.min(9, p.c));
+      var D = [C[0] + c, C[1]];
+
+      /* AB 与中点 */
+      tSeg(m, A[0], A[1], B[0], B[1], '#185fa5', 2.8);
+      cDot(m, A[0], A[1], '#333', 4);
+      cDot(m, B[0], B[1], '#333', 4);
+      cDot(m, M[0], M[1], '#c0392b', 4.5);
+      cTag(m, A[0] - 0.4, A[1] + 0.5, 'A', '#333', 0, 0);
+      cTag(m, B[0] + 0.4, B[1] + 0.5, 'B', '#333', 0, 0);
+      cTag(m, M[0], M[1] + 0.55, 'M', '#c0392b', 0, 0);
+      tTicks(m, A[0], A[1], M[0], M[1], 1, '#c0392b');
+      tTicks(m, M[0], M[1], B[0], B[1], 1, '#c0392b');
+      cTag(m, M[0], M[1] - 0.75, 'AM = MB = 3', '#c0392b', 0, 0);
+
+      /* CD */
+      tSeg(m, C[0], C[1], D[0], D[1], '#0f6e56', 2.8);
+      cDot(m, C[0], C[1], '#333', 4);
+      cDot(m, D[0], D[1], '#333', 4);
+      cTag(m, C[0] - 0.4, C[1] - 0.55, 'C', '#333', 0, 0);
+      cTag(m, D[0] + 0.4, D[1] - 0.55, 'D', '#333', 0, 0);
+      cTag(m, (C[0] + D[0]) / 2, C[1] + 0.55, 'CD = ' + cFmt(c), '#0f6e56', 0, 0);
+
+      /* 叠合比较：把 CD 搬到 A 点上方 */
+      var GY = 3.4;
+      tSeg(m, A[0], GY, A[0] + c, GY, '#8a5a00', 2.2);
+      tSeg(m, A[0], GY, B[0], GY, 'rgba(51,51,51,0.35)', 1.4, [4, 4]);
+      cTag(m, A[0] + c + 0.75, GY, '叠合后', '#8a5a00', 0, 0);
+      cTag(m, -5.9, GY, '比较：', '#8a5a00', 0, 0);
+
+      s0.info.innerHTML =
+        '<div class="viz-line">比较线段：把 CD 叠到 AB 上（黄色虚线），CD = ' + cFmt(c) + (c < 6 - 1e-9
+          ? ' < AB = 6，<b>CD 更短</b>，端点 D 落在 AB 内部。'
+          : c > 6 + 1e-9
+            ? ' > AB = 6，<b>CD 更长</b>，端点 D 落到 B 外面。'
+            : ' = AB = 6，<b>两条线段恰好相等</b>。') + '</div>' +
+        '<div class="viz-line">中点：M 把 AB 平分，AM = MB = ½AB = 3，反过来 AB = AM + MB = 6。</div>' +
+        '<span class="viz-meta">比较线段长短有两种办法：<b>度量法</b>（用刻度尺量出数值再比）和<b>叠合法</b>（把一条线段挪到另一条上，一个端点重合，看另一个端点的位置）。中点是考试里出镜率最高的概念：已知 AM = 3 求 AB 时要想到<b>分类讨论</b>——M 是中点时 AB = 6，但题目没说「M 是中点」时还有别的可能（比如延长线上），读题要抠字眼。</span>';
+
+      cSlider(s0.ctrl, 'CD 的长度', p.c, 0.5, 9, 0.1, function (v) { p.c = v; draw(); });
+    }
+    draw();
+  }
+
+  /* 角的度量与角平分线 */
+  function geoAngleLab(el, cfg) {
+    var s0 = circleScaffold(el);
+    var p = { ang: 64 };
+    if (cfg.values) for (var key in cfg.values) p[key] = cfg.values[key];
+    var view = { xmin: -8.6, xmax: 4.8, ymin: -3.8, ymax: 4.2 };
+    var O = [-2.4, -1.9];
+
+    function draw() {
+      var m = circleMap(s0.cv, view), ctx = m.ctx;
+      cGrid(m, view);
+      var ang = Math.max(10, Math.min(170, p.ang));
+      var R = 4.6;
+      var A = [O[0] + R, O[1]];
+      var B = [O[0] + R * Math.cos(ang * T_D2R), O[1] + R * Math.sin(ang * T_D2R)];
+      var hb = ang / 2 * T_D2R;
+      var C = [O[0] + 4.1 * Math.cos(hb), O[1] + 4.1 * Math.sin(hb)];
+
+      tSeg(m, O[0], O[1], A[0], A[1], '#333', 2.2);
+      tSeg(m, O[0], O[1], B[0], B[1], '#333', 2.2);
+      tSeg(m, O[0], O[1], C[0], C[1], '#0f6e56', 2.0, [6, 5]);
+      cDot(m, O[0], O[1], '#c0392b', 4.5);
+      cTag(m, A[0] + 0.4, A[1] - 0.4, 'A', '#333', 0, 0);
+      cTag(m, B[0] + 0.1, B[1] + 0.5, 'B', '#333', 0, 0);
+      cTag(m, C[0] + 0.35, C[1] + 0.35, 'C', '#0f6e56', 0, 0);
+      cTag(m, O[0] - 0.45, O[1] - 0.45, 'O', '#c0392b', 0, 0);
+
+      tAngle(m, O[0], O[1], 1.55, 0, ang * T_D2R, '#c0392b', ang + '°');
+      tAngle(m, O[0], O[1], 0.85, 0, hb, '#0f6e56', '');
+      tAngle(m, O[0], O[1], 0.85, hb, ang * T_D2R, '#0f6e56', '');
+
+      s0.info.innerHTML =
+        '<div class="viz-line"><b>∠AOB = ' + ang + '°</b>，绿色虚线 OC 是它的<b>角平分线</b>：∠AOC = ∠BOC = ' + cFmt(ang / 2) + '°。</div>' +
+        '<span class="viz-meta">有公共端点的两条射线组成角，这个公共端点是顶点，两条射线是边。度量的进位要记牢：<b>1° = 60′，1′ = 60″</b>（六十进制，和时钟一样）。角平分线的用法和线段中点如出一辙：把一个量平分成两份。0° 到 180° 之间拖一拖：小于 90° 是锐角，等于 90° 是直角（两条边互相垂直），大于 90° 是钝角——角的分类与互余互补在下一个实验台继续。</span>';
+
+      cSlider(s0.ctrl, '∠AOB 的度数', p.ang, 10, 170, 1, function (v) { p.ang = v; draw(); });
+    }
+    draw();
+  }
+
+  /* 余角和补角 */
+  function geoCompLab(el, cfg) {
+    var s0 = circleScaffold(el);
+    var p = { a: 35 };
+    if (cfg.values) for (var key in cfg.values) p[key] = cfg.values[key];
+    var view = { xmin: -8.2, xmax: 8.8, ymin: -4.0, ymax: 3.0 };
+    var O1 = [-5.4, -1.8], O2 = [-0.3, -1.8], O3 = [4.8, -1.8];
+    var RL = 2.7;
+
+    function ray(m, O, angDeg, color) {
+      var P = [O[0] + RL * Math.cos(angDeg * T_D2R), O[1] + RL * Math.sin(angDeg * T_D2R)];
+      tSeg(m, O[0], O[1], P[0], P[1], color, 2.2);
+      return P;
+    }
+
+    function draw() {
+      var m = circleMap(s0.cv, view), ctx = m.ctx;
+      cGrid(m, view);
+      var a = Math.max(5, Math.min(85, p.a));
+      var comp = 90 - a, supp = 180 - a;
+
+      ray(m, O1, 0, '#333'); ray(m, O1, a, '#c0392b');
+      tAngle(m, O1[0], O1[1], 0.9, 0, a * T_D2R, '#c0392b', a + '°');
+      cTag(m, O1[0] + 0.4, O1[1] - 0.55, '∠1', '#c0392b', 0, 0);
+      cDot(m, O1[0], O1[1], '#333', 4);
+
+      ray(m, O2, 0, '#333'); ray(m, O2, comp, '#0f6e56');
+      tAngle(m, O2[0], O2[1], 0.9, 0, comp * T_D2R, '#0f6e56', comp + '°');
+      cTag(m, O2[0] + 0.5, O2[1] - 0.55, '∠2（余角）', '#0f6e56', 0, 0);
+      cDot(m, O2[0], O2[1], '#333', 4);
+
+      ray(m, O3, 0, '#333'); ray(m, O3, supp, '#185fa5');
+      tAngle(m, O3[0], O3[1], 0.72, 0, supp * T_D2R, '#185fa5', supp + '°');
+      cTag(m, O3[0] + 0.3, O3[1] - 0.55, '∠3（补角）', '#185fa5', 0, 0);
+      cDot(m, O3[0], O3[1], '#333', 4);
+
+      s0.info.innerHTML =
+        '<div class="viz-line">∠1 = ' + a + '°，∠2 = 90° − ∠1 = ' + comp + '°，∠3 = 180° − ∠1 = ' + supp + '°。</div>' +
+        '<div class="viz-line">如果两个角的和是 90°，就说它们<b>互余</b>（∠1 与 ∠2）；和是 180° 就<b>互补</b>（∠1 与 ∠3）。</div>' +
+        '<span class="viz-meta">易错点有三：① 互余、互补说的是<b>两个角的数量关系</b>，与位置无关，别和「相邻」混为一谈；② 补角可以画成一条直线上「割出一个角」，所以常有 ∠α + ∠β = 180° 的隐含条件（平角）；③ 性质要会证：<b>同角（等角）的余角相等、补角相等</b>——∠1 和 ∠2 互余、∠1 和 ∠3 互余，则 ∠2 = ∠3，全靠「等量减等量」。</span>';
+
+      cSlider(s0.ctrl, '∠1 的度数', p.a, 5, 85, 1, function (v) { p.a = v; draw(); });
+    }
+    draw();
+  }
+
+  window.VIZ = { renderPlot: renderPlot, parabolaLab: parabolaLab, stepLab: stepLab, bridgeLab: bridgeLab, profitLab: profitLab, fenceLab: fenceLab, fountainLab: fountainLab, shotLab: shotLab, completeSquareLab: completeSquareLab, equationLab: equationLab, growthLab: growthLab, rotateLab: rotateLab, coordRotLab: coordRotLab, patternLab: patternLab, clockLab: clockLab, anatomyLab: anatomyLab, chordLab: chordLab, inscribedLab: inscribedLab, positionLab: positionLab, tangentLab: tangentLab, sectorLab: sectorLab, eventScaleLab: eventScaleLab, bagLab: bagLab, sumTableLab: sumTableLab, treeLab: treeLab, coinLab: coinLab, dartLab: dartLab, inverseLab: inverseLab, kAreaLab: kAreaLab, inverseCrossLab: inverseCrossLab, inverseUseLab: inverseUseLab, trigRatioLab: trigRatioLab, trigSpecialLab: trigSpecialLab, trigSolveLab: trigSolveLab, trigHeightLab: trigHeightLab, trigSlopeLab: trigSlopeLab, trigAltitudeLab: trigAltitudeLab, simGoldenLab: simGoldenLab, simParallelLab: simParallelLab, simJudgeLab: simJudgeLab, simAreaLab: simAreaLab, simNestedLab: simNestedLab, simHomothetyLab: simHomothetyLab, simShadowLab: simShadowLab, projShadowLab: projShadowLab, projOrthLab: projOrthLab, viewThreeLab: viewThreeLab, viewBlocksLab: viewBlocksLab, viewSolidLab: viewSolidLab, pythagSquaresLab: pythagSquaresLab, pythagPuzzleLab: pythagPuzzleLab, pythagSolveLab: pythagSolveLab, pythagInverseLab: pythagInverseLab, pythagLadderLab: pythagLadderLab, linearLab: linearLab, linearQuadLab: linearQuadLab, linearCrossLab: linearCrossLab, linearModelLab: linearModelLab, linearTranslateLab: linearTranslateLab, linearFitLab: linearFitLab, pgPropLab: pgPropLab, pgDiagLab: pgDiagLab, pgJudgeLab: pgJudgeLab, pgMidlineLab: pgMidlineLab, pgRectLab: pgRectLab, pgRhombusLab: pgRhombusLab, pgSquareLab: pgSquareLab, pgAreaLab: pgAreaLab, triSidesLab: triSidesLab, triLinesLab: triLinesLab, triAngleLab: triAngleLab, triExteriorLab: triExteriorLab, polyAngleLab: polyAngleLab, congMapLab: congMapLab, congJudgeLab: congJudgeLab, congSsaLab: congSsaLab, bisectorLab: bisectorLab, axFoldLab: axFoldLab, axBisectorLab: axBisectorLab, axCoordLab: axCoordLab, axDrawLab: axDrawLab, axIsoscelesLab: axIsoscelesLab, axIsoJudgeLab: axIsoJudgeLab, axEquiLab: axEquiLab, axPathLab: axPathLab, sqrtDefLab: sqrtDefLab, sqrtPropLab: sqrtPropLab, sqrtMulLab: sqrtMulLab, sqrtDivLab: sqrtDivLab, sqrtAddLab: sqrtAddLab, sqrtEstLab: sqrtEstLab, statMeanLab: statMeanLab, statMedianLab: statMedianLab, statModeLab: statModeLab, statVarLab: statVarLab, statChoiceLab: statChoiceLab, ratLineLab: ratLineLab, ratAbsLab: ratAbsLab, ratAddLab: ratAddLab, ratMulLab: ratMulLab, ratPowerLab: ratPowerLab, eqBalanceLab: eqBalanceLab, eqStepsLab: eqStepsLab, eqMotionLab: eqMotionLab, eqDistroLab: eqDistroLab, eqPctLab: eqPctLab, geoSolidsLab: geoSolidsLab, geoMotionLab: geoMotionLab, geoView3Lab: geoView3Lab, geoSegLab: geoSegLab, geoMidLab: geoMidLab, geoAngleLab: geoAngleLab, geoCompLab: geoCompLab };
 })();
 
 </script>
@@ -7830,6 +8258,13 @@ window.__LOCATE_DATA__ = {"asks":[{"k":"方程的解","label":"判断/检验方�
       else if (cfg.type === 'eq-motion') VIZ.eqMotionLab(el, cfg);
       else if (cfg.type === 'eq-distro') VIZ.eqDistroLab(el, cfg);
       else if (cfg.type === 'eq-pct') VIZ.eqPctLab(el, cfg);
+      else if (cfg.type === 'geo-solids') VIZ.geoSolidsLab(el, cfg);
+      else if (cfg.type === 'geo-motion') VIZ.geoMotionLab(el, cfg);
+      else if (cfg.type === 'geo-view3') VIZ.geoView3Lab(el, cfg);
+      else if (cfg.type === 'geo-seg') VIZ.geoSegLab(el, cfg);
+      else if (cfg.type === 'geo-mid') VIZ.geoMidLab(el, cfg);
+      else if (cfg.type === 'geo-angle') VIZ.geoAngleLab(el, cfg);
+      else if (cfg.type === 'geo-comp') VIZ.geoCompLab(el, cfg);
     });
   });
 })();

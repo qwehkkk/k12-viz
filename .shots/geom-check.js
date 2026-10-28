@@ -31,6 +31,7 @@ function makeCtx(rec) {
     moveTo: (x, y) => rec.pt(x, y),
     lineTo: (x, y) => rec.pt(x, y),
     arc: (x, y, r) => { rec.pt(x - r, y - r); rec.pt(x + r, y + r); },
+    ellipse: (x, y, rx, ry) => { rec.pt(x - rx, y - ry); rec.pt(x + rx, y + ry); },
     rect: (x, y, w, h) => rec.box(x, y, w, h),
     fillRect: (x, y, w, h) => rec.box(x, y, w, h),
     strokeRect: (x, y, w, h) => rec.box(x, y, w, h),

@@ -111,6 +111,13 @@
       else if (cfg.type === 'eq-motion') VIZ.eqMotionLab(el, cfg);
       else if (cfg.type === 'eq-distro') VIZ.eqDistroLab(el, cfg);
       else if (cfg.type === 'eq-pct') VIZ.eqPctLab(el, cfg);
+      else if (cfg.type === 'geo-solids') VIZ.geoSolidsLab(el, cfg);
+      else if (cfg.type === 'geo-motion') VIZ.geoMotionLab(el, cfg);
+      else if (cfg.type === 'geo-view3') VIZ.geoView3Lab(el, cfg);
+      else if (cfg.type === 'geo-seg') VIZ.geoSegLab(el, cfg);
+      else if (cfg.type === 'geo-mid') VIZ.geoMidLab(el, cfg);
+      else if (cfg.type === 'geo-angle') VIZ.geoAngleLab(el, cfg);
+      else if (cfg.type === 'geo-comp') VIZ.geoCompLab(el, cfg);
     });
   });
 })();
