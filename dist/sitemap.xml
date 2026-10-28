@@ -757,4 +757,52 @@
   <url><loc>https://teach.toolona.com/derivative/pattern/dv-t-ineq.html</loc><priority>0.7</priority></url>
   <url><loc>https://teach.toolona.com/derivative/pattern/dv-t-zero.html</loc><priority>0.7</priority></url>
   <url><loc>https://teach.toolona.com/derivative/pattern/dv-t-opt.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/counting/index.html</loc><priority>0.9</priority></url>
+  <url><loc>https://teach.toolona.com/counting/cp-principle.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/counting/cp-perm.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/counting/cp-comb.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/counting/cp-pascal.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/counting/cp-binomial.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/counting/patterns.html</loc><priority>0.9</priority></url>
+  <url><loc>https://teach.toolona.com/counting/locate.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/counting/pattern/cp-t-two.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/counting/pattern/cp-t-perm.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/counting/pattern/cp-t-adjacent.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/counting/pattern/cp-t-atleast.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/counting/pattern/cp-t-pc.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/counting/pattern/cp-t-term.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/counting/pattern/cp-t-max.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/counting/pattern/cp-t-assign.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/randvar/index.html</loc><priority>0.9</priority></url>
+  <url><loc>https://teach.toolona.com/randvar/rv-dist.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/randvar/rv-mean.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/randvar/rv-binom.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/randvar/rv-hyper.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/randvar/rv-normal.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/randvar/patterns.html</loc><priority>0.9</priority></url>
+  <url><loc>https://teach.toolona.com/randvar/locate.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/randvar/pattern/rv-t-dist.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/randvar/pattern/rv-t-mean.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/randvar/pattern/rv-t-decide.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/randvar/pattern/rv-t-binom.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/randvar/pattern/rv-t-atleast.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/randvar/pattern/rv-t-hyper.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/randvar/pattern/rv-t-normal.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/randvar/pattern/rv-t-mix.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/pairstat/index.html</loc><priority>0.9</priority></url>
+  <url><loc>https://teach.toolona.com/pairstat/pd-scatter.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/pairstat/pd-regress.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/pairstat/pd-fit.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/pairstat/pd-table.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/pairstat/pd-chi2.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/pairstat/patterns.html</loc><priority>0.9</priority></url>
+  <url><loc>https://teach.toolona.com/pairstat/locate.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/pairstat/pattern/pd-t-scatter.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/pairstat/pattern/pd-t-regress.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/pairstat/pattern/pd-t-predict.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/pairstat/pattern/pd-t-fit.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/pairstat/pattern/pd-t-table.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/pairstat/pattern/pd-t-chi2.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/pairstat/pattern/pd-t-nonlin.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/pairstat/pattern/pd-t-mix.html</loc><priority>0.7</priority></url>
 </urlset>

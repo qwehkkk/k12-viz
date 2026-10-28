@@ -57,7 +57,7 @@ const STRANDS = [
     ghosts: [] },
   { id: 'stat', name: '统计与概率', color: '#8a5a00',
     desc: '用数据说话，用概率算「运气」。中考里分值不大，但最容易拿满。',
-    chapters: ['datacollect', 'statistics', 'probability', 'stat-hs', 'prob-hs'],
+    chapters: ['datacollect', 'statistics', 'probability', 'stat-hs', 'prob-hs', 'counting', 'randvar', 'pairstat'],
     ghosts: [] }
 ];
 

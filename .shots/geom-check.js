@@ -62,7 +62,7 @@ global.navigator = { userAgent: 'node' };
 eval(code);
 const VIZ = global.window.VIZ;
 
-const targets = process.argv[2] === 'all' ? null : ['trig-ratio', 'trig-special', 'trig-solve', 'trig-height', 'trig-slope', 'trig-altitude'];
+const targets = process.argv[2] && process.argv[2] !== 'all' ? process.argv[2].split(',') : null;
 const cases = [];
 for (const f of fs.readdirSync('data/chapters')) {
   if (!f.endsWith('.json')) continue;
