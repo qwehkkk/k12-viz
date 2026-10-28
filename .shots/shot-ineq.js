@@ -39,15 +39,20 @@ srv.listen(8139, async () => {
     await send('Page.enable');
     await send('Emulation.setDeviceMetricsOverride', { width: 1200, height: 2600, deviceScaleFactor: 1, mobile: false });
     const pages = [
-      ['/sets/st-def.html', 'st-def.png'],
-      ['/sets/st-rel.html', 'st-subset.png'],
-      ['/sets/st-ops.html', 'st-venn.png'],
-      ['/sets/st-imply.html', 'st-imply.png'],
-      ['/quad-ineq/qt-vertex.html', 'qt-vertex.png'],
-      ['/quad-ineq/qt-trio.html', 'qt-trio.png'],
-      ['/quad-ineq/qt-solve.html', 'qt-solve.png'],
-      ['/quad-ineq/qt-amgm.html', 'qt-amgm.png'],
-      ['/quad-ineq/qt-apply.html', 'qt-apply.png']
+      ['/function-concept/fc-def.html', 'fc-def.png'],
+      ['/function-concept/fc-domain.html', 'fc-domain.png'],
+      ['/function-concept/fc-value.html', 'fc-piece.png'],
+      ['/function-concept/fc-mono.html', 'fc-mono.png'],
+      ['/function-concept/fc-parity.html', 'fc-parity.png'],
+      ['/function-concept/fc-power.html', 'fc-power.png'],
+      ['/exp-log/el-root.html', 'el-root.png'],
+      ['/exp-log/el-logcon.html', 'el-log.png'],
+      ['/exp-log/el-logop.html', 'el-logop.png'],
+      ['/trig-fn/tf-radian.html', 'tf-radian.png'],
+      ['/trig-fn/tf-def.html', 'tf-unit.png'],
+      ['/trig-fn/tf-sign.html', 'tf-induce.png'],
+      ['/trig-fn/tf-graph.html', 'tf-graph.png'],
+      ['/trig-fn/tf-apply.html', 'tf-shm.png']
     ];
     for (const [u, f] of pages) {
       await send('Page.navigate', { url: 'http://127.0.0.1:8139' + u });

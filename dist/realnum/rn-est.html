@@ -10416,7 +10416,767 @@ function dcTruncLab(el, cfg) {
     cSlider(s0.ctrl, '边长 x（另一边 10 − x）', p.x, 0.5, 9.5, 0.25, function (x) { p.x = x; draw(); });
     draw();
   }
-  window.VIZ = { stDefLab: stDefLab, stRepLab: stRepLab, stSubsetLab: stSubsetLab, stVennLab: stVennLab, stImplyLab: stImplyLab, qtVertexLab: qtVertexLab, qtTrioLab: qtTrioLab, qtSolveLab: qtSolveLab, qtAmgmLab: qtAmgmLab, qtApplyLab: qtApplyLab, frDefLab: frDefLab, frSimplifyLab: frSimplifyLab, frMuldivLab: frMuldivLab, frAddLab: frAddLab, frEqLab: frEqLab, ineqDefLab: ineqDefLab, ineqFlipLab: ineqFlipLab, ineqSolveLab: ineqSolveLab, ineqSetLab: ineqSetLab, ineqApplyLab: ineqApplyLab, iaTermLab: iaTermLab, iaLikeLab: iaLikeLab, iaMergeLab: iaMergeLab, iaParenLab: iaParenLab, iaEvalLab: iaEvalLab, rnSqrtLab: rnSqrtLab, rnCubeLab: rnCubeLab, rnAxisLab: rnAxisLab, rnEstLab: rnEstLab, rnClassLab: rnClassLab, pmPowerLab: pmPowerLab, pmDistroLab: pmDistroLab, pmSqdiffLab: pmSqdiffLab, pmPerfectLab: pmPerfectLab, pmCommonLab: pmCommonLab, pmXtileLab: pmXtileLab, dcSampleLab: dcSampleLab, dcChartLab: dcChartLab, dcPieLab: dcPieLab, dcHistLab: dcHistLab, dcTruncLab: dcTruncLab, renderPlot: renderPlot, parabolaLab: parabolaLab, stepLab: stepLab, bridgeLab: bridgeLab, profitLab: profitLab, fenceLab: fenceLab, fountainLab: fountainLab, shotLab: shotLab, completeSquareLab: completeSquareLab, equationLab: equationLab, growthLab: growthLab, rotateLab: rotateLab, coordRotLab: coordRotLab, patternLab: patternLab, clockLab: clockLab, anatomyLab: anatomyLab, chordLab: chordLab, inscribedLab: inscribedLab, positionLab: positionLab, tangentLab: tangentLab, sectorLab: sectorLab, eventScaleLab: eventScaleLab, bagLab: bagLab, sumTableLab: sumTableLab, treeLab: treeLab, coinLab: coinLab, dartLab: dartLab, inverseLab: inverseLab, kAreaLab: kAreaLab, inverseCrossLab: inverseCrossLab, inverseUseLab: inverseUseLab, trigRatioLab: trigRatioLab, trigSpecialLab: trigSpecialLab, trigSolveLab: trigSolveLab, trigHeightLab: trigHeightLab, trigSlopeLab: trigSlopeLab, trigAltitudeLab: trigAltitudeLab, simGoldenLab: simGoldenLab, simParallelLab: simParallelLab, simJudgeLab: simJudgeLab, simAreaLab: simAreaLab, simNestedLab: simNestedLab, simHomothetyLab: simHomothetyLab, simShadowLab: simShadowLab, projShadowLab: projShadowLab, projOrthLab: projOrthLab, viewThreeLab: viewThreeLab, viewBlocksLab: viewBlocksLab, viewSolidLab: viewSolidLab, pythagSquaresLab: pythagSquaresLab, pythagPuzzleLab: pythagPuzzleLab, pythagSolveLab: pythagSolveLab, pythagInverseLab: pythagInverseLab, pythagLadderLab: pythagLadderLab, linearLab: linearLab, linearQuadLab: linearQuadLab, linearCrossLab: linearCrossLab, linearModelLab: linearModelLab, linearTranslateLab: linearTranslateLab, linearFitLab: linearFitLab, pgPropLab: pgPropLab, pgDiagLab: pgDiagLab, pgJudgeLab: pgJudgeLab, pgMidlineLab: pgMidlineLab, pgRectLab: pgRectLab, pgRhombusLab: pgRhombusLab, pgSquareLab: pgSquareLab, pgAreaLab: pgAreaLab, triSidesLab: triSidesLab, triLinesLab: triLinesLab, triAngleLab: triAngleLab, triExteriorLab: triExteriorLab, polyAngleLab: polyAngleLab, congMapLab: congMapLab, congJudgeLab: congJudgeLab, congSsaLab: congSsaLab, bisectorLab: bisectorLab, axFoldLab: axFoldLab, axBisectorLab: axBisectorLab, axCoordLab: axCoordLab, axDrawLab: axDrawLab, axIsoscelesLab: axIsoscelesLab, axIsoJudgeLab: axIsoJudgeLab, axEquiLab: axEquiLab, axPathLab: axPathLab, sqrtDefLab: sqrtDefLab, sqrtPropLab: sqrtPropLab, sqrtMulLab: sqrtMulLab, sqrtDivLab: sqrtDivLab, sqrtAddLab: sqrtAddLab, sqrtEstLab: sqrtEstLab, statMeanLab: statMeanLab, statMedianLab: statMedianLab, statModeLab: statModeLab, statVarLab: statVarLab, statChoiceLab: statChoiceLab, ratLineLab: ratLineLab, ratAbsLab: ratAbsLab, ratAddLab: ratAddLab, ratMulLab: ratMulLab, ratPowerLab: ratPowerLab, eqBalanceLab: eqBalanceLab, eqStepsLab: eqStepsLab, eqMotionLab: eqMotionLab, eqDistroLab: eqDistroLab, eqPctLab: eqPctLab, geoSolidsLab: geoSolidsLab, geoMotionLab: geoMotionLab, geoView3Lab: geoView3Lab, geoSegLab: geoSegLab, geoMidLab: geoMidLab, geoAngleLab: geoAngleLab, geoCompLab: geoCompLab, sysDefLab: sysDefLab, sysSubstLab: sysSubstLab, sysElimLab: sysElimLab, sysSolLab: sysSolLab, sysCaseLab: sysCaseLab, sysFarmLab: sysFarmLab };
+  /* ============================================================
+   * 必修一 第3章 函数的概念与性质 fc-*
+   * ============================================================ */
+
+  /* 通用：按采样画函数曲线，超出视野自动断开 */
+  function fcCurve(mm, view, f, x1, x2, color, width) {
+    var ctx = mm.ctx, first = true;
+    ctx.strokeStyle = color; ctx.lineWidth = width || 3;
+    ctx.beginPath();
+    for (var i = 0; i <= 300; i++) {
+      var x = x1 + (x2 - x1) * i / 300, y = f(x);
+      if (!isFinite(y) || y < view.ymin - 0.4 || y > view.ymax + 0.4) { first = true; continue; }
+      if (first) { ctx.moveTo(mm.px(x), mm.py(y)); first = false; }
+      else ctx.lineTo(mm.px(x), mm.py(y));
+    }
+    ctx.stroke();
+  }
+
+  /* 竖线检验：一个 x 交出一个点才是函数 */
+  function fcDefLab(el, cfg) {
+    var s0 = circleScaffold(el);
+    var v = (cfg && cfg.values) || {};
+    var p = { t: v.t != null ? v.t : 1, m: v.m || 0 };
+    function draw() {
+      var view = { xmin: -4.8, xmax: 4.8, ymin: -3.6, ymax: 3.6 };
+      var mm = circleMap(s0.cv, view), ctx = mm.ctx;
+      mm._vmin = view.ymin; mm._vmax = view.ymax;
+      xyAxes(mm, view);
+      var ys = [];
+      if (p.m === 0) {
+        fcCurve(mm, view, function (x) { return 0.8 * x * x - 1; }, -4.8, 4.8, '#185fa5');
+        var y0 = 0.8 * p.t * p.t - 1;
+        if (y0 >= view.ymin && y0 <= view.ymax) ys.push(y0);
+        cTag(mm, 3.6, 2.5, 'y = 0.8x² − 1', '#185fa5', 0, 0);
+      } else {
+        ctx.strokeStyle = '#c0392b'; ctx.lineWidth = 3; ctx.beginPath();
+        var first = true;
+        for (var i = 0; i <= 260; i++) {
+          var yy = -3.5 + 7 * i / 260, xx = 0.6 * yy * yy - 2;
+          if (first) { ctx.moveTo(mm.px(xx), mm.py(yy)); first = false; }
+          else ctx.lineTo(mm.px(xx), mm.py(yy));
+        }
+        ctx.stroke();
+        var d = (p.t + 2) / 0.6;
+        if (d >= 0) {
+          var s = Math.sqrt(d);
+          if (s <= 3.5) ys.push(s);
+          if (s > 1e-9 && s <= 3.5) ys.push(-s);
+        }
+        cTag(mm, 2.6, 2.9, 'x = 0.6y² − 2', '#c0392b', 0, 0);
+      }
+      ctx.setLineDash([6, 5]); ctx.strokeStyle = '#e67e22'; ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.moveTo(mm.px(p.t), 0); ctx.lineTo(mm.px(p.t), mm.h); ctx.stroke();
+      ctx.setLineDash([]);
+      ys.forEach(function (yy) { cDot(mm, p.t, yy, '#c0392b', 6); });
+      ctx.fillStyle = '#e67e22'; ctx.font = '12px "PingFang SC","Microsoft YaHei",sans-serif';
+      ctx.textAlign = 'center'; ctx.textBaseline = 'top';
+      ctx.fillText('x = ' + cFmt(p.t), mm.px(p.t), 4);
+      var isFn = ys.length <= 1;
+      cTag(mm, 0, -3.0, '竖线交点数：' + ys.length + ' → ' + (isFn ? '是函数（唯一确定）' : '不是函数（一个 x 对两个 y）'),
+        isFn ? '#0f6e56' : '#c0392b', 0, 0);
+      s0.info.innerHTML = '<span class="viz-meta">函数的核心约束是<b>唯一确定</b>：定义域里每个 x 只能射出一个 y。拖动橙色竖线从左扫到右——' +
+        (p.m === 0 ? '抛物线始终只有 1 个交点，所以它是函数（左支右支各给一个 y 的两条曲线就不行了）。' : '开口向右的抛物线在 x > −2 处一律 2 个交点，一个 x 对上两个 y，它就<b>不是</b>函数。') + '</span>'
+        + '<span class="viz-meta">这也是「竖线检验法」：任何竖直线与图象最多一个交点 ⇔ 该图象表示函数。圆、椭圆、横放的抛物线都过不了这一关。</span>';
+    }
+    cSlider(s0.ctrl, '竖线的位置 x', p.t, -4.4, 4.4, 0.2, function (x) { p.t = x; draw(); });
+    cSlider(s0.ctrl, '曲线（0 抛物线 y=0.8x²−1 ／ 1 横抛物线 x=0.6y²−2）', p.m, 0, 1, 1, function (x) { p.m = x; draw(); });
+    draw();
+  }
+
+  /* 定义域：三条禁令叠加，取交集 */
+  function fcDomainLab(el, cfg) {
+    var s0 = circleScaffold(el);
+    var v = (cfg && cfg.values) || {};
+    var p = { m: v.m != null ? v.m : 7 };
+    function ok(x, bit) {
+      if (!(p.m & bit)) return true;
+      if (bit === 1) return Math.abs(x - 2) > 1e-9;
+      if (bit === 2) return x >= 1;
+      return x < 3;
+    }
+    function draw() {
+      var view = { xmin: -2.8, xmax: 6.8, ymin: -0.9, ymax: 5.4 };
+      var mm = circleMap(s0.cv, view), ctx = mm.ctx;
+      mm._vmin = view.ymin; mm._vmax = view.ymax;
+      ctx.fillStyle = '#ffffff'; ctx.fillRect(0, 0, mm.w, mm.h);
+      function segs(test) {
+        var out = [], cur = null, step = 0.008;
+        for (var x = -2.6; x <= 6.6; x += step) {
+          if (test(x)) { if (!cur) cur = { a: x }; cur.b = x; }
+          else if (cur) { out.push(cur); cur = null; }
+        }
+        if (cur) out.push(cur);
+        return out;
+      }
+      var rows = [
+        { y: 4.3, bit: 1, col: '#c0392b', name: '分母 ≠ 0：x ≠ 2', on: (p.m & 1) !== 0 },
+        { y: 3.3, bit: 2, col: '#e67e22', name: '偶次根号：x ≥ 1', on: (p.m & 2) !== 0 },
+        { y: 2.3, bit: 4, col: '#7d3c98', name: '对数真数：x < 3', on: (p.m & 4) !== 0 }
+      ];
+      rows.forEach(function (r) {
+        ctx.fillStyle = '#f4f7fa';
+        ctx.fillRect(mm.px(-2.6), mm.py(r.y + 0.28), mm.px(6.6) - mm.px(-2.6), 0.56 * mm.sc);
+        if (!r.on) {
+          cTag(mm, 2.0, r.y, r.name + '（已关闭）', '#a8b4c0', 0, 0);
+          return;
+        }
+        segs(function (x) { return ok(x, r.bit); }).forEach(function (s) {
+          ctx.fillStyle = r.col;
+          ctx.globalAlpha = 0.22;
+          ctx.fillRect(mm.px(s.a), mm.py(r.y + 0.26), mm.px(s.b) - mm.px(s.a), 0.52 * mm.sc);
+          ctx.globalAlpha = 1;
+        });
+        cTag(mm, 2.0, r.y + 0.52, r.name, r.col, 0, 0);
+      });
+      /* 交集行 */
+      ctx.fillStyle = '#eef7f2';
+      ctx.fillRect(mm.px(-2.6), mm.py(1.6), mm.px(6.6) - mm.px(-2.6), 0.56 * mm.sc);
+      var inter = segs(function (x) { return ok(x, 1) && ok(x, 2) && ok(x, 4); });
+      inter.forEach(function (s) {
+        ctx.fillStyle = '#0f6e56'; ctx.globalAlpha = 0.55;
+        ctx.fillRect(mm.px(s.a), mm.py(1.56), mm.px(s.b) - mm.px(s.a), 0.52 * mm.sc);
+        ctx.globalAlpha = 1;
+      });
+      /* 数轴 */
+      ctx.strokeStyle = '#9aa7b4'; ctx.lineWidth = 1.6;
+      ctx.beginPath(); ctx.moveTo(mm.px(-2.7), mm.py(0.4)); ctx.lineTo(mm.px(6.7), mm.py(0.4)); ctx.stroke();
+      for (var g = -2; g <= 6; g++) {
+        ctx.beginPath(); ctx.moveTo(mm.px(g), mm.py(0.4) - 4); ctx.lineTo(mm.px(g), mm.py(0.4) + 4); ctx.stroke();
+        ctx.fillStyle = '#6b7a89'; ctx.font = '11px "PingFang SC","Microsoft YaHei",sans-serif';
+        ctx.textAlign = 'center'; ctx.textBaseline = 'top';
+        ctx.fillText(String(g), mm.px(g), mm.py(0.4) + 7);
+      }
+      /* 禁区点 */
+      [[2, (p.m & 1) !== 0], [3, (p.m & 4) !== 0]].forEach(function (t) {
+        if (!t[1]) return;
+        ctx.beginPath(); ctx.arc(mm.px(t[0]), mm.py(0.4), 5, 0, Math.PI * 2);
+        ctx.fillStyle = '#ffffff'; ctx.fill();
+        ctx.strokeStyle = '#c0392b'; ctx.lineWidth = 2; ctx.stroke();
+      });
+      var txt = inter.map(function (s) { return '[' + cFmt(s.a) + ', ' + cFmt(s.b) + ']'; }).join(' ∪ ').replace(/\[(-?[\d.]+), (-?[\d.]+)\]/g, function (all, a, b) {
+        return '[' + a + ', ' + b + ']';
+      });
+      cTag(mm, 2.0, 1.05, '交集（定义域）：' + (inter.length ? txt : '空集'), '#0f6e56', 0, 0);
+      s0.info.innerHTML = '<span class="viz-meta">f(x) = 1/(x − 2) + √(x − 1) + lg(3 − x) 的三条禁令分别是：<b>分母 ≠ 0</b>（挖掉 x = 2 一个点）、<b>被开方数 ≥ 0</b>（x ≥ 1）、<b>真数 > 0</b>（x < 3）。</span>'
+        + '<span class="viz-meta">三条必须<b>同时</b>满足，所以取交集。全开时只剩 1 ≤ x < 3 且 x ≠ 2，即 [1, 2) ∪ (2, 3)——挖掉的单点必须用「∪」拆成两段，写成 [1, 3) 就默认 2 也被包含了。</span>';
+    }
+    cSlider(s0.ctrl, '开关组合（二进制：1 分母 ／ 2 根号 ／ 4 对数）', p.m, 0, 7, 1, function (x) { p.m = x; draw(); });
+    draw();
+  }
+
+  /* 分段函数：先定段，再代入 */
+  function fcPieceLab(el, cfg) {
+    var s0 = circleScaffold(el);
+    var v = (cfg && cfg.values) || {};
+    var p = { t: v.t != null ? v.t : -2 };
+    function f(x) { return x < 0 ? x + 1 : x * x; }
+    function draw() {
+      var view = { xmin: -4.4, xmax: 4.4, ymin: -2.6, ymax: 6.8 };
+      var mm = circleMap(s0.cv, view), ctx = mm.ctx;
+      mm._vmin = view.ymin; mm._vmax = view.ymax;
+      xyAxes(mm, view);
+      ctx.setLineDash([]);
+      fcCurve(mm, view, function (x) { return x + 1; }, -4.4, 0, '#185fa5');
+      fcCurve(mm, view, function (x) { return x * x; }, 0, 2.6, '#0f6e56');
+      /* 分界点：左支空心 (0,1)，右支实心 (0,0) */
+      ctx.beginPath(); ctx.arc(mm.px(0), mm.py(1), 5, 0, Math.PI * 2);
+      ctx.fillStyle = '#ffffff'; ctx.fill(); ctx.strokeStyle = '#185fa5'; ctx.lineWidth = 2.2; ctx.stroke();
+      ctx.beginPath(); ctx.arc(mm.px(0), mm.py(0), 5, 0, Math.PI * 2);
+      ctx.fillStyle = '#0f6e56'; ctx.fill();
+      cTag(mm, -1.6, 2.6, 'y = x + 1（x < 0）', '#185fa5', 0, 0);
+      cTag(mm, 2.4, 4.4, 'y = x²（x ≥ 0）', '#0f6e56', 0, 0);
+      /* 当前点 */
+      var y = f(p.t);
+      ctx.setLineDash([5, 4]); ctx.strokeStyle = '#e67e22'; ctx.lineWidth = 1.6;
+      ctx.beginPath(); ctx.moveTo(mm.px(p.t), mm.py(0)); ctx.lineTo(mm.px(p.t), mm.py(y)); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(mm.px(0), mm.py(y)); ctx.lineTo(mm.px(p.t), mm.py(y)); ctx.stroke();
+      ctx.setLineDash([]);
+      cDot(mm, p.t, y, '#e67e22', 6);
+      cTag(mm, p.t, y + 0.55, '(' + cFmt(p.t) + ', ' + cFmt(y) + ')', '#e67e22', 0, 0);
+      cTag(mm, 0, -2.2, p.t < 0 ? 'x = ' + cFmt(p.t) + ' < 0 → 用第一支 x + 1' : 'x = ' + cFmt(p.t) + ' ≥ 0 → 用第二支 x²',
+        p.t < 0 ? '#185fa5' : '#0f6e56', 0, 0);
+      s0.info.innerHTML = '<span class="viz-meta">分段函数是<b>一个</b>函数，只是不同区间用不同表达式。f(x) = x + 1（x < 0）、x²（x ≥ 0）——拖动 x 跨过 0 的那一刻，公式就换了。</span>'
+        + '<span class="viz-meta">这里 f(0) 由第二支决定（因为等号在 x ≥ 0 上），所以图象在 x = 0 处从 (0, 1) 的<b>空心点</b>跳到 (0, 0) 的实心点。求 f(f(a)) 时先算内层，内层的结果落在哪一段，外层就用哪一段——这是分段函数最容易错的地方。</span>';
+    }
+    cSlider(s0.ctrl, '自变量 x', p.t, -4, 4, 0.2, function (x) { p.t = x; draw(); });
+    draw();
+  }
+
+  /* 单调性：拖两点看高低 */
+  function fcMonoLab(el, cfg) {
+    var s0 = circleScaffold(el);
+    var v = (cfg && cfg.values) || {};
+    var p = { x1: v.x1 != null ? v.x1 : -1, x2: v.x2 != null ? v.x2 : 1.5 };
+    function f(x) { return x * x - 2 * x; }
+    function draw() {
+      var view = { xmin: -3.4, xmax: 5.4, ymin: -3.4, ymax: 8.4 };
+      var mm = circleMap(s0.cv, view), ctx = mm.ctx;
+      mm._vmin = view.ymin; mm._vmax = view.ymax;
+      xyAxes(mm, view);
+      ctx.setLineDash([6, 5]); ctx.strokeStyle = '#e67e22'; ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.moveTo(mm.px(1), 0); ctx.lineTo(mm.px(1), mm.h); ctx.stroke();
+      ctx.setLineDash([]);
+      fcCurve(mm, view, f, -2.2, 4.2, '#185fa5');
+      var a = Math.min(p.x1, p.x2), b = Math.max(p.x1, p.x2);
+      var ya = f(a), yb = f(b);
+      ctx.strokeStyle = '#7d3c98'; ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.moveTo(mm.px(a), mm.py(ya)); ctx.lineTo(mm.px(b), mm.py(yb)); ctx.stroke();
+      ctx.setLineDash([4, 4]); ctx.strokeStyle = '#b0bdc9'; ctx.lineWidth = 1.4;
+      ctx.beginPath(); ctx.moveTo(mm.px(a), mm.py(ya)); ctx.lineTo(mm.px(b), mm.py(ya)); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(mm.px(b), mm.py(ya)); ctx.lineTo(mm.px(b), mm.py(yb)); ctx.stroke();
+      ctx.setLineDash([]);
+      cDot(mm, a, ya, '#185fa5', 6); cDot(mm, b, yb, '#c0392b', 6);
+      cTag(mm, a, ya - 0.85, 'A(' + cFmt(a) + ', ' + cFmt(ya) + ')', '#185fa5', 0, 0);
+      cTag(mm, b, yb + 0.85, 'B(' + cFmt(b) + ', ' + cFmt(yb) + ')', '#c0392b', 0, 0);
+      var res, col;
+      if (Math.abs(a - b) < 1e-9) { res = '两点重合，请拉开'; col = '#8395a7'; }
+      else if (ya < yb) { res = 'x 增大 → y 也增大：这一段单调递增'; col = '#0f6e56'; }
+      else if (ya > yb) { res = 'x 增大 → y 反而减小：这一段单调递减'; col = '#c0392b'; }
+      else { res = 'y 相等：不是单调区间'; col = '#8395a7'; }
+      cTag(mm, 1.2, -2.6, res, col, 0, 0);
+      cTag(mm, 1.0, 7.6, '对称轴 x = 1', '#e67e22', 0, 0);
+      s0.info.innerHTML = '<span class="viz-meta">单调性是<b>区间</b>性质。f(x) = x² − 2x 的对称轴是 x = 1：两点都在轴左边时 y 随 x 增大而减小（递减），都在轴右边时 y 随 x 增大而增大（递增）。</span>'
+        + '<span class="viz-meta">现在 A、B 分别在 ' + cFmt(a) + ' 和 ' + cFmt(b) + '：Δy = ' + cFmt(yb - ya) + '，Δx = ' + cFmt(b - a) + '，差商 Δy/Δx = ' + (Math.abs(b - a) < 1e-9 ? '—' : cFmt((yb - ya) / (b - a))) + '。差商为正即递增、为负即递减。</span>';
+    }
+    cSlider(s0.ctrl, '点 A 的横坐标 x₁', p.x1, -2, 4, 0.25, function (x) { p.x1 = x; draw(); });
+    cSlider(s0.ctrl, '点 B 的横坐标 x₂', p.x2, -2, 4, 0.25, function (x) { p.x2 = x; draw(); });
+    draw();
+  }
+
+  /* 奇偶性：折叠 / 旋转 */
+  function fcParityLab(el, cfg) {
+    var s0 = circleScaffold(el);
+    var v = (cfg && cfg.values) || {};
+    var p = { t: v.t != null ? v.t : 1.4, m: v.m || 0 };
+    var FNS = [
+      { f: function (x) { return 0.5 * x * x * x - x; }, name: 'f(x) = 0.5x³ − x', kind: '奇函数', col: '#185fa5' },
+      { f: function (x) { return 0.5 * x * x - 1; }, name: 'f(x) = 0.5x² − 1', kind: '偶函数', col: '#0f6e56' },
+      { f: function (x) { return 0.5 * x * x + x; }, name: 'f(x) = 0.5x² + x', kind: '非奇非偶', col: '#c0392b' }
+    ];
+    function draw() {
+      var cur = FNS[p.m], view = { xmin: -4.2, xmax: 4.2, ymin: -4.6, ymax: 5.4 };
+      var mm = circleMap(s0.cv, view), ctx = mm.ctx;
+      mm._vmin = view.ymin; mm._vmax = view.ymax;
+      xyAxes(mm, view);
+      ctx.setLineDash([6, 5]); ctx.strokeStyle = '#b0bdc9'; ctx.lineWidth = 1.6;
+      ctx.beginPath(); ctx.moveTo(mm.px(0), 0); ctx.lineTo(mm.px(0), mm.h); ctx.stroke();
+      ctx.setLineDash([]);
+      fcCurve(mm, view, cur.f, -4.2, 4.2, cur.col);
+      var t = p.t, y1 = cur.f(t), y2 = cur.f(-t);
+      /* 折叠 / 旋转的辅助线 */
+      ctx.strokeStyle = '#e67e22'; ctx.lineWidth = 1.6; ctx.setLineDash([4, 4]);
+      ctx.beginPath(); ctx.moveTo(mm.px(-4.2), mm.py(y1)); ctx.lineTo(mm.px(4.2), mm.py(y1)); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(mm.px(t), mm.py(y1)); ctx.lineTo(mm.px(-t), mm.py(y2)); ctx.stroke();
+      ctx.setLineDash([]);
+      cDot(mm, t, y1, '#e67e22', 6); cDot(mm, -t, y2, '#7d3c98', 6);
+      cTag(mm, t, y1 + 0.7, 'f(' + cFmt(t) + ') = ' + cFmt(y1), '#e67e22', 0, 0);
+      cTag(mm, -t, y2 - 0.7, 'f(' + cFmt(-t) + ') = ' + cFmt(y2), '#7d3c98', 0, 0);
+      cTag(mm, 0, 4.7, cur.name + '　→　' + cur.kind, cur.col, 0, 0);
+      s0.info.innerHTML = '<span class="viz-meta">判断奇偶之前先看<b>定义域</b>：三个函数都是 R，关于原点对称，可以继续算。然后比较 f(−x) 与 f(x) 的关系。</span>'
+        + '<span class="viz-meta">' + (p.m === 0 ? 'f(−x) = −0.5x³ + x = −f(x) → <b>奇函数</b>，图象关于原点中心对称：绕原点转 180° 与原图重合。'
+          : p.m === 1 ? 'f(−x) = 0.5x² − 1 = f(x) → <b>偶函数</b>，图象关于 y 轴对称：沿 y 轴对折两半重合。'
+            : 'f(−x) = 0.5x² − x，既不等于 f(x) 也不等于 −f(x) → <b>非奇非偶</b>，折不过去也转不过来。')
+        + '当前 f(' + cFmt(t) + ') = ' + cFmt(y1) + '，f(' + cFmt(-t) + ') = ' + cFmt(y2) + '。</span>';
+    }
+    cSlider(s0.ctrl, '点的横坐标 x', p.t, -3, 3, 0.2, function (x) { p.t = x; draw(); });
+    cSlider(s0.ctrl, '函数（0 奇 ／ 1 偶 ／ 2 非奇非偶）', p.m, 0, 2, 1, function (x) { p.m = x; draw(); });
+    draw();
+  }
+
+  /* 幂函数族 */
+  function fcPowerLab(el, cfg) {
+    var s0 = circleScaffold(el);
+    var v = (cfg && cfg.values) || {};
+    var p = { n: v.n != null ? v.n : 3 };
+    var AL = [-1, 0.5, 1, 2, 3];
+    var NAME = ['α = −1（y = 1/x）', 'α = 1/2（y = √x）', 'α = 1（y = x）', 'α = 2（y = x²）', 'α = 3（y = x³）'];
+    var DESC = ['定义域 x ≠ 0，奇函数，两支，在 (0,+∞) 递减', '定义域 [0,+∞)，只有半支，无奇偶性，递增', '定义域 R，奇函数，过原点的直线', '定义域 R，偶函数，抛物线', '定义域 R，奇函数，立方曲线'];
+    function pow(x, a) {
+      if (a === 0.5) return x < 0 ? NaN : Math.sqrt(x);
+      if (a < 0) return x === 0 ? NaN : Math.pow(x, a);
+      return Math.pow(x, a);
+    }
+    function draw() {
+      var view = { xmin: -3.2, xmax: 3.2, ymin: -5.2, ymax: 8.2 };
+      var mm = circleMap(s0.cv, view), ctx = mm.ctx;
+      mm._vmin = view.ymin; mm._vmax = view.ymax;
+      xyAxes(mm, view);
+      var i;
+      for (i = 0; i < AL.length; i++) {
+        if (i === p.n) continue;
+        fcCurve(mm, view, function (x) { return pow(x, AL[i]); }, -3.2, 3.2, '#c3ced9', 1.6);
+      }
+      fcCurve(mm, view, function (x) { return pow(x, AL[p.n]); }, -3.2, 3.2, '#185fa5', 3.4);
+      cDot(mm, 1, 1, '#e67e22', 6);
+      cTag(mm, 1, 1.75, '(1, 1) 恒过', '#e67e22', 0, 0);
+      cTag(mm, 0, 7.4, NAME[p.n], '#185fa5', 0, 0);
+      cTag(mm, 0, -4.5, DESC[p.n], '#6b7a89', 0, 0);
+      s0.info.innerHTML = '<span class="viz-meta">幂函数 y = x^α 只有一个参数。五条淡色曲线是 α = −1、1/2、1、2、3 的参考曲线，粗蓝线是当前 α。全部穿过 <b>(1, 1)</b>——这是最好认的钉子点。</span>'
+        + '<span class="viz-meta">比较大小的关键规律：在 x ∈ (0, 1) 内，α 越大曲线越低（0.5³ < 0.5² < 0.5）；在 x > 1 时反过来，α 越大越高。α < 0 时曲线在 x → 0⁺ 冲向无穷、x → +∞ 贴着 x 轴，且在 (0,+∞) 上递减。</span>';
+    }
+    cSlider(s0.ctrl, '指数 α（−1 → 1/2 → 1 → 2 → 3）', p.n, 0, 4, 1, function (x) { p.n = x; draw(); });
+    draw();
+  }
+
+  /* ============================================================
+   * 必修一 第4章 指数函数与对数函数 el-*
+   * ============================================================ */
+
+  /* 分数指数幂：a^(m/n) 的三步链路 */
+  function elRootLab(el, cfg) {
+    var s0 = circleScaffold(el);
+    var v = (cfg && cfg.values) || {};
+    var p = { a: v.a || 2, m: v.m || 3, n: v.n || 2 };
+    function sup(x) { return ['', '', '²', '³', '⁴', '⁵', '⁶'][x] || ('^' + x); }
+    function card(mm, x, y, w, h, title, body, col) {
+      var ctx = mm.ctx;
+      ctx.fillStyle = '#ffffff';
+      ctx.strokeStyle = col; ctx.lineWidth = 2;
+      ctx.beginPath();
+      var rx = mm.px(x - w / 2), ry = mm.py(y + h / 2), rw = w * mm.sc, rh = h * mm.sc;
+      ctx.rect(rx, ry, rw, rh); ctx.fill(); ctx.stroke();
+      ctx.fillStyle = col; ctx.font = 'bold 20px "PingFang SC","Microsoft YaHei",sans-serif';
+      ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      ctx.fillText(title, mm.px(x), mm.py(y + 0.55));
+      ctx.fillStyle = '#5b6b7a'; ctx.font = '13px "PingFang SC","Microsoft YaHei",sans-serif';
+      ctx.fillText(body, mm.px(x), mm.py(y - 0.75));
+    }
+    function arrow(mm, x1, x2, y, col) {
+      var ctx = mm.ctx;
+      ctx.strokeStyle = col; ctx.lineWidth = 2; ctx.beginPath();
+      ctx.moveTo(mm.px(x1), mm.py(y)); ctx.lineTo(mm.px(x2), mm.py(y)); ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(mm.px(x2), mm.py(y));
+      ctx.lineTo(mm.px(x2) - 9, mm.py(y) - 5);
+      ctx.lineTo(mm.px(x2) - 9, mm.py(y) + 5);
+      ctx.closePath(); ctx.fillStyle = col; ctx.fill();
+      ctx.fillStyle = col; ctx.font = '12px "PingFang SC","Microsoft YaHei",sans-serif';
+      ctx.textAlign = 'center'; ctx.textBaseline = 'bottom';
+      ctx.fillText('开 n 次方', mm.px((x1 + x2) / 2), mm.py(y) - 6);
+    }
+    function draw() {
+      var view = { xmin: 0, xmax: 12, ymin: 0, ymax: 7.4 };
+      var mm = circleMap(s0.cv, view), ctx = mm.ctx;
+      ctx.fillStyle = '#ffffff'; ctx.fillRect(0, 0, mm.w, mm.h);
+      var am = Math.pow(p.a, p.m), res = Math.pow(p.a, p.m / p.n);
+      card(mm, 2, 4.6, 2.6, 2.0, String(p.a), '底数 a', '#185fa5');
+      card(mm, 6, 4.6, 2.9, 2.0, String(am), 'a' + sup(p.m) + '（先乘方）', '#7d3c98');
+      card(mm, 10, 4.6, 2.7, 2.0, cFmt(res), '结果 a^(m/n)', '#0f6e56');
+      arrow(mm, 3.4, 4.5, 4.6, '#9aa7b4');
+      arrow(mm, 7.5, 8.6, 4.6, '#9aa7b4');
+      ctx.fillStyle = '#1d2b38'; ctx.font = 'bold 24px "PingFang SC","Microsoft YaHei",sans-serif';
+      ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      ctx.fillText(p.a + sup(p.m) + '/' + p.n + ' 次方 =  ⁿ√(' + p.a + sup(p.m) + ') = ' + p.n + ' 次根号下 ' + am, mm.px(6), mm.py(6.9));
+      ctx.font = '14px "PingFang SC","Microsoft YaHei",sans-serif';
+      ctx.fillStyle = '#5b6b7a';
+      ctx.fillText('另一条等价路径：先开 n 次方 → (' + p.n + '√' + p.a + ') = ' + cFmt(Math.pow(p.a, 1 / p.n)) + '，再乘 m 次方 → ' + cFmt(Math.pow(Math.pow(p.a, 1 / p.n), p.m)), mm.px(6), mm.py(6.05));
+      ctx.fillStyle = '#0f6e56'; ctx.font = 'bold 15px "PingFang SC","Microsoft YaHei",sans-serif';
+      ctx.fillText('两条路径结果相同：' + cFmt(Math.pow(p.a, p.m / p.n)), mm.px(6), mm.py(5.2));
+      ctx.fillStyle = '#8395a7'; ctx.font = '13px "PingFang SC","Microsoft YaHei",sans-serif';
+      ctx.fillText('化简口诀：先开方，后乘方——数字小、算得快，也不容易溢出', mm.px(6), mm.py(3.6));
+      ctx.fillText('规定 a^(m/n) = ⁿ√(a^m) 是为了保住指数律：(a^(1/2))² = a^(2×1/2) = a', mm.px(6), mm.py(3.0));
+      s0.info.innerHTML = '<span class="viz-meta">根式与分数指数幂是同一件事：' + p.a + '<sup>' + p.m + '/' + p.n + '</sup> = <sup>' + p.n + '</sup>√(' + p.a + '<sup>' + p.m + '</sup>) = ' + cFmt(res) + '。</span>'
+        + '<span class="viz-meta">注意 a^(m/n) 与 (a^m)/n 完全不同：前者是开 n 次方，后者只是除以 n。做化简题时把负指数先转正、根式转分数指数，再用同底合并指数，几乎不会出错。</span>';
+    }
+    cSlider(s0.ctrl, '底数 a', p.a, 2, 6, 1, function (x) { p.a = x; draw(); });
+    cSlider(s0.ctrl, '分子 m（乘方次数）', p.m, 1, 4, 1, function (x) { p.m = x; draw(); });
+    cSlider(s0.ctrl, '分母 n（开方次数）', p.n, 2, 4, 1, function (x) { p.n = x; draw(); });
+    draw();
+  }
+
+  /* 指数函数族 */
+  function elExpLab(el, cfg) {
+    var s0 = circleScaffold(el);
+    var v = (cfg && cfg.values) || {};
+    var p = { a: v.a || 2 };
+    function draw() {
+      var view = { xmin: -4.2, xmax: 4.2, ymin: -1.4, ymax: 9.2 };
+      var mm = circleMap(s0.cv, view), ctx = mm.ctx;
+      mm._vmin = view.ymin; mm._vmax = view.ymax;
+      xyAxes(mm, view);
+      ctx.setLineDash([5, 4]); ctx.strokeStyle = '#c3ced9'; ctx.lineWidth = 1.4;
+      ctx.beginPath(); ctx.moveTo(0, mm.py(1)); ctx.lineTo(mm.w, mm.py(1)); ctx.stroke();
+      ctx.setLineDash([]);
+      fcCurve(mm, view, function (x) { return Math.pow(2, x); }, -4.2, 4.2, '#d5dee7', 1.8);
+      fcCurve(mm, view, function (x) { return Math.pow(0.5, x); }, -4.2, 4.2, '#d5dee7', 1.8);
+      fcCurve(mm, view, function (x) { return Math.pow(p.a, x); }, -4.2, 4.2, '#185fa5', 3.4);
+      cDot(mm, 0, 1, '#e67e22', 6);
+      cTag(mm, 0.85, 1.55, '(0, 1)', '#e67e22', 0, 0);
+      var up = p.a > 1;
+      cTag(mm, 0, 8.4, 'y = ' + cFmt(p.a) + '^x　' + (up ? '底数 > 1 → 单调递增' : '底数 ∈ (0,1) → 单调递减'), up ? '#0f6e56' : '#c0392b', 0, 0);
+      cTag(mm, 2.6, 0.25, 'y = 1（渐近线）', '#a8b4c0', 0, 0);
+      s0.info.innerHTML = '<span class="viz-meta">y = a^x 的两条铁律：<b>永远在 x 轴上方</b>（值域 (0, +∞)）、<b>恒过 (0, 1)</b>（a⁰ = 1 与 a 无关）。淡灰两条是 a = 2 与 a = 0.5 的参考曲线，互为关于 y 轴的镜像。</span>'
+        + '<span class="viz-meta">现在 a = ' + cFmt(p.a) + '：' + (up ? '每加 1，y 乘 ' + cFmt(p.a) + ' 倍——x 从 0 到 4，y 从 1 涨到 ' + cFmt(Math.pow(p.a, 4)) + '，这就是「指数爆炸」。' : '每加 1，y 缩为原来的 ' + cFmt(p.a) + '——x 越大越贴近 x 轴但永不触碰，这是衰减。') + '</span>';
+    }
+    cSlider(s0.ctrl, '底数 a', p.a, 0.2, 3, 0.1, function (x) { p.a = x; draw(); });
+    draw();
+  }
+
+  /* 指数 ↔ 对数：关于 y = x 对称 */
+  function elLogLab(el, cfg) {
+    var s0 = circleScaffold(el);
+    var v = (cfg && cfg.values) || {};
+    var p = { a: v.a || 2, x: v.x != null ? v.x : 2 };
+    function draw() {
+      var a = p.a;
+      var view = { xmin: -4, xmax: 6, ymin: -4, ymax: 6 };
+      var mm = circleMap(s0.cv, view), ctx = mm.ctx;
+      mm._vmin = view.ymin; mm._vmax = view.ymax;
+      xyAxes(mm, view);
+      ctx.setLineDash([6, 5]); ctx.strokeStyle = '#b0bdc9'; ctx.lineWidth = 1.6;
+      ctx.beginPath(); ctx.moveTo(mm.px(view.xmin), mm.py(view.xmin)); ctx.lineTo(mm.px(view.xmax), mm.py(view.xmax)); ctx.stroke();
+      ctx.setLineDash([]);
+      cTag(mm, 5.2, 5.45, 'y = x', '#8a97a4', 0, 0);
+      fcCurve(mm, view, function (x) { return Math.pow(a, x); }, -4, 6, '#185fa5', 3.2);
+      fcCurve(mm, view, function (x) {
+        return x > 0 ? Math.log(x) / Math.log(a) : NaN;
+      }, 0.001, 6, '#0f6e56', 3.2);
+      var N = Math.pow(a, p.x);
+      cDot(mm, p.x, N, '#185fa5', 6);
+      cDot(mm, N, p.x, '#0f6e56', 6);
+      ctx.setLineDash([4, 4]); ctx.strokeStyle = '#e67e22'; ctx.lineWidth = 1.6;
+      ctx.beginPath(); ctx.moveTo(mm.px(p.x), mm.py(p.x)); ctx.lineTo(mm.px(p.x), mm.py(N)); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(mm.px(p.x), mm.py(N)); ctx.lineTo(mm.px(N), mm.py(N)); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(mm.px(N), mm.py(N)); ctx.lineTo(mm.px(N), mm.py(p.x)); ctx.stroke();
+      ctx.setLineDash([]);
+      if (p.x >= view.xmin && p.x <= view.xmax && N >= view.ymin && N <= view.ymax) {
+        cTag(mm, p.x - 1.1, N, '(' + cFmt(p.x) + ', ' + cFmt(N) + ')', '#185fa5', 0, 0);
+      }
+      if (N <= view.xmax) cTag(mm, N, p.x - 0.75, '(' + cFmt(N) + ', ' + cFmt(p.x) + ')', '#0f6e56', 0, 0);
+      cTag(mm, 1.5, 5.3, 'y = ' + cFmt(a) + '^x', '#185fa5', 0, 0);
+      cTag(mm, 4.6, 1.4, 'y = log' + cFmt(a) + 'x', '#0f6e56', 0, 0);
+      cTag(mm, -2.2, -3.2, cFmt(a) + '^' + cFmt(p.x) + ' = ' + cFmt(N) + '　⇔　log' + cFmt(a) + cFmt(N) + ' = ' + cFmt(p.x), '#1d2b38', 0, 0);
+      s0.info.innerHTML = '<span class="viz-meta">指数与对数是<b>同一个式子的两种读法</b>：' + cFmt(a) + '^' + cFmt(p.x) + ' = ' + cFmt(N) + '（正向算幂）与 log<sub>' + cFmt(a) + '</sub>' + cFmt(N) + ' = ' + cFmt(p.x) + '（反向问指数）完全等价。</span>'
+        + '<span class="viz-meta">图象上：两条曲线关于 y = x 对称，点 (' + cFmt(p.x) + ', ' + cFmt(N) + ') 与 (' + cFmt(N) + ', ' + cFmt(p.x) + ') 互为镜像。指数的值域 (0,+∞) 变成对数的定义域，定点 (0,1) 变成 (1,0)。</span>';
+    }
+    cSlider(s0.ctrl, '底数 a（> 1，避开 1）', p.a, 1.2, 3, 0.1, function (x) { p.a = x; draw(); });
+    cSlider(s0.ctrl, '指数 x', p.x, -3, 3, 0.5, function (x) { p.x = x; draw(); });
+    draw();
+  }
+
+  /* 对数运算律：乘法变加法 */
+  function elLogopLab(el, cfg) {
+    var s0 = circleScaffold(el);
+    var v = (cfg && cfg.values) || {};
+    var p = { m: v.m || 4, n: v.n || 8 };
+    function draw() {
+      var view = { xmin: 0, xmax: 12, ymin: 0, ymax: 10 };
+      var mm = circleMap(s0.cv, view), ctx = mm.ctx;
+      ctx.fillStyle = '#ffffff'; ctx.fillRect(0, 0, mm.w, mm.h);
+      var lm = Math.log(p.m) / Math.LN2, ln = Math.log(p.n) / Math.LN2, lmn = Math.log(p.m * p.n) / Math.LN2;
+      var unit = 1.15, x0 = 1.6;
+      function bar(y, len, col, label, val) {
+        ctx.fillStyle = '#f4f7fa';
+        ctx.fillRect(mm.px(x0), mm.py(y + 0.34), 8.5 * mm.sc, 0.68 * mm.sc);
+        ctx.fillStyle = col; ctx.globalAlpha = 0.75;
+        ctx.fillRect(mm.px(x0), mm.py(y + 0.34), len * unit * mm.sc, 0.68 * mm.sc);
+        ctx.globalAlpha = 1;
+        ctx.fillStyle = '#1d2b38'; ctx.font = 'bold 13px "PingFang SC","Microsoft YaHei",sans-serif';
+        ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
+        ctx.fillText(label, mm.px(x0 - 1.5), mm.py(y));
+        ctx.textAlign = 'right';
+        ctx.fillStyle = col;
+        ctx.fillText(val, mm.px(x0 + len * unit + 0.2), mm.py(y + 0.02));
+      }
+      bar(8.6, lm, '#185fa5', 'log₂' + p.m, String(cFmt(lm)));
+      bar(7.2, ln, '#7d3c98', 'log₂' + p.n, String(cFmt(ln)));
+      bar(5.4, lmn, '#0f6e56', 'log₂' + (p.m * p.n), String(cFmt(lmn)));
+      ctx.setLineDash([5, 4]); ctx.strokeStyle = '#0f6e56'; ctx.lineWidth = 1.6;
+      ctx.beginPath(); ctx.moveTo(mm.px(x0), mm.py(5.4)); ctx.lineTo(mm.px(x0 + lmn * unit), mm.py(5.4)); ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.fillStyle = '#1d2b38'; ctx.font = 'bold 17px "PingFang SC","Microsoft YaHei",sans-serif';
+      ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      ctx.fillText('log₂(' + p.m + ' × ' + p.n + ') = ' + cFmt(lmn) + ' = ' + cFmt(lm) + ' + ' + cFmt(ln) + ' = log₂' + p.m + ' + log₂' + p.n, mm.px(6), mm.py(4.0));
+      var q = p.m / p.n;
+      ctx.fillStyle = '#5b6b7a'; ctx.font = '14px "PingFang SC","Microsoft YaHei",sans-serif';
+      ctx.fillText('同理（商）：log₂(' + p.m + ' ÷ ' + p.n + ') = log₂' + p.m + ' − log₂' + p.n + ' = ' + cFmt(lm) + ' − ' + cFmt(ln) + ' = ' + cFmt(lm - ln), mm.px(6), mm.py(3.0));
+      ctx.fillText('幂：log₂' + p.m + '² = 2 × log₂' + p.m + ' = ' + cFmt(2 * lm) + '　　（真数 ' + p.m + '² = ' + p.m * p.m + '）', mm.px(6), mm.py(2.2));
+      ctx.fillStyle = '#c0392b'; ctx.font = '13px "PingFang SC","Microsoft YaHei",sans-serif';
+      ctx.fillText('无效公式：log₂(' + p.m + ' + ' + p.n + ') = log₂' + (p.m + p.n) + ' = ' + cFmt(Math.log(p.m + p.n) / Math.LN2) + '　≠　' + cFmt(lm + ln) + '（和的对数没有公式！）', mm.px(6), mm.py(1.2));
+      s0.info.innerHTML = '<span class="viz-meta">对数把<b>乘除降级成加减</b>：log<sub>2</sub>(' + p.m + ' × ' + p.n + ') = log<sub>2</sub>' + p.m + ' + log<sub>2</sub>' + p.n + '，条形长度正好首尾相接。这就是三百年间对数表能替代乘法的原因。</span>'
+        + '<span class="viz-meta">最高频的错误写在了最下面：<b>log(M + N) 没有公式</b>，它既不等于 log M + log N，也不等于 log M · log N。只有「积、商、幂」三条有公式。</span>';
+    }
+    cSlider(s0.ctrl, '第一个真数 m', p.m, 1, 8, 1, function (x) { p.m = x; draw(); });
+    cSlider(s0.ctrl, '第二个真数 n', p.n, 1, 8, 1, function (x) { p.n = x; draw(); });
+    draw();
+  }
+
+  /* 半衰期与复利 */
+  function elHalfLab(el, cfg) {
+    var s0 = circleScaffold(el);
+    var v = (cfg && cfg.values) || {};
+    var p = { t: v.t != null ? v.t : 30, m: v.m || 0 };
+    function draw() {
+      var decay = p.m === 0;
+      var view = decay
+        ? { xmin: -3, xmax: 66, ymin: -0.08, ymax: 1.15 }
+        : { xmin: -3, xmax: 66, ymin: -1, ymax: 21 };
+      var mm = circleMap(s0.cv, view), ctx = mm.ctx;
+      mm._vmin = view.ymin; mm._vmax = view.ymax;
+      xyAxes(mm, view);
+      var f = decay
+        ? function (t) { return Math.pow(0.5, t / 30); }
+        : function (t) { return Math.pow(1.05, t); };
+      fcCurve(mm, view, f, 0, 63, decay ? '#0f6e56' : '#c0392b', 3.2);
+      var y = f(p.t);
+      ctx.setLineDash([5, 4]); ctx.strokeStyle = '#e67e22'; ctx.lineWidth = 1.6;
+      ctx.beginPath(); ctx.moveTo(mm.px(0), mm.py(y)); ctx.lineTo(mm.px(p.t), mm.py(y)); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(mm.px(p.t), mm.py(view.ymin)); ctx.lineTo(mm.px(p.t), mm.py(y)); ctx.stroke();
+      ctx.setLineDash([]);
+      cDot(mm, p.t, y, '#e67e22', 6.5);
+      cTag(mm, p.t, y + (decay ? 0.09 : 1.6), decay ? (cFmt(y * 100) + '%') : (cFmt(y) + ' 倍'), '#e67e22', 0, 0);
+      if (decay) {
+        for (var k = 0; k <= 2; k++) {
+          var tt = 30 * k;
+          if (tt <= 63) {
+            cDot(mm, tt, Math.pow(0.5, k), '#185fa5', 4);
+          }
+        }
+        cTag(mm, 33, 0.98, '每 30 天剩一半：1 → 0.5 → 0.25 → 0.125', '#185fa5', 0, 0);
+      } else {
+        cTag(mm, 33, 17, '每年 ×1.05：约 15 年翻倍（1.05¹⁵ ≈ 2.08）', '#c0392b', 0, 0);
+      }
+      s0.info.innerHTML = '<span class="viz-meta">' + (decay
+        ? '半衰期模型：剩余比例 p = (1/2)^(t/30)。t = ' + p.t + ' 天时剩 <b>' + cFmt(y * 100) + '%</b>。指数衰减的特点是「每过一个固定时间就乘同一个系数」，不是「每过一段就减同一个量」。'
+        : '复利模型：本息倍数 p = 1.05^n。n = ' + p.t + ' 年时是 <b>' + cFmt(y) + ' 倍</b>。指数增长比线性增长可怕得多：前 15 年只翻一倍，后 15 年再翻一倍，越往后每年增加的绝对值越大。')
+        + '</span><span class="viz-meta">解「什么时候到某个值」必须用对数：' + (decay ? '(1/2)^(t/30) = k → t = 30·log₂(1/k)' : '1.05^n = k → n = lg k / lg 1.05') + '。这也是指数与对数总是成对出现的原因。</span>';
+    }
+    cSlider(s0.ctrl, '时间（天 / 年）', p.t, 0, 60, 1, function (x) { p.t = x; draw(); });
+    cSlider(s0.ctrl, '模型（0 半衰期 T=30 ／ 1 复利 5%）', p.m, 0, 1, 1, function (x) { p.m = x; draw(); });
+    draw();
+  }
+
+  /* ============================================================
+   * 必修一 第5章 三角函数 tf-*
+   * ============================================================ */
+
+  function tfSin(deg) { return Math.sin(deg * Math.PI / 180); }
+  function tfCos(deg) { return Math.cos(deg * Math.PI / 180); }
+
+  /* 弧度制：弧长比半径 */
+  function tfRadianLab(el, cfg) {
+    var s0 = circleScaffold(el);
+    var v = (cfg && cfg.values) || {};
+    var p = { deg: v.deg != null ? v.deg : 60, r: v.r || 3 };
+    function draw() {
+      var view = { xmin: -5.4, xmax: 5.4, ymin: -4.6, ymax: 4.6 };
+      var mm = circleMap(s0.cv, view), ctx = mm.ctx;
+      mm._vmin = view.ymin; mm._vmax = view.ymax;
+      cGrid(mm, view);
+      var R = p.r, d = p.deg, rad = d * Math.PI / 180;
+      ctx.strokeStyle = '#c3ced9'; ctx.lineWidth = 1.6;
+      ctx.beginPath(); ctx.arc(mm.px(0), mm.py(0), R * mm.sc, 0, Math.PI * 2); ctx.stroke();
+      /* 扇形填充 */
+      ctx.fillStyle = 'rgba(24,95,165,0.13)';
+      ctx.beginPath(); ctx.moveTo(mm.px(0), mm.py(0));
+      ctx.arc(mm.px(0), mm.py(0), R * mm.sc, 0, -rad, true);
+      ctx.closePath(); ctx.fill();
+      /* 弧加粗 */
+      ctx.strokeStyle = '#c0392b'; ctx.lineWidth = 4;
+      ctx.beginPath(); ctx.arc(mm.px(0), mm.py(0), R * mm.sc, 0, -rad, true); ctx.stroke();
+      /* 两条半径 */
+      ctx.strokeStyle = '#185fa5'; ctx.lineWidth = 2.4;
+      ctx.beginPath(); ctx.moveTo(mm.px(0), mm.py(0)); ctx.lineTo(mm.px(R), mm.py(0)); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(mm.px(0), mm.py(0));
+      ctx.lineTo(mm.px(R * tfCos(d)), mm.py(R * tfSin(d))); ctx.stroke();
+      cDot(mm, R * tfCos(d), R * tfSin(d), '#185fa5', 5);
+      cTag(mm, R * 0.5, 0.45, 'r = ' + cFmt(R), '#185fa5', 0, 0);
+      cTag(mm, R * tfCos(d) * 0.55 - 0.55, R * tfSin(d) * 0.55 + 0.5, 'α', '#c0392b', 0, 0);
+      var l = rad * R, S = 0.5 * l * R;
+      cTag(mm, 0, 4.05, 'α = ' + d + '° = ' + cFmt(rad) + ' rad（≈ ' + cFmt(rad / Math.PI) + ' π）', '#1d2b38', 0, 0);
+      cTag(mm, 0, -3.55, '弧长 l = α·r = ' + cFmt(l) + '　｜　面积 S = ½lr = ' + cFmt(S), '#c0392b', 0, 0);
+      cTag(mm, 0, -4.15, '1 弧度 ≈ 57.3°：弧长正好等于半径的那个角', '#6b7a89', 0, 0);
+      s0.info.innerHTML = '<span class="viz-meta">弧度的定义是「弧长 ÷ 半径」，是个纯数字：α = l/r = ' + cFmt(l) + '/' + cFmt(R) + ' = ' + cFmt(rad) + '。所以 l = αr、S = ½lr 都不带换算系数——这正是弧度制存在的理由。</span>'
+        + '<span class="viz-meta">180° = π rad，故 ' + d + '° = ' + d + '×π/180 = ' + cFmt(rad) + ' rad。改变半径 r，弧长和面积都按比例变，但 α = l/r 不变——弧度与半径无关。</span>';
+    }
+    cSlider(s0.ctrl, '圆心角（度）', p.deg, 0, 360, 5, function (x) { p.deg = x; draw(); });
+    cSlider(s0.ctrl, '半径 r', p.r, 1, 4, 0.5, function (x) { p.r = x; draw(); });
+    draw();
+  }
+
+  /* 单位圆定义 */
+  function tfUnitLab(el, cfg) {
+    var s0 = circleScaffold(el);
+    var v = (cfg && cfg.values) || {};
+    var p = { deg: v.deg != null ? v.deg : 40 };
+    function draw() {
+      var view = { xmin: -2.6, xmax: 2.6, ymin: -2.4, ymax: 2.4 };
+      var mm = circleMap(s0.cv, view), ctx = mm.ctx;
+      mm._vmin = view.ymin; mm._vmax = view.ymax;
+      xyAxes(mm, view);
+      var d = p.deg, c = tfCos(d), s = tfSin(d);
+      ctx.strokeStyle = '#185fa5'; ctx.lineWidth = 2.6;
+      ctx.beginPath(); ctx.arc(mm.px(0), mm.py(0), mm.sc, 0, Math.PI * 2); ctx.stroke();
+      /* 终边 */
+      ctx.strokeStyle = '#7d3c98'; ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.moveTo(mm.px(0), mm.py(0));
+      ctx.lineTo(mm.px(3.4 * c), mm.py(3.4 * s)); ctx.stroke();
+      /* 正弦线 / 余弦线 */
+      ctx.strokeStyle = '#c0392b'; ctx.lineWidth = 3;
+      ctx.beginPath(); ctx.moveTo(mm.px(c), mm.py(0)); ctx.lineTo(mm.px(c), mm.py(s)); ctx.stroke();
+      ctx.strokeStyle = '#0f6e56'; ctx.lineWidth = 3;
+      ctx.beginPath(); ctx.moveTo(mm.px(0), mm.py(0)); ctx.lineTo(mm.px(c), mm.py(0)); ctx.stroke();
+      /* tan 线：x = 1 处 */
+      if (Math.abs(c) > 0.12) {
+        var tn = s / c;
+        var ty = Math.max(-2.5, Math.min(2.5, tn));
+        ctx.strokeStyle = '#e67e22'; ctx.lineWidth = 2.4;
+        ctx.beginPath(); ctx.moveTo(mm.px(1), mm.py(0)); ctx.lineTo(mm.px(1), mm.py(ty)); ctx.stroke();
+        cTag(mm, 1.35, ty * 0.55, 'tan', '#e67e22', 0, 0);
+      }
+      cDot(mm, c, s, '#7d3c98', 6);
+      cTag(mm, c + (c >= 0 ? 0.62 : -0.62), s + (s >= 0 ? 0.24 : -0.24), 'P(cosα, sinα)', '#7d3c98', 0, 0);
+      var quad = d % 360;
+      quad = quad < 0 ? quad + 360 : quad;
+      var qn = quad < 90 ? '第一象限（全正）' : quad < 180 ? '第二象限（sin 正）' : quad < 270 ? '第三象限（tan 正）' : '第四象限（cos 正）';
+      cTag(mm, 0, 2.15, 'α = ' + d + '°　' + qn, '#1d2b38', 0, 0);
+      cTag(mm, 0, -1.95, 'sin α = ' + cFmt(s) + '　cos α = ' + cFmt(c) + '　tan α = ' + (Math.abs(c) < 0.02 ? '不存在' : cFmt(s / c)), '#5b6b7a', 0, 0);
+      s0.info.innerHTML = '<span class="viz-meta">单位圆上 P 的<b>纵坐标就是 sin α，横坐标就是 cos α</b>，终边的斜率就是 tan α。红段是正弦线（高度）、绿段是余弦线（横向位置）、橙段是正切线（x = 1 处切线上的长度）。</span>'
+        + '<span class="viz-meta">所以 sin²α + cos²α = 1 根本不是新公式——它就是单位圆方程 x² + y² = 1。拖动转一圈：sin 上半圆为正、下半圆为负；cos 右半圆为正；tan 一三象限正、二四象限负，90° 与 270° 处终边竖直、切线长度趋于无穷，故 tan 无定义。</span>';
+    }
+    cSlider(s0.ctrl, '角 α（度，可超过 360°）', p.deg, 0, 720, 5, function (x) { p.deg = x; draw(); });
+    draw();
+  }
+
+  /* 诱导公式：四种对称 */
+  function tfInduceLab(el, cfg) {
+    var s0 = circleScaffold(el);
+    var v = (cfg && cfg.values) || {};
+    var p = { deg: v.deg != null ? v.deg : 35, m: v.m || 1 };
+    var MODE = [
+      { name: '关于 x 轴对称：−α', ang: function (d) { return -d; }, f: 'sin(−α) = −sin α，cos(−α) = cos α' },
+      { name: '关于 y 轴对称：π − α', ang: function (d) { return 180 - d; }, f: 'sin(π − α) = sin α，cos(π − α) = −cos α' },
+      { name: '关于原点对称：π + α', ang: function (d) { return 180 + d; }, f: 'sin(π + α) = −sin α，cos(π + α) = −cos α' },
+      { name: '旋转一整圈：2π − α', ang: function (d) { return 360 - d; }, f: 'sin(2π − α) = −sin α，cos(2π − α) = cos α' }
+    ];
+    function draw() {
+      var view = { xmin: -2.4, xmax: 2.4, ymin: -2.2, ymax: 2.2 };
+      var mm = circleMap(s0.cv, view), ctx = mm.ctx;
+      mm._vmin = view.ymin; mm._vmax = view.ymax;
+      xyAxes(mm, view);
+      var d = p.deg, md = MODE[p.m], d2 = md.ang(d);
+      ctx.strokeStyle = '#185fa5'; ctx.lineWidth = 2.4;
+      ctx.beginPath(); ctx.arc(mm.px(0), mm.py(0), mm.sc, 0, Math.PI * 2); ctx.stroke();
+      /* 对称辅助线 */
+      ctx.setLineDash([4, 4]); ctx.strokeStyle = '#d5dee7'; ctx.lineWidth = 1.6;
+      if (p.m === 0) { ctx.beginPath(); ctx.moveTo(0, mm.py(0)); ctx.lineTo(mm.w, mm.py(0)); ctx.stroke(); }
+      if (p.m === 1) { ctx.beginPath(); ctx.moveTo(mm.px(0), 0); ctx.lineTo(mm.px(0), mm.h); ctx.stroke(); }
+      ctx.setLineDash([]);
+      /* 两个终边 */
+      [[d, '#185fa5', 'α'], [d2, '#c0392b', '对称角']].forEach(function (it) {
+        ctx.strokeStyle = it[1]; ctx.lineWidth = 2.2;
+        ctx.beginPath(); ctx.moveTo(mm.px(0), mm.py(0));
+        ctx.lineTo(mm.px(1.9 * tfCos(it[0])), mm.py(1.9 * tfSin(it[0]))); ctx.stroke();
+        cDot(mm, tfCos(it[0]), tfSin(it[0]), it[1], 5.5);
+      });
+      cTag(mm, tfCos(d) * 1.35 + 0.3, tfSin(d) * 1.35 + 0.22, 'α', '#185fa5', 0, 0);
+      cTag(mm, tfCos(d2) * 1.35 - 0.42, tfSin(d2) * 1.35 + 0.22, 'β', '#c0392b', 0, 0);
+      cTag(mm, 0, 2.02, md.name, '#1d2b38', 0, 0);
+      cTag(mm, 0, -1.85, md.f, '#c0392b', 0, 0);
+      s0.info.innerHTML = '<span class="viz-meta">诱导公式不是靠背，是靠<b>看对称</b>。α = ' + d + '° 时 P(' + cFmt(tfCos(d)) + ', ' + cFmt(tfSin(d)) + ')，对称角的点 P\'(' + cFmt(tfCos(d2)) + ', ' + cFmt(tfSin(d2)) + ')。</span>'
+        + '<span class="viz-meta">' + md.f + '。判断符号的通用口诀是「奇变偶不变，符号看象限」：把角写成 k·π/2 ± α，k 为奇数则 sin ↔ cos 互换，k 为偶数则函数名不变；再把 α 当锐角判断整个角所在象限，取该象限原函数的符号。</span>';
+    }
+    cSlider(s0.ctrl, '锐角 α（度）', p.deg, 5, 85, 5, function (x) { p.deg = x; draw(); });
+    cSlider(s0.ctrl, '对称方式（0 −α ／ 1 π−α ／ 2 π+α ／ 3 2π−α）', p.m, 0, 3, 1, function (x) { p.m = x; draw(); });
+    draw();
+  }
+
+  /* y = A sin(ωx + φ) */
+  function tfGraphLab(el, cfg) {
+    var s0 = circleScaffold(el);
+    var v = (cfg && cfg.values) || {};
+    var p = { A: v.A != null ? v.A : 2, w: v.w || 1, phi: v.phi || 0 };
+    function draw() {
+      var amp = Math.abs(p.A) + 1.6;
+      var view = { xmin: -6.8, xmax: 6.8, ymin: -amp, ymax: amp };
+      var mm = circleMap(s0.cv, view), ctx = mm.ctx;
+      mm._vmin = view.ymin; mm._vmax = view.ymax;
+      xyAxes(mm, view);
+      var w = p.w === 0 ? 1 : p.w;
+      fcCurve(mm, view, function (x) { return p.A * Math.sin(w * x + p.phi); }, -6.8, 6.8, '#185fa5', 3.2);
+      var T = 2 * Math.PI / Math.abs(w);
+      /* 五点法 */
+      var pts = [];
+      for (var k = 0; k < 5; k++) {
+        var u = k * Math.PI / 2;
+        var x = (u - p.phi) / w;
+        pts.push([x, p.A * Math.sin(u)]);
+      }
+      ctx.strokeStyle = 'rgba(230,126,34,0.55)'; ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.moveTo(mm.px(pts[0][0]), mm.py(0)); ctx.lineTo(mm.px(pts[4][0]), mm.py(0)); ctx.stroke();
+      pts.forEach(function (q, i) {
+        if (q[0] < view.xmin - 0.2 || q[0] > view.xmax + 0.2) return;
+        cDot(mm, q[0], q[1], '#e67e22', 5);
+      });
+      cTag(mm, 0, amp - 0.35, 'y = ' + cFmt(p.A) + ' sin(' + cFmt(w) + 'x + ' + cFmt(p.phi) + ')', '#185fa5', 0, 0);
+      cTag(mm, 0, -amp + 0.35, '振幅 ' + cFmt(Math.abs(p.A)) + '　｜　周期 T = 2π/ω = ' + cFmt(T) + '　｜　初相 ' + cFmt(p.phi), '#5b6b7a', 0, 0);
+      s0.info.innerHTML = '<span class="viz-meta">三个参数各管一件事：<b>A</b> 管高矮（纵向伸缩，负值整体翻面）、<b>ω</b> 管快慢（横向压缩，周期 T = 2π/|ω|）、<b>φ</b> 管起点（左右平移，平移量是 −φ/ω 而不是 −φ）。</span>'
+        + '<span class="viz-meta">橙点就是「五点法」的五个关键点：相位 ωx + φ 依次取 0、π/2、π、3π/2、2π 的五个位置，y 依次是 0、' + cFmt(p.A) + '、0、' + cFmt(-p.A) + '、0。考试画图题只看这五个点准不准。</span>';
+    }
+    cSlider(s0.ctrl, '振幅 A', p.A, -3, 3, 0.5, function (x) { p.A = x; draw(); });
+    cSlider(s0.ctrl, '角频率 ω', p.w, 0.5, 3, 0.5, function (x) { p.w = x; draw(); });
+    cSlider(s0.ctrl, '初相 φ', p.phi, -3.14, 3.14, 0.52, function (x) { p.phi = x; draw(); });
+    draw();
+  }
+
+  /* 圆周运动投影成正弦曲线 */
+  function tfShmLab(el, cfg) {
+    var s0 = circleScaffold(el);
+    var v = (cfg && cfg.values) || {};
+    var p = { deg: v.deg != null ? v.deg : 60, R: v.R || 3 };
+    function draw() {
+      var view = { xmin: -8.6, xmax: 8.6, ymin: -5.2, ymax: 5.2 };
+      var mm = circleMap(s0.cv, view), ctx = mm.ctx;
+      mm._vmin = view.ymin; mm._vmax = view.ymax;
+      ctx.fillStyle = '#ffffff'; ctx.fillRect(0, 0, mm.w, mm.h);
+      var R = p.R, cx = -4.4, d = p.deg;
+      /* 圆 */
+      ctx.strokeStyle = '#c3ced9'; ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.arc(mm.px(cx), mm.py(0), R * mm.sc, 0, Math.PI * 2); ctx.stroke();
+      ctx.strokeStyle = '#e4eaf0'; ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.moveTo(mm.px(cx - R - 0.4), mm.py(0)); ctx.lineTo(mm.px(cx + R + 0.4), mm.py(0)); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(mm.px(cx), mm.py(-R - 0.4)); ctx.lineTo(mm.px(cx), mm.py(R + 0.4)); ctx.stroke();
+      var px = cx + R * tfCos(d), py = R * tfSin(d);
+      /* 半径与点 */
+      ctx.strokeStyle = '#7d3c98'; ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.moveTo(mm.px(cx), mm.py(0)); ctx.lineTo(mm.px(px), mm.py(py)); ctx.stroke();
+      cDot(mm, px, py, '#7d3c98', 6);
+      /* 投影竖线 */
+      ctx.setLineDash([4, 4]); ctx.strokeStyle = '#c0392b'; ctx.lineWidth = 1.6;
+      ctx.beginPath(); ctx.moveTo(mm.px(px), mm.py(py)); ctx.lineTo(mm.px(px), mm.py(0)); ctx.stroke();
+      ctx.setLineDash([]);
+      /* 右侧曲线：x 从 -0.2 到 8.2 映射角度 0..720 */
+      function xx(dd) { return -0.2 + dd * 8.4 / 720; }
+      ctx.strokeStyle = '#185fa5'; ctx.lineWidth = 2.6; ctx.beginPath();
+      for (var i = 0; i <= 320; i++) {
+        var dd = 720 * i / 320, vx = xx(dd), vy = R * tfSin(dd);
+        if (i === 0) ctx.moveTo(mm.px(vx), mm.py(vy)); else ctx.lineTo(mm.px(vx), mm.py(vy));
+      }
+      ctx.stroke();
+      ctx.strokeStyle = '#9aa7b4'; ctx.lineWidth = 1.2;
+      ctx.beginPath(); ctx.moveTo(mm.px(xx(0)), mm.py(0)); ctx.lineTo(mm.px(xx(720)), mm.py(0)); ctx.stroke();
+      /* 连接线：同高的水平虚线 */
+      ctx.setLineDash([5, 4]); ctx.strokeStyle = '#e67e22'; ctx.lineWidth = 1.8;
+      ctx.beginPath(); ctx.moveTo(mm.px(px), mm.py(py)); ctx.lineTo(mm.px(xx(d)), mm.py(py)); ctx.stroke();
+      ctx.setLineDash([]);
+      cDot(mm, xx(d), py, '#e67e22', 6);
+      cTag(mm, cx, -R - 1.0, '匀速圆周运动', '#7d3c98', 0, 0);
+      cTag(mm, 4.2, -R - 1.0, '把高度随时间展开 → 正弦曲线', '#185fa5', 0, 0);
+      cTag(mm, xx(360), -R - 1.8, '一圈（360°）', '#8a97a4', 0, 0);
+      cTag(mm, xx(720), -R - 1.8, '两圈', '#8a97a4', 0, 0);
+      s0.info.innerHTML = '<span class="viz-meta">三角函数描述现实的根本原因：<b>一切匀速圆周运动，投影出来就是正弦</b>。左边点在圆上转，右边就是它的高度随时间展开的曲线——转一圈，曲线走完一个完整周期。</span>'
+        + '<span class="viz-meta">当前 α = ' + d + '°，高度 h = R sin α = ' + cFmt(p.R) + ' × ' + cFmt(tfSin(d)) + ' = <b>' + cFmt(py) + '</b>。实际建模时：振幅 A = 圆的半径，周期 T = 转一圈的时间，初相 φ = 出发时的位置角。摩天轮、潮汐、交流电、弹簧振子都是这张图。</span>';
+    }
+    cSlider(s0.ctrl, '转过的角度（度）', p.deg, 0, 720, 5, function (x) { p.deg = x; draw(); });
+    cSlider(s0.ctrl, '圆的半径 R（振幅）', p.R, 1, 4, 0.5, function (x) { p.R = x; draw(); });
+    draw();
+  }
+
+
+  window.VIZ = { fcDefLab: fcDefLab, fcDomainLab: fcDomainLab, fcPieceLab: fcPieceLab, fcMonoLab: fcMonoLab, fcParityLab: fcParityLab, fcPowerLab: fcPowerLab, elRootLab: elRootLab, elExpLab: elExpLab, elLogLab: elLogLab, elLogopLab: elLogopLab, elHalfLab: elHalfLab, tfRadianLab: tfRadianLab, tfUnitLab: tfUnitLab, tfInduceLab: tfInduceLab, tfGraphLab: tfGraphLab, tfShmLab: tfShmLab, stDefLab: stDefLab, stRepLab: stRepLab, stSubsetLab: stSubsetLab, stVennLab: stVennLab, stImplyLab: stImplyLab, qtVertexLab: qtVertexLab, qtTrioLab: qtTrioLab, qtSolveLab: qtSolveLab, qtAmgmLab: qtAmgmLab, qtApplyLab: qtApplyLab, frDefLab: frDefLab, frSimplifyLab: frSimplifyLab, frMuldivLab: frMuldivLab, frAddLab: frAddLab, frEqLab: frEqLab, ineqDefLab: ineqDefLab, ineqFlipLab: ineqFlipLab, ineqSolveLab: ineqSolveLab, ineqSetLab: ineqSetLab, ineqApplyLab: ineqApplyLab, iaTermLab: iaTermLab, iaLikeLab: iaLikeLab, iaMergeLab: iaMergeLab, iaParenLab: iaParenLab, iaEvalLab: iaEvalLab, rnSqrtLab: rnSqrtLab, rnCubeLab: rnCubeLab, rnAxisLab: rnAxisLab, rnEstLab: rnEstLab, rnClassLab: rnClassLab, pmPowerLab: pmPowerLab, pmDistroLab: pmDistroLab, pmSqdiffLab: pmSqdiffLab, pmPerfectLab: pmPerfectLab, pmCommonLab: pmCommonLab, pmXtileLab: pmXtileLab, dcSampleLab: dcSampleLab, dcChartLab: dcChartLab, dcPieLab: dcPieLab, dcHistLab: dcHistLab, dcTruncLab: dcTruncLab, renderPlot: renderPlot, parabolaLab: parabolaLab, stepLab: stepLab, bridgeLab: bridgeLab, profitLab: profitLab, fenceLab: fenceLab, fountainLab: fountainLab, shotLab: shotLab, completeSquareLab: completeSquareLab, equationLab: equationLab, growthLab: growthLab, rotateLab: rotateLab, coordRotLab: coordRotLab, patternLab: patternLab, clockLab: clockLab, anatomyLab: anatomyLab, chordLab: chordLab, inscribedLab: inscribedLab, positionLab: positionLab, tangentLab: tangentLab, sectorLab: sectorLab, eventScaleLab: eventScaleLab, bagLab: bagLab, sumTableLab: sumTableLab, treeLab: treeLab, coinLab: coinLab, dartLab: dartLab, inverseLab: inverseLab, kAreaLab: kAreaLab, inverseCrossLab: inverseCrossLab, inverseUseLab: inverseUseLab, trigRatioLab: trigRatioLab, trigSpecialLab: trigSpecialLab, trigSolveLab: trigSolveLab, trigHeightLab: trigHeightLab, trigSlopeLab: trigSlopeLab, trigAltitudeLab: trigAltitudeLab, simGoldenLab: simGoldenLab, simParallelLab: simParallelLab, simJudgeLab: simJudgeLab, simAreaLab: simAreaLab, simNestedLab: simNestedLab, simHomothetyLab: simHomothetyLab, simShadowLab: simShadowLab, projShadowLab: projShadowLab, projOrthLab: projOrthLab, viewThreeLab: viewThreeLab, viewBlocksLab: viewBlocksLab, viewSolidLab: viewSolidLab, pythagSquaresLab: pythagSquaresLab, pythagPuzzleLab: pythagPuzzleLab, pythagSolveLab: pythagSolveLab, pythagInverseLab: pythagInverseLab, pythagLadderLab: pythagLadderLab, linearLab: linearLab, linearQuadLab: linearQuadLab, linearCrossLab: linearCrossLab, linearModelLab: linearModelLab, linearTranslateLab: linearTranslateLab, linearFitLab: linearFitLab, pgPropLab: pgPropLab, pgDiagLab: pgDiagLab, pgJudgeLab: pgJudgeLab, pgMidlineLab: pgMidlineLab, pgRectLab: pgRectLab, pgRhombusLab: pgRhombusLab, pgSquareLab: pgSquareLab, pgAreaLab: pgAreaLab, triSidesLab: triSidesLab, triLinesLab: triLinesLab, triAngleLab: triAngleLab, triExteriorLab: triExteriorLab, polyAngleLab: polyAngleLab, congMapLab: congMapLab, congJudgeLab: congJudgeLab, congSsaLab: congSsaLab, bisectorLab: bisectorLab, axFoldLab: axFoldLab, axBisectorLab: axBisectorLab, axCoordLab: axCoordLab, axDrawLab: axDrawLab, axIsoscelesLab: axIsoscelesLab, axIsoJudgeLab: axIsoJudgeLab, axEquiLab: axEquiLab, axPathLab: axPathLab, sqrtDefLab: sqrtDefLab, sqrtPropLab: sqrtPropLab, sqrtMulLab: sqrtMulLab, sqrtDivLab: sqrtDivLab, sqrtAddLab: sqrtAddLab, sqrtEstLab: sqrtEstLab, statMeanLab: statMeanLab, statMedianLab: statMedianLab, statModeLab: statModeLab, statVarLab: statVarLab, statChoiceLab: statChoiceLab, ratLineLab: ratLineLab, ratAbsLab: ratAbsLab, ratAddLab: ratAddLab, ratMulLab: ratMulLab, ratPowerLab: ratPowerLab, eqBalanceLab: eqBalanceLab, eqStepsLab: eqStepsLab, eqMotionLab: eqMotionLab, eqDistroLab: eqDistroLab, eqPctLab: eqPctLab, geoSolidsLab: geoSolidsLab, geoMotionLab: geoMotionLab, geoView3Lab: geoView3Lab, geoSegLab: geoSegLab, geoMidLab: geoMidLab, geoAngleLab: geoAngleLab, geoCompLab: geoCompLab, sysDefLab: sysDefLab, sysSubstLab: sysSubstLab, sysElimLab: sysElimLab, sysSolLab: sysSolLab, sysCaseLab: sysCaseLab, sysFarmLab: sysFarmLab };
 })();
 
 </script>
@@ -10572,6 +11332,22 @@ function dcTruncLab(el, cfg) {
       else if (cfg.type === 'qt-solve') VIZ.qtSolveLab(el, cfg);
       else if (cfg.type === 'qt-amgm') VIZ.qtAmgmLab(el, cfg);
       else if (cfg.type === 'qt-apply') VIZ.qtApplyLab(el, cfg);
+      else if (cfg.type === 'fc-def') VIZ.fcDefLab(el, cfg);
+      else if (cfg.type === 'fc-domain') VIZ.fcDomainLab(el, cfg);
+      else if (cfg.type === 'fc-piece') VIZ.fcPieceLab(el, cfg);
+      else if (cfg.type === 'fc-mono') VIZ.fcMonoLab(el, cfg);
+      else if (cfg.type === 'fc-parity') VIZ.fcParityLab(el, cfg);
+      else if (cfg.type === 'fc-power') VIZ.fcPowerLab(el, cfg);
+      else if (cfg.type === 'el-root') VIZ.elRootLab(el, cfg);
+      else if (cfg.type === 'el-exp') VIZ.elExpLab(el, cfg);
+      else if (cfg.type === 'el-log') VIZ.elLogLab(el, cfg);
+      else if (cfg.type === 'el-logop') VIZ.elLogopLab(el, cfg);
+      else if (cfg.type === 'el-half') VIZ.elHalfLab(el, cfg);
+      else if (cfg.type === 'tf-radian') VIZ.tfRadianLab(el, cfg);
+      else if (cfg.type === 'tf-unit') VIZ.tfUnitLab(el, cfg);
+      else if (cfg.type === 'tf-induce') VIZ.tfInduceLab(el, cfg);
+      else if (cfg.type === 'tf-graph') VIZ.tfGraphLab(el, cfg);
+      else if (cfg.type === 'tf-shm') VIZ.tfShmLab(el, cfg);
       else if (cfg.type === 'rn-sqrt') VIZ.rnSqrtLab(el, cfg);
       else if (cfg.type === 'rn-cube') VIZ.rnCubeLab(el, cfg);
       else if (cfg.type === 'rn-axis') VIZ.rnAxisLab(el, cfg);
