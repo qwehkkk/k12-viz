@@ -1,0 +1,148 @@
+(function () {
+  'use strict';
+  document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('[data-viz]').forEach(function (el) {
+      var cfg;
+      try { cfg = JSON.parse(el.getAttribute('data-viz')); }
+      catch (e) { console.error('viz config error', e); return; }
+      if (cfg.type === 'plot') VIZ.renderPlot(el, cfg);
+      else if (cfg.type === 'parabola-lab') VIZ.parabolaLab(el, cfg);
+      else if (cfg.type === 'steps') VIZ.stepLab(el, cfg);
+      else if (cfg.type === 'bridge') VIZ.bridgeLab(el, cfg);
+      else if (cfg.type === 'profit') VIZ.profitLab(el, cfg);
+      else if (cfg.type === 'fence') VIZ.fenceLab(el, cfg);
+      else if (cfg.type === 'fountain') VIZ.fountainLab(el, cfg);
+      else if (cfg.type === 'shot') VIZ.shotLab(el, cfg);
+      else if (cfg.type === 'complete-square') VIZ.completeSquareLab(el, cfg);
+      else if (cfg.type === 'equation') VIZ.equationLab(el, cfg);
+      else if (cfg.type === 'growth') VIZ.growthLab(el, cfg);
+      else if (cfg.type === 'rotate') VIZ.rotateLab(el, cfg);
+      else if (cfg.type === 'coord-rot') VIZ.coordRotLab(el, cfg);
+      else if (cfg.type === 'pattern') VIZ.patternLab(el, cfg);
+      else if (cfg.type === 'clock') VIZ.clockLab(el, cfg);
+      else if (cfg.type === 'anatomy') VIZ.anatomyLab(el, cfg);
+      else if (cfg.type === 'chord') VIZ.chordLab(el, cfg);
+      else if (cfg.type === 'inscribed') VIZ.inscribedLab(el, cfg);
+      else if (cfg.type === 'position') VIZ.positionLab(el, cfg);
+      else if (cfg.type === 'tangent') VIZ.tangentLab(el, cfg);
+      else if (cfg.type === 'sector') VIZ.sectorLab(el, cfg);
+      else if (cfg.type === 'event-scale') VIZ.eventScaleLab(el, cfg);
+      else if (cfg.type === 'bag') VIZ.bagLab(el, cfg);
+      else if (cfg.type === 'sum-table') VIZ.sumTableLab(el, cfg);
+      else if (cfg.type === 'tree') VIZ.treeLab(el, cfg);
+      else if (cfg.type === 'coin') VIZ.coinLab(el, cfg);
+      else if (cfg.type === 'dart') VIZ.dartLab(el, cfg);
+    });
+  });
+})();
+
+/* ============================================================
+ * 站内返回导航
+ * 站点是网状的（知识点 ↔ 题型 ↔ 知识链），跳两层以上就容易迷路。
+ * 这里维护一个轻量访问栈：
+ *   - 页面顶部给出「从哪来」的上下文条，一键回原页
+ *   - 滚动后左下角浮出「返回上一步」按钮
+ * 栈存在 sessionStorage，返回时优先用浏览器历史（最准），
+ * 没有站内历史时才按记录的路径跳转。
+ * ============================================================ */
+(function () {
+  'use strict';
+
+  var KEY = 'kz_nav_stack';
+  var here = location.pathname + location.search;
+
+  function load() {
+    try { return JSON.parse(sessionStorage.getItem(KEY) || '[]'); } catch (e) { return []; }
+  }
+  function save(s) {
+    try { sessionStorage.setItem(KEY, JSON.stringify(s.slice(-24))); } catch (e) { /* 隐私模式下忽略 */ }
+  }
+  function esc(s) {
+    return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+  // 页面标题格式为「名字 - 章节 - 站名」，只保留第一段
+  function shortTitle(t) {
+    return String(t || '').split(' - ')[0].trim();
+  }
+  function clip(s, n) {
+    s = String(s || '');
+    return s.length > n ? s.slice(0, n) + '…' : s;
+  }
+  function whereLabel(u) {
+    if (isHome(u)) return '课程目录';
+    if (u.indexOf('/pattern/') > -1) return '题型';
+    if (/patterns\.html$/.test(u)) return '题型库';
+    if (/locate\.html$/.test(u)) return '定位器';
+    if (/\/[^/]+\/index\.html$/.test(u)) return '章节';
+    return '知识点';
+  }
+  function isHome(u) {
+    return u === '/' || /^\/index\.html$/.test(u) || /^[A-Za-z]:[\\/].*?[\\/]index\.html$/.test(u);
+  }
+
+  /* ---------- 1. 维护访问栈 ---------- */
+  var stack = load();
+  // 回到曾经访问过的页面时，丢弃它之后的历史，避免「返回」绕圈
+  for (var i = stack.length - 1; i >= 0; i--) {
+    if (stack[i].u === here) { stack = stack.slice(0, i); break; }
+  }
+  var prev = stack[stack.length - 1] || null;
+  var next = stack.concat([{ u: here, t: document.title }]);
+  save(next);
+
+  // bfcache（前进/后退恢复）不会重跑脚本，需把栈截断到当前页
+  window.addEventListener('pageshow', function (e) {
+    if (!e.persisted) return;
+    var s = load();
+    for (var j = s.length - 1; j >= 0; j--) {
+      if (s[j].u === here) { save(s.slice(0, j + 1)); break; }
+    }
+  });
+
+  if (!prev) return;
+
+  /* ---------- 2. 顶部「从哪来」上下文条 ---------- */
+  if (!isHome(here)) {
+    var bar = document.createElement('div');
+    bar.className = 'prev-bar';
+    bar.innerHTML = '<a class="pb-link" href="' + esc(prev.u) + '"'
+      + ' aria-label="回到' + esc(whereLabel(prev.u) + '：' + shortTitle(prev.t)) + '">'
+      + '<span class="pb-arrow">←</span>'
+      + '<span class="pb-label">回到刚才的' + esc(whereLabel(prev.u)) + '</span>'
+      + '<span class="pb-title">' + esc(clip(shortTitle(prev.t), 26)) + '</span>'
+      + '</a>';
+    var main = document.querySelector('main .container');
+    if (main) main.insertBefore(bar, main.firstChild);
+  }
+
+  /* ---------- 3. 滚动后浮出的返回按钮 ---------- */
+  var btn = document.createElement('button');
+  btn.type = 'button';
+  btn.id = 'back-float';
+  btn.title = '返回：' + shortTitle(prev.t);
+  btn.innerHTML = '<span class="bf-arrow">←</span>'
+    + '<span class="bf-body">'
+    + '<span class="bf-main">返回上一步</span>'
+    + '<span class="bf-sub">' + esc(clip(shortTitle(prev.t), 18)) + '</span>'
+    + '</span>';
+  document.body.appendChild(btn);
+
+  btn.addEventListener('click', function () {
+    var ref = document.referrer || '';
+    var fromSite = ref && (ref.indexOf(location.origin) === 0 || ref.indexOf(location.host) > -1);
+    // 浏览器历史最准确；referrer 被裁掉时退回记录的路径
+    if (fromSite && history.length > 1) history.back();
+    else location.href = prev.u;
+  });
+
+  var shown = false;
+  function onScroll() {
+    var should = (window.pageYOffset || document.documentElement.scrollTop) > 240;
+    if (should !== shown) {
+      shown = should;
+      btn.classList.toggle('show', should);
+    }
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+})();

@@ -1,0 +1,6 @@
+# 开发/测试产物
+.shots/*.png
+.shots/cdp-*
+Thumbs.db
+Desktop.ini
+node_modules/
