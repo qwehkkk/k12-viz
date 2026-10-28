@@ -41,12 +41,12 @@ const chapters = fs.readdirSync(DATA_DIR)
 const STRANDS = [
   { id: 'num', name: '数与式', color: '#c0392b',
     desc: '从有理数到实数、从整式到二次根式——一切计算的地基。数感不通，后面全堵。',
-    chapters: ['rational', 'radical'],
-    ghosts: ['整式的加减|七年级上册', '实数|七年级下册', '整式的乘法与因式分解|八年级上册', '分式|八年级上册'] },
+    chapters: ['rational', 'poly-arith', 'radical'],
+    ghosts: ['实数|七年级下册', '整式的乘法与因式分解|八年级上册', '分式|八年级上册'] },
   { id: 'eq', name: '方程与不等式', color: '#185fa5',
     desc: '把「求多少」翻译成式子，再一步步解出来。一元一次方程是所有方程的娘。',
-    chapters: ['linear-eq', 'eq-system', 'quadratic-equation'],
-    ghosts: ['不等式与不等式组|七年级下册'] },
+    chapters: ['linear-eq', 'eq-system', 'inequality', 'quadratic-equation'],
+    ghosts: [] },
   { id: 'fn', name: '函数', color: '#7d3c98',
     desc: '变量之间的关系：一次是一条直线，二次是抛物线，反比例是双曲线。初中函数就这三张脸。',
     chapters: ['linear-function', 'quadratic-function', 'inverse-function'],
@@ -424,13 +424,16 @@ function renderPoint(ch, p, idx) {
 </section>`
     : '';
 
-  const applyHtml = p.apply ? `<section class="blk">
+  const applyHtml = p.apply ? (() => {
+    const ap = typeof p.apply === 'string' ? { text: p.apply } : p.apply;
+    return `<section class="blk">
     <h2>现实里能做什么</h2>
     <div class="apply-card">
-      <p class="apply-head">${esc(p.apply.headline)}</p>
-      <p class="apply-text">${esc(p.apply.text)}</p>
+      ${ap.headline ? `<p class="apply-head">${esc(ap.headline)}</p>` : ''}
+      <p class="apply-text">${esc(ap.text)}</p>
     </div>
-  </section>` : '';
+  </section>`;
+  })() : '';
 
   const types = ch.typesByPoint[p.id] || [];
   const typesHtml = types.length ? `<section class="blk">

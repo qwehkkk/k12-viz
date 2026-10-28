@@ -124,6 +124,16 @@
       else if (cfg.type === 'sys-sol') VIZ.sysSolLab(el, cfg);
       else if (cfg.type === 'sys-case') VIZ.sysCaseLab(el, cfg);
       else if (cfg.type === 'sys-farm') VIZ.sysFarmLab(el, cfg);
+      else if (cfg.type === 'ineq-def') VIZ.ineqDefLab(el, cfg);
+      else if (cfg.type === 'ineq-flip') VIZ.ineqFlipLab(el, cfg);
+      else if (cfg.type === 'ineq-solve') VIZ.ineqSolveLab(el, cfg);
+      else if (cfg.type === 'ineq-set') VIZ.ineqSetLab(el, cfg);
+      else if (cfg.type === 'ineq-apply') VIZ.ineqApplyLab(el, cfg);
+      else if (cfg.type === 'ia-term') VIZ.iaTermLab(el, cfg);
+      else if (cfg.type === 'ia-like') VIZ.iaLikeLab(el, cfg);
+      else if (cfg.type === 'ia-merge') VIZ.iaMergeLab(el, cfg);
+      else if (cfg.type === 'ia-paren') VIZ.iaParenLab(el, cfg);
+      else if (cfg.type === 'ia-eval') VIZ.iaEvalLab(el, cfg);
     });
   });
 })();

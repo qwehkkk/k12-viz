@@ -8356,7 +8356,507 @@ function sysFarmLab(el, cfg) {
   cSlider(s0.ctrl, 'L（腿的总数）', p.L, 12, 48, 2, function (v) { p.L = v; draw(); });
   draw();
 }
-  window.VIZ = { renderPlot: renderPlot, parabolaLab: parabolaLab, stepLab: stepLab, bridgeLab: bridgeLab, profitLab: profitLab, fenceLab: fenceLab, fountainLab: fountainLab, shotLab: shotLab, completeSquareLab: completeSquareLab, equationLab: equationLab, growthLab: growthLab, rotateLab: rotateLab, coordRotLab: coordRotLab, patternLab: patternLab, clockLab: clockLab, anatomyLab: anatomyLab, chordLab: chordLab, inscribedLab: inscribedLab, positionLab: positionLab, tangentLab: tangentLab, sectorLab: sectorLab, eventScaleLab: eventScaleLab, bagLab: bagLab, sumTableLab: sumTableLab, treeLab: treeLab, coinLab: coinLab, dartLab: dartLab, inverseLab: inverseLab, kAreaLab: kAreaLab, inverseCrossLab: inverseCrossLab, inverseUseLab: inverseUseLab, trigRatioLab: trigRatioLab, trigSpecialLab: trigSpecialLab, trigSolveLab: trigSolveLab, trigHeightLab: trigHeightLab, trigSlopeLab: trigSlopeLab, trigAltitudeLab: trigAltitudeLab, simGoldenLab: simGoldenLab, simParallelLab: simParallelLab, simJudgeLab: simJudgeLab, simAreaLab: simAreaLab, simNestedLab: simNestedLab, simHomothetyLab: simHomothetyLab, simShadowLab: simShadowLab, projShadowLab: projShadowLab, projOrthLab: projOrthLab, viewThreeLab: viewThreeLab, viewBlocksLab: viewBlocksLab, viewSolidLab: viewSolidLab, pythagSquaresLab: pythagSquaresLab, pythagPuzzleLab: pythagPuzzleLab, pythagSolveLab: pythagSolveLab, pythagInverseLab: pythagInverseLab, pythagLadderLab: pythagLadderLab, linearLab: linearLab, linearQuadLab: linearQuadLab, linearCrossLab: linearCrossLab, linearModelLab: linearModelLab, linearTranslateLab: linearTranslateLab, linearFitLab: linearFitLab, pgPropLab: pgPropLab, pgDiagLab: pgDiagLab, pgJudgeLab: pgJudgeLab, pgMidlineLab: pgMidlineLab, pgRectLab: pgRectLab, pgRhombusLab: pgRhombusLab, pgSquareLab: pgSquareLab, pgAreaLab: pgAreaLab, triSidesLab: triSidesLab, triLinesLab: triLinesLab, triAngleLab: triAngleLab, triExteriorLab: triExteriorLab, polyAngleLab: polyAngleLab, congMapLab: congMapLab, congJudgeLab: congJudgeLab, congSsaLab: congSsaLab, bisectorLab: bisectorLab, axFoldLab: axFoldLab, axBisectorLab: axBisectorLab, axCoordLab: axCoordLab, axDrawLab: axDrawLab, axIsoscelesLab: axIsoscelesLab, axIsoJudgeLab: axIsoJudgeLab, axEquiLab: axEquiLab, axPathLab: axPathLab, sqrtDefLab: sqrtDefLab, sqrtPropLab: sqrtPropLab, sqrtMulLab: sqrtMulLab, sqrtDivLab: sqrtDivLab, sqrtAddLab: sqrtAddLab, sqrtEstLab: sqrtEstLab, statMeanLab: statMeanLab, statMedianLab: statMedianLab, statModeLab: statModeLab, statVarLab: statVarLab, statChoiceLab: statChoiceLab, ratLineLab: ratLineLab, ratAbsLab: ratAbsLab, ratAddLab: ratAddLab, ratMulLab: ratMulLab, ratPowerLab: ratPowerLab, eqBalanceLab: eqBalanceLab, eqStepsLab: eqStepsLab, eqMotionLab: eqMotionLab, eqDistroLab: eqDistroLab, eqPctLab: eqPctLab, geoSolidsLab: geoSolidsLab, geoMotionLab: geoMotionLab, geoView3Lab: geoView3Lab, geoSegLab: geoSegLab, geoMidLab: geoMidLab, geoAngleLab: geoAngleLab, geoCompLab: geoCompLab, sysDefLab: sysDefLab, sysSubstLab: sysSubstLab, sysElimLab: sysElimLab, sysSolLab: sysSolLab, sysCaseLab: sysCaseLab, sysFarmLab: sysFarmLab };
+/* ================= 七下 9 · 不等式与不等式组 ================= */
+
+/* 数轴上画数轴带箭头的解集：内部小工具 */
+function ineqRay(m, from, to, y, color, w) {
+  tSeg(m, from, y, to, y, color, w || 2.6);
+}
+
+/* 解集的数轴表示：四种不等号一个滑块看完 */
+function ineqDefLab(el, cfg) {
+  var s0 = circleScaffold(el);
+  var p = { a: 2, op: 1 };
+  if (cfg.values) for (var key in cfg.values) p[key] = cfg.values[key];
+  var OPS = ['>', '≥', '<', '≤'];
+
+  function draw() {
+    var view = { xmin: -9.5, xmax: 9.5, ymin: -3.6, ymax: 3.6 };
+    var m = circleMap(s0.cv, view), ctx = m.ctx;
+    cGrid(m, view);
+    var y0 = 0;
+    tNumAxis(m, y0, -9, 9, '#333');
+    var right = p.op < 2, closed = (p.op === 1 || p.op === 3);
+    /* 解集色带 */
+    ctx.fillStyle = 'rgba(24,95,165,0.16)';
+    var x1 = right ? p.a : -9, x2 = right ? 9 : p.a;
+    ctx.fillRect(m.px(x1), m.py(y0 + 0.55), (x2 - x1) * m.sc, 1.1 * m.sc);
+    tArrowH(m, x1, x2, y0 + 0.55, '#185fa5', 3);
+    /* 端点：空心 / 实心 */
+    ctx.beginPath();
+    ctx.arc(m.px(p.a), m.py(y0), 7, 0, Math.PI * 2);
+    ctx.fillStyle = closed ? '#185fa5' : '#fff';
+    ctx.fill();
+    ctx.strokeStyle = '#185fa5'; ctx.lineWidth = 2.2; ctx.stroke();
+    cTag(m, 0, 2.5, 'x ' + OPS[p.op] + ' ' + cFmt(p.a), '#185fa5', 0, 0);
+    cTag(m, p.a, -1.6, closed ? '实心点：含 ' + cFmt(p.a) : '空心圈：不含 ' + cFmt(p.a),
+      closed ? '#0f6e56' : '#c0392b', 0, 0);
+    s0.info.innerHTML = '<span class="viz-meta">不等式 <b>x ' + OPS[p.op] + ' ' + cFmt(p.a) + '</b> 的解集是数轴上<b>一整段射线</b>（蓝色带箭头），不是某一个点。'
+      + (closed ? '不等号里有「=」，端点被包含 → 画<b>实心点</b>。' : '不等号里没有「=」，端点被排除 → 画<b>空心圈</b>。')
+      + '比端点大就向右、比端点小就向左——两个细节，各占一分。</span>'
+      + '<span class="viz-meta">拖动 a 换端点、切换不等号看四种解集：> 与 ≥ 只差一个空心实心，> 与 < 只差方向。把「x ≥ 2」画成空心圈是本章最冤枉的丢分。</span>';
+  }
+  cSlider(s0.ctrl, 'a（端点位置）', p.a, -6, 6, 0.5, function (v) { p.a = v; draw(); });
+  cSlider(s0.ctrl, '不等号（0→>，1→≥，2→<，3→≤）', p.op, 0, 3, 1, function (v) { p.op = v; draw(); });
+  draw();
+}
+
+/* 不等式的性质：乘负数要变号 */
+function ineqFlipLab(el, cfg) {
+  var s0 = circleScaffold(el);
+  var p = { c: 0, m: 1 };
+  if (cfg.values) for (var key in cfg.values) p[key] = cfg.values[key];
+
+  function draw() {
+    var A = 3, B = 5;
+    var ta = p.m * A + p.c, tb = p.m * B + p.c;
+    var vals = [A, B, ta, tb];
+    var vmin = Math.min.apply(null, vals), vmax = Math.max.apply(null, vals);
+    var view = { xmin: vmin - 1.8, xmax: vmax + 1.8, ymin: -3.8, ymax: 3.8 };
+    var m = circleMap(s0.cv, view), ctx = m.ctx;
+    cGrid(m, view);
+    var y0 = 0;
+    tNumAxis(m, y0, Math.floor(view.xmin), Math.ceil(view.xmax), '#333');
+    /* 原来的 3 和 5（灰空心） */
+    cDot(m, A, y0, '#9aa7b5', 6);
+    ctx.beginPath(); ctx.arc(m.px(A), m.py(y0), 6, 0, Math.PI * 2); ctx.strokeStyle = '#9aa7b5'; ctx.lineWidth = 2; ctx.stroke();
+    ctx.fillStyle = '#9aa7b5'; ctx.fill();
+    cTag(m, A, -1.2, '3', '#9aa7b5', 0, 0);
+    cDot(m, B, y0, '#9aa7b5', 6);
+    ctx.beginPath(); ctx.arc(m.px(B), m.py(y0), 6, 0, Math.PI * 2); ctx.strokeStyle = '#9aa7b5'; ctx.lineWidth = 2; ctx.stroke();
+    ctx.fillStyle = '#9aa7b5'; ctx.fill();
+    cTag(m, B, -1.2, '5', '#9aa7b5', 0, 0);
+    /* 变换后的两边 */
+    var flip = p.m < 0;
+    var col = p.m === 0 ? '#9aa7b5' : (flip ? '#c0392b' : '#0f6e56');
+    cDot(m, ta, y0, col, 6.5);
+    cTag(m, ta, 1.2, cFmt(ta), col, 0, 0);
+    cDot(m, tb, y0, col, 6.5);
+    cTag(m, tb, 1.2, cFmt(tb), col, 0, 0);
+    /* 大号不等号 */
+    var sgn = p.m === 0 ? '=' : (flip ? '>' : '<');
+    cTag(m, 0, 2.8, '3 ' + (flip ? '<' : '<') + ' 5    →    ' + cFmt(ta) + ' ' + sgn + ' ' + cFmt(tb), col, 0, 0);
+    if (flip) cTag(m, 0, 1.9, '⚠ 乘了负数 ' + p.m + '，不等号掉头！', '#c0392b', 0, 0);
+    s0.info.innerHTML = '<span class="viz-meta">从 3 < 5 出发，两边同乘 m 再同加 c。'
+      + (p.m === 0
+        ? 'm = 0：两边全变成 0，只剩 0 = 0——不等关系消失，所以「乘 0」不在性质讨论之列。'
+        : (flip
+          ? '<b>m = ' + p.m + ' < 0：' + cFmt(ta) + ' 反而比 ' + cFmt(tb) + ' 大了</b>——负半轴上数越大离 0 越近，大小关系整体翻转，不等号必须掉头。'
+          : 'm = ' + p.m + ' > 0：两边各奔各的，' + cFmt(ta) + ' 仍在 ' + cFmt(tb) + ' 左边，方向不变。'))
+      + '</span>'
+      + '<span class="viz-meta">再看加法 c：无论 c 拖成几，两边同加同一个数，大小关系从不翻转——这就是性质 1「加减不变」。三条性质一句话：<b>加减不变，乘正不变，乘负必变</b>。</span>'
+      + '<span class="viz-meta">解题里它变成一句提醒：解不等式到最后一步「系数化为 1」时，先看系数的符号——是负的，不等号跟着一起翻。</span>';
+  }
+  cSlider(s0.ctrl, 'm（两边同乘几）', p.m, -3, 3, 1, function (v) { p.m = v; draw(); });
+  cSlider(s0.ctrl, 'c（再同加几）', p.c, -8, 8, 1, function (v) { p.c = v; draw(); });
+  draw();
+}
+
+/* 一元一次不等式的解法：逐步 + 负系数陷阱 */
+function ineqSolveLab(el, cfg) {
+  var s0 = circleScaffold(el);
+  var p = { a: -2, b: 3, c: 7, t: 3 };
+  if (cfg.values) for (var key in cfg.values) p[key] = cfg.values[key];
+
+  function draw() {
+    var a = p.a, b = p.b, c = p.c;
+    var num = c - b;             /* ax > num */
+    var flip = a < 0;
+    var v = a === 0 ? 0 : num / a;
+    var vals = [v, 0];
+    var view = { xmin: Math.min.apply(null, vals) - 4.5, xmax: Math.max.apply(null, vals) + 4.5, ymin: -4.4, ymax: 4.4 };
+    var m = circleMap(s0.cv, view), ctx = m.ctx;
+    cGrid(m, view);
+    var fA = cFmt(a), fB = cFmt(b), fC = cFmt(c), fN = cFmt(num);
+    /* 逐步的代数式 */
+    cTag(m, 0, 3.5, '① 原式：' + (a === 1 ? '' : a === -1 ? '−' : fA) + 'x ' + (b < 0 ? '− ' + cFmt(-b) : '+ ' + fB) + ' > ' + fC, '#333', 0, 0);
+    if (p.t >= 1) cTag(m, 0, 2.5, '② 移项：' + (a === 1 ? '' : a === -1 ? '−' : fA) + 'x > ' + fN, '#333', 0, 0);
+    if (p.t >= 2) cTag(m, 0, 1.5, '③ 两边同除 ' + fA + (a === 0 ? '（除数是 0，不行！）' : flip ? ' —— 负数，不等号要变向！' : ' —— 正数，方向不变'), flip ? '#c0392b' : '#0f6e56', 0, 0);
+    if (a !== 0 && p.t >= 3) cTag(m, 0, 0.5, '④ 解集：x ' + (flip ? '<' : '>') + ' ' + cFmt(v), '#185fa5', 0, 0);
+    /* 数轴 */
+    var y0 = -2.2;
+    tNumAxis(m, y0, Math.ceil(view.xmin), Math.floor(view.xmax), '#333');
+    if (a !== 0 && p.t >= 3) {
+      var right = !flip;
+      ctx.fillStyle = 'rgba(24,95,165,0.16)';
+      var x1 = right ? v : view.xmin + 0.5, x2 = right ? view.xmax - 0.5 : v;
+      ctx.fillRect(m.px(x1), m.py(y0 + 0.5), (x2 - x1) * m.sc, 1.0 * m.sc);
+      tArrowH(m, x1, x2, y0 + 0.5, '#185fa5', 2.6);
+      ctx.beginPath(); ctx.arc(m.px(v), m.py(y0), 6, 0, Math.PI * 2);
+      ctx.fillStyle = '#fff'; ctx.fill();
+      ctx.strokeStyle = '#185fa5'; ctx.lineWidth = 2.2; ctx.stroke();
+      cTag(m, v, y0 - 1.0, '空心圈：解集不含 ' + cFmt(v), '#185fa5', 0, 0);
+    }
+    s0.info.innerHTML = a === 0
+      ? '<span class="viz-meta">a = 0 时左边没有未知数了——它不再是一元一次不等式。拖回 a = ±1 再玩。</span>'
+      : '<span class="viz-meta">解不等式五步照抄解方程：去分母 → 去括号 → <b>移项</b>（②）→ 合并 → <b>系数化为 1</b>（③④）。唯一的分岔点在除以系数那一步：系数 ' + fA + (flip ? ' 是负数，x 的方向翻到另一侧——<b>不等号掉头</b>。' : ' 是正数，方向原样保留。') + '</span>'
+        + '<span class="viz-meta">拖动 a 从 1 滑到 −2：③④ 行的文字当场变红、解集从右侧翻到左侧——变号不是新规则，是「负半轴大小关系反过来」的直接后果。系数是 ±1 时（如 −x > 4），别忘了它本质也是「除以 −1」。</span>'
+        + '<span class="viz-meta">检验技巧：从解集里挑一个整数代回原式试试（比如 x = ' + (flip ? Math.floor(v) - 1 : Math.ceil(v) + 1) + '），成立就说明方向没画反。</span>';
+  }
+  cSlider(s0.ctrl, 'a（x 的系数，别为 0）', p.a, -3, 3, 1, function (v) { p.a = v; draw(); });
+  cSlider(s0.ctrl, 'b（常数项）', p.b, -8, 8, 1, function (v) { p.b = v; draw(); });
+  cSlider(s0.ctrl, 'c（右边的数）', p.c, -8, 8, 1, function (v) { p.c = v; draw(); });
+  cSlider(s0.ctrl, '步骤', p.t, 0, 3, 1, function (v) { p.t = v; draw(); });
+  draw();
+}
+
+/* 不等式组：两段重叠出解集 */
+function ineqSetLab(el, cfg) {
+  var s0 = circleScaffold(el);
+  var p = { a: 1, b: 4, d1: 1, d2: 0 };
+  if (cfg.values) for (var key in cfg.values) p[key] = cfg.values[key];
+
+  function draw() {
+    var view = { xmin: -8.5, xmax: 8.5, ymin: -4.2, ymax: 4.2 };
+    var m = circleMap(s0.cv, view), ctx = m.ctx;
+    cGrid(m, view);
+    var y0 = 0;
+    tNumAxis(m, y0, -8, 8, '#333');
+    /* 两条射线：dir=+1 表示 x>pt，dir=-1 表示 x<pt */
+    var r1 = { pt: p.a, dir: p.d1 === 1 ? 1 : -1 };
+    var r2 = { pt: p.b, dir: p.d2 === 1 ? 1 : -1 };
+    function band(r, color) {
+      var x1 = r.dir > 0 ? r.pt : view.xmin + 0.5;
+      var x2 = r.dir > 0 ? view.xmax - 0.5 : r.pt;
+      ctx.fillStyle = color;
+      ctx.fillRect(m.px(x1), m.py(y0 + 0.75), (x2 - x1) * m.sc, 0.55 * m.sc);
+      ctx.beginPath(); ctx.arc(m.px(r.pt), m.py(y0 + 0.35), 5.5, 0, Math.PI * 2);
+      ctx.fillStyle = '#fff'; ctx.fill();
+      ctx.strokeStyle = r === r1 ? '#c0392b' : '#185fa5'; ctx.lineWidth = 2; ctx.stroke();
+    }
+    band(r1, 'rgba(192,57,43,0.18)');
+    band(r2, 'rgba(24,95,165,0.18)');
+    /* 公共部分 */
+    var L = [], U = [];
+    [r1, r2].forEach(function (r) { (r.dir > 0 ? L : U).push(r.pt); });
+    var lo = L.length ? Math.max.apply(null, L) : null;
+    var hi = U.length ? Math.min.apply(null, U) : null;
+    var sol, motto, col;
+    if (lo !== null && hi !== null) {
+      if (lo < hi) { sol = lo + ' < x < ' + lo === null ? '' : lo + ' < x < ' + hi; motto = '大小小大中间找'; col = '#0f6e56'; }
+      else { sol = '无解'; motto = '大大小小无处找'; col = '#c0392b'; }
+    } else if (lo !== null) { sol = 'x > ' + lo; motto = '大大取大'; col = '#0f6e56'; }
+    else { sol = 'x < ' + hi; motto = '小小取小'; col = '#0f6e56'; }
+    if (lo !== null && hi !== null && lo < hi) {
+      ctx.fillStyle = 'rgba(15,110,86,0.35)';
+      ctx.fillRect(m.px(lo), m.py(y0 + 0.3), (hi - lo) * m.sc, 0.55 * m.sc);
+    }
+    cTag(m, 0, 2.9, '① x ' + (r1.dir > 0 ? '>' : '<') + ' ' + p.a + '　② x ' + (r2.dir > 0 ? '>' : '<') + ' ' + p.b, '#333', 0, 0);
+    cTag(m, 0, 1.9, '解集：' + sol + '　（' + motto + '）', col, 0, 0);
+    s0.info.innerHTML = '<span class="viz-meta">红线管 ①、蓝线管 ②，各自圈出一段解集；<b>两段重叠的绿色部分</b>才是不等式组的解集——「同时满足」在数轴上就是「公共部分」。</span>'
+      + '<span class="viz-meta">当前判定：<b style="color:' + col + '">' + motto + '</b>。拖动端点 a、b 或切换两条射线的方向，四种情况都会出现：两个向右取大的端点（大大取大）、两个向左取小的端点（小小取小）、一左一右夹出中间（大小小大中间找）、一右一左背对背（大大小小无处找，无解）。</span>'
+      + '<span class="viz-meta">画图判断永远比背口诀稳：口诀只是把「两段的重叠」翻译成速记。特别注意 a = b 时 x > a 且 x < a 是空集——差一个等号（x ≥ a 且 x ≤ a）就还有唯一解。</span>';
+  }
+  cSlider(s0.ctrl, 'a（① 的端点）', p.a, -6, 6, 1, function (v) { p.a = v; draw(); });
+  cSlider(s0.ctrl, 'b（② 的端点）', p.b, -6, 6, 1, function (v) { p.b = v; draw(); });
+  cSlider(s0.ctrl, '① 方向（1→x>a，0→x<a）', p.d1, 0, 1, 1, function (v) { p.d1 = v; draw(); });
+  cSlider(s0.ctrl, '② 方向（1→x>b，0→x<b）', p.d2, 0, 1, 1, function (v) { p.d2 = v; draw(); });
+  draw();
+}
+
+/* 应用：预算约束下的可行解 */
+function ineqApplyLab(el, cfg) {
+  var s0 = circleScaffold(el);
+  var p = { B: 500, u: 8, S: 60 };
+  if (cfg.values) for (var key in cfg.values) p[key] = cfg.values[key];
+
+  function draw() {
+    var v = (p.B - p.S) / p.u;          /* x ≤ v */
+    var maxInt = Math.floor(v);
+    var top = Math.max(6, Math.ceil(v) + 3);
+    var view = { xmin: -2.5, xmax: top, ymin: -4.0, ymax: 4.0 };
+    var m = circleMap(s0.cv, view), ctx = m.ctx;
+    cGrid(m, view);
+    var y0 = 0;
+    tNumAxis(m, y0, -2, top - 1, '#333');
+    cTag(m, 1, 3.1, p.u + 'x + ' + p.S + ' ≤ ' + p.B, '#185fa5', 0, 0);
+    if (v < 0) {
+      cTag(m, top / 2, 1.6, '连一个书包都买不起（x ≤ ' + cFmt(v) + ' < 0）', '#c0392b', 0, 0);
+      s0.info.innerHTML = '<span class="viz-meta">' + p.S + ' 元的书包已经超过 ' + p.B + ' 元预算——不等式解出 x ≤ ' + cFmt(v) + '，负数在现实里无意义。应用题的解必须过「现实合理性」这一关。</span>';
+      return;
+    }
+    /* 可行区间 0 ≤ x ≤ v */
+    ctx.fillStyle = 'rgba(24,95,165,0.14)';
+    ctx.fillRect(m.px(0), m.py(y0 + 0.5), (v - 0) * m.sc, 1.0 * m.sc);
+    tArrowH(m, 0, v, y0 + 0.5, '#185fa5', 2.6);
+    ctx.beginPath(); ctx.arc(m.px(v), m.py(y0), 6, 0, Math.PI * 2);
+    ctx.fillStyle = '#fff'; ctx.fill();
+    ctx.strokeStyle = '#185fa5'; ctx.lineWidth = 2.2; ctx.stroke();
+    cTag(m, v, y0 + 1.6, 'x ≤ ' + cFmt(v), '#185fa5', 0, 0);
+    /* 整数可行点 */
+    var i;
+    for (i = 0; i <= maxInt; i++) cDot(m, i, y0, '#0f6e56', 4);
+    cDot(m, maxInt, y0, '#c0392b', 7);
+    cTag(m, maxInt, y0 - 1.3, '最多买 ' + maxInt + ' 支', '#c0392b', 0, 0);
+    s0.info.innerHTML = '<span class="viz-meta">设买 x 支笔（单价 ' + p.u + ' 元）、一个 ' + p.S + ' 元的书包，预算 ' + p.B + ' 元：' + p.u + 'x + ' + p.S + ' ≤ ' + p.B + ' → <b>x ≤ ' + cFmt(v) + '</b>。蓝色区间里每个 x 都「数学上合法」，绿色整点是「现实里能取」的。</span>'
+      + '<span class="viz-meta">「最多能买几支」的答案藏在端点：x ≤ ' + cFmt(v) + (Number.isInteger(v) ? '，端点本身就是整数 → 最多 ' + maxInt + ' 支。' : '，四舍五入不行——<b>向下取整</b>取 ' + maxInt + ' 支（买 ' + (maxInt + 1) + ' 支会超预算）。') + '验算：' + maxInt + '×' + p.u + ' + ' + p.S + ' = ' + (maxInt * p.u + p.S) + ' ≤ ' + p.B + ' ✓。</span>'
+      + '<span class="viz-meta">拖动 B、u、S：区间伸缩、端点滑动，但套路不变——解出区间 → 找整数解 → 回验。所有「最多 / 至少」类应用题都是这条流水线。</span>';
+  }
+  cSlider(s0.ctrl, 'B（预算，元）', p.B, 100, 600, 10, function (v) { p.B = v; draw(); });
+  cSlider(s0.ctrl, 'u（笔的单价，元）', p.u, 5, 20, 1, function (v) { p.u = v; draw(); });
+  cSlider(s0.ctrl, 'S（书包价格，元）', p.S, 0, 150, 10, function (v) { p.S = v; draw(); });
+  draw();
+}
+
+/* ================= 七上 2 · 整式的加减 ================= */
+
+/* 单项式解剖台 */
+function iaTermLab(el, cfg) {
+  var s0 = circleScaffold(el);
+  var p = { coe: -3, px: 2, py: 1 };
+  if (cfg.values) for (var key in cfg.values) p[key] = cfg.values[key];
+  var SUP = ['', '', '²', '³', '⁴'];
+
+  function termStr() {
+    if (p.coe === 0) return '0';
+    var s = cFmt(p.coe) === '1' ? '' : cFmt(p.coe) === '-1' ? '−' : cFmt(p.coe);
+    if (p.px > 0) s += 'x' + (p.px > 1 ? SUP[p.px] : '');
+    if (p.py > 0) s += 'y' + (p.py > 1 ? SUP[p.py] : '');
+    if (p.px === 0 && p.py === 0) s = cFmt(p.coe);   /* 纯常数 */
+    return s;
+  }
+
+  function draw() {
+    var view = { xmin: -10.5, xmax: 10.5, ymin: -4.6, ymax: 4.6 };
+    var m = circleMap(s0.cv, view), ctx = m.ctx;
+    cGrid(m, view);
+    var y0 = 0.6;
+    /* 零件：系数盒 + 字母盒 */
+    var bx = -7.5;
+    if (!(p.px === 0 && p.py === 0)) {
+      tBox(m, bx, y0, 2.0, 1.3, p.coe < 0 ? 'rgba(192,57,43,0.82)' : 'rgba(24,95,165,0.82)', '#333', String(cFmt(p.coe)));
+      cTag(m, bx, y0 - 1.4, '系数（带符号）', '#6b7a89', 0, 0);
+      bx += 2.6;
+    }
+    if (p.px > 0) {
+      tBox(m, bx, y0, 1.5, 1.3, 'rgba(15,110,86,0.82)', '#333', 'x' + (p.px > 1 ? SUP[p.px] : ''));
+      cTag(m, bx, y0 - 1.4, 'x 的指数 ' + p.px, '#6b7a89', 0, 0);
+      bx += 2.1;
+    }
+    if (p.py > 0) {
+      tBox(m, bx, y0, 1.5, 1.3, 'rgba(138,90,0,0.82)', '#333', 'y' + (p.py > 1 ? SUP[p.py] : ''));
+      cTag(m, bx, y0 - 1.4, 'y 的指数 ' + p.py, '#6b7a89', 0, 0);
+      bx += 2.1;
+    }
+    /* 次数 */
+    var deg = p.px + p.py;
+    cTag(m, 4.6, y0 + 0.3, '次数 = ' + p.px + ' + ' + p.py + ' = ' + deg, '#c0392b', 0, 0);
+    cTag(m, 4.6, y0 - 0.8, deg === 0 ? '非零常数是零次单项式' : (deg === 1 ? '一次单项式' : deg === 2 ? '二次单项式' : deg + ' 次单项式'), '#6b7a89', 0, 0);
+    /* 整体式子 */
+    cTag(m, 0, 3.3, '这个单项式是：' + termStr(), '#333', 0, 0);
+    s0.info.innerHTML = p.coe === 0
+      ? '<span class="viz-meta">系数是 0 时整个单项式就是 0，通常不讨论它的次数。把系数拖离 0 再玩。</span>'
+      : '<span class="viz-meta">单项式 = <b>系数 × 字母部分</b>。系数是数字因数（<b>带着符号</b>，1 和 −1 省略不写）；次数是<b>所有字母的指数之和</b>——不是只看 x！</span>'
+        + '<span class="viz-meta">两个高频陷阱都在这个实验台里：① π 是数字，πr² 的系数是 π、次数是 2，别把 π 当字母；② 单独的常数（x、y 指数全 0）是<b>零次</b>单项式，所有常数项互为同类项。</span>'
+        + '<span class="viz-meta">注意 x/2 是单项式（系数 1/2），但 2/x 不是——<b>分母含字母就出局</b>，这是「整式」的入场券。</span>';
+  }
+  cSlider(s0.ctrl, '系数', p.coe, -5, 5, 1, function (v) { p.coe = v; draw(); });
+  cSlider(s0.ctrl, 'x 的指数', p.px, 0, 4, 1, function (v) { p.px = v; draw(); });
+  cSlider(s0.ctrl, 'y 的指数', p.py, 0, 3, 1, function (v) { p.py = v; draw(); });
+  draw();
+}
+
+/* 同类项：分家族 */
+function iaLikeLab(el, cfg) {
+  var s0 = circleScaffold(el);
+  var p = { t: 1 };
+  if (cfg.values) for (var key in cfg.values) p[key] = cfg.values[key];
+  /* 式子：3x − 5x² + 2x − x² + 7 */
+  var TERMS = [
+    { co: 3, kind: 'x' }, { co: -5, kind: 'x2' }, { co: 2, kind: 'x' },
+    { co: -1, kind: 'x2' }, { co: 7, kind: 'c' }
+  ];
+  var KIND = {
+    x: { name: 'x', co: '#0f6e56' },
+    x2: { name: 'x²', co: '#185fa5' },
+    c: { name: '常数', co: '#8a5a00' }
+  };
+
+  function coStr(co) { return co < 0 ? '− ' + (-co) : String(co); }
+  function box(m, x, y, t, color, w) {
+    tBox(m, x + (w || 1.6) / 2, y, w || 1.6, 1.1, 'rgba(255,255,255,0.95)', color, '');
+    cTag(m, x + (w || 1.6) / 2, y, t, '#333', 0, 0);
+    return x + (w || 1.6) + 0.55;
+  }
+
+  function draw() {
+    var view = { xmin: -11, xmax: 11, ymin: -4.6, ymax: 4.6 };
+    var m = circleMap(s0.cv, view), ctx = m.ctx;
+    cGrid(m, view);
+    var y0 = 1.8;
+    var list = TERMS.slice();
+    if (p.t >= 1) {
+      /* 分族：x² → x → 常数 */
+      list = TERMS.filter(function (t) { return t.kind === 'x2'; })
+        .concat(TERMS.filter(function (t) { return t.kind === 'x'; }))
+        .concat(TERMS.filter(function (t) { return t.kind === 'c'; }));
+    }
+    /* 家族底带 */
+    if (p.t >= 1) {
+      var bands = [[0, 2, 'x2'], [2, 4, 'x'], [4, 5, 'c']];
+      bands.forEach(function (b) {
+        var px0 = -9.25 + b[0] * 2.15, px1 = -7.65 + (b[1] - 1) * 2.15;
+        ctx.fillStyle = 'rgba(0,0,0,0.05)';
+        ctx.fillRect(m.px(px0), m.py(y0 + 1.15), (px1 - px0) * m.sc, 1.9 * m.sc);
+        cTag(m, (px0 + px1) / 2, y0 - 1.1, KIND[b[2]].name + ' 族', KIND[b[2]].co, 0, 0);
+      });
+    }
+    var x = -9.6;
+    list.forEach(function (t, i) {
+      if (i > 0) cTag(m, x + 0.05, y0, t.co < 0 ? '−' : '+', '#333', 0, 0);
+      var label = (Math.abs(t.co) === 1 ? (t.co < 0 ? '−' : '') : coStr(Math.abs(t.co))) + (t.kind === 'c' ? '' : KIND[t.kind].name);
+      x = box(m, x + 0.35, y0, label, KIND[t.kind].co);
+    });
+    if (p.t >= 2) {
+      /* 合并 */
+      var y2 = -1.6;
+      cTag(m, -9.9, y2, '⬇ 合并', '#6b7a89', 0, 0);
+      var xb = -9.6;
+      xb = box(m, xb, y2, '− 6x²', KIND.x2.co);
+      cTag(m, xb - 0.25, y2, '+', '#333', 0, 0);
+      xb = box(m, xb + 0.35, y2, '5x', KIND.x.co);
+      cTag(m, xb - 0.25, y2, '+', '#333', 0, 0);
+      xb = box(m, xb + 0.35, y2, '7', KIND.c.co);
+      cTag(m, -8.3, y2 + 1.35, 'x² 族：−5 + (−1) = −6　x 族：3 + 2 = 5', '#6b7a89', 0, 0);
+    }
+    cTag(m, 0, 3.7, p.t === 0 ? '原式：3x − 5x² + 2x − x² + 7' : p.t === 1 ? '第一步：同类的排一起（颜色即家族）' : '第二步：各族系数相加', '#333', 0, 0);
+    s0.info.innerHTML = '<span class="viz-meta">式子 3x − 5x² + 2x − x² + 7 里有三个家族：<b>x 族</b>（3x、2x）、<b>x² 族</b>（−5x²、−x²）、<b>常数族</b>（7）。判断同类只看字母档案——字母相同、相同字母的指数也相同；−5yx² 和 3x²y 也算同类，因为乘法交换律让顺序不重要。</span>'
+      + '<span class="viz-meta">拖动「步骤」：先归类、再合并。合并时<b>系数相加、字母照抄</b>：x² 族 −5 + (−1) = −6，x 族 3 + 2 = 5。7 自己一族动不了——不同类就不能合并，x 和 x² 永远是两家人。</span>'
+      + '<span class="viz-meta">做整式加减题的第一遍永远是<b>逐项标号检查</b>：这一项系数是多少、管哪个字母、指数几次——标完再动手，家族不会分错。</span>';
+  }
+  cSlider(s0.ctrl, '步骤（0 原式 → 1 归类 → 2 合并）', p.t, 0, 2, 1, function (v) { p.t = v; draw(); });
+  draw();
+}
+
+/* 合并同类项：数一数有几个 x */
+function iaMergeLab(el, cfg) {
+  var s0 = circleScaffold(el);
+  var p = { a: 3, b: -1 };
+  if (cfg.values) for (var key in cfg.values) p[key] = cfg.values[key];
+
+  function draw() {
+    var s = p.a + p.b;
+    var n = Math.max(Math.abs(p.a), Math.abs(p.b), Math.abs(s), 1);
+    var view = { xmin: -1.8, xmax: n * 1.15 + 3.6, ymin: -2.6, ymax: 5.2 };
+    var m = circleMap(s0.cv, view), ctx = m.ctx;
+    cGrid(m, view);
+    function row(y, cnt, label, color) {
+      cTag(m, -0.9, y, label, '#333', 0, 0);
+      var i;
+      for (i = 0; i < Math.abs(cnt); i++) {
+        var bx = 0.55 + i * 1.15;
+        if (cnt > 0) tBox(m, bx, y, 0.95, 0.95, color, '#333', 'x');
+        else {
+          tBox(m, bx, y, 0.95, 0.95, 'rgba(255,255,255,0.9)', color, '');
+          tSeg(m, bx - 0.34, y + 0.34, bx + 0.34, y - 0.34, color, 2.2);
+          tSeg(m, bx - 0.34, y - 0.34, bx + 0.34, y + 0.34, color, 2.2);
+        }
+      }
+      if (cnt === 0) cTag(m, 0.55, y, '0 个（全部抵消）', '#0f6e56', 0, 0);
+      tBox(m, 0.55 + n * 1.15 + 0.75, y, 1.15, 0.95, 'rgba(138,90,0,0.16)', '#8a5a00', 'x²');
+    }
+    row(3.6, p.a, p.a + 'x', 'rgba(24,95,165,0.82)');
+    row(1.6, p.b, (p.b < 0 ? '− ' + (-p.b) : p.b) + 'x', 'rgba(192,57,43,0.82)');
+    row(-0.6, s, '(' + p.a + ' + ' + (p.b < 0 ? '(' + p.b + ')' : p.b) + ')x = ' + s + 'x', 'rgba(15,110,86,0.82)');
+    cTag(m, 0.55 + n * 1.15 + 0.75, 2.5, 'x² 不掺和', '#8a5a00', 0, 0);
+    s0.info.innerHTML = '<span class="viz-meta">合并同类项就是在<b>数个数</b>：' + p.a + ' 个 x 加上 ' + (p.b < 0 ? '拿走 ' + (-p.b) + ' 个' : p.b + ' 个') + '，剩 ' + s + ' 个 x——<b>系数相加，字母照抄</b>。'
+      + (s === 0 ? '现在恰好全部抵消：' + p.a + 'x + (' + p.b + 'x) = <b>0</b>——系数相加得 0，这一项整个消失。' : '')
+      + '</span>'
+      + '<span class="viz-meta">右边的 x² 盒子是提醒：不管 x 有几个，<b>x² 都进不了 x 的队伍</b>——字母和指数不同就不是同类。合并的数学根据是分配律：(3 + 2)x = 3x + 2x，倒过来用而已。</span>'
+      + '<span class="viz-meta">负数个 x 表示「拿走」（虚线叉盒）：3x − x = 2x、3x − 3x = 0。把 b 拖到 −3 看抵消，拖到正数看累加——法则在滑块里自己长出来。</span>';
+  }
+  cSlider(s0.ctrl, 'a（第一组的系数）', p.a, -4, 4, 1, function (v) { p.a = v; draw(); });
+  cSlider(s0.ctrl, 'b（第二组的系数）', p.b, -4, 4, 1, function (v) { p.b = v; draw(); });
+  draw();
+}
+
+/* 去括号：负号是翻转开关 */
+function iaParenLab(el, cfg) {
+  var s0 = circleScaffold(el);
+  var p = { a: 2, b: 3, s: -1 };
+  if (cfg.values) for (var key in cfg.values) p[key] = cfg.values[key];
+
+  function draw() {
+    var view = { xmin: -11, xmax: 11, ymin: -4.8, ymax: 4.8 };
+    var m = circleMap(s0.cv, view), ctx = m.ctx;
+    cGrid(m, view);
+    var y0 = 2.6;
+    /* 括号前系数盒 */
+    tBox(m, -6.2, y0, 1.7, 1.2, p.s > 0 ? 'rgba(15,110,86,0.85)' : 'rgba(192,57,43,0.85)', '#333', p.s > 0 ? '+1' : '−1');
+    cTag(m, -6.2, y0 - 1.15, '括号前是 ' + (p.s > 0 ? '+：原样搬' : '−：全变号'), p.s > 0 ? '#0f6e56' : '#c0392b', 0, 0);
+    cTag(m, -4.9, y0, '×', '#333', 0, 0);
+    cTag(m, -4.1, y0, '(', '#333', 0, 0);
+    tBox(m, -3.1, y0, 1.4, 1.2, 'rgba(24,95,165,0.85)', '#333', cFmt(p.a));
+    cTag(m, -1.9, y0, 'x +', '#333', 0, 0);
+    tBox(m, -0.9, y0, 1.4, 1.2, 'rgba(24,95,165,0.85)', '#333', cFmt(p.b));
+    cTag(m, 0.4, y0, ')', '#333', 0, 0);
+    /* 箭头分到两项 */
+    ctx.strokeStyle = '#9aa7b5'; ctx.lineWidth = 1.6;
+    ctx.beginPath(); ctx.moveTo(m.px(-6.2), m.py(y0 - 0.6)); ctx.lineTo(m.px(-3.4), m.py(-1.1)); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(m.px(-6.2), m.py(y0 - 0.6)); ctx.lineTo(m.px(2.6), m.py(-1.1)); ctx.stroke();
+    /* 结果两项 */
+    var y2 = -2.0;
+    cTag(m, -6.6, y2, '展开：', '#333', 0, 0);
+    var t1 = p.s * p.a, t2 = p.s * p.b;
+    tBox(m, -4.6, y2, 2.6, 1.2, Math.abs(t1) > 0 ? 'rgba(24,95,165,0.2)' : 'rgba(255,255,255,0.9)', '#185fa5', cFmt(t1) + 'x');
+    cTag(m, -2.7, y2, t2 < 0 ? '−' : '+', '#333', 0, 0);
+    tBox(m, -1.4, y2, 2.4, 1.2, 'rgba(24,95,165,0.2)', '#185fa5', String(cFmt(Math.abs(t2))));
+    if (p.s < 0) cTag(m, 2.2, y2, '← 两项同时变号', '#c0392b', 0, 0);
+    if (p.a === 0) cTag(m, -4.6, y2 - 1.4, 'x 项系数为 0，x 项消失', '#0f6e56', 0, 0);
+    s0.info.innerHTML = '<span class="viz-meta">去括号的根是<b>乘法分配律</b>：括号前那个数要乘进<b>每一项</b>。当前展开：' + (p.s > 0 ? '+' : '−') + '(' + cFmt(p.a) + 'x ' + (p.b < 0 ? '− ' + cFmt(-p.b) : '+ ' + cFmt(p.b)) + ') = <b>' + cFmt(t1) + 'x ' + (t2 < 0 ? '− ' + cFmt(-t2) : '+ ' + cFmt(t2)) + '</b>。</span>'
+      + '<span class="viz-meta">把 s 从 +1 拖到 −1：红盒一按，<b>x 项和常数项同时变号</b>——「负号是翻转开关」，不是只翻第一项。再拖 a 到 3：每一项还要再乘 3——「只乘了 x、忘了乘常数」是本章事故率最高的错误。</span>'
+      + '<span class="viz-meta">添括号是逆操作：a − b = −(b − a)——添上负号括号，里面同样全变号。多层括号从里往外一层层去，每层都过一遍符号检查。</span>';
+  }
+  cSlider(s0.ctrl, '括号前的符号（−1 或 +1）', p.s, -1, 1, 2, function (v) { p.s = v; draw(); });
+  cSlider(s0.ctrl, 'a（x 的系数）', p.a, -3, 4, 1, function (v) { p.a = v; draw(); });
+  cSlider(s0.ctrl, 'b（括号里的常数）', p.b, -5, 5, 1, function (v) { p.b = v; draw(); });
+  draw();
+}
+
+/* 化简求值：两条路算出同一个数 */
+function iaEvalLab(el, cfg) {
+  var s0 = circleScaffold(el);
+  var p = { x: 2 };
+  if (cfg.values) for (var key in cfg.values) p[key] = cfg.values[key];
+
+  function draw() {
+    var x = p.x;
+    var raw = [
+      { v: 3 * x * x, t: '3x²' }, { v: -5 * x, t: '−5x' }, { v: 2, t: '+2' },
+      { v: -x * x, t: '−x²' }, { v: 3 * x, t: '+3x' }, { v: -4, t: '−4' }
+    ];
+    var simp = [{ v: 2 * x * x, t: '2x²' }, { v: -2 * x, t: '−2x' }, { v: -2, t: '−2' }];
+    var sum1 = 0, sum2 = 0, i;
+    for (i = 0; i < raw.length; i++) sum1 += raw[i].v;
+    for (i = 0; i < simp.length; i++) sum2 += simp[i].v;
+    var view = { xmin: -11.5, xmax: 11.5, ymin: -4.4, ymax: 4.4 };
+    var m = circleMap(s0.cv, view), ctx = m.ctx;
+    cGrid(m, view);
+    function track(y, items, sum, label, color) {
+      cTag(m, -9.6, y, label, color, 0, 0);
+      var bx = -8.2;
+      items.forEach(function (it, k) {
+        if (k > 0) cTag(m, bx + 0.1, y, it.v < 0 ? '−' : '+', '#333', 0, 0);
+        tBox(m, bx + 0.95, y, 1.9, 1.2, it.v === sum ? 'rgba(15,110,86,0.14)' : 'rgba(255,255,255,0.95)', color, '');
+        cTag(m, bx + 0.95, y + 0.88, it.t, '#6b7a89', 0, 0);
+        cTag(m, bx + 0.95, y, cFmt(it.v), '#333', 0, 0);
+        bx += 2.5;
+      });
+      cTag(m, bx + 0.1, y, '=', '#333', 0, 0);
+      tBox(m, bx + 1.15, y, 1.9, 1.2, color.replace(')', ',0.85)').replace('rgb', 'rgba'), color, cFmt(sum));
+      tSeg(m, -8.2, y - 0.9, bx + 1.2, y - 0.9, 'rgba(154,167,181,0.5)', 1.2, [4, 3]);
+    }
+    track(2.4, raw, sum1, '原始式逐项代', '#c0392b');
+    track(-2.4, simp, sum2, '化简式一次代', '#0f6e56');
+    cTag(m, 0, 3.9, 'x = ' + p.x + '：两条路都算出 ' + cFmt(sum2), '#333', 0, 0);
+    s0.info.innerHTML = '<span class="viz-meta">原始式 3x² − 5x + 2 − (x² − 3x + 4) 要算 6 项，化简成 2x² − 2x − 2 只算 3 项——拖动 x，<b>两行的结果永远相等</b>（都在 ' + cFmt(sum2) + '）。化简没有改变式子的值，只是把它收拾得省力。</span>'
+      + '<span class="viz-meta">化简过程：去括号（−1 乘进括号 → −x² + 3x − 4）→ 合并同类项（3x² − x² = 2x²，−5x + 3x = −2x，2 − 4 = −2）。「先化简再求值」三个动作各占一步，阅卷按步给分。</span>'
+      + '<span class="viz-meta">注意 x 拖到负数时：3x² 用的是 <b>(−2)² = 4</b> 不是 −2² = −4——代入负数必须给底数加括号，这一分年年有人丢。</span>';
+  }
+  cSlider(s0.ctrl, 'x（代入的值）', p.x, -3, 3, 1, function (v) { p.x = v; draw(); });
+  draw();
+}
+  window.VIZ = { ineqDefLab: ineqDefLab, ineqFlipLab: ineqFlipLab, ineqSolveLab: ineqSolveLab, ineqSetLab: ineqSetLab, ineqApplyLab: ineqApplyLab, iaTermLab: iaTermLab, iaLikeLab: iaLikeLab, iaMergeLab: iaMergeLab, iaParenLab: iaParenLab, iaEvalLab: iaEvalLab, renderPlot: renderPlot, parabolaLab: parabolaLab, stepLab: stepLab, bridgeLab: bridgeLab, profitLab: profitLab, fenceLab: fenceLab, fountainLab: fountainLab, shotLab: shotLab, completeSquareLab: completeSquareLab, equationLab: equationLab, growthLab: growthLab, rotateLab: rotateLab, coordRotLab: coordRotLab, patternLab: patternLab, clockLab: clockLab, anatomyLab: anatomyLab, chordLab: chordLab, inscribedLab: inscribedLab, positionLab: positionLab, tangentLab: tangentLab, sectorLab: sectorLab, eventScaleLab: eventScaleLab, bagLab: bagLab, sumTableLab: sumTableLab, treeLab: treeLab, coinLab: coinLab, dartLab: dartLab, inverseLab: inverseLab, kAreaLab: kAreaLab, inverseCrossLab: inverseCrossLab, inverseUseLab: inverseUseLab, trigRatioLab: trigRatioLab, trigSpecialLab: trigSpecialLab, trigSolveLab: trigSolveLab, trigHeightLab: trigHeightLab, trigSlopeLab: trigSlopeLab, trigAltitudeLab: trigAltitudeLab, simGoldenLab: simGoldenLab, simParallelLab: simParallelLab, simJudgeLab: simJudgeLab, simAreaLab: simAreaLab, simNestedLab: simNestedLab, simHomothetyLab: simHomothetyLab, simShadowLab: simShadowLab, projShadowLab: projShadowLab, projOrthLab: projOrthLab, viewThreeLab: viewThreeLab, viewBlocksLab: viewBlocksLab, viewSolidLab: viewSolidLab, pythagSquaresLab: pythagSquaresLab, pythagPuzzleLab: pythagPuzzleLab, pythagSolveLab: pythagSolveLab, pythagInverseLab: pythagInverseLab, pythagLadderLab: pythagLadderLab, linearLab: linearLab, linearQuadLab: linearQuadLab, linearCrossLab: linearCrossLab, linearModelLab: linearModelLab, linearTranslateLab: linearTranslateLab, linearFitLab: linearFitLab, pgPropLab: pgPropLab, pgDiagLab: pgDiagLab, pgJudgeLab: pgJudgeLab, pgMidlineLab: pgMidlineLab, pgRectLab: pgRectLab, pgRhombusLab: pgRhombusLab, pgSquareLab: pgSquareLab, pgAreaLab: pgAreaLab, triSidesLab: triSidesLab, triLinesLab: triLinesLab, triAngleLab: triAngleLab, triExteriorLab: triExteriorLab, polyAngleLab: polyAngleLab, congMapLab: congMapLab, congJudgeLab: congJudgeLab, congSsaLab: congSsaLab, bisectorLab: bisectorLab, axFoldLab: axFoldLab, axBisectorLab: axBisectorLab, axCoordLab: axCoordLab, axDrawLab: axDrawLab, axIsoscelesLab: axIsoscelesLab, axIsoJudgeLab: axIsoJudgeLab, axEquiLab: axEquiLab, axPathLab: axPathLab, sqrtDefLab: sqrtDefLab, sqrtPropLab: sqrtPropLab, sqrtMulLab: sqrtMulLab, sqrtDivLab: sqrtDivLab, sqrtAddLab: sqrtAddLab, sqrtEstLab: sqrtEstLab, statMeanLab: statMeanLab, statMedianLab: statMedianLab, statModeLab: statModeLab, statVarLab: statVarLab, statChoiceLab: statChoiceLab, ratLineLab: ratLineLab, ratAbsLab: ratAbsLab, ratAddLab: ratAddLab, ratMulLab: ratMulLab, ratPowerLab: ratPowerLab, eqBalanceLab: eqBalanceLab, eqStepsLab: eqStepsLab, eqMotionLab: eqMotionLab, eqDistroLab: eqDistroLab, eqPctLab: eqPctLab, geoSolidsLab: geoSolidsLab, geoMotionLab: geoMotionLab, geoView3Lab: geoView3Lab, geoSegLab: geoSegLab, geoMidLab: geoMidLab, geoAngleLab: geoAngleLab, geoCompLab: geoCompLab, sysDefLab: sysDefLab, sysSubstLab: sysSubstLab, sysElimLab: sysElimLab, sysSolLab: sysSolLab, sysCaseLab: sysCaseLab, sysFarmLab: sysFarmLab };
 })();
 
 </script>
@@ -8487,6 +8987,16 @@ function sysFarmLab(el, cfg) {
       else if (cfg.type === 'sys-sol') VIZ.sysSolLab(el, cfg);
       else if (cfg.type === 'sys-case') VIZ.sysCaseLab(el, cfg);
       else if (cfg.type === 'sys-farm') VIZ.sysFarmLab(el, cfg);
+      else if (cfg.type === 'ineq-def') VIZ.ineqDefLab(el, cfg);
+      else if (cfg.type === 'ineq-flip') VIZ.ineqFlipLab(el, cfg);
+      else if (cfg.type === 'ineq-solve') VIZ.ineqSolveLab(el, cfg);
+      else if (cfg.type === 'ineq-set') VIZ.ineqSetLab(el, cfg);
+      else if (cfg.type === 'ineq-apply') VIZ.ineqApplyLab(el, cfg);
+      else if (cfg.type === 'ia-term') VIZ.iaTermLab(el, cfg);
+      else if (cfg.type === 'ia-like') VIZ.iaLikeLab(el, cfg);
+      else if (cfg.type === 'ia-merge') VIZ.iaMergeLab(el, cfg);
+      else if (cfg.type === 'ia-paren') VIZ.iaParenLab(el, cfg);
+      else if (cfg.type === 'ia-eval') VIZ.iaEvalLab(el, cfg);
     });
   });
 })();

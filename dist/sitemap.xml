@@ -21,6 +21,22 @@
   <url><loc>https://teach.toolona.com/rational/pattern/r-abs-equation.html</loc><priority>0.7</priority></url>
   <url><loc>https://teach.toolona.com/rational/pattern/r-add-sub-mixed.html</loc><priority>0.7</priority></url>
   <url><loc>https://teach.toolona.com/rational/pattern/r-mul-power-order.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/poly-arith/index.html</loc><priority>0.9</priority></url>
+  <url><loc>https://teach.toolona.com/poly-arith/ia-term.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/poly-arith/ia-like.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/poly-arith/ia-merge.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/poly-arith/ia-paren.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/poly-arith/ia-eval.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/poly-arith/patterns.html</loc><priority>0.9</priority></url>
+  <url><loc>https://teach.toolona.com/poly-arith/locate.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/poly-arith/pattern/ia-basic-merge.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/poly-arith/pattern/ia-basic-paren.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/poly-arith/pattern/ia-basic-concept.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/poly-arith/pattern/ia-adv-like-param.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/poly-arith/pattern/ia-adv-eval.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/poly-arith/pattern/ia-adv-independent.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/poly-arith/pattern/ia-app-digits.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/poly-arith/pattern/ia-app-fee.html</loc><priority>0.7</priority></url>
   <url><loc>https://teach.toolona.com/linear-eq/index.html</loc><priority>0.9</priority></url>
   <url><loc>https://teach.toolona.com/linear-eq/eq-def.html</loc><priority>0.8</priority></url>
   <url><loc>https://teach.toolona.com/linear-eq/eq-prop.html</loc><priority>0.8</priority></url>
@@ -75,6 +91,22 @@
   <url><loc>https://teach.toolona.com/eq-system/pattern/sys-adv-choose-method.html</loc><priority>0.7</priority></url>
   <url><loc>https://teach.toolona.com/eq-system/pattern/sys-app-farm.html</loc><priority>0.7</priority></url>
   <url><loc>https://teach.toolona.com/eq-system/pattern/sys-app-rate.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/inequality/index.html</loc><priority>0.9</priority></url>
+  <url><loc>https://teach.toolona.com/inequality/ineq-concept.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/inequality/ineq-props.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/inequality/ineq-solve.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/inequality/ineq-set.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/inequality/ineq-apply.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/inequality/patterns.html</loc><priority>0.9</priority></url>
+  <url><loc>https://teach.toolona.com/inequality/locate.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/inequality/pattern/ineq-basic-solve.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/inequality/pattern/ineq-basic-axis.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/inequality/pattern/ineq-basic-prop.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/inequality/pattern/ineq-adv-system.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/inequality/pattern/ineq-adv-param.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/inequality/pattern/ineq-adv-nosol.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/inequality/pattern/ineq-app-score.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/inequality/pattern/ineq-app-plan.html</loc><priority>0.7</priority></url>
   <url><loc>https://teach.toolona.com/triangle/index.html</loc><priority>0.9</priority></url>
   <url><loc>https://teach.toolona.com/triangle/tri-side.html</loc><priority>0.8</priority></url>
   <url><loc>https://teach.toolona.com/triangle/tri-lines.html</loc><priority>0.8</priority></url>
