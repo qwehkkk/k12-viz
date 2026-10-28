@@ -4894,7 +4894,532 @@ window.__LOCATE_DATA__ = {"asks":[{"k":"概念辨析","label":"判断是否一�
     draw();
   }
 
-  window.VIZ = { renderPlot: renderPlot, parabolaLab: parabolaLab, stepLab: stepLab, bridgeLab: bridgeLab, profitLab: profitLab, fenceLab: fenceLab, fountainLab: fountainLab, shotLab: shotLab, completeSquareLab: completeSquareLab, equationLab: equationLab, growthLab: growthLab, rotateLab: rotateLab, coordRotLab: coordRotLab, patternLab: patternLab, clockLab: clockLab, anatomyLab: anatomyLab, chordLab: chordLab, inscribedLab: inscribedLab, positionLab: positionLab, tangentLab: tangentLab, sectorLab: sectorLab, eventScaleLab: eventScaleLab, bagLab: bagLab, sumTableLab: sumTableLab, treeLab: treeLab, coinLab: coinLab, dartLab: dartLab, inverseLab: inverseLab, kAreaLab: kAreaLab, inverseCrossLab: inverseCrossLab, inverseUseLab: inverseUseLab, trigRatioLab: trigRatioLab, trigSpecialLab: trigSpecialLab, trigSolveLab: trigSolveLab, trigHeightLab: trigHeightLab, trigSlopeLab: trigSlopeLab, trigAltitudeLab: trigAltitudeLab, simGoldenLab: simGoldenLab, simParallelLab: simParallelLab, simJudgeLab: simJudgeLab, simAreaLab: simAreaLab, simNestedLab: simNestedLab, simHomothetyLab: simHomothetyLab, simShadowLab: simShadowLab, projShadowLab: projShadowLab, projOrthLab: projOrthLab, viewThreeLab: viewThreeLab, viewBlocksLab: viewBlocksLab, viewSolidLab: viewSolidLab, pythagSquaresLab: pythagSquaresLab, pythagPuzzleLab: pythagPuzzleLab, pythagSolveLab: pythagSolveLab, pythagInverseLab: pythagInverseLab, pythagLadderLab: pythagLadderLab, linearLab: linearLab, linearQuadLab: linearQuadLab, linearCrossLab: linearCrossLab, linearModelLab: linearModelLab, linearTranslateLab: linearTranslateLab, linearFitLab: linearFitLab };
+  /* ==================== 第十二章：平行四边形（八下 18 章） ==================== */
+
+  /* 多边形：pts = [[x,y],...]，fill 为填充色、color 为描边色 */
+  function tPoly(m, pts, color, w, fill) {
+    var ctx = m.ctx;
+    ctx.beginPath();
+    ctx.moveTo(m.px(pts[0][0]), m.py(pts[0][1]));
+    for (var i = 1; i < pts.length; i++) ctx.lineTo(m.px(pts[i][0]), m.py(pts[i][1]));
+    ctx.closePath();
+    if (fill) { ctx.fillStyle = fill; ctx.fill(); }
+    if (color) { ctx.strokeStyle = color; ctx.lineWidth = w || 2; ctx.stroke(); }
+  }
+
+  /* 只填色不描边的三角形 */
+  function tTri(m, a, b, c, fill) {
+    var ctx = m.ctx;
+    ctx.beginPath();
+    ctx.moveTo(m.px(a[0]), m.py(a[1]));
+    ctx.lineTo(m.px(b[0]), m.py(b[1]));
+    ctx.lineTo(m.px(c[0]), m.py(c[1]));
+    ctx.closePath();
+    ctx.fillStyle = fill;
+    ctx.fill();
+  }
+
+  /* 等长标记：在边中点沿法线画 n 条短垂线 */
+  function tTicks(m, x1, y1, x2, y2, n, color) {
+    var ctx = m.ctx;
+    var dx = m.px(x2) - m.px(x1), dy = m.py(y2) - m.py(y1);
+    var len = Math.sqrt(dx * dx + dy * dy) || 1;
+    var ux = dx / len, uy = dy / len, nx = -uy, ny = ux;
+    var mx = (m.px(x1) + m.px(x2)) / 2, my = (m.py(y1) + m.py(y2)) / 2;
+    var cnt = n || 1, half = 5, gap = 4;
+    ctx.save();
+    ctx.strokeStyle = color || '#c0392b';
+    ctx.lineWidth = 1.6;
+    for (var i = 0; i < cnt; i++) {
+      var off = (i - (cnt - 1) / 2) * gap;
+      var cx = mx + ux * off, cy = my + uy * off;
+      ctx.beginPath();
+      ctx.moveTo(cx - nx * half, cy - ny * half);
+      ctx.lineTo(cx + nx * half, cy + ny * half);
+      ctx.stroke();
+    }
+    ctx.restore();
+  }
+
+  function tLen(x1, y1, x2, y2) {
+    return Math.sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
+  }
+
+  /* 多边形面积（鞋带公式，取绝对值） */
+  function tArea(pts) {
+    var s = 0;
+    for (var i = 0; i < pts.length; i++) {
+      var a = pts[i], b = pts[(i + 1) % pts.length];
+      s += a[0] * b[1] - b[0] * a[1];
+    }
+    return Math.abs(s) / 2;
+  }
+
+  /* 平行四边形：拖底边、斜边、夹角，看对边相等 / 对角相等 / 邻角互补 */
+  function pgPropLab(el, cfg) {
+    var s0 = circleScaffold(el);
+    var p = { a: 7, b: 4, ang: 62 };
+    if (cfg.values) for (var key in cfg.values) p[key] = cfg.values[key];
+
+    function draw() {
+      var th = p.ang * T_D2R;
+      var A = [0, 0], B = [p.a, 0];
+      var D = [p.b * Math.cos(th), p.b * Math.sin(th)];
+      var C = [B[0] + D[0], B[1] + D[1]];
+      var view = {
+        xmin: Math.min(0, D[0]) - 1.8, xmax: Math.max(B[0], C[0]) + 2.2,
+        ymin: -2.2, ymax: Math.max(D[1], C[1]) + 2.0
+      };
+      var m = circleMap(s0.cv, view);
+      cGrid(m, view);
+      tPoly(m, [A, B, C, D], '#185fa5', 2.4, 'rgba(24,95,165,.07)');
+      /* 对角线（虚线，提示中心对称） */
+      tSeg(m, A[0], A[1], C[0], C[1], '#b9c4cf', 1.4, [5, 4]);
+      tSeg(m, B[0], B[1], D[0], D[1], '#b9c4cf', 1.4, [5, 4]);
+      /* 边长标签放外侧 */
+      tEdgeLabel(m, A[0], A[1], B[0], B[1], 'AB = ' + cFmt(p.a), '#185fa5', 16);
+      tEdgeLabel(m, B[0], B[1], C[0], C[1], 'BC = ' + cFmt(p.b), '#185fa5', 18);
+      tEdgeLabel(m, C[0], C[1], D[0], D[1], 'CD = ' + cFmt(p.a), '#185fa5', 16);
+      tEdgeLabel(m, D[0], D[1], A[0], A[1], 'AD = ' + cFmt(p.b), '#185fa5', 18);
+      /* 等长标记：一组对边 1 道，另一组 2 道 */
+      tTicks(m, A[0], A[1], B[0], B[1], 1, '#c0392b');
+      tTicks(m, C[0], C[1], D[0], D[1], 1, '#c0392b');
+      tTicks(m, B[0], B[1], C[0], C[1], 2, '#0f6e56');
+      tTicks(m, D[0], D[1], A[0], A[1], 2, '#0f6e56');
+      /* 四个内角：对顶同色，邻角互补 */
+      var r = Math.min(1.5, p.b * 0.4 + 0.4);
+      var aDeg = Math.round(p.ang), bDeg = 180 - aDeg;
+      tAngle(m, A[0], A[1], r, 0, th, '#c0392b', aDeg + '°');
+      tAngle(m, C[0], C[1], r, Math.PI, Math.PI + th, '#c0392b', aDeg + '°');
+      tAngle(m, B[0], B[1], r, th, Math.PI, '#0f6e56', bDeg + '°');
+      tAngle(m, D[0], D[1], r, th - Math.PI, 0, '#0f6e56', bDeg + '°');
+      /* 顶点 */
+      cDot(m, A[0], A[1], '#185fa5', 3.5);
+      cDot(m, B[0], B[1], '#185fa5', 3.5);
+      cDot(m, C[0], C[1], '#185fa5', 3.5);
+      cDot(m, D[0], D[1], '#185fa5', 3.5);
+      cTag(m, A[0], A[1], 'A', '#185fa5', -12, 13);
+      cTag(m, B[0], B[1], 'B', '#185fa5', 12, 13);
+      cTag(m, C[0], C[1], 'C', '#185fa5', 13, -11);
+      cTag(m, D[0], D[1], 'D', '#185fa5', -13, -11);
+
+      var per = 2 * (p.a + p.b);
+      var special = Math.abs(aDeg - 90) < 1.5 ? '四个角都是直角 → 这时它是<b>矩形</b>' :
+        (Math.abs(p.a - p.b) < 0.01 ? '邻边相等 → 这时它是<b>菱形</b>' : '既不是矩形也不是菱形（一般平行四边形）');
+      s0.info.innerHTML =
+        '<span class="viz-meta">AB = CD = ' + cFmt(p.a) + '，AD = BC = ' + cFmt(p.b) + '（红色 1 道 / 绿色 2 道短线是等长标记）。周长 = 2 × (' + cFmt(p.a) + ' + ' + cFmt(p.b) + ') = <b>' + cFmt(per) + '</b>。</span>' +
+        '<span class="viz-meta">∠A = ∠C = ' + aDeg + '°，∠B = ∠D = ' + bDeg + '°：<b>对角相等</b>。同旁的两个角 ∠A + ∠B = ' + (aDeg + bDeg) + '°：<b>邻角互补</b>——因为 AD ∥ BC，它们是同旁内角。</span>' +
+        '<span class="viz-meta">为什么对边相等？连对角线 AC，把平行四边形分成 △ABC 与 △CDA：∠BAC = ∠DCA、∠BCA = ∠DAC（内错角），AC 公共 → 全等 → AB = CD。所以「平行」是根，「相等」是果。当前：' + special + '。</span>';
+    }
+    cSlider(s0.ctrl, '底边 AB', p.a, 4, 9, 0.5, function (v) { p.a = v; draw(); });
+    cSlider(s0.ctrl, '斜边 AD', p.b, 2, 6, 0.5, function (v) { p.b = v; draw(); });
+    cSlider(s0.ctrl, '夹角 ∠A', p.ang, 35, 145, 1, function (v) { p.ang = v; draw(); });
+    draw();
+  }
+
+  /* 对角线互相平分 + 过交点的直线把面积平分 */
+  function pgDiagLab(el, cfg) {
+    var s0 = circleScaffold(el);
+    var p = { a: 7, b: 4, ang: 62, phi: 28 };
+    if (cfg.values) for (var key in cfg.values) p[key] = cfg.values[key];
+
+    function draw() {
+      var th = p.ang * T_D2R;
+      var A = [0, 0], B = [p.a, 0];
+      var D = [p.b * Math.cos(th), p.b * Math.sin(th)];
+      var C = [B[0] + D[0], B[1] + D[1]];
+      var O = [(A[0] + C[0]) / 2, (A[1] + C[1]) / 2];
+      var view = {
+        xmin: Math.min(0, D[0]) - 2.0, xmax: Math.max(B[0], C[0]) + 2.4,
+        ymin: -2.4, ymax: Math.max(D[1], C[1]) + 2.2
+      };
+      var m = circleMap(s0.cv, view);
+      cGrid(m, view);
+      /* 四块小三角形：面积两两相等、整体四等分 */
+      tTri(m, O, A, B, 'rgba(24,95,165,.10)');
+      tTri(m, O, B, C, 'rgba(192,57,43,.09)');
+      tTri(m, O, C, D, 'rgba(24,95,165,.10)');
+      tTri(m, O, D, A, 'rgba(192,57,43,.09)');
+      tPoly(m, [A, B, C, D], '#185fa5', 2.2, null);
+      /* 对角线 */
+      tSeg(m, A[0], A[1], C[0], C[1], '#8a5a00', 1.8, [6, 4]);
+      tSeg(m, B[0], B[1], D[0], D[1], '#8a5a00', 1.8, [6, 4]);
+      /* 过 O 的直线，与四边形边界求交 */
+      var ph = p.phi * T_D2R;
+      var dx = Math.cos(ph), dy = Math.sin(ph);
+      var poly = [A, B, C, D], ss = [];
+      for (var i = 0; i < 4; i++) {
+        var P1 = poly[i], P2 = poly[(i + 1) % 4];
+        var ex = P2[0] - P1[0], ey = P2[1] - P1[1];
+        var qx = P1[0] - O[0], qy = P1[1] - O[1];
+        var det = -dx * ey + ex * dy;
+        if (Math.abs(det) < 1e-9) continue;
+        var sv = (-qx * ey + ex * qy) / det;
+        var uv = (dx * qy - qx * dy) / det;
+        if (uv >= -1e-6 && uv <= 1 + 1e-6) ss.push(sv);
+      }
+      if (ss.length >= 2) {
+        var s1 = Math.min.apply(null, ss), s2 = Math.max.apply(null, ss);
+        var E = [O[0] + s1 * dx, O[1] + s1 * dy];
+        var F = [O[0] + s2 * dx, O[1] + s2 * dy];
+        tSeg(m, E[0], E[1], F[0], F[1], '#0f6e56', 2.6);
+        cDot(m, E[0], E[1], '#0f6e56', 4);
+        cDot(m, F[0], F[1], '#0f6e56', 4);
+        cTag(m, E[0], E[1], 'E', '#0f6e56', -13, -10);
+        cTag(m, F[0], F[1], 'F', '#0f6e56', 13, 13);
+        tEdgeLabel(m, O[0], O[1], E[0], E[1], cFmt(Math.abs(s1)), '#0f6e56', 14);
+        tEdgeLabel(m, O[0], O[1], F[0], F[1], cFmt(Math.abs(s2)), '#0f6e56', 14);
+      }
+      cDot(m, O[0], O[1], '#8a5a00', 4.5);
+      cTag(m, O[0], O[1], 'O', '#8a5a00', 0, -13);
+      cTag(m, A[0], A[1], 'A', '#185fa5', -12, 13);
+      cTag(m, B[0], B[1], 'B', '#185fa5', 12, 13);
+      cTag(m, C[0], C[1], 'C', '#185fa5', 13, -11);
+      cTag(m, D[0], D[1], 'D', '#185fa5', -13, -11);
+
+      var ac = tLen(A[0], A[1], C[0], C[1]);
+      var bd = tLen(B[0], B[1], D[0], D[1]);
+      var S = tArea([A, B, C, D]);
+      var half = ss.length >= 2 ? (Math.abs(Math.max.apply(null, ss)) + Math.abs(Math.min.apply(null, ss))) / 2 : 0;
+      s0.info.innerHTML =
+        '<span class="viz-meta">对角线 AC = ' + cFmt(ac) + '，BD = ' + cFmt(bd) + '，它们<b>一般不相等</b>（一旦相等它就变成矩形了）；但一定都被 O 平分：OA = OC = ' + cFmt(ac / 2) + '，OB = OD = ' + cFmt(bd / 2) + '。</span>' +
+        '<span class="viz-meta">两条对角线把平行四边形切成 4 个三角形，因为 OA = OC、OB = OD、对顶角相等，两两全等 → <b>4 块面积相等，各占 ' + cFmt(S / 4) + '</b>（总面积 ' + cFmt(S) + '）。</span>' +
+        (ss.length >= 2 ?
+          '<span class="viz-meta">过交点 O 任作一条直线，交两边于 E、F：OE = OF = ' + cFmt(half) + '（绕 O 转 180° 后 E 落到 F），所以这条直线<b>把平行四边形面积平分</b>——这两块各 ' + cFmt(S / 2) + '。分地、分蛋糕、剪图形，先连对角线找 O，再随便过 O 划一刀。</span>'
+          : '') +
+        '<span class="viz-meta">注意：OE = OF 成立的前提是 O 是<b>对称中心</b>。平行四边形绕 O 旋转 180° 与自身重合，所以过 O 的整条直线都被它平分。</span>';
+    }
+    cSlider(s0.ctrl, '底边 AB', p.a, 4, 9, 0.5, function (v) { p.a = v; draw(); });
+    cSlider(s0.ctrl, '斜边 AD', p.b, 2, 6, 0.5, function (v) { p.b = v; draw(); });
+    cSlider(s0.ctrl, '夹角 ∠A', p.ang, 35, 145, 1, function (v) { p.ang = v; draw(); });
+    cSlider(s0.ctrl, '直线 EF 的倾斜角', p.phi, 0, 178, 2, function (v) { p.phi = v; draw(); });
+    draw();
+  }
+
+  /* 判定实验台：拖 D，看五条判定条件逐条亮起 */
+  function pgJudgeLab(el, cfg) {
+    var s0 = circleScaffold(el);
+    var p = { a: 6, xd: 3.2, yd: 1.6 };
+    if (cfg.values) for (var key in cfg.values) p[key] = cfg.values[key];
+    var C = [8.6, 3.6];
+
+    function draw() {
+      var A = [0, 0], B = [p.a, 0], D = [p.xd, p.yd];
+      var view = { xmin: -1.6, xmax: 10.6, ymin: -2.4, ymax: 5.8 };
+      var m = circleMap(s0.cv, view);
+      cGrid(m, view);
+
+      var AB = [B[0] - A[0], B[1] - A[1]];
+      var DC = [C[0] - D[0], C[1] - D[1]];
+      var AD = [D[0] - A[0], D[1] - A[1]];
+      var BC = [C[0] - B[0], C[1] - B[1]];
+      var lAB = tLen(A[0], A[1], B[0], B[1]), lDC = tLen(D[0], D[1], C[0], C[1]);
+      var lAD = tLen(A[0], A[1], D[0], D[1]), lBC = tLen(B[0], B[1], C[0], C[1]);
+      function cross(u, v) { return u[0] * v[1] - u[1] * v[0]; }
+      function par(u, v) { return Math.abs(cross(u, v)) / (tLen(0, 0, u[0], u[1]) * tLen(0, 0, v[0], v[1]) || 1) < 0.035; }
+      var pAB = par(AB, DC), pAD = par(AD, BC);
+      var eAB = Math.abs(lAB - lDC) < 0.12, eAD = Math.abs(lAD - lBC) < 0.12;
+      var M1 = [(A[0] + C[0]) / 2, (A[1] + C[1]) / 2];
+      var M2 = [(B[0] + D[0]) / 2, (B[1] + D[1]) / 2];
+      var bis = tLen(M1[0], M1[1], M2[0], M2[1]) < 0.1;
+      var isP = pAB && pAD;
+
+      /* 图形：边按「这一组对边是否已平行」上色 */
+      tPoly(m, [A, B, C, D], '#9aa7b4', 1.8, isP ? 'rgba(15,110,86,.08)' : 'rgba(154,167,180,.08)');
+      tSeg(m, A[0], A[1], B[0], B[1], pAB ? '#0f6e56' : '#c0392b', 3);
+      tSeg(m, D[0], D[1], C[0], C[1], pAB ? '#0f6e56' : '#c0392b', 3);
+      tSeg(m, B[0], B[1], C[0], C[1], pAD ? '#0f6e56' : '#185fa5', 3);
+      tSeg(m, A[0], A[1], D[0], D[1], pAD ? '#0f6e56' : '#185fa5', 3);
+      tSeg(m, A[0], A[1], C[0], C[1], '#b9c4cf', 1.5, [5, 4]);
+      tSeg(m, B[0], B[1], D[0], D[1], bis ? '#c0392b' : '#b9c4cf', 1.5, [5, 4]);
+      cDot(m, M1[0], M1[1], bis ? '#c0392b' : '#b9c4cf', 3);
+      cDot(m, M2[0], M2[1], bis ? '#c0392b' : '#b9c4cf', 3);
+      cDot(m, A[0], A[1], '#185fa5', 4); cDot(m, B[0], B[1], '#185fa5', 4);
+      cDot(m, C[0], C[1], '#185fa5', 4); cDot(m, D[0], D[1], '#c0392b', 5);
+      cTag(m, A[0], A[1], 'A', '#185fa5', -12, 13);
+      cTag(m, B[0], B[1], 'B', '#185fa5', 12, 13);
+      cTag(m, C[0], C[1], 'C', '#185fa5', 14, -10);
+      cTag(m, D[0], D[1], 'D ← 拖我', '#c0392b', 40, -2);
+      tEdgeLabel(m, A[0], A[1], B[0], B[1], 'AB = ' + cFmt(lAB), '#185fa5', 16);
+      tEdgeLabel(m, D[0], D[1], C[0], C[1], 'DC = ' + cFmt(lDC), '#185fa5', 16);
+      tEdgeLabel(m, A[0], A[1], D[0], D[1], 'AD = ' + cFmt(lAD), '#185fa5', 16);
+      tEdgeLabel(m, B[0], B[1], C[0], C[1], 'BC = ' + cFmt(lBC), '#185fa5', 16);
+
+      function row(ok, text) {
+        return '<span class="viz-meta">' + (ok ? '✔' : '✘') + ' ' + text + '</span>';
+      }
+      var dx0 = Math.round((C[0] - p.a) * 10) / 10, dy0 = Math.round(C[1] * 10) / 10;
+      s0.info.innerHTML =
+        row(pAB, '两组对边中的 AB ∥ DC（' + (pAB ? '已平行' : '不平行') + '）') +
+        row(pAD, '另一组对边 AD ∥ BC（' + (pAD ? '已平行' : '不平行') + '）') +
+        row(eAB && eAD, '两组对边分别相等：AB ' + (eAB ? '=' : '≠') + ' DC，AD ' + (eAD ? '=' : '≠') + ' BC') +
+        row(bis, '两条对角线互相平分（AC 中点与 BD 中点重合）') +
+        '<span class="viz-meta">结论：这个四边形' + (isP ? '<b>是</b>平行四边形' : '<b>不是</b>平行四边形') +
+        '。判定的五条路：① 两组对边分别平行（定义）　② 两组对边分别相等　③ <b>一组对边平行且相等</b>　④ 两组对角分别相等　⑤ 对角线互相平分。' +
+        (isP ? '当前同时满足其中好几条——这正说明它们等价。' : '把 D 拖到 (' + cFmt(dx0) + ', ' + cFmt(dy0) + ') 附近，五条会同时亮起。') + '</span>';
+    }
+    cSlider(s0.ctrl, '底边 AB', p.a, 4, 8, 0.5, function (v) { p.a = v; draw(); });
+    cSlider(s0.ctrl, 'D 的横坐标', p.xd, 0, 9, 0.2, function (v) { p.xd = v; draw(); });
+    cSlider(s0.ctrl, 'D 的纵坐标', p.yd, -1.5, 5, 0.2, function (v) { p.yd = v; draw(); });
+    draw();
+  }
+
+  /* 三角形中位线：拖顶点，看 DE∥BC 且 DE = ½BC，四个小三角形全等 */
+  function pgMidlineLab(el, cfg) {
+    var s0 = circleScaffold(el);
+    var p = { cx: 5.2, cy: 4.6 };
+    if (cfg.values) for (var key in cfg.values) p[key] = cfg.values[key];
+
+    function draw() {
+      var A = [0, 0], B = [8, 0], C = [p.cx, p.cy];
+      var D = [(A[0] + B[0]) / 2, 0];
+      var E = [(A[0] + C[0]) / 2, C[1] / 2];
+      var F = [(B[0] + C[0]) / 2, C[1] / 2];
+      var view = { xmin: -1.6, xmax: 9.8, ymin: -2.0, ymax: p.cy + 1.9 };
+      var m = circleMap(s0.cv, view);
+      cGrid(m, view);
+      /* 四个全等小三角形，四种浅色 */
+      tTri(m, A, D, E, 'rgba(24,95,165,.10)');
+      tTri(m, D, B, F, 'rgba(15,110,86,.10)');
+      tTri(m, E, F, C, 'rgba(192,57,43,.09)');
+      tTri(m, D, E, F, 'rgba(138,90,0,.12)');
+      tPoly(m, [A, B, C], '#185fa5', 2.4, null);
+      /* 三条中位线：DE 加粗，另两条细虚线 */
+      tSeg(m, E[0], E[1], F[0], F[1], '#9aa7b4', 1.5, [5, 4]);
+      tSeg(m, D[0], D[1], F[0], F[1], '#9aa7b4', 1.5, [5, 4]);
+      tSeg(m, D[0], D[1], E[0], E[1], '#0f6e56', 3);
+      tSeg(m, B[0], B[1], C[0], C[1], '#c0392b', 3);
+      /* 中点标记*/
+      cDot(m, D[0], D[1], '#0f6e56', 4);
+      cDot(m, E[0], E[1], '#0f6e56', 4);
+      cDot(m, F[0], F[1], '#0f6e56', 4);
+      cTag(m, D[0], D[1], 'D', '#0f6e56', 0, 15);
+      cTag(m, E[0], E[1], 'E', '#0f6e56', -13, -6);
+      cTag(m, F[0], F[1], 'F', '#0f6e56', 13, -6);
+      cTag(m, A[0], A[1], 'A', '#185fa5', -12, 14);
+      cTag(m, B[0], B[1], 'B', '#185fa5', 12, 14);
+      cTag(m, C[0], C[1], 'C', '#185fa5', 0, -13);
+      tEdgeLabel(m, D[0], D[1], E[0], E[1], 'DE = ' + cFmt(tLen(D[0], D[1], E[0], E[1])), '#0f6e56', 15);
+      tEdgeLabel(m, B[0], B[1], C[0], C[1], 'BC = ' + cFmt(tLen(B[0], B[1], C[0], C[1])), '#c0392b', -17);
+      /* 平行标记：DE 与 BC 同色同位角 */
+      var angB = Math.atan2(C[1] - B[1], C[0] - B[0]);
+      tAngle(m, B[0], B[1], 1.1, Math.PI, angB < 0 ? angB + 2 * Math.PI : angB, '#c0392b', '');
+      tAngle(m, D[0], D[1], 1.1, 0, Math.atan2(E[1] - D[1], E[0] - D[0]), '#c0392b', '');
+
+      var de = tLen(D[0], D[1], E[0], E[1]);
+      var bc = tLen(B[0], B[1], C[0], C[1]);
+      var S = tArea([A, B, C]);
+      s0.info.innerHTML =
+        '<span class="viz-meta">D、E 分别是 AB、AC 的中点，DE 就是<b>中位线</b>：DE = ' + cFmt(de) + '，BC = ' + cFmt(bc) + '，比值正好 <b>' + cFmt(de / bc) + '</b>，而且 DE ∥ BC（红色角相等 = 同位角相等）。</span>' +
+        '<span class="viz-meta">三条中位线把三角形切成 <b>4 个全等的小三角形</b>（面积各占 ' + cFmt(S / 4) + '，原三角形 ' + cFmt(S) + '）。所以「中位线三角形」的周长是原三角形的一半，面积是四分之一。</span>' +
+        '<span class="viz-meta">为什么 DE = ½BC？延长 DE 到 G 使 EG = DE，连 CG。由 AE = CE、∠AED = ∠CEG（对顶角）、DE = EG 得 △ADE ≌ △CGE，于是 CG = AD = BD、且 CG ∥ BD → 四边形 BCGD 是平行四边形 → DG ∥ BC 且 DG = BC → DE = ½DG = ½BC。整条推理只用到全等 + 「一组对边平行且相等」，还是本章那套工具。</span>';
+    }
+    cSlider(s0.ctrl, '顶点 C 的横坐标', p.cx, 1, 7, 0.2, function (v) { p.cx = v; draw(); });
+    cSlider(s0.ctrl, '顶点 C 的高', p.cy, 2, 6, 0.2, function (v) { p.cy = v; draw(); });
+    draw();
+  }
+
+  /* 矩形：四个直角 + 对角线相等 + 斜边中线等于斜边一半 */
+  function pgRectLab(el, cfg) {
+    var s0 = circleScaffold(el);
+    var p = { w: 7, h: 4 };
+    if (cfg.values) for (var key in cfg.values) p[key] = cfg.values[key];
+
+    function draw() {
+      var A = [0, 0], B = [p.w, 0], C = [p.w, p.h], D = [0, p.h];
+      var O = [p.w / 2, p.h / 2];
+      var view = { xmin: -1.6, xmax: p.w + 2.2, ymin: -2.0, ymax: p.h + 2.0 };
+      var m = circleMap(s0.cv, view);
+      cGrid(m, view);
+      tTri(m, A, B, C, 'rgba(15,110,86,.09)');
+      tPoly(m, [A, B, C, D], '#185fa5', 2.4, null);
+      /* 四个直角标记 */
+      cRightAngle(m, A[0], A[1], [1, 0], [0, -1], '#8a5a00');
+      cRightAngle(m, B[0], B[1], [-1, 0], [0, -1], '#8a5a00');
+      cRightAngle(m, C[0], C[1], [-1, 0], [0, 1], '#8a5a00');
+      cRightAngle(m, D[0], D[1], [1, 0], [0, 1], '#8a5a00');
+      /* 对角线 + 中线 BO */
+      tSeg(m, A[0], A[1], C[0], C[1], '#8a5a00', 2, [6, 4]);
+      tSeg(m, B[0], B[1], D[0], D[1], '#8a5a00', 2, [6, 4]);
+      tSeg(m, B[0], B[1], O[0], O[1], '#c0392b', 3);
+      cDot(m, O[0], O[1], '#8a5a00', 4.5);
+      cTag(m, O[0], O[1], 'O', '#8a5a00', 0, -13);
+      cDot(m, A[0], A[1], '#185fa5', 4); cDot(m, B[0], B[1], '#185fa5', 4);
+      cDot(m, C[0], C[1], '#185fa5', 4); cDot(m, D[0], D[1], '#185fa5', 4);
+      cTag(m, A[0], A[1], 'A', '#185fa5', -12, 14);
+      cTag(m, B[0], B[1], 'B', '#185fa5', 12, 14);
+      cTag(m, C[0], C[1], 'C', '#185fa5', 13, -11);
+      cTag(m, D[0], D[1], 'D', '#185fa5', -13, -11);
+      tEdgeLabel(m, A[0], A[1], B[0], B[1], 'AB = ' + cFmt(p.w), '#185fa5', 17);
+      tEdgeLabel(m, B[0], B[1], C[0], C[1], 'BC = ' + cFmt(p.h), '#185fa5', 18);
+      tEdgeLabel(m, D[0], D[1], C[0], C[1], 'DC = ' + cFmt(p.w), '#185fa5', 17);
+      tEdgeLabel(m, A[0], A[1], D[0], D[1], 'AD = ' + cFmt(p.h), '#185fa5', 18);
+      tEdgeLabel(m, B[0], B[1], O[0], O[1], 'BO = ' + cFmt(tLen(B[0], B[1], O[0], O[1])), '#c0392b', 22);
+
+      var ac = tLen(A[0], A[1], C[0], C[1]);
+      var bd = tLen(B[0], B[1], D[0], D[1]);
+      var sq = Math.abs(p.w - p.h) < 0.01;
+      s0.info.innerHTML =
+        '<span class="viz-meta">矩形就是「有一个角是直角的平行四边形」，所以它<b>继承了平行四边形的全部性质</b>（对边平行且相等、对角相等、对角线互相平分），还多了两条：四个角都是直角；<b>对角线相等</b>。AC = ' + cFmt(ac) + '，BD = ' + cFmt(bd) + '。</span>' +
+        '<span class="viz-meta">对角线相等 → OA = OB = OC = OD = ½AC = ' + cFmt(ac / 2) + '。<b>反过来说</b>：把 △ABC 单独拎出来看（绿色），∠ABC = 90°，BO 是斜边 AC 上的中线，于是 <b>直角三角形斜边上的中线等于斜边的一半</b>：BO = ' + cFmt(tLen(B[0], B[1], O[0], O[1])) + ' = ½ × ' + cFmt(ac) + '。</span>' +
+        '<span class="viz-meta">这条推论在综合题里出现频率极高：见「直角 + 斜边中点」就想到连中线、造等腰三角形。' + (sq ? '当前 AB = BC，它已经是<b>正方形</b>了。' : '把两条边调成一样长，它就是正方形。') + '</span>';
+    }
+    cSlider(s0.ctrl, '宽 AB', p.w, 3, 9, 0.5, function (v) { p.w = v; draw(); });
+    cSlider(s0.ctrl, '高 BC', p.h, 2, 6, 0.5, function (v) { p.h = v; draw(); });
+    draw();
+  }
+
+  /* 菱形：四边相等、对角线垂直且互相平分、面积 = ½d₁d₂ */
+  function pgRhombusLab(el, cfg) {
+    var s0 = circleScaffold(el);
+    var p = { d1: 8, d2: 5.6 };
+    if (cfg.values) for (var key in cfg.values) p[key] = cfg.values[key];
+
+    function draw() {
+      var h1 = p.d1 / 2, h2 = p.d2 / 2;
+      var A = [-h1, 0], C = [h1, 0], B = [0, h2], D = [0, -h2];
+      var view = { xmin: -h1 - 2.0, xmax: h1 + 2.0, ymin: -h2 - 2.0, ymax: h2 + 2.0 };
+      var m = circleMap(s0.cv, view);
+      cGrid(m, view);
+      tTri(m, [0, 0], A, B, 'rgba(24,95,165,.10)');
+      tTri(m, [0, 0], B, C, 'rgba(192,57,43,.08)');
+      tTri(m, [0, 0], C, D, 'rgba(24,95,165,.10)');
+      tTri(m, [0, 0], D, A, 'rgba(192,57,43,.08)');
+      tPoly(m, [A, B, C, D], '#185fa5', 2.4, null);
+      /* 对角线（两条对称轴） */
+      tSeg(m, A[0], A[1], C[0], C[1], '#8a5a00', 2, [6, 4]);
+      tSeg(m, B[0], B[1], D[0], D[1], '#8a5a00', 2, [6, 4]);
+      cRightAngle(m, 0, 0, [1, 0], [0, 1], '#8a5a00');
+      /* 边长与等长标记 */
+      tTicks(m, A[0], A[1], B[0], B[1], 1, '#0f6e56');
+      tTicks(m, B[0], B[1], C[0], C[1], 1, '#0f6e56');
+      tTicks(m, C[0], C[1], D[0], D[1], 1, '#0f6e56');
+      tTicks(m, D[0], D[1], A[0], A[1], 1, '#0f6e56');
+      var side = tLen(A[0], A[1], B[0], B[1]);
+      tEdgeLabel(m, A[0], A[1], B[0], B[1], cFmt(side), '#0f6e56', 16);
+      tEdgeLabel(m, B[0], B[1], C[0], C[1], cFmt(side), '#0f6e56', 16);
+      tEdgeLabel(m, C[0], C[1], D[0], D[1], cFmt(side), '#0f6e56', 16);
+      tEdgeLabel(m, D[0], D[1], A[0], A[1], cFmt(side), '#0f6e56', 16);
+      cTag(m, A[0], A[1], 'A', '#185fa5', -13, 13);
+      cTag(m, B[0], B[1], 'B', '#185fa5', 12, -11);
+      cTag(m, C[0], C[1], 'C', '#185fa5', 13, 13);
+      cTag(m, D[0], D[1], 'D', '#185fa5', -13, -11);
+      cTag(m, 0, 0, 'O', '#8a5a00', 12, 13);
+      cTag(m, -h1 / 2, 0, cFmt(h1), '#8a5a00', 0, -12);
+      cTag(m, h1 / 2, 0, cFmt(h1), '#8a5a00', 0, -12);
+      cTag(m, 0, h2 / 2, cFmt(h2), '#8a5a00', 13, 0);
+      cTag(m, 0, -h2 / 2, cFmt(h2), '#8a5a00', 13, 0);
+
+      var S = p.d1 * p.d2 / 2;
+      var hgt = S / side;
+      var isSq = Math.abs(p.d1 - p.d2) < 0.05;
+      s0.info.innerHTML =
+        '<span class="viz-meta">四边相等（绿色短线），边长由两个「半对角线」用勾股定理算出：√((' + cFmt(h1) + ')² + (' + cFmt(h2) + ')²) = <b>' + cFmt(side) + '</b>，周长 ' + cFmt(4 * side) + '。</span>' +
+        '<span class="viz-meta">两条对角线<b>互相垂直平分</b>（∠AOB = 90°），并且每条对角线平分一组对角——所以菱形既是中心对称图形，也有 2 条对称轴（就是两条对角线所在的直线）。</span>' +
+        '<span class="viz-meta">面积有两条路：① 底 × 高 = ' + cFmt(side) + ' × ' + cFmt(hgt) + ' = <b>' + cFmt(S) + '</b>；② <b>S = ½ d₁d₂ = ½ × ' + cFmt(p.d1) + ' × ' + cFmt(p.d2) + ' = ' + cFmt(S) + '</b>。②更好用，因为对角线就是 4 个全等直角三角形（各 ' + cFmt(S / 4) + '）的直角边。' + (isSq ? '两条对角线相等了，此时它是<b>正方形</b>。' : '把两条对角线拉成一样长，它就成了正方形。') + '</span>';
+    }
+    cSlider(s0.ctrl, '对角线 AC（d₁）', p.d1, 2, 10, 0.2, function (v) { p.d1 = v; draw(); });
+    cSlider(s0.ctrl, '对角线 BD（d₂）', p.d2, 2, 10, 0.2, function (v) { p.d2 = v; draw(); });
+    draw();
+  }
+
+  /* 正方形：两条来路（矩形邻边相等 / 菱形对角线相等）汇合 */
+  function pgSquareLab(el, cfg) {
+    var s0 = circleScaffold(el);
+    var p = { k: 0.55 };
+    if (cfg.values) for (var key in cfg.values) p[key] = cfg.values[key];
+
+    function draw() {
+      var k = p.k;
+      var view = { xmin: -1.4, xmax: 13.8, ymin: -2.4, ymax: 6.2 };
+      var m = circleMap(s0.cv, view);
+      cGrid(m, view);
+      var isSq = Math.abs(k - 1) < 0.051;
+
+      /* 左：矩形 4 × 4k */
+      var w = 4, h = 4 * k;
+      var A = [0, 0], B = [w, 0], C = [w, h], D = [0, h];
+      tPoly(m, [A, B, C, D], isSq ? '#0f6e56' : '#185fa5', 2.6, isSq ? 'rgba(15,110,86,.10)' : 'rgba(24,95,165,.06)');
+      tSeg(m, A[0], A[1], C[0], C[1], '#b9c4cf', 1.4, [5, 4]);
+      cRightAngle(m, A[0], A[1], [1, 0], [0, -1], '#8a5a00');
+      cTag(m, A[0], A[1], 'A', '#185fa5', -12, 14);
+      cTag(m, B[0], B[1], 'B', '#185fa5', 12, 14);
+      cTag(m, C[0], C[1], 'C', '#185fa5', 13, -11);
+      cTag(m, D[0], D[1], 'D', '#185fa5', -13, -11);
+      tEdgeLabel(m, A[0], A[1], B[0], B[1], cFmt(w), '#185fa5', 16);
+      tEdgeLabel(m, B[0], B[1], C[0], C[1], cFmt(h), '#c0392b', 18);
+      cTag(m, w / 2, h + 1.15, '矩形', '#185fa5', 0, 0);
+      cTag(m, w / 2, h + 0.6, isSq ? '邻边相等 ✔' : '让高 = 宽', isSq ? '#0f6e56' : '#8a5a00', 0, 0);
+
+      /* 右：菱形 d₁ = 4, d₂ = 4k */
+      var cx0 = 9.9, cy0 = 1.9, h1 = 2, h2 = 2 * k;
+      var A2 = [cx0 - h1, cy0], C2 = [cx0 + h1, cy0];
+      var B2 = [cx0, cy0 + h2], D2 = [cx0, cy0 - h2];
+      tPoly(m, [A2, B2, C2, D2], isSq ? '#0f6e56' : '#c0392b', 2.6, isSq ? 'rgba(15,110,86,.10)' : 'rgba(192,57,43,.06)');
+      tSeg(m, A2[0], A2[1], C2[0], C2[1], '#b9c4cf', 1.4, [5, 4]);
+      tSeg(m, B2[0], B2[1], D2[0], D2[1], '#b9c4cf', 1.4, [5, 4]);
+      cRightAngle(m, cx0, cy0, [1, 0], [0, 1], '#8a5a00');
+      cTag(m, A2[0], A2[1], 'A', '#c0392b', -13, 13);
+      cTag(m, B2[0], B2[1], 'B', '#c0392b', 12, -11);
+      cTag(m, C2[0], C2[1], 'C', '#c0392b', 13, 13);
+      cTag(m, D2[0], D2[1], 'D', '#c0392b', -13, -11);
+      cTag(m, cx0, cy0 + h2 + 1.15, '菱形', '#c0392b', 0, 0);
+      cTag(m, cx0, cy0 + h2 + 0.6, isSq ? '对角线相等 ✔' : '让 d₂ = d₁', isSq ? '#0f6e56' : '#8a5a00', 0, 0);
+      cTag(m, cx0, cy0, 'd₁ = ' + cFmt(4), '#8a5a00', 0, -13);
+      cTag(m, cx0, cy0 + h2 / 2, 'd₂ = ' + cFmt(4 * k), '#8a5a00', 26, 0);
+
+      s0.info.innerHTML =
+        '<span class="viz-meta">正方形有<b>两条来路</b>：左边是「矩形 + 一组邻边相等」，右边是「菱形 + 两条对角线相等」。拉同一条滑块，两边同时变化，最后在 k = 1 处汇合成同一个图形（边长 4 的正方形）——这说明正方形既是特殊的矩形，也是特殊的菱形。</span>' +
+        '<span class="viz-meta">所以正方形继承了全部性质：四个直角、四边相等、对角线相等且互相垂直平分（' + (isSq ? '现在对角线 = 4√2 ≈ ' + cFmt(4 * Math.SQRT2) + '，每条对角线都把正方形分成两个等腰直角三角形' : '注意右边菱形对角线长 ' + cFmt(4) + ' 与 ' + cFmt(4 * k) + ' 不相等，此时它还不是正方形') + '）。</span>' +
+        '<span class="viz-meta">判定记法：<b>先有矩形或菱形，再加一个「拉正」的条件</b>。答题时先证它是矩形（或菱形），再补一句邻边相等（或对角线互相垂直/相等），才算证完正方形——直接说「四边相等且四角是直角」在阅卷里会被扣分，因为漏了推理链。</span>';
+    }
+    cSlider(s0.ctrl, '邻边比（k → 1 变正方形）', p.k, 0.4, 1, 0.05, function (v) { p.k = v; draw(); });
+    draw();
+  }
+
+  /* 等积变形：顶点沿平行线滑动，底不变高不变 → 面积不变 */
+  function pgAreaLab(el, cfg) {
+    var s0 = circleScaffold(el);
+    var p = { b: 6, h: 3.4, t: 1.2 };
+    if (cfg.values) for (var key in cfg.values) p[key] = cfg.values[key];
+
+    function draw() {
+      var A = [0, 0], B = [p.b, 0];
+      var D = [p.t, p.h], C = [p.t + p.b, p.h];
+      var view = { xmin: -2.6, xmax: p.b + 3.6, ymin: -2.2, ymax: p.h + 2.2 };
+      var m = circleMap(s0.cv, view);
+      cGrid(m, view);
+      /* 两条平行线 */
+      tSeg(m, view.xmin, 0, view.xmax, 0, '#c9d2dc', 1.4, [7, 5]);
+      tSeg(m, view.xmin, p.h, view.xmax, p.h, '#c9d2dc', 1.4, [7, 5]);
+      /* 原始长方形（对照） */
+      tPoly(m, [[0, 0], [p.b, 0], [p.b, p.h], [0, p.h]], '#b9c4cf', 1.4, 'rgba(154,167,180,.10)');
+      /* 当前平行四边形 */
+      tPoly(m, [A, B, C, D], '#185fa5', 2.6, 'rgba(24,95,165,.12)');
+      /* 高 */
+      tSeg(m, D[0], D[1], D[0], 0, '#c0392b', 2, [5, 4]);
+      cRightAngle(m, D[0], 0, [1, 0], [0, 1], '#8a5a00');
+      tEdgeLabel(m, D[0], D[1], D[0], 0, 'h = ' + cFmt(p.h), '#c0392b', 22);
+      tEdgeLabel(m, A[0], A[1], B[0], B[1], '底 b = ' + cFmt(p.b), '#185fa5', 18);
+      cTag(m, A[0], A[1], 'A', '#185fa5', -12, 14);
+      cTag(m, B[0], B[1], 'B', '#185fa5', 12, 14);
+      cTag(m, C[0], C[1], 'C', '#185fa5', 13, -11);
+      cTag(m, D[0], D[1], 'D', '#185fa5', -13, -11);
+      cDot(m, D[0], D[1], '#c0392b', 5);
+
+      var S = p.b * p.h;
+      s0.info.innerHTML =
+        '<span class="viz-meta">平行四边形面积 = <b>底 × 高</b> = ' + cFmt(p.b) + ' × ' + cFmt(p.h) + ' = <b>' + cFmt(S) + '</b>。注意高是<b>两条平行线之间的距离</b>，不是斜边 AD 的长——把斜边当高来算是这一章最常见的错误。</span>' +
+        '<span class="viz-meta">拖动顶点 D：它始终在<b>同一条平行线</b>上滑动，底 AB 不变、高 h 不变，面积就一直等于 ' + cFmt(S) + '。这就是<b>等积变形</b>：形状变了，面积没变。左边的灰色长方形是「剪拼目标」——沿 D 作高剪下左边的直角三角形，平移到右边，正好拼成面积相同的长方形（t = 0 时平行四边形本身就是长方形）。</span>' +
+        '<span class="viz-meta">推论：夹在两条平行线之间的平行四边形，只要底相同，面积就相等；同底等高的三角形面积 = 平行四边形的一半。</span>';
+    }
+    cSlider(s0.ctrl, '底 b', p.b, 4, 8, 0.5, function (v) { p.b = v; draw(); });
+    cSlider(s0.ctrl, '高 h', p.h, 2, 5, 0.2, function (v) { p.h = v; draw(); });
+    cSlider(s0.ctrl, '顶点 D 左右滑动', p.t, -2, 4, 0.2, function (v) { p.t = v; draw(); });
+    draw();
+  }
+
+  window.VIZ = { renderPlot: renderPlot, parabolaLab: parabolaLab, stepLab: stepLab, bridgeLab: bridgeLab, profitLab: profitLab, fenceLab: fenceLab, fountainLab: fountainLab, shotLab: shotLab, completeSquareLab: completeSquareLab, equationLab: equationLab, growthLab: growthLab, rotateLab: rotateLab, coordRotLab: coordRotLab, patternLab: patternLab, clockLab: clockLab, anatomyLab: anatomyLab, chordLab: chordLab, inscribedLab: inscribedLab, positionLab: positionLab, tangentLab: tangentLab, sectorLab: sectorLab, eventScaleLab: eventScaleLab, bagLab: bagLab, sumTableLab: sumTableLab, treeLab: treeLab, coinLab: coinLab, dartLab: dartLab, inverseLab: inverseLab, kAreaLab: kAreaLab, inverseCrossLab: inverseCrossLab, inverseUseLab: inverseUseLab, trigRatioLab: trigRatioLab, trigSpecialLab: trigSpecialLab, trigSolveLab: trigSolveLab, trigHeightLab: trigHeightLab, trigSlopeLab: trigSlopeLab, trigAltitudeLab: trigAltitudeLab, simGoldenLab: simGoldenLab, simParallelLab: simParallelLab, simJudgeLab: simJudgeLab, simAreaLab: simAreaLab, simNestedLab: simNestedLab, simHomothetyLab: simHomothetyLab, simShadowLab: simShadowLab, projShadowLab: projShadowLab, projOrthLab: projOrthLab, viewThreeLab: viewThreeLab, viewBlocksLab: viewBlocksLab, viewSolidLab: viewSolidLab, pythagSquaresLab: pythagSquaresLab, pythagPuzzleLab: pythagPuzzleLab, pythagSolveLab: pythagSolveLab, pythagInverseLab: pythagInverseLab, pythagLadderLab: pythagLadderLab, linearLab: linearLab, linearQuadLab: linearQuadLab, linearCrossLab: linearCrossLab, linearModelLab: linearModelLab, linearTranslateLab: linearTranslateLab, linearFitLab: linearFitLab, pgPropLab: pgPropLab, pgDiagLab: pgDiagLab, pgJudgeLab: pgJudgeLab, pgMidlineLab: pgMidlineLab, pgRectLab: pgRectLab, pgRhombusLab: pgRhombusLab, pgSquareLab: pgSquareLab, pgAreaLab: pgAreaLab };
 })();
 
 </script>
@@ -4966,6 +5491,14 @@ window.__LOCATE_DATA__ = {"asks":[{"k":"概念辨析","label":"判断是否一�
       else if (cfg.type === 'linear-model') VIZ.linearModelLab(el, cfg);
       else if (cfg.type === 'linear-translate') VIZ.linearTranslateLab(el, cfg);
       else if (cfg.type === 'linear-fit') VIZ.linearFitLab(el, cfg);
+      else if (cfg.type === 'pg-prop') VIZ.pgPropLab(el, cfg);
+      else if (cfg.type === 'pg-diag') VIZ.pgDiagLab(el, cfg);
+      else if (cfg.type === 'pg-judge') VIZ.pgJudgeLab(el, cfg);
+      else if (cfg.type === 'pg-midline') VIZ.pgMidlineLab(el, cfg);
+      else if (cfg.type === 'pg-rect') VIZ.pgRectLab(el, cfg);
+      else if (cfg.type === 'pg-rhombus') VIZ.pgRhombusLab(el, cfg);
+      else if (cfg.type === 'pg-square') VIZ.pgSquareLab(el, cfg);
+      else if (cfg.type === 'pg-area') VIZ.pgAreaLab(el, cfg);
     });
   });
 })();

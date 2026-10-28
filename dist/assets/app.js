@@ -65,6 +65,14 @@
       else if (cfg.type === 'linear-model') VIZ.linearModelLab(el, cfg);
       else if (cfg.type === 'linear-translate') VIZ.linearTranslateLab(el, cfg);
       else if (cfg.type === 'linear-fit') VIZ.linearFitLab(el, cfg);
+      else if (cfg.type === 'pg-prop') VIZ.pgPropLab(el, cfg);
+      else if (cfg.type === 'pg-diag') VIZ.pgDiagLab(el, cfg);
+      else if (cfg.type === 'pg-judge') VIZ.pgJudgeLab(el, cfg);
+      else if (cfg.type === 'pg-midline') VIZ.pgMidlineLab(el, cfg);
+      else if (cfg.type === 'pg-rect') VIZ.pgRectLab(el, cfg);
+      else if (cfg.type === 'pg-rhombus') VIZ.pgRhombusLab(el, cfg);
+      else if (cfg.type === 'pg-square') VIZ.pgSquareLab(el, cfg);
+      else if (cfg.type === 'pg-area') VIZ.pgAreaLab(el, cfg);
     });
   });
 })();

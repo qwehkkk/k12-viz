@@ -220,4 +220,28 @@
   <url><loc>https://teach.toolona.com/linear-function/pattern/linear-model-fee.html</loc><priority>0.7</priority></url>
   <url><loc>https://teach.toolona.com/linear-function/pattern/linear-model-motion.html</loc><priority>0.7</priority></url>
   <url><loc>https://teach.toolona.com/linear-function/pattern/linear-param-comprehensive.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/parallelogram/index.html</loc><priority>0.9</priority></url>
+  <url><loc>https://teach.toolona.com/parallelogram/pg-prop.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/parallelogram/pg-diag.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/parallelogram/pg-judge.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/parallelogram/pg-midline.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/parallelogram/pg-rect.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/parallelogram/pg-rhombus.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/parallelogram/pg-square.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/parallelogram/pg-area.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/parallelogram/patterns.html</loc><priority>0.9</priority></url>
+  <url><loc>https://teach.toolona.com/parallelogram/locate.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/parallelogram/pattern/pg-prop-calc.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/parallelogram/pattern/pg-prop-equ.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/parallelogram/pattern/pg-diag-calc.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/parallelogram/pattern/pg-diag-bisect.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/parallelogram/pattern/pg-judge-one.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/parallelogram/pattern/pg-judge-diag.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/parallelogram/pattern/pg-midline-calc.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/parallelogram/pattern/pg-midquad.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/parallelogram/pattern/pg-rect-slant.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/parallelogram/pattern/pg-rect-fold.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/parallelogram/pattern/pg-rhombus-calc.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/parallelogram/pattern/pg-square-rot.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/parallelogram/pattern/pg-area-eq.html</loc><priority>0.7</priority></url>
 </urlset>
