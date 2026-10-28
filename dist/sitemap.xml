@@ -168,4 +168,20 @@
   <url><loc>https://teach.toolona.com/similarity/pattern/sim-nested-project.html</loc><priority>0.7</priority></url>
   <url><loc>https://teach.toolona.com/similarity/pattern/sim-coord-homothety.html</loc><priority>0.7</priority></url>
   <url><loc>https://teach.toolona.com/similarity/pattern/sim-shadow-measure.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/projection/index.html</loc><priority>0.9</priority></url>
+  <url><loc>https://teach.toolona.com/projection/project-concept.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/projection/project-orth.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/projection/view-three.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/projection/view-solid.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/projection/view-restore.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/projection/patterns.html</loc><priority>0.9</priority></url>
+  <url><loc>https://teach.toolona.com/projection/locate.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/projection/pattern/proj-street-lamp.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/projection/pattern/proj-parallel-ratio.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/projection/pattern/proj-orth-calc.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/projection/pattern/view-draw-three.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/projection/pattern/view-read-size.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/projection/pattern/view-identify-solid.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/projection/pattern/view-blocks-count.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/projection/pattern/view-solid-calc.html</loc><priority>0.7</priority></url>
 </urlset>

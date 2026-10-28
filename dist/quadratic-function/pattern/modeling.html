@@ -3973,7 +3973,341 @@ ul.lesson-list li::before {
     draw();
   }
 
-  window.VIZ = { renderPlot: renderPlot, parabolaLab: parabolaLab, stepLab: stepLab, bridgeLab: bridgeLab, profitLab: profitLab, fenceLab: fenceLab, fountainLab: fountainLab, shotLab: shotLab, completeSquareLab: completeSquareLab, equationLab: equationLab, growthLab: growthLab, rotateLab: rotateLab, coordRotLab: coordRotLab, patternLab: patternLab, clockLab: clockLab, anatomyLab: anatomyLab, chordLab: chordLab, inscribedLab: inscribedLab, positionLab: positionLab, tangentLab: tangentLab, sectorLab: sectorLab, eventScaleLab: eventScaleLab, bagLab: bagLab, sumTableLab: sumTableLab, treeLab: treeLab, coinLab: coinLab, dartLab: dartLab, inverseLab: inverseLab, kAreaLab: kAreaLab, inverseCrossLab: inverseCrossLab, inverseUseLab: inverseUseLab, trigRatioLab: trigRatioLab, trigSpecialLab: trigSpecialLab, trigSolveLab: trigSolveLab, trigHeightLab: trigHeightLab, trigSlopeLab: trigSlopeLab, trigAltitudeLab: trigAltitudeLab, simGoldenLab: simGoldenLab, simParallelLab: simParallelLab, simJudgeLab: simJudgeLab, simAreaLab: simAreaLab, simNestedLab: simNestedLab, simHomothetyLab: simHomothetyLab, simShadowLab: simShadowLab };
+  /* ============ 投影与视图章组件 ============ */
+
+  /* 中心投影 vs 平行投影：拖点光源看影子怎么变，太阳光线作对照 */
+  function projShadowLab(el, cfg) {
+    var s0 = circleScaffold(el);
+    var p = { lx: -3, ly: 6 };
+    if (cfg.values) for (var key in cfg.values) p[key] = cfg.values[key];
+    var OX = 3, H = 3;
+
+    function draw() {
+      var ly = Math.max(p.ly, 3.6);
+      var t = ly / (ly - H);
+      var xe = p.lx + (OX - p.lx) * t;
+      var xmax = Math.max(xe, OX + 4.5, p.lx) + 3;
+      var view = { xmin: Math.min(p.lx, OX, xe) - 2.2, xmax: xmax, ymin: -2.6, ymax: Math.max(ly, H) + 2.6 };
+      var m = circleMap(s0.cv, view), ctx = m.ctx;
+      cGrid(m, view);
+      tSeg(m, view.xmin, 0, view.xmax, 0, '#6b7a89', 2.6);
+      /* 点光源 */
+      var bx = m.px(p.lx), by = m.py(ly);
+      ctx.beginPath();
+      for (var i = 0; i < 8; i++) {
+        var a = i * Math.PI / 4;
+        ctx.moveTo(bx + Math.cos(a) * 9, by - Math.sin(a) * 9);
+        ctx.lineTo(bx + Math.cos(a) * 15, by - Math.sin(a) * 15);
+      }
+      ctx.strokeStyle = '#e0a800'; ctx.lineWidth = 1.4; ctx.stroke();
+      ctx.beginPath(); ctx.arc(bx, by, 6, 0, Math.PI * 2);
+      ctx.fillStyle = '#f4c430'; ctx.fill();
+      ctx.strokeStyle = '#b8860b'; ctx.stroke();
+      cTag(m, p.lx, ly, '点光源 S', '#b8860b', 0, -22);
+      /* 物体（杆） */
+      tSeg(m, OX, 0, OX, H, '#185fa5', 4);
+      cDot(m, OX, H, '#185fa5', 4);
+      cTag(m, OX, H, '杆顶', '#185fa5', 14, -12);
+      tEdgeLabel(m, OX, 0, OX, H, '高 ' + H, '#185fa5', 20);
+      /* 中心投影影子：S → 杆顶 → 延长到地面 */
+      tSeg(m, p.lx, ly, OX, H, '#e0a800', 1.6, [6, 4]);
+      tSeg(m, OX, H, xe, 0, '#e0a800', 1.6, [6, 4]);
+      tSeg(m, OX, 0, xe, 0, '#c0392b', 6);
+      cDot(m, xe, 0, '#c0392b', 4);
+      cTag(m, (OX + xe) / 2, 0, '中心投影影长 ' + cFmt(Math.abs(xe - OX)), '#c0392b', 0, 16);
+      /* 平行投影对照（固定斜率光线） */
+      var sEnd = OX + H;
+      tSeg(m, OX - 1.2, H + 1.2, sEnd + 0.2, 0, '#0f6e56', 1.4, [3, 3]);
+      tSeg(m, OX, 0, sEnd, 0, '#0f6e56', 3);
+      cTag(m, (OX + sEnd) / 2, 0, '平行投影影长 ' + cFmt(H), '#0f6e56', 0, 30);
+      s0.info.innerHTML = '<span class="viz-meta">点光源在 (' + cFmt(p.lx) + ', ' + cFmt(ly) + ')：光线从一点发出（<b>中心投影</b>），影子长 ' + cFmt(Math.abs(xe - OX)) + '。拖光源：灯越远越低影子越长，灯越近越高影子越短——影长没有固定公式，每道题都要现场连光线。</span>' +
+        '<span class="viz-meta">绿色虚线是<b>平行投影</b>（太阳）：光线互相平行、与地面夹角固定，影长 = 物高 × 固定比例 = ' + cFmt(H) + '，不随你在地面的位置变。路灯、手电筒、台灯是中心投影；太阳、月光（足够远）当平行投影处理。</span>' +
+        '<span class="viz-meta">考点提醒：中心投影题的经典问法是「已知两根杆的影子端点，求光源位置」——两条光线延长线的交点就是光源；平行投影的经典问法是「同一时刻」比例求解。看到「同一时刻」三个字，条件反射找比例。</span>';
+    }
+    cSlider(s0.ctrl, '光源水平位置', p.lx, -5, 9, 0.5, function (v) { p.lx = v; draw(); });
+    cSlider(s0.ctrl, '光源高度', p.ly, 4, 10, 0.5, function (v) { p.ly = v; draw(); });
+    draw();
+  }
+
+  /* 正投影：杆与投影面（地面）的夹角 θ，投影长 = L·cosθ */
+  function projOrthLab(el, cfg) {
+    var s0 = circleScaffold(el);
+    var p = { ang: 60, L: 5 };
+    if (cfg.values) for (var key in cfg.values) p[key] = cfg.values[key];
+
+    function draw() {
+      var A = p.ang * T_D2R;
+      var tipx = 2 + p.L * Math.cos(A), tipy = p.L * Math.sin(A);
+      var view = { xmin: -1.6, xmax: Math.max(tipx + 2, 8), ymin: -2.4, ymax: Math.max(tipy, p.L) + 2.2 };
+      var m = circleMap(s0.cv, view), ctx = m.ctx;
+      cGrid(m, view);
+      tSeg(m, view.xmin, 0, view.xmax, 0, '#6b7a89', 2.8);
+      cTag(m, view.xmax - 1, 0, '投影面（地面）', '#8aa0b5', 0, -14);
+      /* 投影线：过杆顶垂直于投影面 */
+      tSeg(m, tipx, tipy, tipx, 0, '#e0a800', 1.6, [5, 4]);
+      /* 杆 */
+      tSeg(m, 2, 0, tipx, tipy, '#185fa5', 4);
+      cDot(m, 2, 0, '#185fa5', 4.5);
+      cDot(m, tipx, tipy, '#185fa5', 4.5);
+      /* 正投影 */
+      tSeg(m, 2, 0, tipx, 0, '#c0392b', 6);
+      cTag(m, (2 + tipx) / 2, 0, '正投影 = ' + cFmt(p.L * Math.cos(A)), '#c0392b', 0, 18);
+      cTag(m, tipx, 0, '影足', '#c0392b', 4, -16);
+      tAngle(m, 2, 0, Math.min(1.3, p.L * 0.4), 0, A, '#8a5a00', Math.round(p.ang) + '°');
+      cTag(m, 2, 0, 'A', '#555', -14, 14);
+      cTag(m, tipx, tipy, 'B', '#185fa5', 10, -14);
+      tEdgeLabel(m, 2, 0, tipx, tipy, '杆长 L = ' + cFmt(p.L), '#185fa5', 20);
+      s0.info.innerHTML = '<span class="viz-meta">正投影：投影线垂直于投影面。杆长 L = ' + cFmt(p.L) + '、与地面夹角 θ = ' + Math.round(p.ang) + '°，正投影长 = L·cosθ = ' + cFmt(p.L * Math.cos(A)) + (p.ang >= 89.5 ? '，杆与投影面垂直，投影缩成一个<b>点</b>' : p.ang <= 0.5 ? '，杆与投影面平行，投影 = 原长' : '') + '</span>' +
+        '<span class="viz-meta">三种情况记牢：① 线段平行于投影面 → 正投影 = 原长；② 倾斜 → 缩短为 L·cosθ；③ 垂直 → 缩成一点。面（如矩形板）同理：平行不变、倾斜缩小（L·cosθ 各方向）、垂直成线段。上一章的 cosθ 在这里直接上岗。</span>' +
+        '<span class="viz-meta">易混：正投影 ≠ 影子。影子的大小还跟光源远近有关（中心投影能把影子拉很长），正投影只取决于物体与投影面的相对位置，与光源无关。三视图的每一个视图，都是物体沿一个方向的正投影。</span>';
+    }
+    cSlider(s0.ctrl, '杆与投影面夹角 θ（度）', p.ang, 0, 90, 1, function (v) { p.ang = v; draw(); });
+    cSlider(s0.ctrl, '杆长 L', p.L, 2, 7, 0.5, function (v) { p.L = v; draw(); });
+    draw();
+  }
+
+  /* 长方体三视图：拖长宽高，三等关系（长对正/高平齐/宽相等）联动 */
+  function viewThreeLab(el, cfg) {
+    var s0 = circleScaffold(el);
+    var p = { a: 4, b: 2, c: 3 };
+    if (cfg.values) for (var key in cfg.values) p[key] = cfg.values[key];
+    var U = 26;
+
+    function draw() {
+      var W = 700, H = 400;
+      var s = setupCanvas(s0.cv);
+      var ctx = s.ctx;
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(0, 0, s.w, s.h);
+      /* 三个视图位置：主视图左上 (a×c)，左视图右上 (b×c)，俯视图主视图正下 (a×b) */
+      var gapx = 40, gapy = 44, ox = 46, oy = 40;
+      var wF = p.a * U, hF = p.c * U, wL = p.b * U, hL = p.c * U, wT = p.a * U, hT = p.b * U;
+      var xF = ox, yF = oy;
+      var xL = xF + wF + gapx, yL = oy;
+      var xT = xF, yT = yF + hF + gapy;
+      if (xL + wL > s.w || yT + hT > s.h) { ctx.fillStyle = '#333'; ctx.font = '14px sans-serif'; ctx.fillText('参数过大', 20, 20); }
+      function panel(x, y, w, h, color, label, sub) {
+        ctx.fillStyle = color;
+        ctx.fillRect(x, y, w, h);
+        ctx.strokeStyle = '#185fa5'; ctx.lineWidth = 2;
+        ctx.strokeRect(x, y, w, h);
+        ctx.fillStyle = '#333';
+        ctx.font = '13px "PingFang SC","Microsoft YaHei",sans-serif';
+        ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+        ctx.fillText(label, x + w / 2, y - 14);
+        if (sub) ctx.fillText(sub, x + w / 2, y + h + 14);
+        ctx.fillStyle = 'rgba(24,95,165,.16)';
+      }
+      panel(xF, yF, wF, hF, 'rgba(24,95,165,.16)', '主视图（从前看）', 'a × c');
+      panel(xL, yL, wL, hL, 'rgba(15,110,86,.16)', '左视图（从左看）', 'b × c');
+      panel(xT, yT, wT, hT, 'rgba(192,57,43,.16)', '俯视图（从上看）', 'a × b');
+      /* 三等关系标注 */
+      ctx.strokeStyle = '#8a5a00'; ctx.lineWidth = 1.2; ctx.setLineDash([4, 4]);
+      ctx.beginPath();
+      ctx.moveTo(xF, yF + hF + 6); ctx.lineTo(xT, yT - 6);
+      ctx.moveTo(xF + wF, yF + hF + 6); ctx.lineTo(xT + wT, yT - 6);
+      ctx.moveTo(xL, yL + hL + 6); ctx.lineTo(xL, yL + hL + 6);
+      ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.fillStyle = '#8a5a00';
+      ctx.fillText('长对正', xF + wF / 2, (yF + hF + yT) / 2);
+      ctx.fillText('高平齐：主、左视图顶部对齐', xL + wL / 2 + 30, yL - 30);
+      ctx.fillText('宽相等：左视图宽 = 俯视图宽', xL + wL / 2 + 30, yL + 16);
+      cTag0(ctx, xF + wF / 2, yF + hF / 2, 'a=' + p.a + ', c=' + p.c);
+      cTag0(ctx, xL + wL / 2, yL + hL / 2, 'b=' + p.b + ', c=' + p.c);
+      cTag0(ctx, xT + wT / 2, yT + hT / 2, 'a=' + p.a + ', b=' + p.b);
+      s0.info.innerHTML = '<span class="viz-meta">长方体长 a = ' + p.a + '、宽 b = ' + p.b + '、高 c = ' + p.c + '。主视图是 a×c 矩形，左视图是 b×c 矩形，俯视图是 a×b 矩形——拖任一滑块，受影响的视图同时变。</span>' +
+        '<span class="viz-meta">三等关系（画三视图的宪法）：<b>长对正</b>——主视图与俯视图的长相等且对齐；<b>高平齐</b>——主视图与左视图的高相等且对齐；<b>宽相等</b>——左视图的宽 = 俯视图的宽（注意宽在左视图里是横向的，容易画成 c）。</span>' +
+        '<span class="viz-meta">看图规矩：主视图定左右和上下，俯视图定前后和左右，左视图定前后和上下。三视图里看到的都是「正投影」，看不见的轮廓画虚线（本题长方体没有看不见轮廓，组合体才有）。</span>';
+    }
+    function cTag0(ctx, x, y, t) {
+      ctx.fillStyle = '#333';
+      ctx.font = '13px "PingFang SC","Microsoft YaHei",sans-serif';
+      ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      ctx.fillText(t, x, y);
+    }
+    cSlider(s0.ctrl, '长 a', p.a, 2, 6, 1, function (v) { p.a = v; draw(); });
+    cSlider(s0.ctrl, '宽 b', p.b, 1, 4, 1, function (v) { p.b = v; draw(); });
+    cSlider(s0.ctrl, '高 c', p.c, 1, 4, 1, function (v) { p.c = v; draw(); });
+    draw();
+  }
+
+  /* 方块堆积：3 列高度滑块 → 立体图 + 三视图 + 块数 */
+  function viewBlocksLab(el, cfg) {
+    var s0 = circleScaffold(el);
+    var p = { h1: 3, h2: 1, h3: 2 };
+    if (cfg.values) for (var key in cfg.values) p[key] = cfg.values[key];
+
+    function draw() {
+      var U = 34, base = 46, gy = 320;
+      var s = setupCanvas(s0.cv), ctx = s.ctx;
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(0, 0, s.w, s.h);
+      var hs = [p.h1, p.h2, p.h3];
+      /* 立体示意图（正面 + 简单顶面斜边） */
+      var dx = 12, dy = -8;
+      var i, j;
+      for (i = 0; i < 3; i++) {
+        for (j = 0; j < hs[i]; j++) {
+          var x = base + i * U, y = gy - (j + 1) * U;
+          ctx.fillStyle = 'rgba(24,95,165,' + (0.14 + j * 0.045) + ')';
+          ctx.fillRect(x, y, U - 2, U - 2);
+          ctx.strokeStyle = '#185fa5'; ctx.lineWidth = 1.6;
+          ctx.strokeRect(x, y, U - 2, U - 2);
+          if (j === hs[i] - 1) {
+            ctx.beginPath();
+            ctx.moveTo(x, y); ctx.lineTo(x + dx, y + dy);
+            ctx.lineTo(x + U - 2 + dx, y + dy); ctx.lineTo(x + U - 2, y);
+            ctx.strokeStyle = '#8aa0b5'; ctx.stroke();
+          }
+        }
+      }
+      tSeg0(ctx, base - 10, gy, base + 3 * U + 14, gy);
+      cTag0(ctx, base + 1.5 * U, gy + 16, '立体：一排 3 列，列高 ' + p.h1 + ', ' + p.h2 + ', ' + p.h3);
+      /* 三视图：主（柱状）、俯（1×3）、左（max 列） */
+      var vx = 330, vy = 50;
+      ctx.font = '13px "PingFang SC","Microsoft YaHei",sans-serif';
+      ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      /* 主视图 */
+      var u2 = 30;
+      ctx.fillStyle = '#333'; ctx.fillText('主视图', vx + 1.5 * u2, vy - 14);
+      for (i = 0; i < 3; i++) {
+        ctx.fillStyle = 'rgba(24,95,165,.2)';
+        ctx.fillRect(vx + i * u2, vy + (3 - hs[i]) * u2, u2 - 2, hs[i] * u2);
+        ctx.strokeStyle = '#185fa5'; ctx.strokeRect(vx + i * u2, vy + (3 - hs[i]) * u2, u2 - 2, hs[i] * u2);
+      }
+      /* 左视图 */
+      var mx = vx, my = vy + 3 * u2 + 44;
+      var mh = Math.max(p.h1, p.h2, p.h3);
+      ctx.fillStyle = '#333'; ctx.fillText('左视图（宽 = 最大列高）', mx + 1.5 * u2, my - 14);
+      ctx.fillStyle = 'rgba(15,110,86,.2)';
+      ctx.fillRect(mx, my + (3 - mh) * u2, u2 - 2, mh * u2);
+      ctx.strokeStyle = '#0f6e56'; ctx.strokeRect(mx, my + (3 - mh) * u2, u2 - 2, mh * u2);
+      /* 俯视图 */
+      var tx = vx + 5.4 * u2, ty = vy;
+      ctx.fillStyle = '#333'; ctx.fillText('俯视图', tx + 1.5 * u2, ty - 14);
+      for (i = 0; i < 3; i++) {
+        ctx.fillStyle = 'rgba(192,57,43,.16)';
+        ctx.fillRect(tx + i * u2, ty, u2 - 2, u2 - 2);
+        ctx.strokeStyle = '#c0392b'; ctx.strokeRect(tx + i * u2, ty, u2 - 2, u2 - 2);
+      }
+      var total = p.h1 + p.h2 + p.h3;
+      ctx.fillStyle = '#8a5a00';
+      ctx.fillText('总块数 = ' + p.h1 + '+' + p.h2 + '+' + p.h3 + ' = ' + total, tx + 1.5 * u2, ty + u2 + 20);
+      s0.info.innerHTML = '<span class="viz-meta">从正面看：三根柱子高度分别是 ' + p.h1 + '、' + p.h2 + '、' + p.h3 + '（主视图 = 柱状图）；从上面看：一行 3 个格子（俯视图）；从左边看：只有一列，高度 = 三列最大值 max(' + p.h1 + ', ' + p.h2 + ', ' + p.h3 + ') = ' + mh + '（左视图）。</span>' +
+        '<span class="viz-meta">总块数 = ' + total + '。经典考题「由三视图求数目」：俯视图定底面位置，主视图/左视图定各处高度；<b>最少</b>块数 = 满足三个视图的必要块，<b>最多</b>块数 = 所有不被视图排除的位置都放。两层以上看不见的位置（被前排挡住）就是多解的来源。</span>' +
+        '<span class="viz-meta">画三视图的细节：每个正方体面都画正方形；看不见的棱画虚线（本例从左看，右侧列被挡住的部分就是虚线）；主视图的左右对应俯视图的左右，左视图的左右对应俯视图的<b>前后</b>——初学者最常把左右视图画反。</span>';
+    }
+    function tSeg0(ctx, x1, y1, x2, y2) {
+      ctx.strokeStyle = '#6b7a89'; ctx.lineWidth = 2.4; ctx.lineCap = 'round';
+      ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); ctx.stroke();
+    }
+    function cTag0(ctx, x, y, t) {
+      ctx.fillStyle = '#333';
+      ctx.font = '13px "PingFang SC","Microsoft YaHei",sans-serif';
+      ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      ctx.fillText(t, x, y);
+    }
+    cSlider(s0.ctrl, '第 1 列高度', p.h1, 0, 3, 1, function (v) { p.h1 = v; draw(); });
+    cSlider(s0.ctrl, '第 2 列高度', p.h2, 0, 3, 1, function (v) { p.h2 = v; draw(); });
+    cSlider(s0.ctrl, '第 3 列高度', p.h3, 0, 3, 1, function (v) { p.h3 = v; draw(); });
+    draw();
+  }
+
+  /* 常见几何体三视图：kind = cylinder | cone | sphere */
+  function viewSolidLab(el, cfg) {
+    var s0 = circleScaffold(el);
+    var kind = (cfg.values && cfg.values.kind) || 'cylinder';
+    var p = { r: 1.5, h: 4 };
+    if (cfg.values) for (var key in cfg.values) p[key] = cfg.values[key];
+
+    function draw() {
+      var r = p.r, h = kind === 'sphere' ? 2 * r : p.h;
+      var cy0 = h / 2, cx0 = 0;
+      var top = Math.max(h / 2, r);
+      var view = { xmin: -2 * r - 3.4, xmax: (kind === 'sphere' ? 4 * r + 3.1 : 5 * r + 3.1), ymin: -top - 2.6, ymax: top + 2.6 };
+      var m = circleMap(s0.cv, view), ctx = m.ctx;
+      cGrid(m, view);
+      /* 立体示意图 */
+      var ax = -r - 2.2;
+      if (kind === 'cylinder') {
+        tSeg(m, ax - r, cy0, ax + r, cy0, '#185fa5', 2.4);
+        tSeg(m, ax - r, -cy0, ax + r, -cy0, '#185fa5', 2.4);
+        cArc(m, ax, cy0, r, 0, Math.PI, false); ctx.strokeStyle = '#185fa5'; ctx.lineWidth = 2; ctx.stroke();
+        cArc(m, ax, -cy0, r, Math.PI, Math.PI * 2, false); ctx.strokeStyle = '#185fa5'; ctx.stroke();
+        tSeg(m, ax - r, cy0, ax - r, -cy0, '#185fa5', 2);
+        tSeg(m, ax + r, cy0, ax + r, -cy0, '#185fa5', 2);
+        tEdgeLabel(m, ax - r, -cy0, ax + r, -cy0, '2r', '#8a5a00', 14);
+        tEdgeLabel(m, ax + r, -cy0, ax + r, cy0, 'h', '#8a5a00', 14);
+      } else if (kind === 'cone') {
+        tSeg(m, ax - r, -cy0, ax, cy0, '#185fa5', 2.4);
+        tSeg(m, ax + r, -cy0, ax, cy0, '#185fa5', 2.4);
+        cArc(m, ax, -cy0, r, Math.PI, Math.PI * 2, false);
+        cArc(m, ax, -cy0, r, 0, Math.PI, false);
+        ctx.strokeStyle = '#185fa5'; ctx.lineWidth = 2; ctx.stroke();
+        cDot(m, ax, -cy0, '#8a5a00', 3);
+        tEdgeLabel(m, ax - r, -cy0, ax + r, -cy0, '2r', '#8a5a00', 14);
+        tEdgeLabel(m, ax, -cy0, ax, cy0, 'h', '#8a5a00', 14);
+      } else {
+        cArc(m, ax, 0, r, 0, Math.PI * 2, false);
+        ctx.strokeStyle = '#185fa5'; ctx.lineWidth = 2.4; ctx.stroke();
+        cArc(m, ax, 0, r * 0.42, 0, Math.PI * 2, false);
+        ctx.strokeStyle = '#8aa0b5'; ctx.lineWidth = 1.2; ctx.stroke();
+        cTag(m, ax, 0, 'r = ' + cFmt(r), '#8a5a00', 0, r * 0.42 * m.sc + 16);
+      }
+      /* 三视图 */
+      var vx = r + 1.2, vy = 0;
+      var names = { cylinder: '圆柱', cone: '圆锥', sphere: '球' };
+      if (kind === 'sphere') {
+        /* 三视图全圆 */
+        for (var i = 0; i < 3; i++) {
+          var cx = vx + (i - 1) * (2 * r + 1.1);
+          cArc(m, cx, 0, r, 0, Math.PI * 2, false);
+          ctx.strokeStyle = ['#c0392b', '#0f6e56', '#8a5a00'][i]; ctx.lineWidth = 2; ctx.stroke();
+          cTag(m, cx, r + 0.9, ['主', '左', '俯'][i] + '视图', '#555', 0, 0);
+        }
+        tSeg(m, vx - (2 * r + 1.1) - r - 0.5, 0, vx + 2 * r + 1.1 + r + 0.5, 0, '#c9d2dc', 1, [4, 4]);
+      } else {
+        /* 主视图：矩形(柱)/三角(锥)，左视图同形，俯视图圆 */
+        var isCone = kind === 'cone';
+        cArc(m, vx, 0, r, 0, Math.PI * 2, false);
+        ctx.strokeStyle = '#8a5a00'; ctx.lineWidth = 2; ctx.stroke();
+        cTag(m, vx, 0, '俯 r=' + cFmt(r), '#8a5a00', 0, r * m.sc + 14);
+        var fx = vx - (2 * r + 1.1);
+        ctx.strokeStyle = '#c0392b'; ctx.lineWidth = 2;
+        ctx.beginPath();
+        if (isCone) {
+          ctx.moveTo(m.px(fx - r), m.py(-h / 2)); ctx.lineTo(m.px(fx), m.py(h / 2)); ctx.lineTo(m.px(fx + r), m.py(-h / 2));
+        } else {
+          ctx.rect(m.px(fx - r), m.py(h / 2), 2 * r * m.sc, h * m.sc);
+        }
+        ctx.stroke();
+        cTag(m, fx, h / 2 + 0.8, (isCone ? '主/左：三角形' : '主/左：矩形') + ' 底2r 高h', '#c0392b', 0, 14);
+        var lx = vx + (2 * r + 1.1);
+        ctx.strokeStyle = '#0f6e56';
+        ctx.beginPath();
+        if (isCone) {
+          ctx.moveTo(m.px(lx - r), m.py(-h / 2)); ctx.lineTo(m.px(lx), m.py(h / 2)); ctx.lineTo(m.px(lx + r), m.py(-h / 2));
+        } else {
+          ctx.rect(m.px(lx - r), m.py(h / 2), 2 * r * m.sc, h * m.sc);
+        }
+        ctx.stroke();
+        cTag(m, lx, h / 2 + 0.8, '左视图同形', '#0f6e56', 0, 14);
+      }
+      var txt = {
+        cylinder: '圆柱：主视图、左视图都是矩形（宽 2r，高 h），俯视图是圆（半径 r）。三视图里没有椭圆——正投影方向与圆柱轴线平行或垂直，永远截出矩形和圆。',
+        cone: '圆锥：主视图、左视图都是等腰三角形（底 2r，高 h），俯视图是「圆 + 圆心」——那个圆心就是锥顶的正投影。漏画圆心是圆锥三视图最经典的错误。',
+        sphere: '球：三个视图全是等大的圆，半径都是球的半径 r。球是唯一「三个视图一模一样」的基本几何体，这也是它被称为最对称形体的原因。'
+      }[kind];
+      s0.info.innerHTML = '<span class="viz-meta">' + names[kind] + '（r = ' + cFmt(r) + (kind === 'sphere' ? '' : '，h = ' + cFmt(h)) + '）：' + txt + '</span>' +
+        '<span class="viz-meta">反着用（由视图定几何体）：三视图两个矩形 + 一个圆 → 圆柱；两个三角形 + 一个带圆心的圆 → 圆锥；三个等圆 → 球；矩形 + 圆的组合 → 圆柱与别的体组合。中考常考「由三视图求全面积/体积」，先认体、再从视图里读出 r 和 h。</span>';
+    }
+    cSlider(s0.ctrl, '半径 r', p.r, 0.8, 2.4, 0.1, function (v) { p.r = v; draw(); });
+    if (kind !== 'sphere') cSlider(s0.ctrl, '高 h', p.h, 2, 6, 0.5, function (v) { p.h = v; draw(); });
+    draw();
+  }
+
+  window.VIZ = { renderPlot: renderPlot, parabolaLab: parabolaLab, stepLab: stepLab, bridgeLab: bridgeLab, profitLab: profitLab, fenceLab: fenceLab, fountainLab: fountainLab, shotLab: shotLab, completeSquareLab: completeSquareLab, equationLab: equationLab, growthLab: growthLab, rotateLab: rotateLab, coordRotLab: coordRotLab, patternLab: patternLab, clockLab: clockLab, anatomyLab: anatomyLab, chordLab: chordLab, inscribedLab: inscribedLab, positionLab: positionLab, tangentLab: tangentLab, sectorLab: sectorLab, eventScaleLab: eventScaleLab, bagLab: bagLab, sumTableLab: sumTableLab, treeLab: treeLab, coinLab: coinLab, dartLab: dartLab, inverseLab: inverseLab, kAreaLab: kAreaLab, inverseCrossLab: inverseCrossLab, inverseUseLab: inverseUseLab, trigRatioLab: trigRatioLab, trigSpecialLab: trigSpecialLab, trigSolveLab: trigSolveLab, trigHeightLab: trigHeightLab, trigSlopeLab: trigSlopeLab, trigAltitudeLab: trigAltitudeLab, simGoldenLab: simGoldenLab, simParallelLab: simParallelLab, simJudgeLab: simJudgeLab, simAreaLab: simAreaLab, simNestedLab: simNestedLab, simHomothetyLab: simHomothetyLab, simShadowLab: simShadowLab, projShadowLab: projShadowLab, projOrthLab: projOrthLab, viewThreeLab: viewThreeLab, viewBlocksLab: viewBlocksLab, viewSolidLab: viewSolidLab };
 })();
 
 </script>
@@ -4029,6 +4363,11 @@ ul.lesson-list li::before {
       else if (cfg.type === 'sim-nested') VIZ.simNestedLab(el, cfg);
       else if (cfg.type === 'sim-homothety') VIZ.simHomothetyLab(el, cfg);
       else if (cfg.type === 'sim-shadow') VIZ.simShadowLab(el, cfg);
+      else if (cfg.type === 'proj-shadow') VIZ.projShadowLab(el, cfg);
+      else if (cfg.type === 'proj-orth') VIZ.projOrthLab(el, cfg);
+      else if (cfg.type === 'view-three') VIZ.viewThreeLab(el, cfg);
+      else if (cfg.type === 'view-blocks') VIZ.viewBlocksLab(el, cfg);
+      else if (cfg.type === 'view-solid') VIZ.viewSolidLab(el, cfg);
     });
   });
 })();

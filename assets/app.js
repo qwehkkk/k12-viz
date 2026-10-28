@@ -49,6 +49,11 @@
       else if (cfg.type === 'sim-nested') VIZ.simNestedLab(el, cfg);
       else if (cfg.type === 'sim-homothety') VIZ.simHomothetyLab(el, cfg);
       else if (cfg.type === 'sim-shadow') VIZ.simShadowLab(el, cfg);
+      else if (cfg.type === 'proj-shadow') VIZ.projShadowLab(el, cfg);
+      else if (cfg.type === 'proj-orth') VIZ.projOrthLab(el, cfg);
+      else if (cfg.type === 'view-three') VIZ.viewThreeLab(el, cfg);
+      else if (cfg.type === 'view-blocks') VIZ.viewBlocksLab(el, cfg);
+      else if (cfg.type === 'view-solid') VIZ.viewSolidLab(el, cfg);
     });
   });
 })();
