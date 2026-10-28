@@ -42,6 +42,13 @@
       else if (cfg.type === 'trig-height') VIZ.trigHeightLab(el, cfg);
       else if (cfg.type === 'trig-slope') VIZ.trigSlopeLab(el, cfg);
       else if (cfg.type === 'trig-altitude') VIZ.trigAltitudeLab(el, cfg);
+      else if (cfg.type === 'sim-golden') VIZ.simGoldenLab(el, cfg);
+      else if (cfg.type === 'sim-parallel') VIZ.simParallelLab(el, cfg);
+      else if (cfg.type === 'sim-judge') VIZ.simJudgeLab(el, cfg);
+      else if (cfg.type === 'sim-area') VIZ.simAreaLab(el, cfg);
+      else if (cfg.type === 'sim-nested') VIZ.simNestedLab(el, cfg);
+      else if (cfg.type === 'sim-homothety') VIZ.simHomothetyLab(el, cfg);
+      else if (cfg.type === 'sim-shadow') VIZ.simShadowLab(el, cfg);
     });
   });
 })();

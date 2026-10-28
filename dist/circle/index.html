@@ -3652,7 +3652,345 @@ ul.lesson-list li::before {
     draw();
   }
 
-  window.VIZ = { renderPlot: renderPlot, parabolaLab: parabolaLab, stepLab: stepLab, bridgeLab: bridgeLab, profitLab: profitLab, fenceLab: fenceLab, fountainLab: fountainLab, shotLab: shotLab, completeSquareLab: completeSquareLab, equationLab: equationLab, growthLab: growthLab, rotateLab: rotateLab, coordRotLab: coordRotLab, patternLab: patternLab, clockLab: clockLab, anatomyLab: anatomyLab, chordLab: chordLab, inscribedLab: inscribedLab, positionLab: positionLab, tangentLab: tangentLab, sectorLab: sectorLab, eventScaleLab: eventScaleLab, bagLab: bagLab, sumTableLab: sumTableLab, treeLab: treeLab, coinLab: coinLab, dartLab: dartLab, inverseLab: inverseLab, kAreaLab: kAreaLab, inverseCrossLab: inverseCrossLab, inverseUseLab: inverseUseLab, trigRatioLab: trigRatioLab, trigSpecialLab: trigSpecialLab, trigSolveLab: trigSolveLab, trigHeightLab: trigHeightLab, trigSlopeLab: trigSlopeLab, trigAltitudeLab: trigAltitudeLab };
+  /* ============ 相似章组件 ============ */
+
+  /* 黄金分割：拖分割点 t，找 AC/AB = 0.618 的那一格 */
+  function simGoldenLab(el, cfg) {
+    var s0 = circleScaffold(el);
+    var p = { L: 10, t: 0.5 };
+    if (cfg.values) for (var key in cfg.values) p[key] = cfg.values[key];
+    var PHI = (Math.sqrt(5) - 1) / 2;
+
+    function draw() {
+      var L = p.L, ac = L * p.t, cb = L - ac;
+      var view = { xmin: -1.6, xmax: L + 1.6, ymin: -(L * 0.72 + 1.6), ymax: 3.2 };
+      var m = circleMap(s0.cv, view), ctx = m.ctx;
+      cGrid(m, view);
+      var golden = Math.abs(p.t - PHI) < 0.003;
+      /* 黄金矩形 + 内部正方形拆分 */
+      var h = L * PHI;
+      ctx.fillStyle = 'rgba(24,95,165,.08)';
+      ctx.fillRect(m.px(0), m.py(0), L * m.sc, h * m.sc);
+      tSeg(m, 0, 0, L, 0, '#185fa5', 2.6);
+      tSeg(m, 0, -h, L, -h, '#185fa5', 2);
+      tSeg(m, 0, 0, 0, -h, '#185fa5', 2);
+      tSeg(m, L, 0, L, -h, '#185fa5', 2);
+      tSeg(m, h, 0, h, -h, '#c9d2dc', 1.4, [5, 4]);
+      tSeg(m, h, -h, L, -h, '#c9d2dc', 1.4, [5, 4]);
+      tEdgeLabel(m, 0, -h, h, -h, '正方形 ' + cFmt(h) + '×' + cFmt(h), '#8aa0b5', 0);
+      tEdgeLabel(m, h, -h, L, -h, '小黄金矩形', '#8aa0b5', 0);
+      /* 线段与分割点 */
+      tSeg(m, 0, 1.2, L, 1.2, '#333', 3.2);
+      cDot(m, 0, 1.2, '#333', 4.2);
+      cDot(m, L, 1.2, '#333', 4.2);
+      cDot(m, ac, 1.2, golden ? '#c0392b' : '#0f6e56', 5.5);
+      cTag(m, 0, 1.2, 'A', '#555', -2, -16);
+      cTag(m, L, 1.2, 'B', '#555', 0, -16);
+      cTag(m, ac, 1.2, 'C', golden ? '#c0392b' : '#0f6e56', 0, golden ? -18 : 16);
+      tEdgeLabel(m, 0, 1.2, ac, 1.2, 'AC = ' + cFmt(ac), '#0f6e56', -16);
+      tEdgeLabel(m, ac, 1.2, L, 1.2, 'CB = ' + cFmt(cb), '#8a5a00', -16);
+      var r1 = p.t, r2 = cb / (ac || 1e-9);
+      var err = Math.abs(r1 - PHI);
+      s0.info.innerHTML = '<span class="viz-meta">AC : AB = ' + cFmt(ac) + ' : ' + cFmt(L) + ' = ' + cFmt(r1) + '　　CB : AC = ' + cFmt(cb) + ' : ' + cFmt(ac) + ' = ' + cFmt(r2) + (golden ? '　<span style="color:#c0392b;font-weight:700">✓ 黄金分割点！</span>' : '　（离 0.618 还差 ' + cFmt(err) + '）') + '</span>' +
+        '<span class="viz-meta">把线段分成两段，让<b>较长段与全长之比 = 较短段与较长段之比</b>，这个比就是黄金比 φ = (√5−1)/2 ≈ 0.618。AC : CB = 1.618，CB : AC = 0.618——同一个点、两种写法，看清问的是哪个比。</span>' +
+        '<span class="viz-meta">右边的黄金矩形也有同样性质：切掉一个正方形，剩下的小矩形长宽比还是 0.618，可以无限切下去。五角星每条线段上也都藏着这个比。列方程解黄金分割题：设 AC = x，则 x/L = (L−x)/x，整理得 x² + Lx − L² = 0（一元二次方程回归）。</span>';
+    }
+    cSlider(s0.ctrl, '线段 AB 的长', p.L, 6, 14, 0.5, function (v) { p.L = v; draw(); });
+    cSlider(s0.ctrl, '分割点位置 AC/AB', p.t, 0.3, 0.9, 0.001, function (v) { p.t = v; draw(); });
+    draw();
+  }
+
+  /* 平行截线（A 型）：DE∥BC，拖相似比 k 看三组比值同时变 */
+  function simParallelLab(el, cfg) {
+    var s0 = circleScaffold(el);
+    var p = { k: 0.6, ax: 4.2 };
+    if (cfg.values) for (var key in cfg.values) p[key] = cfg.values[key];
+
+    function draw() {
+      var B = { x: 0, y: 0 }, C = { x: 10, y: 0 }, A = { x: p.ax, y: 6.5 };
+      var D = { x: A.x + (B.x - A.x) * p.k, y: A.y + (B.y - A.y) * p.k };
+      var E = { x: A.x + (C.x - A.x) * p.k, y: A.y + (C.y - A.y) * p.k };
+      var view = { xmin: -1.8, xmax: 11.8, ymin: -2.6, ymax: 8.2 };
+      var m = circleMap(s0.cv, view), ctx = m.ctx;
+      cGrid(m, view);
+      /* 小三角形填充 */
+      ctx.beginPath();
+      ctx.moveTo(m.px(A.x), m.py(A.y)); ctx.lineTo(m.px(D.x), m.py(D.y)); ctx.lineTo(m.px(E.x), m.py(E.y));
+      ctx.closePath();
+      ctx.fillStyle = 'rgba(192,57,43,.14)'; ctx.fill();
+      tSeg(m, A.x, A.y, B.x, B.y, '#185fa5', 3);
+      tSeg(m, A.x, A.y, C.x, C.y, '#185fa5', 3);
+      tSeg(m, B.x, B.y, C.x, C.y, '#185fa5', 3);
+      tSeg(m, D.x, D.y, E.x, E.y, '#c0392b', 2.6);
+      tSeg(m, A.x, A.y, D.x, D.y, '#c0392b', 2.2);
+      tSeg(m, A.x, A.y, E.x, E.y, '#c0392b', 2.2);
+      cTag(m, A.x, A.y, 'A', '#555', 0, -16);
+      cTag(m, B.x, B.y, 'B', '#555', -14, 14);
+      cTag(m, C.x, C.y, 'C', '#555', 14, 14);
+      cTag(m, D.x, D.y, 'D', '#c0392b', D.x < A.x ? -14 : 14, 6);
+      cTag(m, E.x, E.y, 'E', '#c0392b', E.x > A.x ? 14 : -14, 6);
+      tAngle(m, A.x, A.y, 0.9, Math.atan2(B.y - A.y, B.x - A.x), Math.atan2(C.y - A.y, C.x - A.x), '#8a5a00', '');
+      tAngle(m, D.x, D.y, 0.75, Math.atan2(A.y - D.y, A.x - D.x), 0, '#0f6e56', '');
+      tAngle(m, E.x, E.y, 0.75, Math.PI, Math.atan2(A.y - E.y, A.x - E.x), '#0f6e56', '');
+      tEdgeLabel(m, A.x, A.y, D.x, D.y, 'AD', '#c0392b', -16);
+      tEdgeLabel(m, D.x, D.y, B.x, B.y, 'DB', '#185fa5', -16);
+      tEdgeLabel(m, A.x, A.y, E.x, E.y, 'AE', '#c0392b', 18);
+      tEdgeLabel(m, E.x, E.y, C.x, C.y, 'EC', '#185fa5', 18);
+      tEdgeLabel(m, D.x, D.y, E.x, E.y, 'DE', '#c0392b', 16);
+      tEdgeLabel(m, B.x, B.y, C.x, C.y, 'BC', '#185fa5', 16);
+      /* 平行小箭头 */
+      ctx.fillStyle = '#0f6e56';
+      var mid = { x: (D.x + E.x) / 2, y: (D.y + E.y) / 2 };
+      ctx.beginPath();
+      ctx.moveTo(m.px(mid.x), m.py(mid.y) - 5); ctx.lineTo(m.px(mid.x) - 7, m.py(mid.y) - 1); ctx.lineTo(m.px(mid.x) + 7, m.py(mid.y) - 1);
+      ctx.closePath(); ctx.fill();
+      s0.info.innerHTML = '<span class="viz-meta">DE ∥ BC，k = AD/AB = ' + cFmt(p.k) + '。三组比值同时等于 k：AD/AB = AE/AC = DE/BC = ' + cFmt(p.k) + '（同一条截线动，三组比一起变）。</span>' +
+        '<span class="viz-meta">DE ∥ BC ⇒ △ADE ∽ △ABC（两角对应相等：同位角 ∠ADE=∠B、∠AED=∠C，再加公共角 ∠A）。相似比就是 k，面积比是 k² = ' + cFmt(p.k * p.k) + '。</span>' +
+        '<span class="viz-meta">这就是<b>A 型基本图形</b>。它的变形是 <b>X 型（8 字型）</b>：两条直线交于 A，DE ∥ BC 但 D、E 在延长线另一侧，△ADE 与 △ABC 关于点 A 反向相似，比值关系完全一样。找平行线、找公共角——相似题一半的辅助线就从这里来。</span>';
+    }
+    cSlider(s0.ctrl, '相似比 k = AD/AB', p.k, 0.15, 0.9, 0.01, function (v) { p.k = v; draw(); });
+    cSlider(s0.ctrl, '顶点 A 的水平位置', p.ax, 1.8, 8.2, 0.1, function (v) { p.ax = v; draw(); });
+    draw();
+  }
+
+  /* AA 判定：角定形、k 定大小，两个三角形永远相似 */
+  function simJudgeLab(el, cfg) {
+    var s0 = circleScaffold(el);
+    var p = { a1: 40, b1: 60, k: 0.7 };
+    if (cfg.values) for (var key in cfg.values) p[key] = cfg.values[key];
+
+    function draw() {
+      var A1 = p.a1 * T_D2R, B1 = p.b1 * T_D2R;
+      var base = 6;
+      var Cx = base * Math.tan(B1) / (Math.tan(A1) + Math.tan(B1));
+      var Cy = Cx * Math.tan(A1);
+      var gap = 2.2, A2x = base + gap;
+      var k = Math.abs(p.k) < 0.05 ? 0.05 : p.k;
+      var view = { xmin: -1.6, xmax: base + gap + base * k + 1.8, ymin: -2.2, ymax: Math.max(Cy, Cy * k) + 1.8 };
+      var m = circleMap(s0.cv, view), ctx = m.ctx;
+      cGrid(m, view);
+      function tri(ox, sc, color, fill) {
+        var Ax = ox, Ay = 0, Bx = ox + base * sc, By = 0, cx = ox + Cx * sc, cy = Cy * sc;
+        ctx.beginPath();
+        ctx.moveTo(m.px(Ax), m.py(Ay)); ctx.lineTo(m.px(Bx), m.py(By)); ctx.lineTo(m.px(cx), m.py(cy));
+        ctx.closePath();
+        ctx.fillStyle = fill; ctx.fill();
+        tSeg(m, Ax, Ay, Bx, By, color, 3);
+        tSeg(m, Ax, Ay, cx, cy, color, 3);
+        tSeg(m, Bx, By, cx, cy, color, 3);
+        tAngle(m, Ax, Ay, Math.min(1.1, base * sc * 0.32), 0, A1, '#8a5a00', Math.round(p.a1) + '°');
+        tAngle(m, Bx, By, Math.min(1.1, base * sc * 0.32), Math.PI - B1, Math.PI, '#0f6e56', Math.round(p.b1) + '°');
+        return { Ax: Ax, Bx: Bx, cx: cx, cy: cy };
+      }
+      tri(0, 1, '#185fa5', 'rgba(24,95,165,.10)');
+      tri(A2x, k, '#c0392b', 'rgba(192,57,43,.12)');
+      tEdgeLabel(m, 0, 0, base, 0, 'a', '#185fa5', -16);
+      tEdgeLabel(m, A2x, 0, A2x + base * k, 0, "a′ = " + cFmt(base * k), '#c0392b', -16);
+      s0.info.innerHTML = '<span class="viz-meta">△ABC 与 △A′B′C′：<b>∠A = ∠A′ = ' + Math.round(p.a1) + '°，∠B = ∠B′ = ' + Math.round(p.b1) + '°</b>，两个角对应相等 ⇒ △ABC ∽ △A′B′C′（AA 判定）。第三对角不用验——三角形内角和 180°，前两对相等第三对必然相等。</span>' +
+        '<span class="viz-meta">拖 α 或 β：两个三角形的形状<b>同时</b>变——两个角就锁死了三角形的形状（第三个角是 180° 减出来）；拖 k：只改大小不改形状。所以「相似 = 形状相同」这件事，几何上就等价于「两角对应相等」。</span>' +
+        '<span class="viz-meta">判定定理一共三条，本质都是"锁定形状"：① AA 两角对应相等（最快）；② SAS 两边成比例且夹角相等（夹角必须相等，等了边不等角不行）；③ SSS 三边对应成比例。做题时先找现成的等角（公共角、对顶角、同位角），再找比例。</span>';
+    }
+    cSlider(s0.ctrl, '∠α（两三角形共用）', p.a1, 25, 80, 1, function (v) { p.a1 = v; draw(); });
+    cSlider(s0.ctrl, '∠β（两三角形共用）', p.b1, 25, 80, 1, function (v) { p.b1 = v; draw(); });
+    cSlider(s0.ctrl, '放大系数 k', p.k, 0.4, 1.6, 0.05, function (v) { p.k = v; draw(); });
+    draw();
+  }
+
+  /* 相似性质：周长比 = k，面积比 = k²（嵌套同角三角形直观展示） */
+  function simAreaLab(el, cfg) {
+    var s0 = circleScaffold(el);
+    var p = { k: 0.6 };
+    if (cfg.values) for (var key in cfg.values) p[key] = cfg.values[key];
+
+    function draw() {
+      var k = Math.abs(p.k) < 0.08 ? 0.08 : p.k;
+      var A = { x: 0, y: 0 }, B = { x: 6.4, y: 0 }, C = { x: 2.3, y: 4.6 };
+      var view = { xmin: -1.4, xmax: Math.max(B.x * k, B.x) + 1.6, ymin: -1.8, ymax: Math.max(C.y * k, C.y) + 1.6 };
+      var m = circleMap(s0.cv, view), ctx = m.ctx;
+      cGrid(m, view);
+      /* 大三角形 */
+      ctx.beginPath();
+      ctx.moveTo(m.px(A.x), m.py(A.y)); ctx.lineTo(m.px(B.x), m.py(B.y)); ctx.lineTo(m.px(C.x), m.py(C.y));
+      ctx.closePath();
+      ctx.fillStyle = 'rgba(24,95,165,.10)'; ctx.fill();
+      tSeg(m, A.x, A.y, B.x, B.y, '#185fa5', 3);
+      tSeg(m, A.x, A.y, C.x, C.y, '#185fa5', 3);
+      tSeg(m, B.x, B.y, C.x, C.y, '#185fa5', 3);
+      /* 小三角形（共享 ∠A） */
+      var B2 = { x: B.x * k, y: B.y * k }, C2 = { x: C.x * k, y: C.y * k };
+      ctx.beginPath();
+      ctx.moveTo(m.px(A.x), m.py(A.y)); ctx.lineTo(m.px(B2.x), m.py(B2.y)); ctx.lineTo(m.px(C2.x), m.py(C2.y));
+      ctx.closePath();
+      ctx.fillStyle = 'rgba(192,57,43,.22)'; ctx.fill();
+      tSeg(m, A.x, A.y, B2.x, B2.y, '#c0392b', 2.8);
+      tSeg(m, A.x, A.y, C2.x, C2.y, '#c0392b', 2.8);
+      tSeg(m, B2.x, B2.y, C2.x, C2.y, '#c0392b', 2.8);
+      cTag(m, A.x, A.y, 'A', '#555', -14, -6);
+      cTag(m, B.x, B.y, 'B', '#185fa5', 0, -16);
+      cTag(m, C.x, C.y, 'C', '#185fa5', 14, 6);
+      cTag(m, B2.x, B2.y, 'B′', '#c0392b', B2.x > B.x ? 16 : 14, B2.y > 0 ? 14 : -14);
+      cTag(m, C2.x, C2.y, 'C′', '#c0392b', C2.x > C.x ? 18 : 12, C2.y > C.y ? 14 : -14);
+      tAngle(m, A.x, A.y, Math.min(1.2, B2.x * 0.4), 0, Math.atan2(C.y, C.x), '#8a5a00', '');
+      cRightAngle(m, A.x, A.y, [1, 0], [Math.cos(Math.atan2(C.y, C.x)), Math.sin(Math.atan2(C.y, C.x))], '#c9d2dc');
+      var P1 = 6.4 + Math.sqrt(6.4 * 6.4 + 4.6 * 4.6) + Math.sqrt((6.4 - 2.3) * (6.4 - 2.3) + 4.6 * 4.6);
+      var S1 = 0.5 * 6.4 * 4.6;
+      s0.info.innerHTML = '<span class="viz-meta">△AB′C′ ∽ △ABC，公共角 ∠A，相似比 k = AB′/AB = ' + cFmt(k) + '。周长比 = k = ' + cFmt(k) + '　面积比 = k² = ' + cFmt(k * k) + '（S△AB′C′ = ' + cFmt(S1 * k * k) + '，S△ABC = ' + cFmt(S1) + '）</span>' +
+        '<span class="viz-meta">性质记三条：对应高、中线、角平分线的比 = 相似比 k；<b>周长比 = k</b>（一维量，长度的一次方）；<b>面积比 = k²</b>（二维量，长度的平方）。反着用时小心：告诉你面积比是 4:9，相似比要开方，是 2:3 不是 4:9。</span>' +
+        '<span class="viz-meta">红色小三角形嵌在大三角形里共享 ∠A——这是「共角共边型」相似的原型，很多压轴题的图形就是在这个基础上加平行线或延长线搭出来的。看到两个三角形叠在一起共一个角，先怀疑它们相似。</span>';
+    }
+    cSlider(s0.ctrl, '相似比 k = AB′/AB', p.k, 0.15, 1.35, 0.01, function (v) { p.k = v; draw(); });
+    draw();
+  }
+
+  /* 双垂直（母子型）：斜边上的高 CD，射影定理数值全验证 */
+  function simNestedLab(el, cfg) {
+    var s0 = circleScaffold(el);
+    var p = { a: 6, b: 4.5 };
+    if (cfg.values) for (var key in cfg.values) p[key] = cfg.values[key];
+
+    function draw() {
+      var a = p.a, b = p.b;
+      var c = Math.sqrt(a * a + b * b);
+      var t = (b * b) / (c * c);
+      var D = { x: t * a, y: b * (1 - t) };
+      var view = { xmin: -1.8, xmax: a + 1.8, ymin: -1.8, ymax: b + 1.8 };
+      var m = circleMap(s0.cv, view), ctx = m.ctx;
+      cGrid(m, view);
+      tSeg(m, 0, b, a, 0, '#185fa5', 3);
+      tSeg(m, 0, b, 0, 0, '#185fa5', 3);
+      tSeg(m, 0, 0, a, 0, '#185fa5', 3);
+      tSeg(m, 0, 0, D.x, D.y, '#c0392b', 2.4, [7, 4]);
+      cRightAngle(m, 0, 0, [1, 0], [0, 1], '#8a5a00');
+      /* D 处直角记号（沿 DA、DB 方向） */
+      (function () {
+        var ux = (0 - D.x) / Math.sqrt((0 - D.x) * (0 - D.x) + (b - D.y) * (b - D.y));
+        var uy = (b - D.y) / Math.sqrt((0 - D.x) * (0 - D.x) + (b - D.y) * (b - D.y));
+        var vx = (a - D.x) / Math.sqrt((a - D.x) * (a - D.x) + (0 - D.y) * (0 - D.y));
+        var vy = (0 - D.y) / Math.sqrt((a - D.x) * (a - D.x) + (0 - D.y) * (0 - D.y));
+        cRightAngle(m, D.x, D.y, [ux, uy], [vx, vy], '#c0392b');
+      })();
+      cTag(m, 0, b, 'A', '#185fa5', -14, 8);
+      cTag(m, 0, 0, 'C', '#185fa5', -14, -14);
+      cTag(m, a, 0, 'B', '#185fa5', 14, -14);
+      cTag(m, D.x, D.y, 'D', '#c0392b', D.x < a / 2 ? 14 : -14, -14);
+      tEdgeLabel(m, 0, b, D.x, D.y, 'AD = ' + cFmt(b * b / c), '#0f6e56', 16);
+      tEdgeLabel(m, D.x, D.y, a, 0, 'BD = ' + cFmt(a * a / c), '#0f6e56', 16);
+      tEdgeLabel(m, 0, 0, D.x, D.y, 'CD = ' + cFmt(a * b / c), '#c0392b', -18);
+      tEdgeLabel(m, 0, b, 0, 0, 'AC = ' + cFmt(b), '#185fa5', -18);
+      tEdgeLabel(m, 0, 0, a, 0, 'BC = ' + cFmt(a), '#185fa5', -18);
+      var cd2 = Math.pow(a * b / c, 2), adb = (b * b / c) * (a * a / c);
+      var ac2 = b * b, adab = (b * b / c) * c;
+      var bc2 = a * a, bdab = (a * a / c) * c;
+      s0.info.innerHTML = '<span class="viz-meta">Rt△ABC，∠C = 90°，CD ⊥ AB 于 D。斜边 AB = √(a²+b²) = ' + cFmt(c) + '，被 D 分成 AD = b²/c = ' + cFmt(b * b / c) + ' 与 BD = a²/c = ' + cFmt(a * a / c) + '，高 CD = ab/c = ' + cFmt(a * b / c) + '</span>' +
+        '<span class="viz-meta">射影定理（数值全对上）：CD² = ' + cFmt(cd2) + ' = AD·BD = ' + cFmt(adb) + ' ✓　AC² = ' + cFmt(ac2) + ' = AD·AB = ' + cFmt(adab) + ' ✓　BC² = ' + cFmt(bc2) + ' = BD·AB = ' + cFmt(bdab) + ' ✓</span>' +
+        '<span class="viz-meta">为什么成立：∠ACD = 90° − ∠A = ∠B（同角的余角），加上公共角，△ACD ∽ △CBD ∽ △ABC——一个直角三角形被斜边上的高劈成两个小直角三角形，<b>三个都相似</b>（母子型）。射影定理不用背：现场用「AC² = AD·AB」这种对应边成比例一乘就出来。它还是勾股定理的另一种拆法：AC² + BC² = AD·AB + BD·AB = AB²。</span>';
+    }
+    cSlider(s0.ctrl, '直角边 BC（a）', p.a, 3, 8, 0.1, function (v) { p.a = v; draw(); });
+    cSlider(s0.ctrl, '直角边 AC（b）', p.b, 2.5, 6, 0.1, function (v) { p.b = v; draw(); });
+    draw();
+  }
+
+  /* 位似变换：拖位似比 k（可负），看像的缩放与翻转 */
+  function simHomothetyLab(el, cfg) {
+    var s0 = circleScaffold(el);
+    var p = { k: 1.5 };
+    if (cfg.values) for (var key in cfg.values) p[key] = cfg.values[key];
+    var A = { x: -6, y: 1 }, B = { x: -3, y: 4.5 }, C = { x: -1.5, y: 1.2 };
+
+    function draw() {
+      var k = Math.abs(p.k) < 0.06 ? 0.06 : p.k;
+      var pts = [A, B, C], img = [];
+      var i;
+      for (i = 0; i < 3; i++) img.push({ x: pts[i].x * k, y: pts[i].y * k });
+      var xs = [], ys = [];
+      for (i = 0; i < 3; i++) { xs.push(pts[i].x, img[i].x, 0); ys.push(pts[i].y, img[i].y, 0); }
+      var view = { xmin: Math.min.apply(null, xs) - 1.6, xmax: Math.max.apply(null, xs) + 1.6, ymin: Math.min.apply(null, ys) - 1.6, ymax: Math.max.apply(null, ys) + 1.6 };
+      var m = circleMap(s0.cv, view), ctx = m.ctx;
+      cGrid(m, view);
+      /* 坐标轴 */
+      tSeg(m, view.xmin, 0, view.xmax, 0, '#6b7a89', 1.6);
+      tSeg(m, 0, view.ymin, 0, view.ymax, '#6b7a89', 1.6);
+      cTag(m, view.xmax - 0.4, 0, 'x', '#8aa0b5', 0, -12);
+      cTag(m, 0, view.ymax - 0.4, 'y', '#8aa0b5', 12, 0);
+      /* 连线：O 与各对应点共线 */
+      for (i = 0; i < 3; i++) tSeg(m, 0, 0, img[i].x, img[i].y, '#c9d2dc', 1.2, [4, 4]);
+      /* 原三角形 */
+      ctx.beginPath();
+      ctx.moveTo(m.px(A.x), m.py(A.y)); ctx.lineTo(m.px(B.x), m.py(B.y)); ctx.lineTo(m.px(C.x), m.py(C.y));
+      ctx.closePath();
+      ctx.fillStyle = 'rgba(24,95,165,.12)'; ctx.fill();
+      tSeg(m, A.x, A.y, B.x, B.y, '#185fa5', 3); tSeg(m, B.x, B.y, C.x, C.y, '#185fa5', 3); tSeg(m, C.x, C.y, A.x, A.y, '#185fa5', 3);
+      /* 像三角形 */
+      ctx.beginPath();
+      ctx.moveTo(m.px(img[0].x), m.py(img[0].y)); ctx.lineTo(m.px(img[1].x), m.py(img[1].y)); ctx.lineTo(m.px(img[2].x), m.py(img[2].y));
+      ctx.closePath();
+      ctx.fillStyle = k < 0 ? 'rgba(138,90,0,.16)' : 'rgba(192,57,43,.14)'; ctx.fill();
+      tSeg(m, img[0].x, img[0].y, img[1].x, img[1].y, '#c0392b', 3); tSeg(m, img[1].x, img[1].y, img[2].x, img[2].y, '#c0392b', 3); tSeg(m, img[2].x, img[2].y, img[0].x, img[0].y, '#c0392b', 3);
+      cDot(m, 0, 0, '#333', 4.5);
+      cTag(m, 0, 0, 'O', '#555', 12, -12);
+      var names = ['A', 'B', 'C'];
+      for (i = 0; i < 3; i++) {
+        cTag(m, pts[i].x, pts[i].y, names[i], '#185fa5', -14, 10);
+        cTag(m, img[i].x, img[i].y, names[i] + '′', '#c0392b', 12, -12);
+      }
+      cTag(m, (A.x + img[0].x) / 2, (A.y + img[0].y) / 2, 'A(' + A.x + ', ' + A.y + ') → A′(' + cFmt(img[0].x) + ', ' + cFmt(img[0].y) + ')', '#8a5a00', 0, k > 0 ? 16 : 16);
+      s0.info.innerHTML = '<span class="viz-meta">位似中心 O(0,0)，位似比 k = ' + cFmt(k) + '。A(−6, 1) → A′(' + cFmt(A.x * k) + ', ' + cFmt(A.y * k) + ')，恰好是 <b>(kx, ky)</b>——位似变换在坐标系里就是横纵坐标同乘 k。</span>' +
+        '<span class="viz-meta">' + (k > 0 ? 'k > 0：像与原形在位似中心<b>同侧</b>，是放缩不翻转的正像。' : 'k < 0：像跑到位似中心<b>另一侧</b>，图形倒了个方向——这是负位似。') + '|k| = ' + cFmt(Math.abs(k)) + (Math.abs(k) > 1 ? ' > 1，放大；' : Math.abs(k) < 1 ? ' < 1，缩小；' : '，全等（|k| = 1 就是平移型的特殊情况）。') + '</span>' +
+        '<span class="viz-meta">位似是特殊的相似：不仅形状相同，连对应点的连线都交于一点。做题三步：① 确认对应点连线过同一点；② 用对应点坐标算 k；③ 坐标 ×k 得像。注意 k 有正负两解（|k| 相同、方向相反的像都合法），题目问「几个像」时要答两个。</span>';
+    }
+    cSlider(s0.ctrl, '位似比 k', p.k, -2, 2, 0.05, function (v) { p.k = v; draw(); });
+    draw();
+  }
+
+  /* 影长测高：同一时刻光线平行，物高与影长成比例 */
+  function simShadowLab(el, cfg) {
+    var s0 = circleScaffold(el);
+    var p = { h1: 2, s1: 3, H: 10 };
+    if (cfg.values) for (var key in cfg.values) p[key] = cfg.values[key];
+
+    function draw() {
+      var x2 = p.s1 + 4.5, s2 = p.H * p.s1 / p.h1;
+      var W = x2 + s2 + 3;
+      var VH = Math.max(p.H * 1.25, W / 2.4) + 2;
+      var view = { xmin: -1.8, xmax: W, ymin: -2.6, ymax: VH };
+      var m = circleMap(s0.cv, view), ctx = m.ctx;
+      cGrid(m, view);
+      tSeg(m, -1.8, 0, W, 0, '#6b7a89', 2.6);
+      /* 杆1 与影 */
+      ctx.fillStyle = 'rgba(24,95,165,.15)';
+      ctx.fillRect(m.px(0), m.py(p.h1), 0.5 * m.sc, p.h1 * m.sc);
+      tSeg(m, 0, 0, 0, p.h1, '#185fa5', 3);
+      tSeg(m, 0, 0, p.s1, 0, '#0f6e56', 5);
+      /* 旗杆与影 */
+      ctx.fillStyle = 'rgba(192,57,43,.12)';
+      ctx.fillRect(m.px(x2), m.py(p.H), 0.7 * m.sc, p.H * m.sc);
+      tSeg(m, x2, 0, x2, p.H, '#c0392b', 3.4);
+      tSeg(m, x2, 0, x2 + s2, 0, '#0f6e56', 5);
+      /* 平行光线（同一时刻）：从物体顶上一点到影子末端，参数化避免画出画面 */
+      (function () {
+        var t0 = -0.08, t1 = 1.02;
+        var x1a = t0 * p.s1, y1a = p.h1 * (1 - t0), x1b = t1 * p.s1, y1b = p.h1 * (1 - t1);
+        tSeg(m, x1a, y1a, x1b, y1b, '#e0a800', 1.8, [7, 5]);
+        var x2a = x2 + t0 * s2, y2a = p.H * (1 - t0), x2b = x2 + t1 * s2, y2b = p.H * (1 - t1);
+        tSeg(m, x2a, y2a, x2b, y2b, '#e0a800', 1.8, [7, 5]);
+      })();
+      cDot(m, 0, p.h1, '#185fa5', 4);
+      cDot(m, x2, p.H, '#c0392b', 4);
+      cTag(m, 0, p.h1 / 2, '杆高 h₁ = ' + cFmt(p.h1) + ' m', '#185fa5', 48, 0);
+      tEdgeLabel(m, 0, 0, p.s1, 0, '影 s₁ = ' + cFmt(p.s1) + ' m', '#0f6e56', 16);
+      tEdgeLabel(m, x2, 0, x2, p.H, '旗杆 H = ' + cFmt(p.H) + ' m', '#c0392b', -24);
+      tEdgeLabel(m, x2, 0, x2 + s2, 0, '影 s₂ = ' + cFmt(s2) + ' m', '#0f6e56', 16);
+      s0.info.innerHTML = '<span class="viz-meta">同一时刻两根光线平行（太阳够远）。杆的影长与高的比 = 旗杆的影长与高的比：h₁ : s₁ = H : s₂，即 ' + cFmt(p.h1) + ' : ' + cFmt(p.s1) + ' = ' + cFmt(p.H) + ' : ' + cFmt(s2) + '，两边数值都是 ' + cFmt(p.h1 / p.s1) + ' ✓</span>' +
+        '<span class="viz-meta">所以 s₂ = H·s₁/h₁ = ' + cFmt(s2) + ' m。测出好量的（杆高、两个影长），推出不好量的（旗杆/楼/树高）——这就是「用相似测不可达高度」的全部思想。光线路径画出的是两个相似三角形的斜边：△(杆+影) ∽ △(旗杆+影)，AA 判定（光线平行得同位角相等 + 直角）。</span>' +
+        '<span class="viz-meta">易错点：① 单位要统一（影长常用 cm，物高常用 m）；② 「影长落在墙上」时不是简单比例——先假想墙不存在算到墙脚的全长，再减去墙上那段折算高度；③ 同一时刻是前提，上午下午影长不同，两次测量必须同时完成。</span>';
+    }
+    cSlider(s0.ctrl, '杆高 h₁（m）', p.h1, 1, 4, 0.1, function (v) { p.h1 = v; draw(); });
+    cSlider(s0.ctrl, '杆影 s₁（m）', p.s1, 1.5, 6, 0.1, function (v) { p.s1 = v; draw(); });
+    cSlider(s0.ctrl, '旗杆高 H（m）', p.H, 4, 18, 0.5, function (v) { p.H = v; draw(); });
+    draw();
+  }
+
+  window.VIZ = { renderPlot: renderPlot, parabolaLab: parabolaLab, stepLab: stepLab, bridgeLab: bridgeLab, profitLab: profitLab, fenceLab: fenceLab, fountainLab: fountainLab, shotLab: shotLab, completeSquareLab: completeSquareLab, equationLab: equationLab, growthLab: growthLab, rotateLab: rotateLab, coordRotLab: coordRotLab, patternLab: patternLab, clockLab: clockLab, anatomyLab: anatomyLab, chordLab: chordLab, inscribedLab: inscribedLab, positionLab: positionLab, tangentLab: tangentLab, sectorLab: sectorLab, eventScaleLab: eventScaleLab, bagLab: bagLab, sumTableLab: sumTableLab, treeLab: treeLab, coinLab: coinLab, dartLab: dartLab, inverseLab: inverseLab, kAreaLab: kAreaLab, inverseCrossLab: inverseCrossLab, inverseUseLab: inverseUseLab, trigRatioLab: trigRatioLab, trigSpecialLab: trigSpecialLab, trigSolveLab: trigSolveLab, trigHeightLab: trigHeightLab, trigSlopeLab: trigSlopeLab, trigAltitudeLab: trigAltitudeLab, simGoldenLab: simGoldenLab, simParallelLab: simParallelLab, simJudgeLab: simJudgeLab, simAreaLab: simAreaLab, simNestedLab: simNestedLab, simHomothetyLab: simHomothetyLab, simShadowLab: simShadowLab };
 })();
 
 </script>
@@ -3701,6 +4039,13 @@ ul.lesson-list li::before {
       else if (cfg.type === 'trig-height') VIZ.trigHeightLab(el, cfg);
       else if (cfg.type === 'trig-slope') VIZ.trigSlopeLab(el, cfg);
       else if (cfg.type === 'trig-altitude') VIZ.trigAltitudeLab(el, cfg);
+      else if (cfg.type === 'sim-golden') VIZ.simGoldenLab(el, cfg);
+      else if (cfg.type === 'sim-parallel') VIZ.simParallelLab(el, cfg);
+      else if (cfg.type === 'sim-judge') VIZ.simJudgeLab(el, cfg);
+      else if (cfg.type === 'sim-area') VIZ.simAreaLab(el, cfg);
+      else if (cfg.type === 'sim-nested') VIZ.simNestedLab(el, cfg);
+      else if (cfg.type === 'sim-homothety') VIZ.simHomothetyLab(el, cfg);
+      else if (cfg.type === 'sim-shadow') VIZ.simShadowLab(el, cfg);
     });
   });
 })();

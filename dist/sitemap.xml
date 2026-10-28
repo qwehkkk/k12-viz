@@ -148,4 +148,24 @@
   <url><loc>https://teach.toolona.com/trigonometry/pattern/trig-height-double.html</loc><priority>0.7</priority></url>
   <url><loc>https://teach.toolona.com/trigonometry/pattern/trig-slope-calc.html</loc><priority>0.7</priority></url>
   <url><loc>https://teach.toolona.com/trigonometry/pattern/trig-altitude-split.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/similarity/index.html</loc><priority>0.9</priority></url>
+  <url><loc>https://teach.toolona.com/similarity/similarity-concept.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/similarity/similarity-parallel.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/similarity/similarity-judge.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/similarity/similarity-property.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/similarity/similarity-nested.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/similarity/similarity-homothety.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/similarity/similarity-apply.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/similarity/patterns.html</loc><priority>0.9</priority></url>
+  <url><loc>https://teach.toolona.com/similarity/locate.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/similarity/pattern/sim-golden-calc.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/similarity/pattern/sim-a-type-seg.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/similarity/pattern/sim-x-type-seg.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/similarity/pattern/sim-judge-aa.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/similarity/pattern/sim-judge-sas.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/similarity/pattern/sim-prop-area.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/similarity/pattern/sim-prop-height.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/similarity/pattern/sim-nested-project.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/similarity/pattern/sim-coord-homothety.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/similarity/pattern/sim-shadow-measure.html</loc><priority>0.7</priority></url>
 </urlset>
