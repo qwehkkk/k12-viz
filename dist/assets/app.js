@@ -134,6 +134,11 @@
       else if (cfg.type === 'ia-merge') VIZ.iaMergeLab(el, cfg);
       else if (cfg.type === 'ia-paren') VIZ.iaParenLab(el, cfg);
       else if (cfg.type === 'ia-eval') VIZ.iaEvalLab(el, cfg);
+      else if (cfg.type === 'fr-def') VIZ.frDefLab(el, cfg);
+      else if (cfg.type === 'fr-simplify') VIZ.frSimplifyLab(el, cfg);
+      else if (cfg.type === 'fr-muldiv') VIZ.frMuldivLab(el, cfg);
+      else if (cfg.type === 'fr-add') VIZ.frAddLab(el, cfg);
+      else if (cfg.type === 'fr-eq') VIZ.frEqLab(el, cfg);
       else if (cfg.type === 'rn-sqrt') VIZ.rnSqrtLab(el, cfg);
       else if (cfg.type === 'rn-cube') VIZ.rnCubeLab(el, cfg);
       else if (cfg.type === 'rn-axis') VIZ.rnAxisLab(el, cfg);

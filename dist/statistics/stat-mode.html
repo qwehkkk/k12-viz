@@ -9591,7 +9591,283 @@ function dcTruncLab(el, cfg) {
   cSlider(s0.ctrl, '纵轴起点（0 = 诚实，60 = 重度截断）', p.y0, 0, 60, 5, function (v) { p.y0 = v; draw(); });
   draw();
 }
-  window.VIZ = { ineqDefLab: ineqDefLab, ineqFlipLab: ineqFlipLab, ineqSolveLab: ineqSolveLab, ineqSetLab: ineqSetLab, ineqApplyLab: ineqApplyLab, iaTermLab: iaTermLab, iaLikeLab: iaLikeLab, iaMergeLab: iaMergeLab, iaParenLab: iaParenLab, iaEvalLab: iaEvalLab, rnSqrtLab: rnSqrtLab, rnCubeLab: rnCubeLab, rnAxisLab: rnAxisLab, rnEstLab: rnEstLab, rnClassLab: rnClassLab, pmPowerLab: pmPowerLab, pmDistroLab: pmDistroLab, pmSqdiffLab: pmSqdiffLab, pmPerfectLab: pmPerfectLab, pmCommonLab: pmCommonLab, pmXtileLab: pmXtileLab, dcSampleLab: dcSampleLab, dcChartLab: dcChartLab, dcPieLab: dcPieLab, dcHistLab: dcHistLab, dcTruncLab: dcTruncLab, renderPlot: renderPlot, parabolaLab: parabolaLab, stepLab: stepLab, bridgeLab: bridgeLab, profitLab: profitLab, fenceLab: fenceLab, fountainLab: fountainLab, shotLab: shotLab, completeSquareLab: completeSquareLab, equationLab: equationLab, growthLab: growthLab, rotateLab: rotateLab, coordRotLab: coordRotLab, patternLab: patternLab, clockLab: clockLab, anatomyLab: anatomyLab, chordLab: chordLab, inscribedLab: inscribedLab, positionLab: positionLab, tangentLab: tangentLab, sectorLab: sectorLab, eventScaleLab: eventScaleLab, bagLab: bagLab, sumTableLab: sumTableLab, treeLab: treeLab, coinLab: coinLab, dartLab: dartLab, inverseLab: inverseLab, kAreaLab: kAreaLab, inverseCrossLab: inverseCrossLab, inverseUseLab: inverseUseLab, trigRatioLab: trigRatioLab, trigSpecialLab: trigSpecialLab, trigSolveLab: trigSolveLab, trigHeightLab: trigHeightLab, trigSlopeLab: trigSlopeLab, trigAltitudeLab: trigAltitudeLab, simGoldenLab: simGoldenLab, simParallelLab: simParallelLab, simJudgeLab: simJudgeLab, simAreaLab: simAreaLab, simNestedLab: simNestedLab, simHomothetyLab: simHomothetyLab, simShadowLab: simShadowLab, projShadowLab: projShadowLab, projOrthLab: projOrthLab, viewThreeLab: viewThreeLab, viewBlocksLab: viewBlocksLab, viewSolidLab: viewSolidLab, pythagSquaresLab: pythagSquaresLab, pythagPuzzleLab: pythagPuzzleLab, pythagSolveLab: pythagSolveLab, pythagInverseLab: pythagInverseLab, pythagLadderLab: pythagLadderLab, linearLab: linearLab, linearQuadLab: linearQuadLab, linearCrossLab: linearCrossLab, linearModelLab: linearModelLab, linearTranslateLab: linearTranslateLab, linearFitLab: linearFitLab, pgPropLab: pgPropLab, pgDiagLab: pgDiagLab, pgJudgeLab: pgJudgeLab, pgMidlineLab: pgMidlineLab, pgRectLab: pgRectLab, pgRhombusLab: pgRhombusLab, pgSquareLab: pgSquareLab, pgAreaLab: pgAreaLab, triSidesLab: triSidesLab, triLinesLab: triLinesLab, triAngleLab: triAngleLab, triExteriorLab: triExteriorLab, polyAngleLab: polyAngleLab, congMapLab: congMapLab, congJudgeLab: congJudgeLab, congSsaLab: congSsaLab, bisectorLab: bisectorLab, axFoldLab: axFoldLab, axBisectorLab: axBisectorLab, axCoordLab: axCoordLab, axDrawLab: axDrawLab, axIsoscelesLab: axIsoscelesLab, axIsoJudgeLab: axIsoJudgeLab, axEquiLab: axEquiLab, axPathLab: axPathLab, sqrtDefLab: sqrtDefLab, sqrtPropLab: sqrtPropLab, sqrtMulLab: sqrtMulLab, sqrtDivLab: sqrtDivLab, sqrtAddLab: sqrtAddLab, sqrtEstLab: sqrtEstLab, statMeanLab: statMeanLab, statMedianLab: statMedianLab, statModeLab: statModeLab, statVarLab: statVarLab, statChoiceLab: statChoiceLab, ratLineLab: ratLineLab, ratAbsLab: ratAbsLab, ratAddLab: ratAddLab, ratMulLab: ratMulLab, ratPowerLab: ratPowerLab, eqBalanceLab: eqBalanceLab, eqStepsLab: eqStepsLab, eqMotionLab: eqMotionLab, eqDistroLab: eqDistroLab, eqPctLab: eqPctLab, geoSolidsLab: geoSolidsLab, geoMotionLab: geoMotionLab, geoView3Lab: geoView3Lab, geoSegLab: geoSegLab, geoMidLab: geoMidLab, geoAngleLab: geoAngleLab, geoCompLab: geoCompLab, sysDefLab: sysDefLab, sysSubstLab: sysSubstLab, sysElimLab: sysElimLab, sysSolLab: sysSolLab, sysCaseLab: sysCaseLab, sysFarmLab: sysFarmLab };
+  // ---- 分式 fr-* ----
+  function frFrac(m, cx, cy, num, den, cn, cd, fs, barHalf) {
+    var ctx = m.ctx;
+    fs = fs || 20;
+    barHalf = barHalf || 1.15;
+    ctx.font = '700 ' + fs + 'px "PingFang SC","Microsoft YaHei",sans-serif';
+    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.fillStyle = cn || '#185fa5';
+    ctx.fillText(num, m.px(cx), m.py(cy + 0.55));
+    ctx.strokeStyle = cn || '#185fa5';
+    ctx.lineWidth = 2.5;
+    ctx.beginPath();
+    ctx.moveTo(m.px(cx - barHalf), m.py(cy));
+    ctx.lineTo(m.px(cx + barHalf), m.py(cy));
+    ctx.stroke();
+    ctx.fillStyle = cd || '#c0392b';
+    ctx.fillText(den, m.px(cx), m.py(cy - 0.65));
+  }
+  function frBoxRow(m, factors, yCenter, boxW, colors, dead) {
+    var ctx = m.ctx, n = factors.length;
+    var gap = 0.16;
+    var total = n * boxW + (n - 1) * gap;
+    var x0 = -total / 2;
+    for (var i = 0; i < n; i++) {
+      var bx = x0 + i * (boxW + gap);
+      ctx.globalAlpha = dead[i] ? 0.3 : 1;
+      ctx.fillStyle = colors[i];
+      ctx.fillRect(m.px(bx), m.py(yCenter + 0.55), boxW * m.sc, 1.1 * m.sc);
+      ctx.fillStyle = '#ffffff';
+      ctx.font = '700 17px "PingFang SC","Microsoft YaHei",sans-serif';
+      ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      ctx.fillText(factors[i], m.px(bx + boxW / 2), m.py(yCenter));
+      ctx.globalAlpha = 1;
+    }
+    return function (idx) { return { x: x0 + idx * (boxW + gap) + boxW / 2, y: yCenter }; };
+  }
+  function frAxis(m, view, bans, cand, alarm) {
+    var ctx = m.ctx, y = 1.4;
+    ctx.strokeStyle = '#8395a7';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(m.px(view.xmin), m.py(y)); ctx.lineTo(m.px(view.xmax), m.py(y));
+    ctx.stroke();
+    for (var x = Math.ceil(view.xmin); x <= view.xmax; x++) {
+      ctx.beginPath();
+      ctx.moveTo(m.px(x), m.py(y) - 4); ctx.lineTo(m.px(x), m.py(y) + 4);
+      ctx.stroke();
+      cTag(m, x, y - 0.55, String(x), '#8395a7');
+    }
+    bans.forEach(function (b) {
+      ctx.beginPath();
+      ctx.arc(m.px(b), m.py(y), 7, 0, Math.PI * 2);
+      ctx.fillStyle = '#ffffff'; ctx.fill();
+      ctx.strokeStyle = '#c0392b'; ctx.lineWidth = 2.5; ctx.stroke();
+      cTag(m, b, y - 0.95, 'x ≠ ' + b, '#c0392b');
+    });
+    if (cand !== null && cand !== undefined) {
+      ctx.beginPath();
+      ctx.arc(m.px(cand), m.py(y), 9, 0, Math.PI * 2);
+      ctx.fillStyle = alarm ? 'rgba(192,57,43,0.28)' : 'rgba(24,95,165,0.22)';
+      ctx.fill();
+      cDot(m, cand, y, alarm ? '#c0392b' : '#185fa5', 6);
+    }
+  }
+  function frDefLab(el, cfg) {
+    var s0 = circleScaffold(el);
+    var v = (cfg && cfg.values) || {};
+    var p = { k: v.k || 0 };
+    var EXPS = [
+      { num: 'x', den: '2', isF: false, ban: [], kind: '整式', why: '分母是 2，纯数字——这是整式，不是分式' },
+      { num: '2', den: 'x', isF: true, ban: [0], kind: '分式', why: '分母含字母 → 分式；x 当 0 时除法崩塌 → x ≠ 0' },
+      { num: 'x+1', den: '3', isF: false, ban: [], kind: '整式', why: '字母站在分子上不算数——分母是 3，整式' },
+      { num: '3', den: 'x−1', isF: true, ban: [1], kind: '分式', why: '分母 x−1 = 0 时无意义 → 禁点 x ≠ 1' },
+      { num: 'x−2', den: 'x+2', isF: true, ban: [-2], kind: '分式', why: '禁点：x + 2 = 0 → x ≠ −2' },
+      { num: '1', den: 'x²−4', isF: true, ban: [-2, 2], kind: '分式', why: '先分解 (x+2)(x−2) → 禁点有两个：x ≠ ±2' }
+    ];
+    function draw() {
+      var e = EXPS[Math.round(p.k)];
+      var view = { xmin: -5.5, xmax: 5.5, ymin: -0.6, ymax: 9.6 };
+      var m = circleMap(s0.cv, view), ctx = m.ctx;
+      cGrid(m, view);
+      ctx.strokeStyle = e.isF ? '#185fa5' : '#8395a7';
+      ctx.lineWidth = 3;
+      ctx.strokeRect(m.px(-2.1), m.py(8.0), 4.2 * m.sc, 5.4 * m.sc);
+      ctx.beginPath();
+      ctx.arc(m.px(0), m.py(8.0), 9, 0, Math.PI * 2);
+      ctx.fillStyle = e.isF ? '#185fa5' : '#b8c4cf';
+      ctx.fill();
+      frFrac(m, 0, 5.6, e.num, e.den, '#185fa5', e.isF ? '#c0392b' : '#333333', 26, 1.5);
+      cTag(m, 0, 3.05, e.isF ? '分母含字母 → 这是分式' : '分母是纯数字 → 整式', e.isF ? '#185fa5' : '#8395a7', 0, 0);
+      frAxis(m, view, e.ban, null, false);
+      if (e.ban.length) {
+        cTag(m, 0, -0.15, '安检线：' + e.ban.map(function (b) { return 'x ≠ ' + b; }).join(' 且 '), '#c0392b', 0, 0);
+      } else {
+        cTag(m, 0, -0.15, '没有禁点，x 取任何值都有意义', '#0f6e56', 0, 0);
+      }
+      cTag(m, 3.9, 6.6, '类型', '#8395a7', 0, 0);
+      cTag(m, 3.9, 5.7, e.kind, e.isF ? '#185fa5' : '#8395a7', 0, 0);
+      cTag(m, 3.9, 4.3, '分母何时为 0', '#8395a7', 0, 0);
+      cTag(m, 3.9, 3.4, e.ban.length ? 'x = ' + e.ban.join(' 或 ') : '不可能', e.ban.length ? '#c0392b' : '#0f6e56', 0, 0);
+      s0.info.innerHTML = '<span class="viz-meta"><b>' + e.kind + '</b>：' + e.why
+        + '</span><span class="viz-meta">安检铁律只有一条：<b>分母 ≠ 0</b>。「有意义」就找禁点；「值为 0」要双条件——分子 = 0 <b>且</b> 分母 ≠ 0。</span>'
+        + '<span class="viz-meta">陷阱警报：π、√2 是<b>数</b>不是字母，它们出现在分母不改变整式身份；x²−4 这类分母要先因式分解，禁点常常不止一个。</span>';
+    }
+    cSlider(s0.ctrl, '传送带上的式子', p.k, 0, 5, 1, function (x) { p.k = x; draw(); });
+    draw();
+  }
+  function frSimplifyLab(el, cfg) {
+    var s0 = circleScaffold(el);
+    var v = (cfg && cfg.values) || {};
+    var p = { t: v.t || 0 };
+    var NUM = ['2', '3', 'x', 'x', 'y'];
+    var DEN = ['3', '3', 'x', 'y', 'y'];
+    var PAIRS = [[1, 0], [2, 2], [4, 3]];
+    function draw() {
+      var t = Math.round(p.t);
+      var view = { xmin: -5.5, xmax: 5.5, ymin: -0.6, ymax: 9.6 };
+      var m = circleMap(s0.cv, view), ctx = m.ctx;
+      cGrid(m, view);
+      var deadN = NUM.map(function (_, i) { return PAIRS.some(function (pr, s) { return s < t && pr[0] === i; }); });
+      var deadD = DEN.map(function (_, i) { return PAIRS.some(function (pr, s) { return s < t && pr[1] === i; }); });
+      var fn = frBoxRow(m, NUM, 6.4, 1.05, NUM.map(function () { return '#185fa5'; }), deadN);
+      ctx.strokeStyle = '#185fa5'; ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.moveTo(m.px(-3.0), m.py(4.5)); ctx.lineTo(m.px(3.0), m.py(4.5));
+      ctx.stroke();
+      var fd = frBoxRow(m, DEN, 2.6, 1.05, DEN.map(function () { return '#c0392b'; }), deadD);
+      ctx.strokeStyle = '#e74c3c'; ctx.lineWidth = 3;
+      for (var s = 0; s < t && s < PAIRS.length; s++) {
+        var a = fn(PAIRS[s][0]), b = fd(PAIRS[s][1]);
+        ctx.beginPath();
+        ctx.moveTo(m.px(a.x), m.py(a.y + 0.55)); ctx.lineTo(m.px(b.x), m.py(b.y - 0.55));
+        ctx.stroke();
+      }
+      var rn = NUM.filter(function (_, i) { return !deadN[i]; }).join('');
+      var rd = DEN.filter(function (_, i) { return !deadD[i]; }).join('');
+      cTag(m, 3.9, 6.4, '原式', '#8395a7', 0, 0);
+      cTag(m, 3.9, 5.6, '6x²y / 9xy²', '#333333', 0, 0);
+      cTag(m, 3.9, 4.2, '当前', '#8395a7', 0, 0);
+      cTag(m, 3.9, 3.4, rn + ' / ' + rd, t >= 3 ? '#0f6e56' : '#185fa5', 0, 0);
+      cTag(m, 0, 0.9, t >= 3 ? '分子分母再无公因式 → 最简分式 2x/3y' : '同除公因式，值不变（分母 ≠ 0 保证）', t >= 3 ? '#0f6e56' : '#8395a7', 0, 0);
+      s0.info.innerHTML = '<span class="viz-meta">分子分母<b>同除</b>一个公因式，分式值不变——这就是约分。每划掉一对，式子瘦一圈：'
+        + '划 3 → 划 x → 划 y，最后剩 <b>2x / 3y</b>，没有公因式可划，就是<b>最简分式</b>。</span>'
+        + '<span class="viz-meta">考试里公因式常藏在乘积里（如 x²−9 = (x+3)(x−3)），所以口诀是<b>先因式分解、再约分</b>。'
+        + '注意：约分不能改变禁点！哪怕分母被约没了，x 的禁区依然生效。</span>';
+    }
+    cSlider(s0.ctrl, '约分进度（划掉公因式）', p.t, 0, 3, 1, function (x) { p.t = x; draw(); });
+    draw();
+  }
+  function frMuldivLab(el, cfg) {
+    var s0 = circleScaffold(el);
+    var v = (cfg && cfg.values) || {};
+    var p = { t: v.t || 0, m: v.m || 0 };
+    var NF = ['3', '2', 'a', 'a', 'b'];
+    var DF = ['2', '2', '3', '3', 'a', 'b'];
+    function draw() {
+      var t = Math.round(p.t), md = Math.round(p.m);
+      var view = { xmin: -5.5, xmax: 5.5, ymin: -0.6, ymax: 9.6 };
+      var m = circleMap(s0.cv, view), ctx = m.ctx;
+      cGrid(m, view);
+      var op = md ? '÷' : '×';
+      if (t === 0) {
+        frFrac(m, -2.6, 5.6, '3a²', '4b', '#185fa5', '#c0392b', 24, 1.3);
+        cTag(m, -0.9, 5.6, op, '#333333', 0, 0);
+        frFrac(m, 1.2, 5.6, '9a', '2b', md ? '#e67e22' : '#185fa5', md ? '#e67e22' : '#c0392b', 24, 1.1);
+        cTag(m, 0, 3.2, md ? '除以一个分式 = 乘它的倒数：先把除式上下翻面' : '分子乘分子、分母乘分母', '#8395a7', 0, 0);
+        cTag(m, 1.2, 7.6, md ? '预备翻面 ↑' : '', md ? '#e67e22' : '#8395a7', 0, 0);
+      } else if (t === 1) {
+        if (md) {
+          frFrac(m, -2.6, 5.6, '3a²', '4b', '#185fa5', '#c0392b', 24, 1.3);
+          cTag(m, -0.9, 5.6, '×', '#333333', 0, 0);
+          frFrac(m, 1.2, 5.6, '2b', '9a', '#0f6e56', '#0f6e56', 24, 1.1);
+          cTag(m, 1.2, 7.6, '已翻面，÷ 变 ×', '#0f6e56', 0, 0);
+        } else {
+          frFrac(m, 0, 5.6, '6a²b', '36ab', '#185fa5', '#c0392b', 26, 1.5);
+          cTag(m, 0, 3.2, '合成一个分数：3a²·2b / 4b·9a', '#8395a7', 0, 0);
+        }
+      } else if (t === 2) {
+        var deadN = [true, true, true, false, true];
+        var deadD = [true, false, true, true, true, true];
+        var fn = frBoxRow(m, NF, 6.4, 0.92, NF.map(function () { return '#185fa5'; }), deadN);
+        ctx.strokeStyle = '#185fa5'; ctx.lineWidth = 3;
+        ctx.beginPath();
+        ctx.moveTo(m.px(-3.2), m.py(4.5)); ctx.lineTo(m.px(3.2), m.py(4.5));
+        ctx.stroke();
+        var fd = frBoxRow(m, DF, 2.6, 0.92, DF.map(function () { return '#c0392b'; }), deadD);
+        ctx.strokeStyle = '#e74c3c'; ctx.lineWidth = 2.5;
+        var PR = [[0, 2], [1, 0], [2, 4], [4, 5]];
+        PR.forEach(function (pr) {
+          var a = fn(pr[0]), b = fd(pr[1]);
+          ctx.beginPath();
+          ctx.moveTo(m.px(a.x), m.py(a.y + 0.55)); ctx.lineTo(m.px(b.x), m.py(b.y - 0.55));
+          ctx.stroke();
+        });
+        cTag(m, 0, 0.9, '逐对划掉公因式：3、2、a、b 各划一对，剩 a / 6', '#8395a7', 0, 0);
+      } else {
+        frFrac(m, 0, 5.6, 'a', '6', '#0f6e56', '#0f6e56', 30, 0.9);
+        cTag(m, 0, 3.2, '最简分式，运算完成', '#0f6e56', 0, 0);
+      }
+      cTag(m, 3.9, 6.6, '模式', '#8395a7', 0, 0);
+      cTag(m, 3.9, 5.7, md ? '除法 ÷' : '乘法 ×', md ? '#e67e22' : '#185fa5', 0, 0);
+      cTag(m, 3.9, 4.3, md ? '第一步翻面' : '直接相乘', '#8395a7', 0, 0);
+      s0.info.innerHTML = '<span class="viz-meta">乘法：<b>分子乘分子、分母乘分母</b>，再逐对约分——(3a²/4b) × (2b/9a) = 6a²b/36ab = <b>a/6</b>。</span>'
+        + '<span class="viz-meta">除法从来不新学：÷ 一个分式 = <b>乘它的倒数</b>（上下翻面）。翻完面之后，流程和乘法一模一样。</span>'
+        + '<span class="viz-meta">乘方是把「全家升幂」：(2a/b³)³ = 8a³/b⁹——分子分母各自乘方，符号由指数奇偶单独定。</span>';
+    }
+    cSlider(s0.ctrl, '运算进度', p.t, 0, 3, 1, function (x) { p.t = x; draw(); });
+    cSlider(s0.ctrl, '模式（0 = 乘 ×，1 = 除 ÷）', p.m, 0, 1, 1, function (x) { p.m = x; draw(); });
+    draw();
+  }
+  function frAddLab(el, cfg) {
+    var s0 = circleScaffold(el);
+    var v = (cfg && cfg.values) || {};
+    var p = { t: v.t || 0 };
+    function draw() {
+      var t = Math.round(p.t);
+      var view = { xmin: -5.5, xmax: 5.5, ymin: -0.6, ymax: 9.6 };
+      var m = circleMap(s0.cv, view), ctx = m.ctx;
+      cGrid(m, view);
+      if (t === 0) {
+        frFrac(m, -2.6, 5.6, '3', 'x+2', '#185fa5', '#e67e22', 24, 0.9);
+        cTag(m, -0.9, 5.6, '+', '#333333', 0, 0);
+        frFrac(m, 1.2, 5.6, '1', 'x−2', '#185fa5', '#e67e22', 24, 0.9);
+        cTag(m, 0, 3.2, '分母不同（橙色高亮）→ 先通分', '#e67e22', 0, 0);
+      } else if (t === 1) {
+        frFrac(m, -2.6, 5.6, '3(x−2)', '(x+2)(x−2)', '#185fa5', '#185fa5', 20, 1.7);
+        cTag(m, -0.9, 5.6, '+', '#333333', 0, 0);
+        frFrac(m, 1.2, 5.6, '(x+2)', '(x+2)(x−2)', '#185fa5', '#185fa5', 20, 1.7);
+        cTag(m, 0, 3.2, '公分母 (x+2)(x−2)：分子「穿上马甲」，补乘的因式要括号', '#185fa5', 0, 0);
+      } else if (t === 2) {
+        frFrac(m, 0, 5.6, '(4x−4)', '(x+2)(x−2)', '#185fa5', '#c0392b', 24, 1.5);
+        cTag(m, 0, 3.2, '分子合并：3(x−2) + (x+2) = 3x − 6 + x + 2 = 4x − 4', '#8395a7', 0, 0);
+      } else {
+        frFrac(m, 0, 5.6, '4(x−1)', '(x+2)(x−2)', '#0f6e56', '#0f6e56', 24, 1.5);
+        cTag(m, 0, 3.2, '分子提出 4；分子分母无公因式 → 最简', '#0f6e56', 0, 0);
+      }
+      cTag(m, 3.9, 6.6, '进度', '#8395a7', 0, 0);
+      cTag(m, 3.9, 5.7, ['找公分母', '通分', '合并分子', '化最简'][t] || '', '#185fa5', 0, 0);
+      s0.info.innerHTML = '<span class="viz-meta">异分母加减四步：<b>定公分母 → 通分 → 分子加减 → 化最简</b>。'
+        + '本例 3/(x+2) + 1/(x−2) = 4(x−1)/((x+2)(x−2))。</span>'
+        + '<span class="viz-meta">本章错误率之王：<b>减号后面是多项式分子时必须整体加括号</b>——'
+        + '(2x+2) − (x−1) 里的负号要打到每一项头上，漏括号必错。</span>'
+        + '<span class="viz-meta">「1 减分式」先造公分母：1 − 1/(x+1) = (x+1)/(x+1) − 1/(x+1) = x/(x+1)。</span>';
+    }
+    cSlider(s0.ctrl, '通分进度', p.t, 0, 3, 1, function (x) { p.t = x; draw(); });
+    draw();
+  }
+  function frEqLab(el, cfg) {
+    var s0 = circleScaffold(el);
+    var v = (cfg && cfg.values) || {};
+    var p = { t: v.t || 0 };
+    function draw() {
+      var t = Math.round(p.t);
+      var view = { xmin: -1.6, xmax: 3.6, ymin: -0.6, ymax: 9.6 };
+      var m = circleMap(s0.cv, view), ctx = m.ctx;
+      cGrid(m, view);
+      var dCol = t >= 1 ? '#8395a7' : '#c0392b';
+      frFrac(m, -1.9, 7.0, '(x+1)', '(x−1)', '#185fa5', dCol, 19, 1.1);
+      cTag(m, -0.65, 7.0, '=', '#333333', 0, 0);
+      frFrac(m, 0.35, 7.0, '2', '(x−1)', '#185fa5', dCol, 19, 0.75);
+      cTag(m, 1.35, 7.0, '−', '#333333', 0, 0);
+      cTag(m, 1.95, 7.0, '1', '#185fa5', 0, 0);
+      cTag(m, 0, 5.6, ['分母全在安检线 x ≠ 1 上——先看清再动手', '两边同乘 (x−1)：x + 1 = 2 − (x−1)', '解整式方程：x + 1 = 3 − x → x = 1', '验根：把 x = 1 代入 x − 1 = 0 → 分母爆了！', '增根舍去 → 原方程无解'][t],
+        ['#c0392b', '#185fa5', '#185fa5', '#c0392b', '#c0392b'][t], 0, 0);
+      if (t >= 1) {
+        cTag(m, 0, 4.6, '（去分母这一步把「分母 ≠ 0」的安检暂时弄丢了，最后必须补验）', '#8395a7', 0, 0);
+      }
+      frAxis(m, view, [1], t >= 2 ? 1 : null, t >= 3);
+      s0.info.innerHTML = '<span class="viz-meta">解分式方程五步：<b>定公分母 → 去分母 → 解整式方程 → 验根 → 下结论</b>。'
+        + '本例解出 x = 1，恰好撞上禁区——<b>增根</b>，舍去，原方程无解。</span>'
+        + '<span class="viz-meta">为什么会有增根？「两边同乘 (x−1)」只有在 x ≠ 1 时才合法——我们借了它的力，也要回头验它的伤。</span>'
+        + '<span class="viz-meta">卷面红线：<b>验根必须写进过程</b>（「代入 x−1 = 0，是增根，舍去」）。整式方程的解若是增根，结论写「原方程无解」。</span>';
+    }
+    cSlider(s0.ctrl, '解题进度', p.t, 0, 4, 1, function (x) { p.t = x; draw(); });
+    draw();
+  }
+  window.VIZ = { frDefLab: frDefLab, frSimplifyLab: frSimplifyLab, frMuldivLab: frMuldivLab, frAddLab: frAddLab, frEqLab: frEqLab, ineqDefLab: ineqDefLab, ineqFlipLab: ineqFlipLab, ineqSolveLab: ineqSolveLab, ineqSetLab: ineqSetLab, ineqApplyLab: ineqApplyLab, iaTermLab: iaTermLab, iaLikeLab: iaLikeLab, iaMergeLab: iaMergeLab, iaParenLab: iaParenLab, iaEvalLab: iaEvalLab, rnSqrtLab: rnSqrtLab, rnCubeLab: rnCubeLab, rnAxisLab: rnAxisLab, rnEstLab: rnEstLab, rnClassLab: rnClassLab, pmPowerLab: pmPowerLab, pmDistroLab: pmDistroLab, pmSqdiffLab: pmSqdiffLab, pmPerfectLab: pmPerfectLab, pmCommonLab: pmCommonLab, pmXtileLab: pmXtileLab, dcSampleLab: dcSampleLab, dcChartLab: dcChartLab, dcPieLab: dcPieLab, dcHistLab: dcHistLab, dcTruncLab: dcTruncLab, renderPlot: renderPlot, parabolaLab: parabolaLab, stepLab: stepLab, bridgeLab: bridgeLab, profitLab: profitLab, fenceLab: fenceLab, fountainLab: fountainLab, shotLab: shotLab, completeSquareLab: completeSquareLab, equationLab: equationLab, growthLab: growthLab, rotateLab: rotateLab, coordRotLab: coordRotLab, patternLab: patternLab, clockLab: clockLab, anatomyLab: anatomyLab, chordLab: chordLab, inscribedLab: inscribedLab, positionLab: positionLab, tangentLab: tangentLab, sectorLab: sectorLab, eventScaleLab: eventScaleLab, bagLab: bagLab, sumTableLab: sumTableLab, treeLab: treeLab, coinLab: coinLab, dartLab: dartLab, inverseLab: inverseLab, kAreaLab: kAreaLab, inverseCrossLab: inverseCrossLab, inverseUseLab: inverseUseLab, trigRatioLab: trigRatioLab, trigSpecialLab: trigSpecialLab, trigSolveLab: trigSolveLab, trigHeightLab: trigHeightLab, trigSlopeLab: trigSlopeLab, trigAltitudeLab: trigAltitudeLab, simGoldenLab: simGoldenLab, simParallelLab: simParallelLab, simJudgeLab: simJudgeLab, simAreaLab: simAreaLab, simNestedLab: simNestedLab, simHomothetyLab: simHomothetyLab, simShadowLab: simShadowLab, projShadowLab: projShadowLab, projOrthLab: projOrthLab, viewThreeLab: viewThreeLab, viewBlocksLab: viewBlocksLab, viewSolidLab: viewSolidLab, pythagSquaresLab: pythagSquaresLab, pythagPuzzleLab: pythagPuzzleLab, pythagSolveLab: pythagSolveLab, pythagInverseLab: pythagInverseLab, pythagLadderLab: pythagLadderLab, linearLab: linearLab, linearQuadLab: linearQuadLab, linearCrossLab: linearCrossLab, linearModelLab: linearModelLab, linearTranslateLab: linearTranslateLab, linearFitLab: linearFitLab, pgPropLab: pgPropLab, pgDiagLab: pgDiagLab, pgJudgeLab: pgJudgeLab, pgMidlineLab: pgMidlineLab, pgRectLab: pgRectLab, pgRhombusLab: pgRhombusLab, pgSquareLab: pgSquareLab, pgAreaLab: pgAreaLab, triSidesLab: triSidesLab, triLinesLab: triLinesLab, triAngleLab: triAngleLab, triExteriorLab: triExteriorLab, polyAngleLab: polyAngleLab, congMapLab: congMapLab, congJudgeLab: congJudgeLab, congSsaLab: congSsaLab, bisectorLab: bisectorLab, axFoldLab: axFoldLab, axBisectorLab: axBisectorLab, axCoordLab: axCoordLab, axDrawLab: axDrawLab, axIsoscelesLab: axIsoscelesLab, axIsoJudgeLab: axIsoJudgeLab, axEquiLab: axEquiLab, axPathLab: axPathLab, sqrtDefLab: sqrtDefLab, sqrtPropLab: sqrtPropLab, sqrtMulLab: sqrtMulLab, sqrtDivLab: sqrtDivLab, sqrtAddLab: sqrtAddLab, sqrtEstLab: sqrtEstLab, statMeanLab: statMeanLab, statMedianLab: statMedianLab, statModeLab: statModeLab, statVarLab: statVarLab, statChoiceLab: statChoiceLab, ratLineLab: ratLineLab, ratAbsLab: ratAbsLab, ratAddLab: ratAddLab, ratMulLab: ratMulLab, ratPowerLab: ratPowerLab, eqBalanceLab: eqBalanceLab, eqStepsLab: eqStepsLab, eqMotionLab: eqMotionLab, eqDistroLab: eqDistroLab, eqPctLab: eqPctLab, geoSolidsLab: geoSolidsLab, geoMotionLab: geoMotionLab, geoView3Lab: geoView3Lab, geoSegLab: geoSegLab, geoMidLab: geoMidLab, geoAngleLab: geoAngleLab, geoCompLab: geoCompLab, sysDefLab: sysDefLab, sysSubstLab: sysSubstLab, sysElimLab: sysElimLab, sysSolLab: sysSolLab, sysCaseLab: sysCaseLab, sysFarmLab: sysFarmLab };
 })();
 
 </script>
@@ -9732,6 +10008,11 @@ function dcTruncLab(el, cfg) {
       else if (cfg.type === 'ia-merge') VIZ.iaMergeLab(el, cfg);
       else if (cfg.type === 'ia-paren') VIZ.iaParenLab(el, cfg);
       else if (cfg.type === 'ia-eval') VIZ.iaEvalLab(el, cfg);
+      else if (cfg.type === 'fr-def') VIZ.frDefLab(el, cfg);
+      else if (cfg.type === 'fr-simplify') VIZ.frSimplifyLab(el, cfg);
+      else if (cfg.type === 'fr-muldiv') VIZ.frMuldivLab(el, cfg);
+      else if (cfg.type === 'fr-add') VIZ.frAddLab(el, cfg);
+      else if (cfg.type === 'fr-eq') VIZ.frEqLab(el, cfg);
       else if (cfg.type === 'rn-sqrt') VIZ.rnSqrtLab(el, cfg);
       else if (cfg.type === 'rn-cube') VIZ.rnCubeLab(el, cfg);
       else if (cfg.type === 'rn-axis') VIZ.rnAxisLab(el, cfg);

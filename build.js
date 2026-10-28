@@ -41,8 +41,8 @@ const chapters = fs.readdirSync(DATA_DIR)
 const STRANDS = [
   { id: 'num', name: '数与式', color: '#c0392b',
     desc: '从有理数到实数、从整式到二次根式——一切计算的地基。数感不通，后面全堵。',
-    chapters: ['rational', 'poly-arith', 'realnum', 'polymul', 'radical'],
-    ghosts: ['分式|八年级上册'] },
+    chapters: ['rational', 'poly-arith', 'realnum', 'polymul', 'fraction', 'radical'],
+    ghosts: [] },
   { id: 'eq', name: '方程与不等式', color: '#185fa5',
     desc: '把「求多少」翻译成式子，再一步步解出来。一元一次方程是所有方程的娘。',
     chapters: ['linear-eq', 'eq-system', 'inequality', 'quadratic-equation'],

@@ -216,6 +216,22 @@
   <url><loc>https://teach.toolona.com/polymul/pattern/pm-adv-factor.html</loc><priority>0.7</priority></url>
   <url><loc>https://teach.toolona.com/polymul/pattern/pm-app-fast.html</loc><priority>0.7</priority></url>
   <url><loc>https://teach.toolona.com/polymul/pattern/pm-app-area.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/fraction/index.html</loc><priority>0.9</priority></url>
+  <url><loc>https://teach.toolona.com/fraction/fr-concept.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/fraction/fr-props.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/fraction/fr-muldiv.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/fraction/fr-addsub.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/fraction/fr-eq.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/fraction/patterns.html</loc><priority>0.9</priority></url>
+  <url><loc>https://teach.toolona.com/fraction/locate.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/fraction/pattern/fr-basic-mean.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/fraction/pattern/fr-basic-simp.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/fraction/pattern/fr-basic-mul.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/fraction/pattern/fr-adv-add.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/fraction/pattern/fr-adv-eval.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/fraction/pattern/fr-adv-eq.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/fraction/pattern/fr-app-trip.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/fraction/pattern/fr-app-work.html</loc><priority>0.7</priority></url>
   <url><loc>https://teach.toolona.com/radical/index.html</loc><priority>0.9</priority></url>
   <url><loc>https://teach.toolona.com/radical/radical-def.html</loc><priority>0.8</priority></url>
   <url><loc>https://teach.toolona.com/radical/radical-prop.html</loc><priority>0.8</priority></url>

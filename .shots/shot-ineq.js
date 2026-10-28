@@ -39,17 +39,11 @@ srv.listen(8139, async () => {
     await send('Page.enable');
     await send('Emulation.setDeviceMetricsOverride', { width: 1200, height: 2600, deviceScaleFactor: 1, mobile: false });
     const pages = [
-      ['/realnum/rn-sqrt.html', 'rn-sqrt.png'],
-      ['/realnum/rn-cube.html', 'rn-cube.png'],
-      ['/realnum/rn-est.html', 'rn-est.png'],
-      ['/realnum/rn-class.html', 'rn-class.png'],
-      ['/polymul/pm-power.html', 'pm-power.png'],
-      ['/polymul/pm-formula.html', 'pm-sqdiff.png'],
-      ['/polymul/pm-formula-factor.html', 'pm-xtile.png'],
-      ['/datacollect/dc-survey.html', 'dc-sample.png'],
-      ['/datacollect/dc-chart.html', 'dc-chart.png'],
-      ['/datacollect/dc-hist.html', 'dc-hist.png'],
-      ['/datacollect/dc-read.html', 'dc-trunc.png']
+      ['/fraction/fr-concept.html', 'fr-def.png'],
+      ['/fraction/fr-props.html', 'fr-simplify.png'],
+      ['/fraction/fr-muldiv.html', 'fr-muldiv.png'],
+      ['/fraction/fr-addsub.html', 'fr-add.png'],
+      ['/fraction/fr-eq.html', 'fr-eq.png']
     ];
     for (const [u, f] of pages) {
       await send('Page.navigate', { url: 'http://127.0.0.1:8139' + u });
