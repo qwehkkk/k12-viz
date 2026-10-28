@@ -118,6 +118,12 @@
       else if (cfg.type === 'geo-mid') VIZ.geoMidLab(el, cfg);
       else if (cfg.type === 'geo-angle') VIZ.geoAngleLab(el, cfg);
       else if (cfg.type === 'geo-comp') VIZ.geoCompLab(el, cfg);
+      else if (cfg.type === 'sys-def') VIZ.sysDefLab(el, cfg);
+      else if (cfg.type === 'sys-subst') VIZ.sysSubstLab(el, cfg);
+      else if (cfg.type === 'sys-elim') VIZ.sysElimLab(el, cfg);
+      else if (cfg.type === 'sys-sol') VIZ.sysSolLab(el, cfg);
+      else if (cfg.type === 'sys-case') VIZ.sysCaseLab(el, cfg);
+      else if (cfg.type === 'sys-farm') VIZ.sysFarmLab(el, cfg);
     });
   });
 })();

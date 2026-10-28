@@ -8099,7 +8099,268 @@ a:hover .tg-node { stroke-width: 2.4; }
     draw();
   }
 
-  window.VIZ = { renderPlot: renderPlot, parabolaLab: parabolaLab, stepLab: stepLab, bridgeLab: bridgeLab, profitLab: profitLab, fenceLab: fenceLab, fountainLab: fountainLab, shotLab: shotLab, completeSquareLab: completeSquareLab, equationLab: equationLab, growthLab: growthLab, rotateLab: rotateLab, coordRotLab: coordRotLab, patternLab: patternLab, clockLab: clockLab, anatomyLab: anatomyLab, chordLab: chordLab, inscribedLab: inscribedLab, positionLab: positionLab, tangentLab: tangentLab, sectorLab: sectorLab, eventScaleLab: eventScaleLab, bagLab: bagLab, sumTableLab: sumTableLab, treeLab: treeLab, coinLab: coinLab, dartLab: dartLab, inverseLab: inverseLab, kAreaLab: kAreaLab, inverseCrossLab: inverseCrossLab, inverseUseLab: inverseUseLab, trigRatioLab: trigRatioLab, trigSpecialLab: trigSpecialLab, trigSolveLab: trigSolveLab, trigHeightLab: trigHeightLab, trigSlopeLab: trigSlopeLab, trigAltitudeLab: trigAltitudeLab, simGoldenLab: simGoldenLab, simParallelLab: simParallelLab, simJudgeLab: simJudgeLab, simAreaLab: simAreaLab, simNestedLab: simNestedLab, simHomothetyLab: simHomothetyLab, simShadowLab: simShadowLab, projShadowLab: projShadowLab, projOrthLab: projOrthLab, viewThreeLab: viewThreeLab, viewBlocksLab: viewBlocksLab, viewSolidLab: viewSolidLab, pythagSquaresLab: pythagSquaresLab, pythagPuzzleLab: pythagPuzzleLab, pythagSolveLab: pythagSolveLab, pythagInverseLab: pythagInverseLab, pythagLadderLab: pythagLadderLab, linearLab: linearLab, linearQuadLab: linearQuadLab, linearCrossLab: linearCrossLab, linearModelLab: linearModelLab, linearTranslateLab: linearTranslateLab, linearFitLab: linearFitLab, pgPropLab: pgPropLab, pgDiagLab: pgDiagLab, pgJudgeLab: pgJudgeLab, pgMidlineLab: pgMidlineLab, pgRectLab: pgRectLab, pgRhombusLab: pgRhombusLab, pgSquareLab: pgSquareLab, pgAreaLab: pgAreaLab, triSidesLab: triSidesLab, triLinesLab: triLinesLab, triAngleLab: triAngleLab, triExteriorLab: triExteriorLab, polyAngleLab: polyAngleLab, congMapLab: congMapLab, congJudgeLab: congJudgeLab, congSsaLab: congSsaLab, bisectorLab: bisectorLab, axFoldLab: axFoldLab, axBisectorLab: axBisectorLab, axCoordLab: axCoordLab, axDrawLab: axDrawLab, axIsoscelesLab: axIsoscelesLab, axIsoJudgeLab: axIsoJudgeLab, axEquiLab: axEquiLab, axPathLab: axPathLab, sqrtDefLab: sqrtDefLab, sqrtPropLab: sqrtPropLab, sqrtMulLab: sqrtMulLab, sqrtDivLab: sqrtDivLab, sqrtAddLab: sqrtAddLab, sqrtEstLab: sqrtEstLab, statMeanLab: statMeanLab, statMedianLab: statMedianLab, statModeLab: statModeLab, statVarLab: statVarLab, statChoiceLab: statChoiceLab, ratLineLab: ratLineLab, ratAbsLab: ratAbsLab, ratAddLab: ratAddLab, ratMulLab: ratMulLab, ratPowerLab: ratPowerLab, eqBalanceLab: eqBalanceLab, eqStepsLab: eqStepsLab, eqMotionLab: eqMotionLab, eqDistroLab: eqDistroLab, eqPctLab: eqPctLab, geoSolidsLab: geoSolidsLab, geoMotionLab: geoMotionLab, geoView3Lab: geoView3Lab, geoSegLab: geoSegLab, geoMidLab: geoMidLab, geoAngleLab: geoAngleLab, geoCompLab: geoCompLab };
+/* ================= 七下 8 · 二元一次方程组 ================= */
+
+/* 一个方程的解：直线上无数个点 */
+function sysDefLab(el, cfg) {
+  var s0 = circleScaffold(el);
+  var p = { n: 5, x: 2 };
+  if (cfg.values) for (var key in cfg.values) p[key] = cfg.values[key];
+  var view = { xmin: -6.4, xmax: 8.4, ymin: -6.4, ymax: 8.4 };
+
+  function draw() {
+    var m = circleMap(s0.cv, view), ctx = m.ctx;
+    xyAxes(m, view);
+    tSegLine(m, view, -1, p.n, '#c0392b', 3);
+    /* 直线上的整数格点解 */
+    var i, cnt = 0;
+    for (i = Math.ceil(view.xmin); i <= view.xmax; i++) {
+      var yv = p.n - i;
+      if (yv >= view.ymin && yv <= view.ymax) {
+        cDot(m, i, yv, 'rgba(192,57,43,0.4)', 4);
+        cnt++;
+      }
+    }
+    /* 当前解（出视野就不画，info 里仍报数值） */
+    var yc = p.n - p.x;
+    if (yc >= view.ymin + 0.4 && yc <= view.ymax - 0.4 && p.x >= view.xmin + 0.4 && p.x <= view.xmax - 0.4) {
+      tSeg(m, p.x, 0, p.x, yc, 'rgba(24,95,165,0.6)', 1.4, [5, 4]);
+      tSeg(m, 0, yc, p.x, yc, 'rgba(24,95,165,0.6)', 1.4, [5, 4]);
+      cDot(m, p.x, yc, '#185fa5', 6);
+      cTag(m, p.x, yc, '(' + p.x + ', ' + yc + ')', '#185fa5', 14, -14);
+    }
+    cTag(m, -3.4, p.n + 3.4 > view.ymax - 0.8 ? view.ymax - 0.8 : p.n + 3.4, 'x + y = ' + p.n, '#c0392b', 0, 0);
+    s0.info.innerHTML = '<span class="viz-meta">方程 <b>x + y = ' + p.n + '</b> 的图像就是这条红线——线上<b>每一个点都是一组解</b>，所以二元一次方程有<b>无数组解</b>（光整数解在视野里就数出 ' + cnt + ' 组）。</span>' +
+      '<span class="viz-meta">蓝点是当前解 (x = ' + p.x + ', y = ' + yc + ')：x 每加 1，y 就减 1，和始终是 ' + p.n + '。一个方程「管不住」唯一答案——未知数多一个，自由度也多一个。</span>' +
+      '<span class="viz-meta">把两个这样的方程放进同一个<b>方程组</b>，两条直线一相交，交点就是同时满足两个方程的那组解——这正是后面「图像法」的来源。</span>';
+  }
+  cSlider(s0.ctrl, 'n（两数之和）', p.n, 2, 8, 1, function (v) { p.n = v; draw(); });
+  cSlider(s0.ctrl, 'x（当前解的横坐标）', p.x, -6, 8, 1, function (v) { p.x = v; draw(); });
+  draw();
+}
+
+/* 代入消元：把一条线「代」进另一条 */
+function sysSubstLab(el, cfg) {
+  var s0 = circleScaffold(el);
+  var p = { a: 1, t: 0 };
+  if (cfg.values) for (var key in cfg.values) p[key] = cfg.values[key];
+  var view = { xmin: -5.4, xmax: 8.4, ymin: -5.4, ymax: 8.4 };
+
+  function draw() {
+    var m = circleMap(s0.cv, view), ctx = m.ctx;
+    xyAxes(m, view);
+    var xs = (7 - p.a) / 2, ys = xs + p.a;
+    /* 方程①：y = x + a（绿） */
+    tSegLine(m, view, 1, p.a, '#0f6e56', 2.6);
+    cTag(m, 4 - p.a, 4, 'y = x + ' + (p.a >= 0 ? cFmt(p.a) : '− ' + cFmt(-p.a)), '#0f6e56', 0, -14);
+    /* 方程②：x + y = 7（红），代入后退化成垂直线 x = xs */
+    if (p.t < 1) {
+      tSegLine(m, view, -1, 7, '#c0392b', 2.6);
+      cTag(m, 6.2, 0.8, 'x + y = 7', '#c0392b', 0, 0);
+    } else {
+      tSegLine(m, view, -1, 7, 'rgba(192,57,43,0.22)', 2);
+      tLineIn(m, view, [xs, 0], [0, 1], '#c0392b', 2.6, [7, 5]);
+      cTag(m, xs, 5.6, 'x = ' + cFmt(xs), '#c0392b', 0, 0);
+    }
+    if (p.t >= 2) {
+      cDot(m, xs, ys, '#8a5a00', 7);
+      cTag(m, xs, ys, '(' + cFmt(xs) + ', ' + cFmt(ys) + ')', '#8a5a00', 16, 12);
+    }
+    var msg;
+    if (p.t === 0) {
+      msg = '两条线各说各话：绿线 y = x + a 说「y 比 x 多 ' + cFmt(p.a) + '」，红线 x + y = 7 说「加起来是 7」。两个未知数、两个方程，答案被夹在交点上——但先别急着画交点。';
+    } else if (p.t === 1) {
+      msg = '代入消元：把 y 用 (x + ' + cFmt(p.a) + ') 整个换掉 → x + (x + ' + cFmt(p.a) + ') = 7，<b>两个未知数变成一个</b>：x = ' + cFmt(xs) + '。红线此刻退化成垂直线 x = ' + cFmt(xs) + '（原来的它变淡留在背后）。';
+    } else {
+      msg = '回代：x = ' + cFmt(xs) + ' 塞回 y = x + ' + cFmt(p.a) + ' 得 y = ' + cFmt(ys) + '。方程组的解 (x, y) = (' + cFmt(xs) + ', ' + cFmt(ys) + ')，恰好就是两条原线的交点——<b>代入法（代数）和图像法（几何）在这里合龙</b>。';
+    }
+    s0.info.innerHTML = '<span class="viz-meta">' + msg + '</span>' +
+      '<span class="viz-meta">为什么敢整个换掉？因为方程①说的就是「y 就是 x + a」——<b>代入的本质是「等量替换」</b>，消掉的是未知数，不是信息。</span>';
+  }
+  cSlider(s0.ctrl, 'a（y 比 x 多多少）', p.a, -3, 5, 2, function (v) { p.a = v; draw(); });
+  cSlider(s0.ctrl, '步骤', p.t, 0, 2, 1, function (v) { p.t = v; draw(); });
+  draw();
+}
+
+/* 加减消元：系数配平 */
+function sysElimLab(el, cfg) {
+  var s0 = circleScaffold(el);
+  var p = { m: 1 };
+  if (cfg.values) for (var key in cfg.values) p[key] = cfg.values[key];
+  var view = { xmin: -7.6, xmax: 7.6, ymin: -4.6, ymax: 5.4 };
+
+  function draw() {
+    var m = circleMap(s0.cv, view), ctx = m.ctx;
+    xyAxes(m, view);
+    /* 画一个系数块：宽 ∝ |值|（封顶），正蓝负红，0 画绿字 */
+    function block(x, y, val, dim) {
+      if (val === 0) {
+        cTag(m, x + 0.4, y, '0', '#0f6e56', 0, 0);
+        return x + 1.0;
+      }
+      var w = Math.min(2.4, Math.abs(val) * 0.45), h = 0.6;
+      ctx.fillStyle = dim ? 'rgba(24,95,165,0.35)' : (val > 0 ? 'rgba(24,95,165,0.7)' : 'rgba(192,57,43,0.7)');
+      ctx.fillRect(m.px(x), m.py(y + h / 2), w * m.sc, h * m.sc);
+      cTag(m, x + w / 2, y, cFmt(val), '#333', 0, 0);
+      return x + w + 0.5;
+    }
+    function row(y, label, c, dim) {
+      cTag(m, -7.0, y, label, '#6b7a89', 0, 0);
+      var x = -6.0;
+      x = block(x, y, c[0], dim);
+      x = block(x, y, c[1], dim);
+      cTag(m, x + 0.2, y, '=', '#6b7a89', 0, 0);
+      block(x + 1.0, y, c[2], dim);
+    }
+    /* 表头 */
+    cTag(m, -5.6, 4.5, 'x 的系数', '#6b7a89', 0, 0);
+    cTag(m, -2.6, 4.5, 'y 的系数', '#6b7a89', 0, 0);
+    cTag(m, 2.4, 4.5, '常数', '#6b7a89', 0, 0);
+    row(3.4, '①', [3, 2, 12], false);
+    row(1.8, '② × ' + p.m, [p.m, 2 * p.m, 8 * p.m], Math.abs(p.m) !== 1);
+    var y3 = 0.2, c3 = [3 + p.m, 2 + 2 * p.m, 12 + 8 * p.m];
+    row(y3, '相加', c3, false);
+    if (c3[1] === 0) {
+      /* y 消掉了：绿色高亮 */
+      ctx.strokeStyle = '#0f6e56';
+      ctx.lineWidth = 2.4;
+      ctx.strokeRect(m.px(-6.4), m.py(y3 + 0.65), 9.4 * m.sc, 1.3 * m.sc);
+      cTag(m, 4.6, y3, 'y 被消掉了', '#0f6e56', 0, 0);
+    }
+    s0.info.innerHTML = '<span class="viz-meta">方程组 { 3x + 2y = 12 ; x + 2y = 8 }。② 的 y 系数乘 m 倍后是 ' + cFmt(2 * p.m) + '，与 ① 的 2 相加得 <b>' + cFmt(c3[1]) + '</b>。</span>' +
+      (c3[1] === 0
+        ? '<span class="viz-meta">现在 y 的系数互为相反数，相加后 <b>y 被完全消掉</b>：' + cFmt(c3[0]) + 'x = ' + cFmt(c3[2]) + ' → x = 2，回代得 y = 3。<b>加减消元的本质：凑出系数相反（或相同），一加（减）就只剩一个未知数。</b></span>'
+        : (c3[0] === 0
+          ? '<span class="viz-meta">这次消掉的是 x：' + cFmt(c3[1]) + 'y = ' + cFmt(c3[2]) + ' → y = 3，回代得 x = 2。<b>消哪个未知数都行，看哪个系数好凑。</b></span>'
+          : '<span class="viz-meta">还没消干净。目标是让 ② 的 y 系数变成 −2（即 m = −1），或者故意消 x（m = −3 时 x 系数变 0）——拖动滑块试出来。</span>')) +
+      '<span class="viz-meta">对比代入法：当两个方程里某个未知数的系数<b>恰好相同或相反</b>（或成倍数）时，加减消元几乎不用变形，更快。</span>';
+  }
+  cSlider(s0.ctrl, 'm（② 整体乘几倍）', p.m, -3, 3, 1, function (v) { p.m = v; draw(); });
+  draw();
+}
+
+/* 图像法：两条直线的交点就是方程组的解 */
+function sysSolLab(el, cfg) {
+  var s0 = circleScaffold(el);
+  var p = { k1: 1, b1: 1, k2: -0.5, b2: 4 };
+  if (cfg.values) for (var key in cfg.values) p[key] = cfg.values[key];
+  var view = { xmin: -6.4, xmax: 6.4, ymin: -6.4, ymax: 6.4 };
+
+  function draw() {
+    var m = circleMap(s0.cv, view), ctx = m.ctx;
+    xyAxes(m, view);
+    tSegLine(m, view, p.k1, p.b1, '#c0392b', 2.6);
+    tSegLine(m, view, p.k2, p.b2, '#185fa5', 2.6);
+    cTag(m, -3.6, 4.6, 'y = ' + cFmt(p.k1) + 'x + ' + cFmt(p.b1), '#c0392b', 0, 0);
+    cTag(m, 2.6, 4.6, 'y = ' + cFmt(p.k2) + 'x + ' + cFmt(p.b2), '#185fa5', 0, 0);
+    var dk = p.k1 - p.k2, db = p.b1 - p.b2;
+    if (Math.abs(dk) < 0.05) {
+      if (Math.abs(db) < 0.05) {
+        cTag(m, 0, 2.8, '两线重合：无数组公共解', '#0f6e56', 0, 0);
+        s0.info.innerHTML = '<span class="viz-meta">两条直线<b>完全重合</b>——两个方程其实是同一个方程。线上每个点都同时满足两式：<b>无数组解</b>。</span>';
+      } else {
+        cTag(m, 0, 2.8, '两线平行：无公共解', '#c0392b', 0, 0);
+        s0.info.innerHTML = '<span class="viz-meta">两条直线<b>平行</b>（k 相同、b 不同）——永不相交，<b>无公共解</b>。这样的方程组叫矛盾方程组。</span>';
+      }
+      return;
+    }
+    var xi = -db / dk, yi = (p.k1 * p.b2 - p.k2 * p.b1) / dk;
+    var inside = xi >= view.xmin && xi <= view.xmax && yi >= view.ymin && yi <= view.ymax;
+    if (inside) {
+      tSeg(m, xi, 0, xi, yi, 'rgba(138,90,0,0.6)', 1.4, [5, 4]);
+      tSeg(m, 0, yi, xi, yi, 'rgba(138,90,0,0.6)', 1.4, [5, 4]);
+      cDot(m, xi, yi, '#8a5a00', 7);
+      cTag(m, xi, yi, '(' + cFmt(xi) + ', ' + cFmt(yi) + ')', '#8a5a00', 16, 12);
+    }
+    s0.info.innerHTML = '<span class="viz-meta">交点 ' + (inside ? '(' + cFmt(xi) + ', ' + cFmt(yi) + ')' : '在视野外 (' + cFmt(xi) + ', ' + cFmt(yi) + ')') + '：这个点同时在两条线上——横坐标、纵坐标<b>同时满足两个方程</b>，它就是方程组的解。</span>' +
+      '<span class="viz-meta">反过来，把 x = ' + cFmt(xi) + '、y = ' + cFmt(yi) + ' 分别代回两个方程检验，左边都等于右边。图像法慢，但<b>它解释了「解」到底是什么</b>：不是算出来的巧合，是两条约束的公共部分。</span>' +
+      '<span class="viz-meta">拖 k2 或 b2，看交点怎么跑；把 k2 拖到与 k1 相等，交点会「跑丢」——那就是无解或无数解的情况。</span>';
+  }
+  cSlider(s0.ctrl, 'k₁（红线斜率）', p.k1, -3, 3, 0.5, function (v) { p.k1 = v; draw(); });
+  cSlider(s0.ctrl, 'b₁（红线截距）', p.b1, -5, 5, 0.5, function (v) { p.b1 = v; draw(); });
+  cSlider(s0.ctrl, 'k₂（蓝线斜率）', p.k2, -3, 3, 0.5, function (v) { p.k2 = v; draw(); });
+  cSlider(s0.ctrl, 'b₂（蓝线截距）', p.b2, -5, 5, 0.5, function (v) { p.b2 = v; draw(); });
+  draw();
+}
+
+/* 解的情况判别：不用解出来，比 k 和 b 就够 */
+function sysCaseLab(el, cfg) {
+  var s0 = circleScaffold(el);
+  var p = { k: 1, b: 3 };
+  if (cfg.values) for (var key in cfg.values) p[key] = cfg.values[key];
+  var view = { xmin: -6.4, xmax: 6.4, ymin: -6.4, ymax: 6.4 };
+
+  function draw() {
+    var m = circleMap(s0.cv, view), ctx = m.ctx;
+    xyAxes(m, view);
+    /* 基准线 y = x + 1 */
+    tSegLine(m, view, 1, 1, '#0f6e56', 2.6);
+    cTag(m, -4.4, -2.4, 'y = x + 1', '#0f6e56', 0, 0);
+    tSegLine(m, view, p.k, p.b, '#185fa5', 2.6);
+    var sameK = Math.abs(p.k - 1) < 0.05, sameB = Math.abs(p.b - 1) < 0.05;
+    var txt, color;
+    if (sameK && sameB) {
+      txt = '重合 · 无数组解'; color = '#0f6e56';
+      cTag(m, 0, 3.6, '两条线叠在一起了', color, 0, 0);
+    } else if (sameK) {
+      txt = '平行 · 无解'; color = '#c0392b';
+      cTag(m, 0, 3.6, 'k 一样、b 不一样 → 永不相交', color, 0, 0);
+    } else {
+      var xi = (p.b - 1) / (1 - p.k), yi = xi + 1;
+      txt = '相交 · 唯一解 (' + cFmt(xi) + ', ' + cFmt(yi) + ')'; color = '#185fa5';
+      if (xi >= view.xmin && xi <= view.xmax && yi >= view.ymin && yi <= view.ymax) {
+        cDot(m, xi, yi, '#8a5a00', 7);
+        cTag(m, xi, yi, '(' + cFmt(xi) + ', ' + cFmt(yi) + ')', '#8a5a00', 14, 12);
+      }
+      cTag(m, 0, 3.6, 'k 不一样 → 必有一个交点', color, 0, 0);
+    }
+    cTag(m, 2.4, 5.4, 'y = ' + cFmt(p.k) + 'x + ' + cFmt(p.b), '#185fa5', 0, 0);
+    s0.info.innerHTML = '<span class="viz-meta">绿线固定是 y = x + 1，蓝线是 y = ' + cFmt(p.k) + 'x + ' + cFmt(p.b) + '。当前判定：<b style="color:' + color + '">' + txt + '</b>。</span>' +
+      '<span class="viz-meta">判别口诀（不用解出来）：<b>k 不同 → 相交，唯一解；k 同 b 不同 → 平行，无解；k 同 b 同 → 重合（其实是同一个方程），无数解</b>。考题常问「方程组无解，求 a、b 的值」——翻译过来就是「两直线平行」。</span>' +
+      '<span class="viz-meta">注意蓝线拖到 k = 1 的瞬间：交点先是跑到无穷远（平行），b 再对上就整条线贴上来了。</span>';
+  }
+  cSlider(s0.ctrl, 'k（蓝线斜率）', p.k, -1, 3, 0.5, function (v) { p.k = v; draw(); });
+  cSlider(s0.ctrl, 'b（蓝线截距）', p.b, -4, 4, 1, function (v) { p.b = v; draw(); });
+  draw();
+}
+
+/* 应用：鸡兔同笼 */
+function sysFarmLab(el, cfg) {
+  var s0 = circleScaffold(el);
+  var p = { n: 10, L: 28 };
+  if (cfg.values) for (var key in cfg.values) p[key] = cfg.values[key];
+
+  function draw() {
+    var xmax = p.n + 2.4, ymax = Math.max(p.n, p.L / 4) + 2.4;
+    var view = { xmin: -1.6, xmax: xmax, ymin: -1.6, ymax: ymax };
+    var m = circleMap(s0.cv, view), ctx = m.ctx;
+    xyAxes(m, view);
+    /* 头：x + y = n */
+    tSegLine(m, view, -1, p.n, '#c0392b', 2.4);
+    cTag(m, 2, p.n - 2, 'x + y = ' + p.n, '#c0392b', 0, -12);
+    /* 腿：2x + 4y = L → y = −0.5x + L/4 */
+    tSegLine(m, view, -0.5, p.L / 4, '#185fa5', 2.4);
+    cTag(m, 4.6, p.L / 4 - 2.3, '2x + 4y = ' + p.L, '#185fa5', 0, 0);
+    var xi = 2 * p.n - p.L / 2, yi = p.L / 2 - p.n;
+    var okInt = Math.abs(xi - Math.round(xi)) < 1e-9 && Math.abs(yi - Math.round(yi)) < 1e-9;
+    var good = okInt && xi > 0 && yi > 0;
+    if (xi >= view.xmin && xi <= view.xmax && yi >= view.ymin && yi <= view.ymax) {
+      cDot(m, xi, yi, good ? '#8a5a00' : '#9aa7b5', 7);
+      cTag(m, xi, yi, good
+        ? '鸡 ' + Math.round(xi) + ' · 兔 ' + Math.round(yi)
+        : '不是正整数解', good ? '#8a5a00' : '#9aa7b5', 12, 12);
+    }
+    s0.info.innerHTML = '<span class="viz-meta">笼子里 ' + p.n + ' 个头、' + p.L + ' 条腿。设鸡 x 只、兔 y 只：每个头记一笔 → <b>x + y = ' + p.n + '</b>（红线）；鸡 2 条腿兔 4 条 → <b>2x + 4y = ' + p.L + '</b>（蓝线）。</span>' +
+      '<span class="viz-meta">两线交点 (' + cFmt(xi) + ', ' + cFmt(yi) + ') 就是同时满足「头」和「腿」的唯一答案：' + (good
+        ? '<b>鸡 ' + Math.round(xi) + ' 只、兔 ' + Math.round(yi) + ' 只</b>（验算：' + Math.round(xi) + '+' + Math.round(yi) + '=' + p.n + ' 个头 ✓，' + (2 * Math.round(xi)) + '+' + (4 * Math.round(yi)) + '=' + p.L + ' 条腿 ✓）'
+        : '但它在第一象限外或不是整数——现实里答案必须是<b>正整数</b>，题目会设计成有解（试试 n = 10、L = 26 或 30）。') + '</span>' +
+      '<span class="viz-meta">古人用「抬脚法」秒杀：让所有动物抬起一半的腿（L/2 = ' + cFmt(p.L / 2) + '），此时鸡单脚站立、兔双脚站立，头数多出来的就是兔子——这与消元法算出的 y = L/2 − n = ' + cFmt(yi) + ' 完全一致。</span>';
+  }
+  cSlider(s0.ctrl, 'n（头的总数）', p.n, 6, 16, 1, function (v) { p.n = v; draw(); });
+  cSlider(s0.ctrl, 'L（腿的总数）', p.L, 12, 48, 2, function (v) { p.L = v; draw(); });
+  draw();
+}
+  window.VIZ = { renderPlot: renderPlot, parabolaLab: parabolaLab, stepLab: stepLab, bridgeLab: bridgeLab, profitLab: profitLab, fenceLab: fenceLab, fountainLab: fountainLab, shotLab: shotLab, completeSquareLab: completeSquareLab, equationLab: equationLab, growthLab: growthLab, rotateLab: rotateLab, coordRotLab: coordRotLab, patternLab: patternLab, clockLab: clockLab, anatomyLab: anatomyLab, chordLab: chordLab, inscribedLab: inscribedLab, positionLab: positionLab, tangentLab: tangentLab, sectorLab: sectorLab, eventScaleLab: eventScaleLab, bagLab: bagLab, sumTableLab: sumTableLab, treeLab: treeLab, coinLab: coinLab, dartLab: dartLab, inverseLab: inverseLab, kAreaLab: kAreaLab, inverseCrossLab: inverseCrossLab, inverseUseLab: inverseUseLab, trigRatioLab: trigRatioLab, trigSpecialLab: trigSpecialLab, trigSolveLab: trigSolveLab, trigHeightLab: trigHeightLab, trigSlopeLab: trigSlopeLab, trigAltitudeLab: trigAltitudeLab, simGoldenLab: simGoldenLab, simParallelLab: simParallelLab, simJudgeLab: simJudgeLab, simAreaLab: simAreaLab, simNestedLab: simNestedLab, simHomothetyLab: simHomothetyLab, simShadowLab: simShadowLab, projShadowLab: projShadowLab, projOrthLab: projOrthLab, viewThreeLab: viewThreeLab, viewBlocksLab: viewBlocksLab, viewSolidLab: viewSolidLab, pythagSquaresLab: pythagSquaresLab, pythagPuzzleLab: pythagPuzzleLab, pythagSolveLab: pythagSolveLab, pythagInverseLab: pythagInverseLab, pythagLadderLab: pythagLadderLab, linearLab: linearLab, linearQuadLab: linearQuadLab, linearCrossLab: linearCrossLab, linearModelLab: linearModelLab, linearTranslateLab: linearTranslateLab, linearFitLab: linearFitLab, pgPropLab: pgPropLab, pgDiagLab: pgDiagLab, pgJudgeLab: pgJudgeLab, pgMidlineLab: pgMidlineLab, pgRectLab: pgRectLab, pgRhombusLab: pgRhombusLab, pgSquareLab: pgSquareLab, pgAreaLab: pgAreaLab, triSidesLab: triSidesLab, triLinesLab: triLinesLab, triAngleLab: triAngleLab, triExteriorLab: triExteriorLab, polyAngleLab: polyAngleLab, congMapLab: congMapLab, congJudgeLab: congJudgeLab, congSsaLab: congSsaLab, bisectorLab: bisectorLab, axFoldLab: axFoldLab, axBisectorLab: axBisectorLab, axCoordLab: axCoordLab, axDrawLab: axDrawLab, axIsoscelesLab: axIsoscelesLab, axIsoJudgeLab: axIsoJudgeLab, axEquiLab: axEquiLab, axPathLab: axPathLab, sqrtDefLab: sqrtDefLab, sqrtPropLab: sqrtPropLab, sqrtMulLab: sqrtMulLab, sqrtDivLab: sqrtDivLab, sqrtAddLab: sqrtAddLab, sqrtEstLab: sqrtEstLab, statMeanLab: statMeanLab, statMedianLab: statMedianLab, statModeLab: statModeLab, statVarLab: statVarLab, statChoiceLab: statChoiceLab, ratLineLab: ratLineLab, ratAbsLab: ratAbsLab, ratAddLab: ratAddLab, ratMulLab: ratMulLab, ratPowerLab: ratPowerLab, eqBalanceLab: eqBalanceLab, eqStepsLab: eqStepsLab, eqMotionLab: eqMotionLab, eqDistroLab: eqDistroLab, eqPctLab: eqPctLab, geoSolidsLab: geoSolidsLab, geoMotionLab: geoMotionLab, geoView3Lab: geoView3Lab, geoSegLab: geoSegLab, geoMidLab: geoMidLab, geoAngleLab: geoAngleLab, geoCompLab: geoCompLab, sysDefLab: sysDefLab, sysSubstLab: sysSubstLab, sysElimLab: sysElimLab, sysSolLab: sysSolLab, sysCaseLab: sysCaseLab, sysFarmLab: sysFarmLab };
 })();
 
 </script>
@@ -8224,6 +8485,12 @@ a:hover .tg-node { stroke-width: 2.4; }
       else if (cfg.type === 'geo-mid') VIZ.geoMidLab(el, cfg);
       else if (cfg.type === 'geo-angle') VIZ.geoAngleLab(el, cfg);
       else if (cfg.type === 'geo-comp') VIZ.geoCompLab(el, cfg);
+      else if (cfg.type === 'sys-def') VIZ.sysDefLab(el, cfg);
+      else if (cfg.type === 'sys-subst') VIZ.sysSubstLab(el, cfg);
+      else if (cfg.type === 'sys-elim') VIZ.sysElimLab(el, cfg);
+      else if (cfg.type === 'sys-sol') VIZ.sysSolLab(el, cfg);
+      else if (cfg.type === 'sys-case') VIZ.sysCaseLab(el, cfg);
+      else if (cfg.type === 'sys-farm') VIZ.sysFarmLab(el, cfg);
     });
   });
 })();

@@ -57,6 +57,24 @@
   <url><loc>https://teach.toolona.com/geo-intro/pattern/geo-degree-change.html</loc><priority>0.7</priority></url>
   <url><loc>https://teach.toolona.com/geo-intro/pattern/geo-bisect-calc.html</loc><priority>0.7</priority></url>
   <url><loc>https://teach.toolona.com/geo-intro/pattern/geo-comp-calc.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/eq-system/index.html</loc><priority>0.9</priority></url>
+  <url><loc>https://teach.toolona.com/eq-system/sys-concept.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/eq-system/sys-solution.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/eq-system/sys-subst.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/eq-system/sys-elim.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/eq-system/sys-case.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/eq-system/sys-apply.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/eq-system/patterns.html</loc><priority>0.9</priority></url>
+  <url><loc>https://teach.toolona.com/eq-system/locate.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/eq-system/pattern/sys-basic-solve-sub.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/eq-system/pattern/sys-basic-solve-elim.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/eq-system/pattern/sys-basic-concept.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/eq-system/pattern/sys-adv-param-nosol.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/eq-system/pattern/sys-adv-graph-inter.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/eq-system/pattern/sys-adv-known-solution.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/eq-system/pattern/sys-adv-choose-method.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/eq-system/pattern/sys-app-farm.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/eq-system/pattern/sys-app-rate.html</loc><priority>0.7</priority></url>
   <url><loc>https://teach.toolona.com/triangle/index.html</loc><priority>0.9</priority></url>
   <url><loc>https://teach.toolona.com/triangle/tri-side.html</loc><priority>0.8</priority></url>
   <url><loc>https://teach.toolona.com/triangle/tri-lines.html</loc><priority>0.8</priority></url>
