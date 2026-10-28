@@ -73,6 +73,15 @@
       else if (cfg.type === 'pg-rhombus') VIZ.pgRhombusLab(el, cfg);
       else if (cfg.type === 'pg-square') VIZ.pgSquareLab(el, cfg);
       else if (cfg.type === 'pg-area') VIZ.pgAreaLab(el, cfg);
+      else if (cfg.type === 'tri-sides') VIZ.triSidesLab(el, cfg);
+      else if (cfg.type === 'tri-lines') VIZ.triLinesLab(el, cfg);
+      else if (cfg.type === 'tri-angle') VIZ.triAngleLab(el, cfg);
+      else if (cfg.type === 'tri-exterior') VIZ.triExteriorLab(el, cfg);
+      else if (cfg.type === 'poly-angle') VIZ.polyAngleLab(el, cfg);
+      else if (cfg.type === 'cong-map') VIZ.congMapLab(el, cfg);
+      else if (cfg.type === 'cong-judge') VIZ.congJudgeLab(el, cfg);
+      else if (cfg.type === 'cong-ssa') VIZ.congSsaLab(el, cfg);
+      else if (cfg.type === 'bisector') VIZ.bisectorLab(el, cfg);
     });
   });
 })();

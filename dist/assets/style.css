@@ -563,3 +563,24 @@ ul.lesson-list li::before {
   .fb-fab-text { display: none; }
   #fb-panel { right: 12px; bottom: 66px; }
 }
+
+/* ---------- 章节知识链（前置 / 后续） ---------- */
+.path-row {
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 10px; padding: 12px 14px; margin-bottom: 6px;
+}
+.path-block { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.path-label { font-size: 12px; color: var(--muted); }
+.path-label.now { color: var(--accent); font-weight: 500; }
+.path-link {
+  font-size: 13px; text-decoration: none; color: var(--accent);
+  background: var(--accent-soft); padding: 2px 10px; border-radius: 999px;
+}
+.path-link:hover { background: var(--accent); color: #fff; }
+.path-link.cur { background: var(--green-soft); color: var(--green); }
+.path-arrow { color: var(--muted); font-size: 13px; }
+
+/* ---------- 实验台聚合卡片 ---------- */
+.lab-card { border-left: 3px solid var(--green); }
+.lab-card .num { color: var(--green); }

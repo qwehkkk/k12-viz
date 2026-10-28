@@ -572,6 +572,27 @@ ul.lesson-list li::before {
   #fb-panel { right: 12px; bottom: 66px; }
 }
 
+/* ---------- 章节知识链（前置 / 后续） ---------- */
+.path-row {
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 10px; padding: 12px 14px; margin-bottom: 6px;
+}
+.path-block { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.path-label { font-size: 12px; color: var(--muted); }
+.path-label.now { color: var(--accent); font-weight: 500; }
+.path-link {
+  font-size: 13px; text-decoration: none; color: var(--accent);
+  background: var(--accent-soft); padding: 2px 10px; border-radius: 999px;
+}
+.path-link:hover { background: var(--accent); color: #fff; }
+.path-link.cur { background: var(--green-soft); color: var(--green); }
+.path-arrow { color: var(--muted); font-size: 13px; }
+
+/* ---------- 实验台聚合卡片 ---------- */
+.lab-card { border-left: 3px solid var(--green); }
+.lab-card .num { color: var(--green); }
+
 </style>
 </head>
 <body>
@@ -5419,7 +5440,564 @@ window.__LOCATE_DATA__ = {"asks":[{"k":"求第三边","label":"已知两边求�
     draw();
   }
 
-  window.VIZ = { renderPlot: renderPlot, parabolaLab: parabolaLab, stepLab: stepLab, bridgeLab: bridgeLab, profitLab: profitLab, fenceLab: fenceLab, fountainLab: fountainLab, shotLab: shotLab, completeSquareLab: completeSquareLab, equationLab: equationLab, growthLab: growthLab, rotateLab: rotateLab, coordRotLab: coordRotLab, patternLab: patternLab, clockLab: clockLab, anatomyLab: anatomyLab, chordLab: chordLab, inscribedLab: inscribedLab, positionLab: positionLab, tangentLab: tangentLab, sectorLab: sectorLab, eventScaleLab: eventScaleLab, bagLab: bagLab, sumTableLab: sumTableLab, treeLab: treeLab, coinLab: coinLab, dartLab: dartLab, inverseLab: inverseLab, kAreaLab: kAreaLab, inverseCrossLab: inverseCrossLab, inverseUseLab: inverseUseLab, trigRatioLab: trigRatioLab, trigSpecialLab: trigSpecialLab, trigSolveLab: trigSolveLab, trigHeightLab: trigHeightLab, trigSlopeLab: trigSlopeLab, trigAltitudeLab: trigAltitudeLab, simGoldenLab: simGoldenLab, simParallelLab: simParallelLab, simJudgeLab: simJudgeLab, simAreaLab: simAreaLab, simNestedLab: simNestedLab, simHomothetyLab: simHomothetyLab, simShadowLab: simShadowLab, projShadowLab: projShadowLab, projOrthLab: projOrthLab, viewThreeLab: viewThreeLab, viewBlocksLab: viewBlocksLab, viewSolidLab: viewSolidLab, pythagSquaresLab: pythagSquaresLab, pythagPuzzleLab: pythagPuzzleLab, pythagSolveLab: pythagSolveLab, pythagInverseLab: pythagInverseLab, pythagLadderLab: pythagLadderLab, linearLab: linearLab, linearQuadLab: linearQuadLab, linearCrossLab: linearCrossLab, linearModelLab: linearModelLab, linearTranslateLab: linearTranslateLab, linearFitLab: linearFitLab, pgPropLab: pgPropLab, pgDiagLab: pgDiagLab, pgJudgeLab: pgJudgeLab, pgMidlineLab: pgMidlineLab, pgRectLab: pgRectLab, pgRhombusLab: pgRhombusLab, pgSquareLab: pgSquareLab, pgAreaLab: pgAreaLab };
+  /* ==================== 第十三章：三角形（八上 11 章） ==================== */
+
+  /* 点到直线（过 p1p2）的垂足 */
+  function tFoot(p, p1, p2) {
+    var dx = p2[0] - p1[0], dy = p2[1] - p1[1];
+    var d2 = dx * dx + dy * dy || 1;
+    var t = ((p[0] - p1[0]) * dx + (p[1] - p1[1]) * dy) / d2;
+    return [p1[0] + t * dx, p1[1] + t * dy];
+  }
+
+  /* 两直线交点（参数式），平行返回 null */
+  function tMeet(p1, p2, p3, p4) {
+    var ux = p2[0] - p1[0], uy = p2[1] - p1[1];
+    var vx = p4[0] - p3[0], vy = p4[1] - p3[1];
+    var det = ux * vy - uy * vx;
+    if (Math.abs(det) < 1e-9) return null;
+    var wx = p3[0] - p1[0], wy = p3[1] - p1[1];
+    var s = (wx * vy - wy * vx) / det;
+    return [p1[0] + s * ux, p1[1] + s * uy];
+  }
+
+  function tDist(p, q) { return Math.sqrt((p[0] - q[0]) * (p[0] - q[0]) + (p[1] - q[1]) * (p[1] - q[1])); }
+
+  /* 由一组点自动算出带留白的视野 */
+  function tViewOf(pts, pad) {
+    var xmin = 1e9, xmax = -1e9, ymin = 1e9, ymax = -1e9;
+    for (var i = 0; i < pts.length; i++) {
+      if (!isFinite(pts[i][0]) || !isFinite(pts[i][1])) continue;
+      xmin = Math.min(xmin, pts[i][0]); xmax = Math.max(xmax, pts[i][0]);
+      ymin = Math.min(ymin, pts[i][1]); ymax = Math.max(ymax, pts[i][1]);
+    }
+    var p = pad == null ? 1.8 : pad;
+    if (xmax - xmin < 1e-6) { xmax += 1; xmin -= 1; }
+    if (ymax - ymin < 1e-6) { ymax += 1; ymin -= 1; }
+    return { xmin: xmin - p, xmax: xmax + p, ymin: ymin - p, ymax: ymax + p };
+  }
+
+  /* 三边关系：拖三条边，看能不能围成三角形 */
+  function triSidesLab(el, cfg) {
+    var s0 = circleScaffold(el);
+    var p = { a: 4, b: 5, c: 7 };
+    if (cfg.values) for (var key in cfg.values) p[key] = cfg.values[key];
+
+    function draw() {
+      var a = p.a, b = p.b, c = p.c;
+      var ok = a + b > c && a + c > b && b + c > a;
+      if (ok) {
+        var x = (b * b + c * c - a * a) / (2 * c);
+        var y2 = b * b - x * x;
+        var y = y2 > 0 ? Math.sqrt(y2) : 0;
+        var A = [0, 0], B = [c, 0], C = [x, y];
+        var view = tViewOf([A, B, C], 2.2);
+        var m = circleMap(s0.cv, view);
+        cGrid(m, view);
+        tPoly(m, [A, B, C], '#185fa5', 2.6, 'rgba(24,95,165,.08)');
+        tSeg(m, C[0], C[1], A[0], A[1], '#c0392b', 3);
+        tSeg(m, A[0], A[1], B[0], B[1], '#185fa5', 3);
+        tSeg(m, B[0], B[1], C[0], C[1], '#0f6e56', 3);
+        cDot(m, A[0], A[1], '#333', 3.5); cDot(m, B[0], B[1], '#333', 3.5); cDot(m, C[0], C[1], '#333', 3.5);
+        cTag(m, A[0], A[1], 'A', '#333', -12, 13);
+        cTag(m, B[0], B[1], 'B', '#333', 12, 13);
+        cTag(m, C[0], C[1], 'C', '#333', 0, -13);
+        tEdgeLabel(m, A[0], A[1], B[0], B[1], 'c = ' + cFmt(c), '#185fa5', 17);
+        tEdgeLabel(m, C[0], C[1], A[0], A[1], 'b = ' + cFmt(b), '#c0392b', 17);
+        tEdgeLabel(m, B[0], B[1], C[0], C[1], 'a = ' + cFmt(a), '#0f6e56', 17);
+        s0.info.innerHTML =
+          '<span class="viz-meta">三条线段围成三角形，必须满足：<b>任意两边之和大于第三边</b>。当前 a + b = ' + cFmt(a + b) + ' &gt; c = ' + cFmt(c) + ' ✔，a + c = ' + cFmt(a + c) + ' &gt; b ✔，b + c = ' + cFmt(b + c) + ' &gt; a ✔。</span>' +
+          '<span class="viz-meta">其实只要检验<b>两条短边之和是否大于最长边</b>就够了——最长边都满足，另外两个不等式一定成立。反过来，如果两边之和等于第三边，三条线段会「压扁」成一条直线，围不成三角形。</span>' +
+          '<span class="viz-meta">由此得到两条常用结论：三角形两边之差小于第三边（由 a + b &gt; c 移项得 c − b &lt; a）；已知两边求第三边范围时，用「差 &lt; 第三边 &lt; 和」。这是「三角形三边关系」类题目的全部内容。</span>';
+      } else {
+        var long = Math.max(a, b, c);
+        var sum2 = a + b + c - long;
+        var view2 = { xmin: -2.0, xmax: Math.max(long, a + b, b + c) + 2.4, ymin: -3.6, ymax: 5.4 };
+        var m2 = circleMap(s0.cv, view2);
+        cGrid(m2, view2);
+        tSeg(m2, 0, 3.2, a, 3.2, '#c0392b', 3.4);
+        tSeg(m2, a, 3.2, a + b, 3.2, '#0f6e56', 3.4);
+        cTag(m2, a / 2, 3.2, 'a = ' + cFmt(a), '#c0392b', 0, -14);
+        cTag(m2, a + b / 2, 3.2, 'b = ' + cFmt(b), '#0f6e56', 0, -14);
+        cTag(m2, (a + b) / 2, 3.9, '两条短边接起来 = ' + cFmt(a + b), '#5f5e5a', 0, 0);
+        tSeg(m2, 0, 0.8, long, 0.8, '#185fa5', 3.4);
+        cTag(m2, long / 2, 0.8, '最长边 = ' + cFmt(long), '#185fa5', 0, -14);
+        tSeg(m2, Math.min(long, sum2), 2.0, Math.max(long, sum2), 2.0, '#a32d2d', 1.6, [5, 4]);
+        cTag(m2, (long + sum2) / 2, 2.0, '差 ' + cFmt(Math.abs(long - sum2)), '#a32d2d', 0, 12);
+        s0.info.innerHTML =
+          '<span class="viz-meta">围不成！两条短边加起来只有 ' + cFmt(sum2) + '，比最长边 ' + cFmt(long) + ' 还短，首尾相接后中间差 <b>' + cFmt(long - sum2) + '</b>，够不着。</span>' +
+          '<span class="viz-meta">这正是「三角形两边之和大于第三边」的来源：两点之间线段最短，所以从 A 到 B 走折线一定比走直线长。当折线恰好等于直线时，三点共线，三角形退化成一条线段。</span>' +
+          '<span class="viz-meta">把三条边调成能围成的样子试试：让最长的边小于另外两边之和就行。顺手记住常见组合：3-4-5、5-5-5（等边）、5-5-8 可以，但 2-3-6 不行。</span>';
+      }
+    }
+    cSlider(s0.ctrl, '边 a', p.a, 1, 10, 0.5, function (v) { p.a = v; draw(); });
+    cSlider(s0.ctrl, '边 b', p.b, 1, 10, 0.5, function (v) { p.b = v; draw(); });
+    cSlider(s0.ctrl, '边 c', p.c, 1, 11, 0.5, function (v) { p.c = v; draw(); });
+    draw();
+  }
+
+  /* 三角形的高 / 中线 / 角平分线：三条线交于一点 */
+  function triLinesLab(el, cfg) {
+    var s0 = circleScaffold(el);
+    var p = { cx: 4.2, cy: 4.4, mode: 2 };
+    if (cfg.values) for (var key in cfg.values) p[key] = cfg.values[key];
+    var NAMES = { 1: '高', 2: '中线', 3: '角平分线' };
+
+    function draw() {
+      var A = [0, 0], B = [8, 0], C = [p.cx, p.cy];
+      var view = { xmin: -2.8, xmax: 10.8, ymin: -3.0, ymax: Math.max(p.cy, 5) + 2.2 };
+      var m = circleMap(s0.cv, view);
+      cGrid(m, view);
+      tPoly(m, [A, B, C], '#185fa5', 2.4, 'rgba(24,95,165,.06)');
+      var MAB = [(A[0] + B[0]) / 2, (A[1] + B[1]) / 2];
+      var MBC = [(B[0] + C[0]) / 2, (B[1] + C[1]) / 2];
+      var MCA = [(C[0] + A[0]) / 2, (C[1] + A[1]) / 2];
+      var col = '#0f6e56', label = '', detail = '';
+
+      if (p.mode === 1) {
+        var fa = tFoot(A, B, C), fb = tFoot(B, A, C), fc = tFoot(C, A, B);
+        var pairs = [[A, fa, B], [B, fb, A], [C, fc, A]];
+        for (var i = 0; i < 3; i++) {
+          var V = pairs[i][0], F = pairs[i][1], S = pairs[i][2];
+          var lv = tDist(V, F) || 1, ls = tDist(S, F) || 1;
+          var inside = F[0] >= -0.02 && F[0] <= 8.02 && F[1] >= -0.02 && F[1] <= p.cy + 0.02;
+          tSeg(m, V[0], V[1], F[0], F[1], inside ? col : '#c0392b', 2.2, inside ? null : [5, 4]);
+          cRightAngle(m, F[0], F[1], [(V[0] - F[0]) / lv, -(V[1] - F[1]) / lv], [(S[0] - F[0]) / ls, -(S[1] - F[1]) / ls], '#8a5a00');
+          cDot(m, F[0], F[1], inside ? col : '#c0392b', 3.4);
+        }
+        var H = tMeet(A, fa, B, fb);
+        if (H) { cDot(m, H[0], H[1], '#a32d2d', 5); cTag(m, H[0], H[1], '垂心', '#a32d2d', 0, -15); }
+        label = '三条高（或延长线）交于垂心';
+        detail = '<span class="viz-meta">从每个顶点向对边所在直线作垂线，顶点与垂足之间的线段叫<b>高</b>。一个三角形有三条高，它们（或它们的延长线）一定交于一点，叫<b>垂心</b>。</span>' +
+          '<span class="viz-meta">拖动顶点 C 让三角形变成钝角：钝角三角形有两条高落在<b>形外</b>（红色虚线），这时高画在延长线上——这是作图题最常见的错误来源。直角三角形更特殊：两条高就是两条直角边，垂心正好在直角顶点。</span>';
+      } else if (p.mode === 2) {
+        tSeg(m, A[0], A[1], MBC[0], MBC[1], col, 2.2);
+        tSeg(m, B[0], B[1], MCA[0], MCA[1], col, 2.2);
+        tSeg(m, C[0], C[1], MAB[0], MAB[1], col, 2.2);
+        cDot(m, MAB[0], MAB[1], col, 3.4); cDot(m, MBC[0], MBC[1], col, 3.4); cDot(m, MCA[0], MCA[1], col, 3.4);
+        var G = [(A[0] + B[0] + C[0]) / 3, (A[1] + B[1] + C[1]) / 3];
+        cDot(m, G[0], G[1], '#a32d2d', 5);
+        cTag(m, G[0], G[1], '重心', '#a32d2d', 0, 16);
+        label = '三条中线交于重心';
+        detail = '<span class="viz-meta">连接顶点与对边中点的线段叫<b>中线</b>。三条中线交于一点，叫<b>重心</b>；重心把每条中线分成 2 : 1 两段（到顶点的距离是到中点距离的两倍）。</span>' +
+          '<span class="viz-meta">每个三角形被一条中线分成面积相等的两部分——因为两个小三角形等底同高。所以重心也是三角形的「物理重心」：用一根手指顶住它，三角形能平衡。</span>';
+      } else {
+        var a = tDist(B, C), b = tDist(C, A), c = tDist(A, B);
+        var I = [(a * A[0] + b * B[0] + c * C[0]) / (a + b + c), (a * A[1] + b * B[1] + c * C[1]) / (a + b + c)];
+        var tri = [[A, B, C], [B, C, A], [C, A, B]];
+        for (var j = 0; j < 3; j++) {
+          var V2 = tri[j][0], P2 = tri[j][1], Q2 = tri[j][2];
+          tSeg(m, V2[0], V2[1], I[0], I[1], col, 2.2);
+          var D2 = tMeet(V2, I, P2, Q2);
+          if (D2) cDot(m, D2[0], D2[1], col, 3.4);
+        }
+        cDot(m, I[0], I[1], '#a32d2d', 5);
+        cTag(m, I[0], I[1], '内心', '#a32d2d', 0, 16);
+        label = '三条角平分线交于内心';
+        detail = '<span class="viz-meta">把每个内角平均分成两份的线段叫<b>角平分线</b>。三条角平分线交于一点，叫<b>内心</b>，它到三边的距离相等——所以以它为圆心、这个距离为半径画圆，正好与三边相切，这就是内切圆的圆心。</span>' +
+          '<span class="viz-meta">角平分线还有一个金句性质：角平分线上的点到角两边距离相等（下一章「全等三角形」会正式证明它）。拖动顶点 C 看内心怎么跟着走——它永远在三角形内部，而垂心可能跑到外面。</span>';
+      }
+
+      cDot(m, A[0], A[1], '#333', 3.2); cDot(m, B[0], B[1], '#333', 3.2); cDot(m, C[0], C[1], '#333', 3.2);
+      cTag(m, A[0], A[1], 'A', '#333', -12, 13);
+      cTag(m, B[0], B[1], 'B', '#333', 12, 13);
+      cTag(m, C[0], C[1], 'C', '#333', 0, -13);
+      s0.info.innerHTML =
+        '<span class="viz-meta"><b>当前显示：' + NAMES[p.mode] + '</b>（绿线）——' + label + '。</span>' + detail +
+        '<span class="viz-meta">注意三条线的区别：高是<b>垂直</b>关系（定高、定面积），中线是<b>中点</b>关系（定面积两等分、定重心），角平分线是<b>等角</b>关系（定到角两边等远）。题目说哪个词，就用哪条线，别混。</span>';
+    }
+    cSlider(s0.ctrl, '顶点 C 的横坐标', p.cx, 0.4, 7.6, 0.2, function (v) { p.cx = v; draw(); });
+    cSlider(s0.ctrl, '顶点 C 的高', p.cy, 1.6, 6, 0.2, function (v) { p.cy = v; draw(); });
+    cSlider(s0.ctrl, '显示哪种线（1 高 / 2 中线 / 3 角平分线）', p.mode, 1, 3, 1, function (v) { p.mode = Math.round(v); draw(); });
+    draw();
+  }
+
+  /* 内角和 180°：三个角撕下来拼成一个平角 */
+  function triAngleLab(el, cfg) {
+    var s0 = circleScaffold(el);
+    var p = { A: 55, B: 70 };
+    if (cfg.values) for (var key in cfg.values) p[key] = cfg.values[key];
+
+    function draw() {
+      var A = p.A, B = Math.min(p.B, Math.max(16, 140 - p.A));
+      var C = 180 - A - B;
+      var aA = A * T_D2R, aB = B * T_D2R;
+      var P0 = [0, 0], P1 = [6, 0];
+      var Cv = tMeet(P0, [P0[0] + Math.cos(aA), P0[1] + Math.sin(aA)], P1, [P1[0] - Math.cos(aB), P1[1] + Math.sin(aB)]) || [3, 3];
+      var view = { xmin: -2.8, xmax: 16.6, ymin: -2.6, ymax: 7.2 };
+      var m = circleMap(s0.cv, view);
+      cGrid(m, view);
+      tPoly(m, [P0, P1, Cv], '#185fa5', 2.4, 'rgba(24,95,165,.06)');
+      tAngle(m, P0[0], P0[1], 1.0, 0, aA, '#c0392b', A + '°');
+      tAngle(m, P1[0], P1[1], 1.0, Math.PI - aB, Math.PI, '#185fa5', B + '°');
+      var angC = Math.atan2(P0[1] - Cv[1], P0[0] - Cv[0]);
+      var angC2 = Math.atan2(P1[1] - Cv[1], P1[0] - Cv[0]);
+      tAngle(m, Cv[0], Cv[1], 0.95, Math.min(angC, angC2), Math.max(angC, angC2), '#0f6e56', C + '°');
+      cTag(m, P0[0], P0[1], 'A', '#333', -12, 13);
+      cTag(m, P1[0], P1[1], 'B', '#333', 12, 13);
+      cTag(m, Cv[0], Cv[1], 'C', '#333', 0, -15);
+      cTag(m, 3, 6.4, '内角和 = ' + A + '° + ' + B + '° + ' + C + '° = 180°', '#185fa5', 0, 0);
+
+      /* 右：三个角拼成一个平角 */
+      var O = [11.8, 0];
+      tSeg(m, 9.4, 0, 14.2, 0, '#9aa7b4', 1.6);
+      var r = 1.55;
+      var parts = [[0, aA, '#c0392b', A], [aA, aA + aB, '#185fa5', B], [aA + aB, Math.PI, '#0f6e56', C]];
+      for (var i = 0; i < 3; i++) {
+        var q = parts[i];
+        cArc(m, O[0], O[1], r, q[0], q[1], true);
+        m.ctx.fillStyle = i === 0 ? 'rgba(192,57,43,.16)' : (i === 1 ? 'rgba(24,95,165,.16)' : 'rgba(15,110,86,.16)');
+        m.ctx.fill();
+        m.ctx.strokeStyle = q[2];
+        m.ctx.lineWidth = 1.4;
+        m.ctx.stroke();
+        var mid = (q[0] + q[1]) / 2;
+        cTag(m, O[0], O[1], q[3] + '°', q[2], Math.cos(mid) * (r * m.sc + 17), -Math.sin(mid) * (r * m.sc + 17));
+      }
+      cDot(m, O[0], O[1], '#5f5e5a', 3.5);
+      cTag(m, 11.8, 4.0, '三个角拼起来 = 一个平角', '#5f5e5a', 0, 0);
+
+      s0.info.innerHTML =
+        '<span class="viz-meta">拖动两个角，第三个角自动补足 180°——这不是巧合：过顶点 C 作一条平行于 AB 的直线，把 ∠A、∠B 用内错角搬到 C 处，正好和 ∠C 拼成一个平角。这就是教材上「撕角拼图」的严格证明。</span>' +
+        '<span class="viz-meta">右边就是把三个角撕下来拼在一起的样子：三个扇形刚好铺满上半平面，合起来 180°。所以<b>三角形内角和 = 180°</b>，与形状、大小都无关。</span>' +
+        '<span class="viz-meta">常用推论：直角三角形两锐角互余（和为 90°）；已知两角可求第三角；一个三角形最多一个直角或一个钝角。若题目给出「∠A : ∠B : ∠C = 1 : 2 : 3」，设 x 列方程 x + 2x + 3x = 180 即可。</span>';
+    }
+    cSlider(s0.ctrl, '∠A', p.A, 15, 125, 1, function (v) { p.A = v; draw(); });
+    cSlider(s0.ctrl, '∠B', p.B, 15, 125, 1, function (v) { p.B = v; draw(); });
+    draw();
+  }
+
+  /* 外角 = 两个不相邻内角之和 */
+  function triExteriorLab(el, cfg) {
+    var s0 = circleScaffold(el);
+    var p = { cx: 3.6, cy: 3.8 };
+    if (cfg.values) for (var key in cfg.values) p[key] = cfg.values[key];
+
+    function draw() {
+      var A = [0, 0], B = [7, 0], C = [p.cx, p.cy];
+      var ux = (C[0] - B[0]) / (tDist(B, C) || 1), uy = (C[1] - B[1]) / (tDist(B, C) || 1);
+      var D = [C[0] + ux * 3.6, C[1] + uy * 3.6];
+      var view = tViewOf([A, B, C, D], 2.0);
+      var m = circleMap(s0.cv, view);
+      cGrid(m, view);
+      tPoly(m, [A, B, C], '#185fa5', 2.4, 'rgba(24,95,165,.06)');
+      tSeg(m, C[0], C[1], D[0], D[1], '#9aa7b4', 2.2, [6, 4]);
+      var aA = Math.atan2(C[1] - A[1], C[0] - A[0]);
+      var aB = Math.atan2(C[1] - B[1], C[0] - B[0]);
+      tAngle(m, A[0], A[1], 0.85, 0, aA, '#c0392b', '');
+      tAngle(m, B[0], B[1], 0.85, aB, Math.PI, '#185fa5', '');
+      var aC1 = Math.atan2(A[1] - C[1], A[0] - C[0]);
+      var aC2 = Math.atan2(B[1] - C[1], B[0] - C[0]);
+      tAngle(m, C[0], C[1], 0.75, Math.min(aC1, aC2), Math.max(aC1, aC2), '#0f6e56', '');
+      /* 外角 ∠ACD：从 C→A 转到 C→D（取小于 π 的那一侧） */
+      var aD = Math.atan2(D[1] - C[1], D[0] - C[0]);
+      var d = aD - aC1;
+      while (d > Math.PI) d -= 2 * Math.PI;
+      while (d <= -Math.PI) d += 2 * Math.PI;
+      cArc(m, C[0], C[1], 1.45, Math.min(aC1, aC1 + d), Math.max(aC1, aC1 + d), true);
+      m.ctx.fillStyle = 'rgba(163,45,45,.18)';
+      m.ctx.fill();
+      m.ctx.strokeStyle = '#a32d2d';
+      m.ctx.lineWidth = 1.8;
+      m.ctx.stroke();
+      var Adeg = Math.round(aA / T_D2R);
+      var Bdeg = Math.round(180 - aB / T_D2R);
+      var Cdeg = 180 - Adeg - Bdeg;
+      var ext = Math.round(Math.abs(d) / T_D2R);
+      cTag(m, C[0], C[1], '外角 ' + ext + '°', '#a32d2d', 34, 24);
+      cTag(m, A[0], A[1], 'A', '#333', -12, 13);
+      cTag(m, B[0], B[1], 'B', '#333', 12, 13);
+      cTag(m, C[0], C[1], 'C', '#333', -15, -10);
+      cTag(m, D[0], D[1], 'D', '#5f5e5a', 11, -9);
+      s0.info.innerHTML =
+        '<span class="viz-meta">把 BC 延长到 D，∠ACD 就是 △ABC 的一个<b>外角</b>：三角形的一边与另一边的延长线组成的角。它与相邻的内角 ∠ACB 互补（因为 B、C、D 在一条直线上）。</span>' +
+        '<span class="viz-meta">关键结论：<b>三角形的一个外角等于与它不相邻的两个内角之和</b>。当前 ∠A = ' + Adeg + '°，∠B = ' + Bdeg + '°，所以外角 = ' + Adeg + '° + ' + Bdeg + '° = <b>' + ext + '°</b>，而 ∠ACB = ' + Cdeg + '°（两者互补，和 ' + (ext + Cdeg) + '°）。</span>' +
+        '<span class="viz-meta">由此还能推出：外角大于任何一个与它不相邻的内角。这两条是「求角度」和「证角不等」题的主力工具，比反复用内角和快得多。</span>';
+    }
+    cSlider(s0.ctrl, '顶点 C 的横坐标', p.cx, 0.6, 6.4, 0.2, function (v) { p.cx = v; draw(); });
+    cSlider(s0.ctrl, '顶点 C 的高', p.cy, 1.4, 5.6, 0.2, function (v) { p.cy = v; draw(); });
+    draw();
+  }
+
+  /* 多边形：对角线分成 (n−2) 个三角形，内角和 (n−2)·180° */
+  function polyAngleLab(el, cfg) {
+    var s0 = circleScaffold(el);
+    var p = { n: 6 };
+    if (cfg.values) for (var key in cfg.values) p[key] = cfg.values[key];
+
+    function draw() {
+      var n = Math.round(p.n);
+      var R = 3.6, pts = [];
+      for (var i = 0; i < n; i++) {
+        var th = Math.PI / 2 - i * 2 * Math.PI / n;
+        pts.push([R * Math.cos(th), R * Math.sin(th)]);
+      }
+      var view = { xmin: -5.2, xmax: 6.8, ymin: -4.6, ymax: 4.8 };
+      var m = circleMap(s0.cv, view);
+      cGrid(m, view);
+      var fills = ['rgba(24,95,165,.13)', 'rgba(15,110,86,.13)', 'rgba(192,57,43,.11)', 'rgba(138,90,0,.13)', 'rgba(94,84,160,.14)', 'rgba(160,80,120,.12)'];
+      for (var k = 1; k <= n - 2; k++) {
+        tTri(m, pts[0], pts[k], pts[k + 1], fills[(k - 1) % fills.length]);
+      }
+      tPoly(m, pts, '#185fa5', 2.4, null);
+      for (var d = 2; d <= n - 2; d++) {
+        tSeg(m, pts[0][0], pts[0][1], pts[d][0], pts[d][1], '#9aa7b4', 1.2, [4, 4]);
+      }
+      for (var v = 0; v < n; v++) cDot(m, pts[v][0], pts[v][1], '#185fa5', 3.2);
+      cTag(m, pts[0][0], pts[0][1], 'A', '#a32d2d', 0, 15);
+      var inner = Math.round((n - 2) * 180 / n);
+      tEdgeLabel(m, pts[0][0], pts[0][1], pts[1][0], pts[1][1], inner + '°', '#a32d2d', 16);
+      s0.info.innerHTML =
+        '<span class="viz-meta">从多边形的一个顶点出发连对角线，可以把它切成 <b>' + (n - 2) + ' 个三角形</b>——每多一条边，就多切出一个三角形。每个三角形内角和 180°，所以 ' + n + ' 边形的内角和 = (' + n + ' − 2) × 180° = <b>' + ((n - 2) * 180) + '°</b>。</span>' +
+        '<span class="viz-meta">正 ' + n + ' 边形每个内角都相等，各为 ' + ((n - 2) * 180) + '° ÷ ' + n + ' = <b>' + cFmt((n - 2) * 180 / n) + '°</b>。同时每个外角 = 180° − 内角 = ' + cFmt(360 / n) + '°，n 个外角加起来正好 <b>360°</b>——这就是「多边形外角和恒为 360°」的算术原因。</span>' +
+        '<span class="viz-meta">两个常用速记：内角和 = (n−2)·180°（n 边形）；外角和 = 360°（与边数无关！）。考「正多边形每个内角 144°，求边数」时，用外角 36° → 360 ÷ 36 = 10 边形，比列内角方程快得多。</span>';
+    }
+    cSlider(s0.ctrl, '边数 n', p.n, 3, 8, 1, function (v) { p.n = v; draw(); });
+    draw();
+  }
+
+  /* ==================== 第十四章：全等三角形（八上 12 章） ==================== */
+
+  /* 平移 / 旋转 / 翻折都是全等变换：对应顶点同色 */
+  function congMapLab(el, cfg) {
+    var s0 = circleScaffold(el);
+    var p = { th: 145, cy: 3.4 };
+    if (cfg.values) for (var key in cfg.values) p[key] = cfg.values[key];
+
+    function draw() {
+      var A = [0, 0], B = [5, 0], C = [1.5, p.cy];
+      var G = [(A[0] + B[0] + C[0]) / 3, (A[1] + B[1] + C[1]) / 3];
+      var th = p.th * T_D2R, co = Math.cos(th), si = Math.sin(th);
+      function rot(P) {
+        var dx = P[0] - G[0], dy = P[1] - G[1];
+        return [G[0] + dx * co - dy * si + 7.4, G[1] + dx * si + dy * co];
+      }
+      var D = rot(A), E = rot(B), F = rot(C);
+      var view = tViewOf([A, B, C, D, E, F], 2.0);
+      var m = circleMap(s0.cv, view);
+      cGrid(m, view);
+      tPoly(m, [A, B, C], '#185fa5', 2.2, 'rgba(24,95,165,.06)');
+      tPoly(m, [D, E, F], '#185fa5', 2.2, 'rgba(15,110,86,.06)');
+      tSeg(m, A[0], A[1], B[0], B[1], '#c0392b', 3);
+      tSeg(m, D[0], D[1], E[0], E[1], '#c0392b', 3);
+      tSeg(m, B[0], B[1], C[0], C[1], '#185fa5', 3);
+      tSeg(m, E[0], E[1], F[0], F[1], '#185fa5', 3);
+      tSeg(m, C[0], C[1], A[0], A[1], '#0f6e56', 3);
+      tSeg(m, F[0], F[1], D[0], D[1], '#0f6e56', 3);
+      tTicks(m, A[0], A[1], B[0], B[1], 1, '#c0392b');
+      tTicks(m, D[0], D[1], E[0], E[1], 1, '#c0392b');
+      tTicks(m, B[0], B[1], C[0], C[1], 2, '#185fa5');
+      tTicks(m, E[0], E[1], F[0], F[1], 2, '#185fa5');
+      tTicks(m, C[0], C[1], A[0], A[1], 3, '#0f6e56');
+      tTicks(m, F[0], F[1], D[0], D[1], 3, '#0f6e56');
+      cDot(m, A[0], A[1], '#a32d2d', 4.5); cDot(m, B[0], B[1], '#185fa5', 4.5); cDot(m, C[0], C[1], '#0f6e56', 4.5);
+      cDot(m, D[0], D[1], '#a32d2d', 4.5); cDot(m, E[0], E[1], '#185fa5', 4.5); cDot(m, F[0], F[1], '#0f6e56', 4.5);
+      cTag(m, A[0], A[1], 'A', '#a32d2d', -13, 13);
+      cTag(m, B[0], B[1], 'B', '#185fa5', 13, 13);
+      cTag(m, C[0], C[1], 'C', '#0f6e56', 0, -14);
+      cTag(m, D[0], D[1], 'D', '#a32d2d', -13, 13);
+      cTag(m, E[0], E[1], 'E', '#185fa5', 13, 13);
+      cTag(m, F[0], F[1], 'F', '#0f6e56', 0, -14);
+      cTag(m, 2.5, -2.2, '△ABC', '#185fa5', 0, 0);
+      cTag(m, 10.4, -2.2, '△DEF（旋转 ' + Math.round(p.th) + '°）', '#0f6e56', 0, 0);
+
+      s0.info.innerHTML =
+        '<span class="viz-meta">右边这个三角形是把左边绕一点旋转 ' + Math.round(p.th) + '° 得到的。旋转、平移、翻折都不会改变图形的形状和大小，所以<b>△ABC ≌ △DEF</b>（符号「≌」读作「全等于」）。</span>' +
+        '<span class="viz-meta">颜色和横线在告诉你谁跟谁对应：A ↔ D、B ↔ E、C ↔ F。全等的性质就两条：<b>对应边相等</b>（AB = DE，BC = EF，CA = FD），<b>对应角相等</b>（∠A = ∠D，∠B = ∠E，∠C = ∠F）。</span>' +
+        '<span class="viz-meta">写答案时字母顺序必须对应：△ABC ≌ △DEF 对，△ABC ≌ △EFD 就错了——那等于说 A 对应 E。找对应元素的三个窍门：① 公共边、公共角一定是对应元素；② 最长边对最长边；③ 最大角对最大角。</span>';
+    }
+    cSlider(s0.ctrl, '旋转角度', p.th, 0, 180, 1, function (v) { p.th = v; draw(); });
+    cSlider(s0.ctrl, '顶点 C 的高', p.cy, 1.6, 5, 0.2, function (v) { p.cy = v; draw(); });
+    draw();
+  }
+
+  /* 判定五法切换：SSS / SAS / ASA / AAS / HL */
+  function congJudgeLab(el, cfg) {
+    var s0 = circleScaffold(el);
+    var p = { mode: 1 };
+    if (cfg.values) for (var key in cfg.values) p[key] = cfg.values[key];
+    var MODES = [
+      { k: 'SSS', name: '边边边', sides: [0, 1, 2], angles: [],
+        why: '三条边分别相等，三角形的形状和大小就完全确定——三根木条钉死一个三角形，掰不动（三角形具有稳定性）。' },
+      { k: 'SAS', name: '边角边', sides: [0, 2], angles: [0],
+        why: '两边及其<b>夹角</b>相等，第三边被「锁死」，三角形唯一确定。注意角必须是这两条边的夹角。' },
+      { k: 'ASA', name: '角边角', sides: [1], angles: [1, 2],
+        why: '两角及其<b>夹边</b>相等，第三个角由内角和自动补出，所以等价于「两角一边」，三角形唯一确定。' },
+      { k: 'AAS', name: '角角边', sides: [2], angles: [1, 2],
+        why: '两角及其中一角的对边相等：先用内角和求出第三个角，把「对边」换成「夹边」，就化归成 ASA。所以 AAS 不是新判定，是 ASA 的推论。' },
+      { k: 'HL', name: '斜边、直角边', sides: [0, 2], angles: [2],
+        why: '只对直角三角形有效：斜边和一条直角边对应相等即可（直角是白送的条件，实际是「边边角」唯一合法的特例）。' }
+    ];
+
+    function draw() {
+      var off = 7.4;
+      var L = [[0, 3], [4, 0], [0, 0]];
+      var R = [[off, 3], [4 + off, 0], [off, 0]];
+      var view = { xmin: -2.2, xmax: 14.0, ymin: -3.6, ymax: 6.2 };
+      var m = circleMap(s0.cv, view);
+      cGrid(m, view);
+      var md = MODES[p.mode - 1];
+      tPoly(m, L, '#b9c4cf', 2.0, 'rgba(24,95,165,.05)');
+      tPoly(m, R, '#b9c4cf', 2.0, 'rgba(15,110,86,.05)');
+      for (var i = 0; i < 3; i++) {
+        var e1a = L[i], e1b = L[(i + 1) % 3], e2a = R[i], e2b = R[(i + 1) % 3];
+        var on = md.sides.indexOf(i) > -1;
+        tSeg(m, e1a[0], e1a[1], e1b[0], e1b[1], on ? '#c0392b' : '#cdd6de', on ? 3.2 : 1.6);
+        tSeg(m, e2a[0], e2a[1], e2b[0], e2b[1], on ? '#c0392b' : '#cdd6de', on ? 3.2 : 1.6);
+        if (on) {
+          tTicks(m, e1a[0], e1a[1], e1b[0], e1b[1], i + 1, '#c0392b');
+          tTicks(m, e2a[0], e2a[1], e2b[0], e2b[1], i + 1, '#c0392b');
+        }
+      }
+      for (var j = 0; j < 3; j++) {
+        if (md.angles.indexOf(j) < 0) continue;
+        var tris = [L, R];
+        for (var t = 0; t < 2; t++) {
+          var P = tris[t][j], Q1 = tris[t][(j + 1) % 3], Q2 = tris[t][(j + 2) % 3];
+          var a1 = Math.atan2(Q1[1] - P[1], Q1[0] - P[0]);
+          var a2 = Math.atan2(Q2[1] - P[1], Q2[0] - P[0]);
+          tAngle(m, P[0], P[1], 0.66, Math.min(a1, a2), Math.max(a1, a2), '#8a5a00', '');
+        }
+      }
+      if (p.mode === 5) {
+        cRightAngle(m, 0, 0, [1, 0], [0, -1], '#8a5a00');
+        cRightAngle(m, off, 0, [1, 0], [0, -1], '#8a5a00');
+      }
+      var names = ['A', 'B', 'C'], names2 = ['D', 'E', 'F'];
+      for (var v = 0; v < 3; v++) {
+        cDot(m, L[v][0], L[v][1], '#5f5e5a', 3.6);
+        cDot(m, R[v][0], R[v][1], '#5f5e5a', 3.6);
+        cTag(m, L[v][0], L[v][1], names[v], '#333', v === 1 ? 13 : -13, v === 2 ? -13 : 11);
+        cTag(m, R[v][0], R[v][1], names2[v], '#333', v === 1 ? 13 : -13, v === 2 ? -13 : 11);
+      }
+      cTag(m, 2.0, 5.6, md.k + '（' + md.name + '）', '#a32d2d', 0, 0);
+
+      s0.info.innerHTML =
+        '<span class="viz-meta"><b>当前判定：' + md.k + '（' + md.name + '）</b>——红色加粗的是这类判定所需要的条件，其他边角不用给。</span>' +
+        '<span class="viz-meta">' + md.why + '</span>' +
+        '<span class="viz-meta">五个判定里最容易错的是 SAS 与 SSA：必须是<b>夹角</b>。给两边和其中一边的对角（边边角）时，符合条件的三角形可能有两个，所以不能判定全等——把滑块拖到 4（AAS）和 5（HL）对比一下：HL 之所以成立，是因为直角把「两种可能」压成了一种。</span>';
+    }
+    cSlider(s0.ctrl, '判定方法（1 SSS / 2 SAS / 3 ASA / 4 AAS / 5 HL）', p.mode, 1, 5, 1, function (v) { p.mode = Math.round(v); draw(); });
+    draw();
+  }
+
+  /* 边边角为什么不行：两个三角形都能满足条件 */
+  function congSsaLab(el, cfg) {
+    var s0 = circleScaffold(el);
+    var p = { a: 6, c: 5.4, ang: 38 };
+    if (cfg.values) for (var key in cfg.values) p[key] = cfg.values[key];
+
+    function draw() {
+      var th = p.ang * T_D2R;
+      var A = [0, 0], B = [p.a, 0];
+      var ux = -Math.cos(th), uy = Math.sin(th);   /* 射线 BC 方向：与 BA 成 θ 角 */
+      /* |AC| = c，C 在射线 BC 上：t² − 2a·cosθ·t + (a² − c²) = 0 */
+      var disc = p.c * p.c - p.a * p.a * Math.sin(th) * Math.sin(th);
+      var ts = [];
+      if (disc > 1e-4) {
+        var sq = Math.sqrt(disc);
+        ts = [p.a * Math.cos(th) - sq, p.a * Math.cos(th) + sq];
+      } else if (Math.abs(disc) <= 1e-4) {
+        ts = [p.a * Math.cos(th)];
+      }
+      var pts = [];
+      for (var i = 0; i < ts.length; i++) {
+        if (ts[i] > 0.02) pts.push([B[0] + ux * ts[i], B[1] + uy * ts[i]]);
+      }
+      var RL = Math.max(p.a * Math.cos(th) + p.c + 2, 4);
+      var all = [A, B, [B[0] + ux * RL, B[1] + uy * RL]].concat(pts);
+      var view = tViewOf(all, 2.4);
+      if (view.ymax < 2.6) view.ymax = 2.6;
+      var m = circleMap(s0.cv, view);
+      cGrid(m, view);
+      /* 射线 BC */
+      tSeg(m, B[0], B[1], B[0] + ux * RL, B[1] + uy * RL, '#e3e7ec', 1.8);
+      /* 已给两边：AB = a，AC = c（画 A 到各解的连线） */
+      tSeg(m, A[0], A[1], B[0], B[1], '#c0392b', 3.2);
+      tTicks(m, A[0], A[1], B[0], B[1], 1, '#c0392b');
+      /* ∠B */
+      tAngle(m, B[0], B[1], 0.95, Math.PI - th, Math.PI, '#8a5a00', Math.round(p.ang) + '°');
+      var cols = ['#0f6e56', '#185fa5'];
+      for (var k = 0; k < pts.length; k++) {
+        var C = pts[k];
+        tPoly(m, [A, B, C], cols[k % 2], 2.4, k === 0 ? 'rgba(15,110,86,.07)' : 'rgba(24,95,165,.06)');
+        tSeg(m, A[0], A[1], B[0], B[1], '#c0392b', 3.2);
+        tSeg(m, B[0], B[1], C[0], C[1], cols[k % 2], 3);
+        tSeg(m, A[0], A[1], C[0], C[1], cols[k % 2], 2.6, [5, 3]);
+        tTicks(m, A[0], A[1], C[0], C[1], 2, cols[k % 2]);
+        cDot(m, C[0], C[1], cols[k % 2], 5);
+        cTag(m, C[0], C[1], 'C' + (k + 1), cols[k % 2], 0, 16);
+        tAngle(m, B[0], B[1], 0.95, Math.PI - th, Math.PI, '#8a5a00', '');
+      }
+      cDot(m, A[0], A[1], '#333', 4); cDot(m, B[0], B[1], '#333', 4);
+      cTag(m, A[0], A[1], 'A', '#333', -13, 13);
+      cTag(m, B[0], B[1], 'B', '#333', 12, 14);
+
+      s0.info.innerHTML = pts.length ?
+        '<span class="viz-meta">已知 AB = ' + cFmt(p.a) + '、AC = ' + cFmt(p.c) + '，以及<b>不是夹角</b>的 ∠B = ' + Math.round(p.ang) + '°，满足条件的三角形有 <b>' + pts.length + ' 个</b>（C₁ 与 C₂ 都在射线 BC 上，但形状不同）。同样的三个条件给出两个不同的三角形，所以「边边角」不能作为全等判定。</span>' +
+        '<span class="viz-meta">几何解释：以 A 为圆心、AC 为半径画弧，它与射线 BC 可能交 0 个、1 个、2 个点。两个交点时就是「两解」。什么时候只有一解？当 AC 恰好垂直于 BC（∠C = 90°）时弧与射线相切——此时是直角三角形，边边角升级为 <b>HL</b>。</span>' +
+        '<span class="viz-meta">拖动「边 AC」看看三种情形：调小到够不着（0 解）、恰好垂直（1 解）、再大一点（2 解）。理解了这条，就不会再把 SSA 当成全等判定。</span>'
+        : '<span class="viz-meta">当前 AC = ' + cFmt(p.c) + ' 太短，以 A 为圆心、AC 为半径的弧与射线 BC 没有交点，<b>一个三角形也画不出来</b>。</span>' +
+        '<span class="viz-meta">这正是「边边角」不能判定的另一种表现：同样的三个条件，可能有两个三角形，也可能一个都不存在。全等判定要求「唯一确定」。</span>';
+    }
+    cSlider(s0.ctrl, '边 AB', p.a, 3, 8, 0.2, function (v) { p.a = v; draw(); });
+    cSlider(s0.ctrl, '边 AC（对边）', p.c, 0.8, 8, 0.2, function (v) { p.c = v; draw(); });
+    cSlider(s0.ctrl, '∠B（非夹角）', p.ang, 15, 80, 1, function (v) { p.ang = v; draw(); });
+    draw();
+  }
+
+  /* 角平分线：角平分线上的点到角两边距离相等 */
+  function bisectorLab(el, cfg) {
+    var s0 = circleScaffold(el);
+    var p = { ang: 62, t: 5.0, off: 0 };
+    if (cfg.values) for (var key in cfg.values) p[key] = cfg.values[key];
+
+    function draw() {
+      var th = p.ang * T_D2R;
+      var O = [0, 0];
+      var A = [8.4, 0];
+      var B = [8.4 * Math.cos(th), 8.4 * Math.sin(th)];
+      var half = Math.max(0.06, th / 2 + p.off * T_D2R);
+      var P = [p.t * Math.cos(half), p.t * Math.sin(half)];
+      var F1 = tFoot(P, O, A), F2 = tFoot(P, O, B);
+      var view = tViewOf([O, A, B, P, F1, F2], 3.2);
+      var m = circleMap(s0.cv, view);
+      cGrid(m, view);
+      tSeg(m, O[0], O[1], A[0], A[1], '#185fa5', 2.6);
+      tSeg(m, O[0], O[1], B[0], B[1], '#185fa5', 2.6);
+      tSeg(m, O[0], O[1], P[0] * 1.5, P[1] * 1.5, '#0f6e56', 2.0, [7, 4]);
+      tAngle(m, O[0], O[1], 1.0, 0, half, '#c0392b', '');
+      tAngle(m, O[0], O[1], 1.0, half, th, '#c0392b', '');
+      tSeg(m, P[0], P[1], F1[0], F1[1], '#c0392b', 2.6);
+      tSeg(m, P[0], P[1], F2[0], F2[1], '#8a5a00', 2.6);
+      var lp = tDist(P, F1) || 1;
+      cRightAngle(m, F1[0], F1[1], [0, -1], [(P[0] - F1[0]) / lp, -(P[1] - F1[1]) / lp], '#8a5a00');
+      cRightAngle(m, F2[0], F2[1], [(O[0] - F2[0]) / (tDist(O, F2) || 1), -(O[1] - F2[1]) / (tDist(O, F2) || 1)], [(P[0] - F2[0]) / lp, -(P[1] - F2[1]) / lp], '#8a5a00');
+      tEdgeLabel(m, P[0], P[1], F1[0], F1[1], 'PM = ' + cFmt(tDist(P, F1)), '#c0392b', 21);
+      tEdgeLabel(m, P[0], P[1], F2[0], F2[1], 'PN = ' + cFmt(tDist(P, F2)), '#8a5a00', 21);
+      cDot(m, P[0], P[1], '#0f6e56', 5);
+      cDot(m, F1[0], F1[1], '#c0392b', 4); cDot(m, F2[0], F2[1], '#8a5a00', 4);
+      cTag(m, P[0], P[1], 'P', '#0f6e56', 14, -12);
+      cTag(m, F1[0], F1[1], 'M', '#c0392b', 0, -14);
+      cTag(m, F2[0], F2[1], 'N', '#8a5a00', 14, 7);
+      cTag(m, O[0], O[1], 'O', '#333', -14, -11);
+      cTag(m, A[0], A[1], 'A', '#333', 14, 9);
+      cTag(m, B[0], B[1], 'B', '#333', 0, 15);
+
+      var pm = tDist(P, F1), pn = tDist(P, F2);
+      var equal = Math.abs(pm - pn) < 0.02;
+      s0.info.innerHTML =
+        '<span class="viz-meta">绿色虚线是 ∠AOB 的<b>平分线</b>，P 应当落在它上面；PM ⊥ OA、PN ⊥ OB。当前 PM = ' + cFmt(pm) + '，PN = ' + cFmt(pn) + '，' + (equal ? '<b>两者相等</b>。' : '<b>两者不相等</b>——因为 P 已经被你挪出了平分线。') + '</span>' +
+        '<span class="viz-meta">定理：<b>角平分线上的点到角两边的距离相等</b>。证明只要两步：OP 公共、∠1 = ∠2、两个直角相等，用 AAS 得 △POM ≌ △PON，于是 PM = PN。这条定理的价值在于「把角相等换成线段相等」。</span>' +
+        '<span class="viz-meta">逆定理也成立：到角两边距离相等的点，在这个角的平分线上（用 HL 证全等即可）。两个定理合起来就是「距离相等 ⟺ 在平分线上」，判定和作图都靠它。</span>';
+    }
+    cSlider(s0.ctrl, '∠AOB 的大小', p.ang, 30, 120, 1, function (v) { p.ang = v; draw(); });
+    cSlider(s0.ctrl, 'P 到 O 的距离', p.t, 1.4, 7.5, 0.1, function (v) { p.t = v; draw(); });
+    cSlider(s0.ctrl, '把 P 偏出平分线（度）', p.off, -14, 14, 1, function (v) { p.off = v; draw(); });
+    draw();
+  }
+
+  window.VIZ = { renderPlot: renderPlot, parabolaLab: parabolaLab, stepLab: stepLab, bridgeLab: bridgeLab, profitLab: profitLab, fenceLab: fenceLab, fountainLab: fountainLab, shotLab: shotLab, completeSquareLab: completeSquareLab, equationLab: equationLab, growthLab: growthLab, rotateLab: rotateLab, coordRotLab: coordRotLab, patternLab: patternLab, clockLab: clockLab, anatomyLab: anatomyLab, chordLab: chordLab, inscribedLab: inscribedLab, positionLab: positionLab, tangentLab: tangentLab, sectorLab: sectorLab, eventScaleLab: eventScaleLab, bagLab: bagLab, sumTableLab: sumTableLab, treeLab: treeLab, coinLab: coinLab, dartLab: dartLab, inverseLab: inverseLab, kAreaLab: kAreaLab, inverseCrossLab: inverseCrossLab, inverseUseLab: inverseUseLab, trigRatioLab: trigRatioLab, trigSpecialLab: trigSpecialLab, trigSolveLab: trigSolveLab, trigHeightLab: trigHeightLab, trigSlopeLab: trigSlopeLab, trigAltitudeLab: trigAltitudeLab, simGoldenLab: simGoldenLab, simParallelLab: simParallelLab, simJudgeLab: simJudgeLab, simAreaLab: simAreaLab, simNestedLab: simNestedLab, simHomothetyLab: simHomothetyLab, simShadowLab: simShadowLab, projShadowLab: projShadowLab, projOrthLab: projOrthLab, viewThreeLab: viewThreeLab, viewBlocksLab: viewBlocksLab, viewSolidLab: viewSolidLab, pythagSquaresLab: pythagSquaresLab, pythagPuzzleLab: pythagPuzzleLab, pythagSolveLab: pythagSolveLab, pythagInverseLab: pythagInverseLab, pythagLadderLab: pythagLadderLab, linearLab: linearLab, linearQuadLab: linearQuadLab, linearCrossLab: linearCrossLab, linearModelLab: linearModelLab, linearTranslateLab: linearTranslateLab, linearFitLab: linearFitLab, pgPropLab: pgPropLab, pgDiagLab: pgDiagLab, pgJudgeLab: pgJudgeLab, pgMidlineLab: pgMidlineLab, pgRectLab: pgRectLab, pgRhombusLab: pgRhombusLab, pgSquareLab: pgSquareLab, pgAreaLab: pgAreaLab, triSidesLab: triSidesLab, triLinesLab: triLinesLab, triAngleLab: triAngleLab, triExteriorLab: triExteriorLab, polyAngleLab: polyAngleLab, congMapLab: congMapLab, congJudgeLab: congJudgeLab, congSsaLab: congSsaLab, bisectorLab: bisectorLab };
 })();
 
 </script>
@@ -5499,6 +6077,15 @@ window.__LOCATE_DATA__ = {"asks":[{"k":"求第三边","label":"已知两边求�
       else if (cfg.type === 'pg-rhombus') VIZ.pgRhombusLab(el, cfg);
       else if (cfg.type === 'pg-square') VIZ.pgSquareLab(el, cfg);
       else if (cfg.type === 'pg-area') VIZ.pgAreaLab(el, cfg);
+      else if (cfg.type === 'tri-sides') VIZ.triSidesLab(el, cfg);
+      else if (cfg.type === 'tri-lines') VIZ.triLinesLab(el, cfg);
+      else if (cfg.type === 'tri-angle') VIZ.triAngleLab(el, cfg);
+      else if (cfg.type === 'tri-exterior') VIZ.triExteriorLab(el, cfg);
+      else if (cfg.type === 'poly-angle') VIZ.polyAngleLab(el, cfg);
+      else if (cfg.type === 'cong-map') VIZ.congMapLab(el, cfg);
+      else if (cfg.type === 'cong-judge') VIZ.congJudgeLab(el, cfg);
+      else if (cfg.type === 'cong-ssa') VIZ.congSsaLab(el, cfg);
+      else if (cfg.type === 'bisector') VIZ.bisectorLab(el, cfg);
     });
   });
 })();

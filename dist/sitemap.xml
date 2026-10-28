@@ -244,4 +244,37 @@
   <url><loc>https://teach.toolona.com/parallelogram/pattern/pg-rhombus-calc.html</loc><priority>0.7</priority></url>
   <url><loc>https://teach.toolona.com/parallelogram/pattern/pg-square-rot.html</loc><priority>0.7</priority></url>
   <url><loc>https://teach.toolona.com/parallelogram/pattern/pg-area-eq.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/triangle/index.html</loc><priority>0.9</priority></url>
+  <url><loc>https://teach.toolona.com/triangle/tri-side.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/triangle/tri-lines.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/triangle/tri-angle.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/triangle/tri-exterior.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/triangle/poly-angle.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/triangle/patterns.html</loc><priority>0.9</priority></url>
+  <url><loc>https://teach.toolona.com/triangle/locate.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/triangle/pattern/tri-three-sides.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/triangle/pattern/tri-isosceles-perim.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/triangle/pattern/tri-angle-sum.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/triangle/pattern/tri-exterior-angle.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/triangle/pattern/tri-bisector-angle.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/triangle/pattern/tri-median-area.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/triangle/pattern/poly-angle-sum.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/congruence/index.html</loc><priority>0.9</priority></url>
+  <url><loc>https://teach.toolona.com/congruence/cong-concept.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/congruence/cong-sss.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/congruence/cong-sas.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/congruence/cong-asa.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/congruence/cong-hl.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/congruence/bisector.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/congruence/patterns.html</loc><priority>0.9</priority></url>
+  <url><loc>https://teach.toolona.com/congruence/locate.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/congruence/pattern/cong-find.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/congruence/pattern/cong-sss-proof.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/congruence/pattern/cong-sas-proof.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/congruence/pattern/cong-asa-proof.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/congruence/pattern/cong-hl-proof.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/congruence/pattern/cong-chain.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/congruence/pattern/cong-ssa-trap.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/congruence/pattern/bisector-proof.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/congruence/pattern/bisector-apply.html</loc><priority>0.7</priority></url>
 </urlset>

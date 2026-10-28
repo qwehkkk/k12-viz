@@ -77,6 +77,14 @@ chapters.forEach(ch => {
 });
 
 const chapterById = Object.fromEntries(chapters.map(c => [c.meta.id, c]));
+
+// 章节级知识链：meta.prereqChapters 声明「先学哪几章」，反向自动算出「学完本章可以去哪」
+chapters.forEach(ch => {
+  ch.prereqCh = (ch.meta.prereqChapters || []).map(id => chapterById[id]).filter(Boolean);
+});
+chapters.forEach(ch => {
+  ch.nextCh = chapters.filter(c => (c.meta.prereqChapters || []).includes(ch.meta.id));
+});
 const totalPoints = chapters.reduce((s, c) => s + c.points.length, 0);
 const totalExamples = chapters.reduce((s, c) => s + c.examples.length, 0);
 const totalPatterns = chapters.reduce((s, c) => s + c.patterns.length, 0);
@@ -86,7 +94,15 @@ function esc(s) {
   return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }
 function attrJson(obj) { return esc(JSON.stringify(obj)); }
-function kindClass(k) { return k === '组合型' ? 'combo' : (k === '综合型' ? 'full' : ''); }
+function kindClass(k) { return kindGroup(k) === '组合型' ? 'combo' : (kindGroup(k) === '综合型' ? 'full' : ''); }
+/* 题型归类：数据里的 kind 写法很杂（计算/证明/应用型/综合…），
+   统一归到三档，避免有题型因为 kind 写法不在白名单里而从列表消失 */
+function kindGroup(k) {
+  const s = String(k || '');
+  if (s.indexOf('综合') > -1 || s.indexOf('应用') > -1) return '综合型';
+  if (s.indexOf('组合') > -1 || s.indexOf('复合') > -1) return '组合型';
+  return '单一型';
+}
 
 const CSS = fs.readFileSync(path.join(ROOT, 'assets/style.css'), 'utf8');
 const VIZJS = fs.readFileSync(path.join(ROOT, 'assets/viz.js'), 'utf8');
@@ -243,6 +259,30 @@ function renderChapter(ch) {
 </a>`;
   }).join('\n');
 
+  // 章节在知识链上的位置
+  const pathHtml = (ch.prereqCh.length || ch.nextCh.length) ? `<div class="path-row">
+  ${ch.prereqCh.length ? `<div class="path-block"><span class="path-label">先学</span>${ch.prereqCh.map(c => `<a class="path-link" href="../${c.meta.id}/index.html">${esc(c.meta.title)}</a>`).join('<span class="path-arrow">+</span>')}</div><span class="path-arrow">→</span>` : ''}
+  <div class="path-block"><span class="path-label now">本章</span><span class="path-link cur">${esc(ch.meta.title)}</span></div>
+  ${ch.nextCh.length ? `<span class="path-arrow">→</span><div class="path-block"><span class="path-label">继续</span>${ch.nextCh.map(c => `<a class="path-link" href="../${c.meta.id}/index.html">${esc(c.meta.title)}</a>`).join('<span class="path-arrow">/</span>')}</div>` : ''}
+</div>` : '';
+
+  // 本章所有可交互实验台，集中成一块（按知识点顺序）
+  const labs = ch.points
+    .map((p, i) => ({ p, i, n: (p.blocks || []).filter(b => b.t === 'viz').length + (p.viz && p.viz.type !== 'none' ? 1 : 0) }))
+    .filter(x => x.n > 0);
+  const labHtml = labs.length ? `<div class="section-head">
+  <h2>本章 ${labs.length} 个实验台 · 动手拖一拖</h2>
+  <p>所有可交互的演示都集中在这里，按知识顺序排好了——先看哪个、后看哪个，跟着编号走就不会脱节。</p>
+</div>
+<div class="grid">
+${labs.map(x => `<a class="card lab-card" href="${x.p.id}.html">
+  <span class="num">实验台 ${String(x.i + 1).padStart(2, '0')}</span>
+  <h3>${esc(x.p.title)}</h3>
+  <p>${esc(String(x.p.summary || '').slice(0, 40))}…</p>
+  <div class="meta"><span class="badge">${x.n} 个可拖演示</span></div>
+</a>`).join('\n')}
+</div>` : '';
+
   return `${head(`${ch.meta.title} - ${ch.meta.grade}数学 - ${SITE.name}`, ch.meta.intro.slice(0, 120), '../', ch, 'points')}
 <p class="crumb"><a href="../index.html">课程目录</a> / ${esc(ch.meta.grade)}${esc(ch.meta.title)}</p>
 <div class="hero">
@@ -255,10 +295,16 @@ function renderChapter(ch) {
     <span class="chip green">${ch.patterns.length} 类题型</span>
   </div>
 </div>
+${pathHtml}
 
+<div class="section-head">
+  <h2>知识地图 · ${ch.points.length} 个知识点</h2>
+  <p>按编号顺序学最省力：每个知识点都标了前置关系和练习量。</p>
+</div>
 <div class="grid">
 ${cards}
 </div>
+${labHtml}
 
 <div class="section-head">
   <h2>两种进入方式</h2>
@@ -390,7 +436,7 @@ function renderPatterns(ch) {
   }
 
   const groups = ['单一型', '组合型', '综合型'].map(kind => {
-    const list = ch.patterns.filter(t => t.kind === kind);
+    const list = ch.patterns.filter(t => kindGroup(t.kind) === kind);
     if (!list.length) return '';
     const desc = {
       单一型: '只考一两个知识点，练的是「会不会用」。做不快就是基础不熟。',
