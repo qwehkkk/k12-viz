@@ -139,6 +139,16 @@
       else if (cfg.type === 'fr-muldiv') VIZ.frMuldivLab(el, cfg);
       else if (cfg.type === 'fr-add') VIZ.frAddLab(el, cfg);
       else if (cfg.type === 'fr-eq') VIZ.frEqLab(el, cfg);
+      else if (cfg.type === 'st-def') VIZ.stDefLab(el, cfg);
+      else if (cfg.type === 'st-rep') VIZ.stRepLab(el, cfg);
+      else if (cfg.type === 'st-subset') VIZ.stSubsetLab(el, cfg);
+      else if (cfg.type === 'st-venn') VIZ.stVennLab(el, cfg);
+      else if (cfg.type === 'st-imply') VIZ.stImplyLab(el, cfg);
+      else if (cfg.type === 'qt-vertex') VIZ.qtVertexLab(el, cfg);
+      else if (cfg.type === 'qt-trio') VIZ.qtTrioLab(el, cfg);
+      else if (cfg.type === 'qt-solve') VIZ.qtSolveLab(el, cfg);
+      else if (cfg.type === 'qt-amgm') VIZ.qtAmgmLab(el, cfg);
+      else if (cfg.type === 'qt-apply') VIZ.qtApplyLab(el, cfg);
       else if (cfg.type === 'rn-sqrt') VIZ.rnSqrtLab(el, cfg);
       else if (cfg.type === 'rn-cube') VIZ.rnCubeLab(el, cfg);
       else if (cfg.type === 'rn-axis') VIZ.rnAxisLab(el, cfg);

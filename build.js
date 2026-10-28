@@ -28,7 +28,7 @@ const SITE = {
 };
 
 /* 年级学期顺序（人教版目录分组用） */
-const GRADE_TERMS = ['七年级上册', '七年级下册', '八年级上册', '八年级下册', '九年级上册', '九年级下册'];
+const GRADE_TERMS = ['七年级上册', '七年级下册', '八年级上册', '八年级下册', '九年级上册', '九年级下册', '高一上册', '高一下册', '高二上册', '高二下册'];
 
 /* ---------- 载入所有章节 ---------- */
 const chapters = fs.readdirSync(DATA_DIR)
@@ -44,8 +44,8 @@ const STRANDS = [
     chapters: ['rational', 'poly-arith', 'realnum', 'polymul', 'fraction', 'radical'],
     ghosts: [] },
   { id: 'eq', name: '方程与不等式', color: '#185fa5',
-    desc: '把「求多少」翻译成式子，再一步步解出来。一元一次方程是所有方程的娘。',
-    chapters: ['linear-eq', 'eq-system', 'inequality', 'quadratic-equation'],
+    desc: '把「求多少」翻译成式子，再一步步解出来。从一元一次方程一路走到集合语言与二次不等式——高中用它重新说一遍。',
+    chapters: ['linear-eq', 'eq-system', 'inequality', 'quadratic-equation', 'sets', 'quad-ineq'],
     ghosts: [] },
   { id: 'fn', name: '函数', color: '#7d3c98',
     desc: '变量之间的关系：一次是一条直线，二次是抛物线，反比例是双曲线。初中函数就这三张脸。',
