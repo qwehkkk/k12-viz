@@ -59,6 +59,12 @@
       else if (cfg.type === 'pythag-solve') VIZ.pythagSolveLab(el, cfg);
       else if (cfg.type === 'pythag-inverse') VIZ.pythagInverseLab(el, cfg);
       else if (cfg.type === 'pythag-ladder') VIZ.pythagLadderLab(el, cfg);
+      else if (cfg.type === 'linear') VIZ.linearLab(el, cfg);
+      else if (cfg.type === 'linear-quad') VIZ.linearQuadLab(el, cfg);
+      else if (cfg.type === 'linear-cross') VIZ.linearCrossLab(el, cfg);
+      else if (cfg.type === 'linear-model') VIZ.linearModelLab(el, cfg);
+      else if (cfg.type === 'linear-translate') VIZ.linearTranslateLab(el, cfg);
+      else if (cfg.type === 'linear-fit') VIZ.linearFitLab(el, cfg);
     });
   });
 })();

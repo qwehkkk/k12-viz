@@ -4533,7 +4533,288 @@ ul.lesson-list li::before {
     draw();
   }
 
-  window.VIZ = { renderPlot: renderPlot, parabolaLab: parabolaLab, stepLab: stepLab, bridgeLab: bridgeLab, profitLab: profitLab, fenceLab: fenceLab, fountainLab: fountainLab, shotLab: shotLab, completeSquareLab: completeSquareLab, equationLab: equationLab, growthLab: growthLab, rotateLab: rotateLab, coordRotLab: coordRotLab, patternLab: patternLab, clockLab: clockLab, anatomyLab: anatomyLab, chordLab: chordLab, inscribedLab: inscribedLab, positionLab: positionLab, tangentLab: tangentLab, sectorLab: sectorLab, eventScaleLab: eventScaleLab, bagLab: bagLab, sumTableLab: sumTableLab, treeLab: treeLab, coinLab: coinLab, dartLab: dartLab, inverseLab: inverseLab, kAreaLab: kAreaLab, inverseCrossLab: inverseCrossLab, inverseUseLab: inverseUseLab, trigRatioLab: trigRatioLab, trigSpecialLab: trigSpecialLab, trigSolveLab: trigSolveLab, trigHeightLab: trigHeightLab, trigSlopeLab: trigSlopeLab, trigAltitudeLab: trigAltitudeLab, simGoldenLab: simGoldenLab, simParallelLab: simParallelLab, simJudgeLab: simJudgeLab, simAreaLab: simAreaLab, simNestedLab: simNestedLab, simHomothetyLab: simHomothetyLab, simShadowLab: simShadowLab, projShadowLab: projShadowLab, projOrthLab: projOrthLab, viewThreeLab: viewThreeLab, viewBlocksLab: viewBlocksLab, viewSolidLab: viewSolidLab, pythagSquaresLab: pythagSquaresLab, pythagPuzzleLab: pythagPuzzleLab, pythagSolveLab: pythagSolveLab, pythagInverseLab: pythagInverseLab, pythagLadderLab: pythagLadderLab };
+  /* 把直线 y = kx + b 裁到视野内再画（避免端点落在画布外，靠 canvas clip 遮） */
+  function clipSeg(view, x1, y1, x2, y2) {
+    var dx = x2 - x1, dy = y2 - y1, t0 = 0, t1 = 1;
+    function test(pv, qv) {
+      if (Math.abs(pv) < 1e-9) return qv >= 0;
+      var r = qv / pv;
+      if (pv < 0) { if (r > t1) return false; if (r > t0) t0 = r; }
+      else { if (r < t0) return false; if (r < t1) t1 = r; }
+      return true;
+    }
+    if (test(-dx, x1 - view.xmin) && test(dx, view.xmax - x1) && test(-dy, y1 - view.ymin) && test(dy, view.ymax - y1)) {
+      return [x1 + t0 * dx, y1 + t0 * dy, x1 + t1 * dx, y1 + t1 * dy];
+    }
+    return null;
+  }
+  function tSegLine(m, view, k, b, color, w, dash) {
+    var seg = clipSeg(view, view.xmin, k * view.xmin + b, view.xmax, k * view.xmax + b);
+    if (seg) tSeg(m, seg[0], seg[1], seg[2], seg[3], color, w, dash);
+  }
+
+  /* ============ 一次函数章组件 ============ */
+
+  /* y = kx + b：拖 k 看倾斜、拖 b 看上下平移 */
+  function linearLab(el, cfg) {
+    var s0 = circleScaffold(el);
+    var p = { k: 1.5, b: 2 };
+    if (cfg.values) for (var key in cfg.values) p[key] = cfg.values[key];
+    var view = { xmin: -6.4, xmax: 6.4, ymin: -6.4, ymax: 6.4 };
+
+    function draw() {
+      var m = circleMap(s0.cv, view), ctx = m.ctx;
+      xyAxes(m, view);
+      tSegLine(m, view, p.k, p.b, '#c0392b', 3);
+      /* 与坐标轴交点 */
+      cDot(m, 0, p.b, '#185fa5', 5);
+      cTag(m, 0, p.b, 'b = ' + cFmt(p.b), '#185fa5', 16, -10);
+      if (Math.abs(p.k) > 0.01) {
+        var x0 = -p.b / p.k;
+        if (x0 >= view.xmin && x0 <= view.xmax) {
+          cDot(m, x0, 0, '#0f6e56', 5);
+          cTag(m, x0, 0, '(−b/k, 0)', '#0f6e56', 0, 16);
+        }
+      }
+      /* 斜率示意三角形（越界就不画） */
+      var sx = 1.6, sy = p.k * sx;
+      if (Math.abs(sy) < view.ymax - 1 && Math.abs(p.b) < view.ymax - 1.2 && Math.abs(p.b + sy) < view.ymax - 1.2) {
+        tSeg(m, 0, p.b, sx, p.b, '#8a5a00', 1.8, [5, 4]);
+        tSeg(m, sx, p.b, sx, p.b + sy, '#8a5a00', 1.8, [5, 4]);
+        cTag(m, sx / 2, p.b, '1', '#8a5a00', 0, 14);
+        cTag(m, sx, p.b + sy / 2, 'k', '#8a5a00', 12, 0);
+      }
+      var dirTxt = p.k > 0.01 ? 'k > 0，直线从左向右上升，y 随 x 增大而增大' : p.k < -0.01 ? 'k < 0，直线从左向右下降，y 随 x 增大而减小' : 'k = 0，此时 y = b 是常函数，已经不是一次函数了';
+      s0.info.innerHTML = '<span class="viz-meta">解析式 y = ' + cFmt(p.k) + 'x + ' + (p.b >= 0 ? '+ ' : '− ') + cFmt(Math.abs(p.b)) + '：k = ' + cFmt(p.k) + '，b = ' + cFmt(p.b) + '。</span>' +
+        '<span class="viz-meta">' + dirTxt + '。k 的绝对值越大，直线越陡——它是「每向右走 1 格，向上走多少格」。</span>' +
+        '<span class="viz-meta">b 是直线与 y 轴交点的纵坐标（叫截距），它决定整条直线的上下位置：b 变大，直线整体上移。拖动两个滑块分别感受「转」和「移」——k 管方向，b 管位置。</span>';
+    }
+    cSlider(s0.ctrl, 'k（斜率）', p.k, -3, 3, 0.25, function (v) { p.k = v; draw(); });
+    cSlider(s0.ctrl, 'b（截距）', p.b, -5, 5, 0.5, function (v) { p.b = v; draw(); });
+    draw();
+  }
+
+  /* 经过哪几个象限：k、b 的符号决定 */
+  function linearQuadLab(el, cfg) {
+    var s0 = circleScaffold(el);
+    var p = { k: 2, b: 3 };
+    if (cfg.values) for (var key in cfg.values) p[key] = cfg.values[key];
+    var view = { xmin: -6.4, xmax: 6.4, ymin: -6.4, ymax: 6.4 };
+
+    function draw() {
+      var m = circleMap(s0.cv, view), ctx = m.ctx;
+      xyAxes(m, view);
+      var k = p.k, b = p.b;
+      /* 用四点采样判断经过哪些象限 */
+      var q = { 1: false, 2: false, 3: false, 4: false };
+      var xs = [view.xmin + 0.2, view.xmax - 0.2, -b / k, 0];
+      for (var i = 0; i < xs.length; i++) {
+        var y = k * xs[i] + b;
+        if (xs[i] > 0 && y > 0) q[1] = true;
+        if (xs[i] < 0 && y > 0) q[2] = true;
+        if (xs[i] < 0 && y < 0) q[3] = true;
+        if (xs[i] > 0 && y < 0) q[4] = true;
+      }
+      /* 象限底色 */
+      var Q = {
+        1: [0, 0, 6.4, 6.4], 2: [-6.4, 0, 0, 6.4], 3: [-6.4, -6.4, 0, 0], 4: [0, -6.4, 6.4, 0]
+      };
+      for (var key in Q) {
+        if (q[key]) {
+          var r = Q[key];
+          ctx.fillStyle = 'rgba(24,95,165,.10)';
+          ctx.fillRect(m.px(r[0]), m.py(r[3]), (r[2] - r[0]) * m.sc, (r[3] - r[1]) * m.sc);
+        }
+      }
+      tSegLine(m, view, k, b, '#c0392b', 3);
+      cTag(m, 3.4, 3.4, '一', q[1] ? '#185fa5' : '#c9d2dc', 0, 0);
+      cTag(m, -3.4, 3.4, '二', q[2] ? '#185fa5' : '#c9d2dc', 0, 0);
+      cTag(m, -3.4, -3.4, '三', q[3] ? '#185fa5' : '#c9d2dc', 0, 0);
+      cTag(m, 3.4, -3.4, '四', q[4] ? '#185fa5' : '#c9d2dc', 0, 0);
+      var list = [];
+      if (q[1]) list.push('一'); if (q[2]) list.push('二'); if (q[3]) list.push('三'); if (q[4]) list.push('四');
+      var kSign = k > 0 ? '正' : '负';
+      var bSign = b > 0 ? '正' : (b < 0 ? '负' : '0');
+      s0.info.innerHTML = '<span class="viz-meta">k = ' + cFmt(k) + '（' + kSign + '），b = ' + cFmt(b) + '（' + bSign + '）→ 直线经过第 ' + list.join('、') + ' 象限。</span>' +
+        '<span class="viz-meta">口诀：<b>k 正过一三，k 负过二四</b>；再看 b——<b>b 正往上挪一格（多过第二象限）</b>，<b>b 负往下挪（多过第三象限）</b>。k>0,b>0 → 一二三；k>0,b<0 → 一三四；k<0,b>0 → 一二四；k<0,b<0 → 二三四；b=0 时直线过原点，只占两个象限。</span>' +
+        '<span class="viz-meta">这类题的标准做法：画草图（一条斜线 + 一个截距点）比背表格可靠。拖动滑块从 b>0 到 b<0，看直线穿过 x 轴那一瞬间象限是怎么变的。</span>';
+    }
+    cSlider(s0.ctrl, 'k（斜率）', p.k, -3, 3, 0.5, function (v) { p.k = v === 0 ? 0.5 : v; draw(); });
+    cSlider(s0.ctrl, 'b（截距）', p.b, -5, 5, 0.5, function (v) { p.b = v; draw(); });
+    draw();
+  }
+
+  /* 两条直线的交点与不等式解集 */
+  function linearCrossLab(el, cfg) {
+    var s0 = circleScaffold(el);
+    var p = { k1: 1, b1: -1, k2: -0.5, b2: 2 };
+    if (cfg.values) for (var key in cfg.values) p[key] = cfg.values[key];
+    var view = { xmin: -6.4, xmax: 6.4, ymin: -6.4, ymax: 6.4 };
+
+    function draw() {
+      var m = circleMap(s0.cv, view), ctx = m.ctx;
+      xyAxes(m, view);
+      var dk = p.k1 - p.k2, db = p.b1 - p.b2;
+      /* 数值扫描求 k1x+b1 > k2x+b2 的解集 */
+      var segs = [], cur = null, step = 0.02;
+      for (var x = view.xmin; x <= view.xmax; x += step) {
+        var f = dk * x + db;
+        if (f > 0) { if (!cur) cur = { a: x, b: x }; else cur.b = x; }
+        else if (cur) { segs.push(cur); cur = null; }
+      }
+      if (cur) segs.push(cur);
+      /* 解集区域着色 */
+      ctx.fillStyle = 'rgba(15,110,86,.13)';
+      for (var i = 0; i < segs.length; i++) {
+        var g = segs[i];
+        ctx.fillRect(m.px(g.a), m.py(view.ymax), (g.b - g.a) * m.sc, (view.ymax - view.ymin) * m.sc);
+      }
+      tSegLine(m, view, p.k1, p.b1, '#185fa5', 3);
+      tSegLine(m, view, p.k2, p.b2, '#c0392b', 3);
+      var hasX = Math.abs(dk) > 0.001;
+      var xi = hasX ? -db / dk : null, yi = hasX ? p.k1 * xi + p.b1 : null;
+      if (hasX && xi > view.xmin && xi < view.xmax && yi > view.ymin && yi < view.ymax) {
+        cDot(m, xi, yi, '#8a5a00', 6);
+        cTag(m, xi, yi, '(' + cFmt(xi) + ', ' + cFmt(yi) + ')', '#8a5a00', 0, -16);
+      }
+      function fmt(list) {
+        if (!list.length) return '无解';
+        return list.map(function (s) {
+          var a = Math.round(s.a * 100) / 100, b2 = Math.round(s.b * 100) / 100;
+          if (a <= view.xmin + 0.05 && b2 >= view.xmax - 0.05) return '全体实数';
+          if (a <= view.xmin + 0.05) return 'x < ' + cFmt(b2);
+          if (b2 >= view.xmax - 0.05) return 'x > ' + cFmt(a);
+          return cFmt(a) + ' < x < ' + cFmt(b2);
+        }).join(' 或 ');
+      }
+      var sol = hasX ? fmt(segs) : (db > 0 ? '全体实数' : '无解');
+      s0.info.innerHTML = '<span class="viz-meta">蓝线 l₁：y = ' + cFmt(p.k1) + 'x ' + (p.b1 >= 0 ? '+ ' : '− ') + cFmt(Math.abs(p.b1)) + '；红线 l₂：y = ' + cFmt(p.k2) + 'x ' + (p.b2 >= 0 ? '+ ' : '− ') + cFmt(Math.abs(p.b2)) + '。</span>' +
+        '<span class="viz-meta">交点就是方程 ' + cFmt(p.k1) + 'x ' + (p.b1 >= 0 ? '+ ' : '− ') + cFmt(Math.abs(p.b1)) + ' = ' + cFmt(p.k2) + 'x ' + (p.b2 >= 0 ? '+ ' : '− ') + cFmt(Math.abs(p.b2)) + ' 的解：' + (hasX ? 'x = ' + cFmt(xi) + '，y = ' + cFmt(yi) : '两直线平行（k 相等），无交点，方程无解') + '。</span>' +
+        '<span class="viz-meta">绿色区域是 l₁ 在 l₂ 上方（即 l₁ > l₂）的部分，对应不等式解集：<b>' + sol + '</b>。图象法解不等式的全部动作就是「看谁在上，往下投到 x 轴」——交点左边谁高、右边谁高，取决于两条线的 k 谁大。</span>';
+    }
+    cSlider(s0.ctrl, 'k₁', p.k1, -3, 3, 0.5, function (v) { p.k1 = v; draw(); });
+    cSlider(s0.ctrl, 'b₁', p.b1, -5, 5, 0.5, function (v) { p.b1 = v; draw(); });
+    cSlider(s0.ctrl, 'k₂', p.k2, -3, 3, 0.5, function (v) { p.k2 = v; draw(); });
+    cSlider(s0.ctrl, 'b₂', p.b2, -5, 5, 0.5, function (v) { p.b2 = v; draw(); });
+    draw();
+  }
+
+  /* 实际建模：两种计费方案比价（分段函数 + 交点决策） */
+  function linearModelLab(el, cfg) {
+    var s0 = circleScaffold(el);
+    var p = { x: 8, a: 2.4, b: 1.9 };
+    if (cfg.values) for (var key in cfg.values) p[key] = cfg.values[key];
+    function draw() {
+      var a = p.a, b = p.b;
+      var ymax = Math.max(10 + (21 - 3) * a, 8 + 21 * b, 20) + 6;
+      var view = { xmin: -1, xmax: 22, ymin: -3, ymax: ymax };
+      var m = circleMap(s0.cv, view), ctx = m.ctx;
+      xyAxes(m, view);
+      function yA(x) { return 10 + (x > 3 ? (x - 3) * a : 0); }
+      function yB(x) { return 8 + x * b; }
+      clipPlot(m, view);
+      tSeg(m, 0, 10, 3, 10, '#185fa5', 3);
+      tSeg(m, 3, 10, view.xmax, yA(view.xmax), '#185fa5', 3);
+      tSeg(m, 0, 8, view.xmax, yB(view.xmax), '#c0392b', 3);
+      ctx.restore();
+      /* 分界点 x = 3 */
+      tSeg(m, 3, 0, 3, 10, '#c9d2dc', 1.4, [4, 4]);
+      cTag(m, 3, 0, '3 km', '#8a5a00', 0, 14);
+      /* 当前里程 */
+      var cx = p.x, ca = yA(cx), cb = yB(cx);
+      tSeg(m, cx, 0, cx, Math.max(ca, cb), '#0f6e56', 1.6, [5, 4]);
+      cDot(m, cx, ca, '#185fa5', 5);
+      cDot(m, cx, cb, '#c0392b', 5);
+      cTag(m, cx, ca, 'A ' + cFmt(ca) + ' 元', '#185fa5', 0, -14);
+      cTag(m, cx, cb, 'B ' + cFmt(cb) + ' 元', '#c0392b', 0, 18);
+      /* 交点 */
+      var xi = (10 - 8 + 3 * a) / (a - b);
+      if (isFinite(xi) && xi > 0 && xi < view.xmax && a !== b) {
+        cDot(m, xi, yA(xi), '#8a5a00', 6);
+        cTag(m, xi, yA(xi), '里程 ' + cFmt(xi) + ' km 时两种一样贵', '#8a5a00', 0, -16);
+      }
+      var cheaper = ca < cb ? 'A 方案（出租车）更便宜，省 ' + cFmt(cb - ca) + ' 元' :
+        (cb < ca ? 'B 方案（网约车）更便宜，省 ' + cFmt(ca - cb) + ' 元' : '两种方案一样贵');
+      s0.info.innerHTML = '<span class="viz-meta">A（出租车）：起步价 10 元含 3 km，超出部分每公里 ' + cFmt(a) + ' 元 → y = 10（0<x≤3）或 y = 10 + ' + cFmt(a) + '(x−3)（x>3）。B（网约车）：无免费里程，起步 8 元 + 每公里 ' + cFmt(b) + ' 元 → y = 8 + ' + cFmt(b) + 'x。</span>' +
+        '<span class="viz-meta">当前里程 ' + cFmt(p.x) + ' km：A = ' + cFmt(ca) + ' 元，B = ' + cFmt(cb) + ' 元 → <b>' + cheaper + '</b>。</span>' +
+        '<span class="viz-meta">这类「方案比较」题的三步：① 各自写解析式（注意分段：有没有免费里程）；② 求交点（解方程 y₁ = y₂）；③ 分区间下结论。交点是分水岭，<b>左边谁便宜、右边谁便宜，取决于两条线的斜率</b>——单价低的方案在长距离时赢。拖动「每公里单价」就能看到交点左移右移。</span>';
+    }
+    cSlider(s0.ctrl, '行程 x（km）', p.x, 0.5, 21, 0.5, function (v) { p.x = v; draw(); });
+    cSlider(s0.ctrl, 'A 每公里单价（元）', p.a, 1.2, 4, 0.1, function (v) { p.a = v; draw(); });
+    cSlider(s0.ctrl, 'B 每公里单价（元）', p.b, 1.2, 4, 0.1, function (v) { p.b = v; draw(); });
+    draw();
+  }
+
+  /* 平移规律：上加下减、左加右减 */
+  function linearTranslateLab(el, cfg) {
+    var s0 = circleScaffold(el);
+    var p = { k: 1, b: 2, m: 2 };
+    if (cfg.values) for (var key in cfg.values) p[key] = cfg.values[key];
+    var view = { xmin: -6.4, xmax: 6.4, ymin: -6.4, ymax: 6.4 };
+
+    function draw() {
+      var m = circleMap(s0.cv, view), ctx = m.ctx;
+      xyAxes(m, view);
+      tSegLine(m, view, p.k, 0, '#9aa7b4', 2.2, [6, 4]);
+      tSegLine(m, view, p.k, p.b, '#185fa5', 3);
+      tSegLine(m, view, p.k, -p.k * p.m, '#c0392b', 3);
+      cDot(m, 0, 0, '#9aa7b4', 5);
+      cDot(m, 0, p.b, '#185fa5', 5);
+      cTag(m, 0, p.b, 'y = kx + ' + cFmt(p.b), '#185fa5', 62, -12);
+      cDot(m, p.m, 0, '#c0392b', 5);
+      cTag(m, p.m, 0, 'y = k(x − ' + cFmt(p.m) + ')', '#c0392b', 30, 20);
+      tSeg(m, -0.5, 0, -0.5, p.b, '#185fa5', 1.6, [4, 4]);
+      tSeg(m, 0, -0.5, p.m, -0.5, '#c0392b', 1.6, [4, 4]);
+      s0.info.innerHTML = '<span class="viz-meta">灰色虚线是基准 y = ' + cFmt(p.k) + 'x。蓝线 y = ' + cFmt(p.k) + 'x + ' + (p.b >= 0 ? '+ ' : '− ') + cFmt(Math.abs(p.b)) + '：把基准线<b>向上</b>平移 ' + cFmt(p.b) + ' 个单位（b 为负就向下）。</span>' +
+        '<span class="viz-meta">红线 y = ' + cFmt(p.k) + '(x − ' + cFmt(p.m) + ')：把基准线<b>向右</b>平移 ' + cFmt(p.m) + ' 个单位。注意括号里的符号：写成 (x − m) 是右移 m，(x + m) 是左移 m；而常数项 b 则是「+ 上、− 下」。这就是「<b>左加右减、上加下减</b>」的由来——括号里减号会让人误以为往左，其实往右。</span>' +
+        '<span class="viz-meta">两条结论一起看：平移只改变位置、<b>永远不改变 k</b>（斜率），所以平移前后两条直线平行。反过来，k 相等的两条直线一定可以通过平移互相得到。</span>';
+    }
+    cSlider(s0.ctrl, 'k', p.k, -2, 2, 0.5, function (v) { p.k = v === 0 ? 0.5 : v; draw(); });
+    cSlider(s0.ctrl, 'b（上下平移）', p.b, -4, 4, 0.5, function (v) { p.b = v; draw(); });
+    cSlider(s0.ctrl, 'm（左右平移）', p.m, -4, 4, 0.5, function (v) { p.m = v; draw(); });
+    draw();
+  }
+
+  /* 待定系数法：两点确定一条直线 */
+  function linearFitLab(el, cfg) {
+    var s0 = circleScaffold(el);
+    var p = { x1: -2, y1: -1, x2: 2, y2: 3 };
+    if (cfg.values) for (var key in cfg.values) p[key] = cfg.values[key];
+    var view = { xmin: -6.4, xmax: 6.4, ymin: -6.4, ymax: 6.4 };
+
+    function draw() {
+      var m = circleMap(s0.cv, view), ctx = m.ctx;
+      xyAxes(m, view);
+      var dx = p.x2 - p.x1, dy = p.y2 - p.y1;
+      var ok = Math.abs(dx) > 0.01;
+      var k = ok ? dy / dx : NaN;
+      var b = ok ? p.y1 - k * p.x1 : NaN;
+      if (ok) tSegLine(m, view, k, b, '#c0392b', 3);
+      /* 两点的「k 三角形」 */
+      if (ok) {
+        tSeg(m, p.x1, p.y1, p.x2, p.y1, '#8a5a00', 1.8, [5, 4]);
+        tSeg(m, p.x2, p.y1, p.x2, p.y2, '#8a5a00', 1.8, [5, 4]);
+        cTag(m, (p.x1 + p.x2) / 2, p.y1, 'Δx = ' + cFmt(dx), '#8a5a00', 0, 14);
+        cTag(m, p.x2, (p.y1 + p.y2) / 2, 'Δy = ' + cFmt(dy), '#8a5a00', 34, 0);
+      }
+      cDot(m, p.x1, p.y1, '#185fa5', 6);
+      cDot(m, p.x2, p.y2, '#185fa5', 6);
+      cTag(m, p.x1, p.y1, '(' + cFmt(p.x1) + ', ' + cFmt(p.y1) + ')', '#185fa5', 0, -16);
+      cTag(m, p.x2, p.y2, '(' + cFmt(p.x2) + ', ' + cFmt(p.y2) + ')', '#185fa5', 0, -16);
+      s0.info.innerHTML = ok ?
+        '<span class="viz-meta">两点 A(' + cFmt(p.x1) + ', ' + cFmt(p.y1) + ')、B(' + cFmt(p.x2) + ', ' + cFmt(p.y2) + ')。待定系数法：设 y = kx + b，代两点得方程组，相减消 b：</span>' +
+        '<span class="viz-meta">k = Δy / Δx = ' + cFmt(dy) + ' / ' + cFmt(dx) + ' = ' + cFmt(k) + '，再代回求 b = ' + cFmt(b) + '。所以解析式是 <b>y = ' + cFmt(k) + 'x ' + (b >= 0 ? '+ ' : '− ') + cFmt(Math.abs(b)) + '</b>。</span>' +
+        '<span class="viz-meta">「k = Δy/Δx」就是斜率的另一张脸：<b>纵坐标变化量比横坐标变化量</b>。拖动两个点，直线跟着变，但无论怎么拖，k 都等于那个竖直变化比水平变化。两点横坐标相同时（Δx = 0）直线垂直于 x 轴，此时没有 y = kx+b 形式的解析式。</span>'
+        : '<span class="viz-meta">两点横坐标相同（Δx = 0），这条直线垂直于 x 轴，不存在 y = kx + b 形式的解析式——这是「一次函数必须有斜率」的直接体现。把 x₂ 挪开就能恢复。</span>';
+    }
+    cSlider(s0.ctrl, 'A 的横坐标 x₁', p.x1, -5, 5, 1, function (v) { p.x1 = v; draw(); });
+    cSlider(s0.ctrl, 'A 的纵坐标 y₁', p.y1, -5, 5, 1, function (v) { p.y1 = v; draw(); });
+    cSlider(s0.ctrl, 'B 的横坐标 x₂', p.x2, -5, 5, 1, function (v) { p.x2 = v; draw(); });
+    cSlider(s0.ctrl, 'B 的纵坐标 y₂', p.y2, -5, 5, 1, function (v) { p.y2 = v; draw(); });
+    draw();
+  }
+
+  window.VIZ = { renderPlot: renderPlot, parabolaLab: parabolaLab, stepLab: stepLab, bridgeLab: bridgeLab, profitLab: profitLab, fenceLab: fenceLab, fountainLab: fountainLab, shotLab: shotLab, completeSquareLab: completeSquareLab, equationLab: equationLab, growthLab: growthLab, rotateLab: rotateLab, coordRotLab: coordRotLab, patternLab: patternLab, clockLab: clockLab, anatomyLab: anatomyLab, chordLab: chordLab, inscribedLab: inscribedLab, positionLab: positionLab, tangentLab: tangentLab, sectorLab: sectorLab, eventScaleLab: eventScaleLab, bagLab: bagLab, sumTableLab: sumTableLab, treeLab: treeLab, coinLab: coinLab, dartLab: dartLab, inverseLab: inverseLab, kAreaLab: kAreaLab, inverseCrossLab: inverseCrossLab, inverseUseLab: inverseUseLab, trigRatioLab: trigRatioLab, trigSpecialLab: trigSpecialLab, trigSolveLab: trigSolveLab, trigHeightLab: trigHeightLab, trigSlopeLab: trigSlopeLab, trigAltitudeLab: trigAltitudeLab, simGoldenLab: simGoldenLab, simParallelLab: simParallelLab, simJudgeLab: simJudgeLab, simAreaLab: simAreaLab, simNestedLab: simNestedLab, simHomothetyLab: simHomothetyLab, simShadowLab: simShadowLab, projShadowLab: projShadowLab, projOrthLab: projOrthLab, viewThreeLab: viewThreeLab, viewBlocksLab: viewBlocksLab, viewSolidLab: viewSolidLab, pythagSquaresLab: pythagSquaresLab, pythagPuzzleLab: pythagPuzzleLab, pythagSolveLab: pythagSolveLab, pythagInverseLab: pythagInverseLab, pythagLadderLab: pythagLadderLab, linearLab: linearLab, linearQuadLab: linearQuadLab, linearCrossLab: linearCrossLab, linearModelLab: linearModelLab, linearTranslateLab: linearTranslateLab, linearFitLab: linearFitLab };
 })();
 
 </script>
@@ -4599,6 +4880,12 @@ ul.lesson-list li::before {
       else if (cfg.type === 'pythag-solve') VIZ.pythagSolveLab(el, cfg);
       else if (cfg.type === 'pythag-inverse') VIZ.pythagInverseLab(el, cfg);
       else if (cfg.type === 'pythag-ladder') VIZ.pythagLadderLab(el, cfg);
+      else if (cfg.type === 'linear') VIZ.linearLab(el, cfg);
+      else if (cfg.type === 'linear-quad') VIZ.linearQuadLab(el, cfg);
+      else if (cfg.type === 'linear-cross') VIZ.linearCrossLab(el, cfg);
+      else if (cfg.type === 'linear-model') VIZ.linearModelLab(el, cfg);
+      else if (cfg.type === 'linear-translate') VIZ.linearTranslateLab(el, cfg);
+      else if (cfg.type === 'linear-fit') VIZ.linearFitLab(el, cfg);
     });
   });
 })();
