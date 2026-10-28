@@ -54,6 +54,11 @@
       else if (cfg.type === 'view-three') VIZ.viewThreeLab(el, cfg);
       else if (cfg.type === 'view-blocks') VIZ.viewBlocksLab(el, cfg);
       else if (cfg.type === 'view-solid') VIZ.viewSolidLab(el, cfg);
+      else if (cfg.type === 'pythag-squares') VIZ.pythagSquaresLab(el, cfg);
+      else if (cfg.type === 'pythag-puzzle') VIZ.pythagPuzzleLab(el, cfg);
+      else if (cfg.type === 'pythag-solve') VIZ.pythagSolveLab(el, cfg);
+      else if (cfg.type === 'pythag-inverse') VIZ.pythagInverseLab(el, cfg);
+      else if (cfg.type === 'pythag-ladder') VIZ.pythagLadderLab(el, cfg);
     });
   });
 })();
