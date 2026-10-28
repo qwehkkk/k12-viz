@@ -22,7 +22,7 @@ const DATA_DIR = path.join(ROOT, 'data/chapters');
 const SITE = {
   name: '图知学堂',
   tagline: '把知识点画出来',
-  base: 'https://example.com',
+  base: 'https://teach.toolona.com',
   // 留言接口：部署 Cloudflare Pages Functions + D1 后改为 '/api/comments'
   commentApi: ''
 };
