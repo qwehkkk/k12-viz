@@ -1,0 +1,526 @@
+{
+ "meta": {
+  "id": "p2a-angle",
+  "title": "角的初步认识",
+  "grade": "二年级上册",
+  "bookNo": 3,
+  "order": 33,
+  "unit": true,
+  "status": "done",
+  "prereqChapters": [
+   "p2a-len"
+  ],
+  "tagline": "角有一个顶点两条边；三角尺上最大的那个角是直角——比角大小时，角的大小与边的长短无关。",
+  "textbook": "人教版二年级上册第三单元",
+  "intro": "第一次认识「角」：**一个顶点、两条边**。直角是标杆（三角尺上的直角），比直角小是锐角、比直角大是钝角。重要的观念：**角的大小看张口，不看边的长短**——把角的边画长一点，角没有变大。",
+  "examShare": "必考：辨认角与数角、判断直角锐角钝角、画角。失分点是认为边长角就大。",
+  "emoji": "📐"
+ },
+ "points": [
+  {
+   "id": "p2a-angle-part",
+   "title": "角的组成",
+   "summary": "角有一个顶点和两条边（都是直直的线），角的两边张口越大，角越大。",
+   "keyPoints": [
+    "**一个顶点 + 两条边**",
+    "边是**直的**（射线）",
+    "角的大小看**张口**",
+    "边的**长短不影响**角的大小"
+   ],
+   "prerequisites": [],
+   "viz": {
+    "type": "p2a-angle",
+    "title": "模式 0：顶点与两条边",
+    "values": {
+     "mode": 0
+    }
+   },
+   "apply": "钟面上时针分针组成角、剪刀张开是角、屋顶斜面相交是角。",
+   "blocks": [
+    {
+     "t": "p",
+     "text": "指角要指出**顶点和两条边**，不是只点尖尖。"
+    },
+    {
+     "t": "viz",
+     "viz": {
+      "type": "p2a-angle",
+      "title": "模式 0：张口变大变小",
+      "values": {
+       "mode": 0
+      }
+     }
+    },
+    {
+     "t": "p",
+     "text": "重要观念：**边画长画短，角都不变**——角的大小只由张口决定。"
+    },
+    {
+     "t": "list",
+     "items": [
+      "顶点 + 两边",
+      "边是直的",
+      "张口定大小",
+      "边长无关"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "p2a-angle-right",
+   "title": "直角、锐角、钝角",
+   "summary": "三角尺上最大的角是直角：比直角小是锐角，比直角大是钝角。",
+   "keyPoints": [
+    "**直角**：三角尺上最大的角，标直角符号",
+    "**锐角**：比直角小",
+    "**钝角**：比直角大",
+    "判断用**三角尺的直角去比**"
+   ],
+   "prerequisites": [
+    "p2a-angle-part"
+   ],
+   "viz": {
+    "type": "p2a-angle",
+    "title": "模式 1：三类角比一比",
+    "values": {
+     "mode": 1
+    }
+   },
+   "apply": "课本的角是直角、红领巾的角有锐角有钝角、打开的扇子形成钝角。",
+   "blocks": [
+    {
+     "t": "p",
+     "text": "标杆是直角：**拿三角尺的直角**与要判的角比。"
+    },
+    {
+     "t": "viz",
+     "viz": {
+      "type": "p2a-angle",
+      "title": "模式 1：拿直角当尺子",
+      "values": {
+       "mode": 1
+      }
+     }
+    },
+    {
+     "t": "p",
+     "text": "口诀：**比直角小是锐，比直角大是钝**。"
+    },
+    {
+     "t": "list",
+     "items": [
+      "直角为标杆",
+      "锐角更小",
+      "钝角更大",
+      "用尺比"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "p2a-angle-count",
+   "title": "数角与找角",
+   "summary": "数图形中的角：每个顶点处都要找，两个边夹一个角；图形边数越多角越多。",
+   "keyPoints": [
+    "角藏在**顶点**处",
+    "数角按**顶点顺序**数",
+    "三角形有 **3** 个角，长方形有 **4** 个角",
+    "组合图形里的角**别漏别重**"
+   ],
+   "prerequisites": [
+    "p2a-angle-part"
+   ],
+   "viz": {
+    "type": "p2a-angle",
+    "title": "模式 2：图形里数角",
+    "values": {
+     "mode": 2
+    }
+   },
+   "apply": "五角星里藏着一圈角，数一数有多少个。",
+   "blocks": [
+    {
+     "t": "p",
+     "text": "数角按顶点走：**一个顶点数一个角**（本年级只数内角）。"
+    },
+    {
+     "t": "viz",
+     "viz": {
+      "type": "p2a-angle",
+      "title": "模式 2：逐个顶点数",
+      "values": {
+       "mode": 2
+      }
+     }
+    },
+    {
+     "t": "p",
+     "text": "别忘了「藏着的角」：长方形四个角都是直角，即使没画直角符号。"
+    },
+    {
+     "t": "list",
+     "items": [
+      "按顶点数",
+      "三角形 3 角",
+      "四边形 4 角",
+      "藏着的直角"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "p2a-angle-draw",
+   "title": "画角",
+   "summary": "画角先画顶点，再从顶点画两条直直的边；画直角借助三角尺。",
+   "keyPoints": [
+    "**先定顶点**",
+    "从顶点出发画**两条直边**",
+    "画直角用**三角尺描**",
+    "边可以画长也可以画短"
+   ],
+   "prerequisites": [
+    "p2a-angle-right"
+   ],
+   "viz": {
+    "type": "p2a-angle",
+    "title": "模式 3：动手画角",
+    "values": {
+     "mode": 3
+    }
+   },
+   "apply": "画一个直角：沿三角尺直角的两条边描一圈。",
+   "blocks": [
+    {
+     "t": "p",
+     "text": "画角三步：**顶点 → 边 1 → 边 2**。"
+    },
+    {
+     "t": "viz",
+     "viz": {
+      "type": "p2a-angle",
+      "title": "模式 3：三步画角",
+      "values": {
+       "mode": 3
+      }
+     }
+    },
+    {
+     "t": "p",
+     "text": "画直角必须用三角尺**贴着描**，不能徒手画。"
+    },
+    {
+     "t": "list",
+     "items": [
+      "先顶点",
+      "边要直",
+      "直角靠尺",
+      "边长随意"
+     ]
+    }
+   ]
+  }
+ ],
+ "examples": [
+  {
+   "id": "p2a-angle-e1",
+   "point": "p2a-angle-part",
+   "title": "角的组成",
+   "question": "角是由哪几部分组成的？",
+   "steps": [
+    {
+     "text": "一个顶点和两条边。",
+     "math": ""
+    }
+   ],
+   "answer": "一个顶点、两条边"
+  },
+  {
+   "id": "p2a-angle-e2",
+   "point": "p2a-angle-part",
+   "title": "角的大小",
+   "question": "把一个角的边画长一些，角的大小变了吗？",
+   "steps": [
+    {
+     "text": "角的大小看张口。",
+     "math": ""
+    },
+    {
+     "text": "不变。",
+     "math": ""
+    }
+   ],
+   "answer": "不变"
+  },
+  {
+   "id": "p2a-angle-e3",
+   "point": "p2a-angle-right",
+   "title": "判断角的类型",
+   "question": "比直角小的角叫什么角？",
+   "steps": [
+    {
+     "text": "比直角小。",
+     "math": ""
+    },
+    {
+     "text": "锐角。",
+     "math": ""
+    }
+   ],
+   "answer": "锐角"
+  },
+  {
+   "id": "p2a-angle-e4",
+   "point": "p2a-angle-right",
+   "title": "找直角",
+   "question": "三角尺上有几个直角？",
+   "steps": [
+    {
+     "text": "最大的是直角。",
+     "math": ""
+    },
+    {
+     "text": "只有 1 个。",
+     "math": ""
+    }
+   ],
+   "answer": "1 个"
+  },
+  {
+   "id": "p2a-angle-e5",
+   "point": "p2a-angle-count",
+   "title": "数角",
+   "question": "三角形和长方形各有多少个角？",
+   "steps": [
+    {
+     "text": "按顶点数。",
+     "math": ""
+    },
+    {
+     "text": "三角形 3 个，长方形 4 个。",
+     "math": ""
+    }
+   ],
+   "answer": "3 个；4 个"
+  },
+  {
+   "id": "p2a-angle-e6",
+   "point": "p2a-angle-draw",
+   "title": "画直角",
+   "question": "画一个直角需要什么工具？怎样画？",
+   "steps": [
+    {
+     "text": "用三角尺。",
+     "math": ""
+    },
+    {
+     "text": "沿直角两边描。",
+     "math": ""
+    }
+   ],
+   "answer": "用三角尺描直角两边"
+  }
+ ],
+ "patterns": {
+  "asks": [
+   {
+    "k": "认角",
+    "desc": "角的组成与辨认"
+   },
+   {
+    "k": "角的大小",
+    "desc": "张口与边长"
+   },
+   {
+    "k": "分类",
+    "desc": "直角锐角钝角"
+   },
+   {
+    "k": "数角",
+    "desc": "数图形中的角"
+   },
+   {
+    "k": "画角",
+    "desc": "画角与画直角"
+   }
+  ],
+  "features": [
+   "顶点 + 两条直边",
+   "角大小看张口",
+   "直角是分类标杆",
+   "画直角必须用三角尺"
+  ],
+  "patterns": [
+   {
+    "no": "基础 1",
+    "id": "p2a-angle-t-part",
+    "title": "认角",
+    "level": "基础",
+    "kind": "概念",
+    "asks": [
+     "认角"
+    ],
+    "signals": [
+     "是角吗"
+    ],
+    "chain": [
+     {
+      "point": "p2a-angle-part",
+      "role": "顶点 + 两边"
+     }
+    ],
+    "locate": "查顶点与两条直边。",
+    "stem": "一条弯弯的线和一个顶点两条弯边组成的是角吗？",
+    "solution": [
+     {
+      "text": "边必须直。",
+      "math": ""
+     },
+     {
+      "text": "不是角。",
+      "math": ""
+     }
+    ],
+    "trap": "把弯边当成边。",
+    "route": [
+     "/p2a-angle/p2a-angle-part"
+    ]
+   },
+   {
+    "no": "基础 2",
+    "id": "p2a-angle-t-size",
+    "title": "角的大小",
+    "level": "基础",
+    "kind": "概念",
+    "asks": [
+     "角的大小"
+    ],
+    "signals": [
+     "变大",
+     "边长"
+    ],
+    "chain": [
+     {
+      "point": "p2a-angle-part",
+      "role": "张口决定"
+     }
+    ],
+    "locate": "只看张口。",
+    "stem": "两个角，一个边长一个边短，张口一样大。谁大？",
+    "solution": [
+     {
+      "text": "一样大。",
+      "math": ""
+     }
+    ],
+    "trap": "认为边长的大。",
+    "route": [
+     "/p2a-angle/p2a-angle-part"
+    ]
+   },
+   {
+    "no": "中档 1",
+    "id": "p2a-angle-t-class",
+    "title": "角的分类",
+    "level": "中档",
+    "kind": "概念",
+    "asks": [
+     "分类"
+    ],
+    "signals": [
+     "锐角",
+     "钝角",
+     "直角"
+    ],
+    "chain": [
+     {
+      "point": "p2a-angle-right",
+      "role": "与直角比"
+     }
+    ],
+    "locate": "拿三角尺直角去比。",
+    "stem": "打开剪刀形成一个比直角大的角，它是什么角？",
+    "solution": [
+     {
+      "text": "比直角大。",
+      "math": ""
+     },
+     {
+      "text": "钝角。",
+      "math": ""
+     }
+    ],
+    "trap": "不比就乱猜。",
+    "route": [
+     "/p2a-angle/p2a-angle-right"
+    ]
+   },
+   {
+    "no": "中档 2",
+    "id": "p2a-angle-t-count",
+    "title": "数角",
+    "level": "中档",
+    "kind": "应用",
+    "asks": [
+     "数角"
+    ],
+    "signals": [
+     "有几个角"
+    ],
+    "chain": [
+     {
+      "point": "p2a-angle-count",
+      "role": "按顶点数"
+     }
+    ],
+    "locate": "逐个顶点找角。",
+    "stem": "五边形有几个角？",
+    "solution": [
+     {
+      "text": "一个顶点一个角。",
+      "math": "5 个"
+     }
+    ],
+    "trap": "数漏。",
+    "route": [
+     "/p2a-angle/p2a-angle-count"
+    ]
+   },
+   {
+    "no": "提升 1",
+    "id": "p2a-angle-t-draw",
+    "title": "画角",
+    "level": "提升",
+    "kind": "应用",
+    "asks": [
+     "画角"
+    ],
+    "signals": [
+     "画一个",
+     "画直角"
+    ],
+    "chain": [
+     {
+      "point": "p2a-angle-draw",
+      "role": "顶点 + 两边"
+     }
+    ],
+    "locate": "顶点起笔，边画直；直角用尺。",
+    "stem": "画一个钝角，并说说为什么它是钝角。",
+    "solution": [
+     {
+      "text": "张口比直角大。",
+      "math": ""
+     },
+     {
+      "text": "用三角尺比过。",
+      "math": ""
+     }
+    ],
+    "trap": "画成锐角。",
+    "route": [
+     "/p2a-angle/p2a-angle-draw"
+    ]
+   }
+  ]
+ }
+}

@@ -1,0 +1,523 @@
+{
+ "meta": {
+  "id": "p1b-pattern",
+  "title": "找规律",
+  "grade": "一年级下册",
+  "bookNo": 7,
+  "order": 27,
+  "unit": true,
+  "status": "done",
+  "prereqChapters": [
+   "p1b-100"
+  ],
+  "tagline": "规律就是「重复出现的节奏」：圈出一组、看它怎么重复，下一个就能推出来。",
+  "textbook": "人教版一年级下册第七单元",
+  "intro": "本单元练「发现重复」：图形按颜色循环（红黄红黄…）、数字按规律增加（+2、+5…）、数组循环出现。方法三步：**圈出一组重复的 → 说清规律 → 接着画/填**。规律思维是代数与函数的萌芽。",
+  "examShare": "必考：找图形排列规律、找数列规律并填下一个、按规律接着画。失分点是没找准「一组」就开始填。",
+  "emoji": "🔁"
+ },
+ "points": [
+  {
+   "id": "p1b-pattern-shape",
+   "title": "图形的排列规律",
+   "summary": "把重复的一段圈出来：红黄红黄红黄……一组是「红黄」，接着画红黄。",
+   "keyPoints": [
+    "**圈出一组**重复的部分",
+    "说清规律：「按红黄一组依次重复」",
+    "接着画或判断第几个是什么",
+    "一组里可以**不止两种**图形"
+   ],
+   "prerequisites": [],
+   "viz": {
+    "type": "p1b-pattern",
+    "title": "模式 0：圈出重复的一组",
+    "values": {
+     "mode": 0
+    }
+   },
+   "apply": "彩旗、地砖、围栏的花纹都是循环排列。",
+   "blocks": [
+    {
+     "t": "p",
+     "text": "找规律第一步：**找「一组」**——不断重复的最小单位。"
+    },
+    {
+     "t": "viz",
+     "viz": {
+      "type": "p1b-pattern",
+      "title": "模式 0：一组一组圈出来",
+      "values": {
+       "mode": 0
+      }
+     }
+    },
+    {
+     "t": "p",
+     "text": "圈对了组，后面的判断就像数数一样简单。"
+    },
+    {
+     "t": "list",
+     "items": [
+      "找重复单位",
+      "圈一组",
+      "说清规律",
+      "接着排"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "p1b-pattern-num",
+   "title": "数的排列规律",
+   "summary": "数列规律看「相邻两数的差」：2、4、6、8……每次加 2，下一个是 10。",
+   "keyPoints": [
+    "**算差**：后一个 − 前一个",
+    "差一样 → 等差规律（+2、+5…）",
+    "也可能是**递减**（−3…）",
+    "差算准才能填对"
+   ],
+   "prerequisites": [
+    "p1b-pattern-shape"
+   ],
+   "viz": {
+    "type": "p1b-pattern",
+    "title": "模式 1：差出来的规律",
+    "values": {
+     "mode": 1
+    }
+   },
+   "apply": "楼房的门牌号 2、4、6…都是双号，每次加 2。",
+   "blocks": [
+    {
+     "t": "p",
+     "text": "数列规律万能起手：**相邻两数相减**，看差是不是一样。"
+    },
+    {
+     "t": "viz",
+     "viz": {
+      "type": "p1b-pattern",
+      "title": "模式 1：算差找规律",
+      "values": {
+       "mode": 1
+      }
+     }
+    },
+    {
+     "t": "p",
+     "text": "差一样就是「每次加（减）几」；差不一样，再看是不是按组循环。"
+    },
+    {
+     "t": "list",
+     "items": [
+      "先算差",
+      "差相同 = 等差",
+      "递增递减",
+      "填下一个"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "p1b-pattern-array",
+   "title": "数组与组合规律",
+   "summary": "几个数字一组循环出现：1、2、3、1、2、3……要按「组」判断下一个。",
+   "keyPoints": [
+    "规律单位可能是**一组数**",
+    "圈组：1、2、3 为一组",
+    "判断第 n 个：**数一数落在组里第几位**",
+    "图形数字混合也常见"
+   ],
+   "prerequisites": [
+    "p1b-pattern-num"
+   ],
+   "viz": {
+    "type": "p1b-pattern",
+    "title": "模式 2：一组数循环",
+    "values": {
+     "mode": 2
+    }
+   },
+   "apply": "一周 7 天循环：周一到周日，第 9 天是周二。",
+   "blocks": [
+    {
+     "t": "p",
+     "text": "组合规律的「一组」里有多个成员：**整组重复**。"
+    },
+    {
+     "t": "viz",
+     "viz": {
+      "type": "p1b-pattern",
+      "title": "模式 2：整组循环",
+      "values": {
+       "mode": 2
+      }
+     }
+    },
+    {
+     "t": "p",
+     "text": "要问「第 10 个是什么」，就**按组数周期**。"
+    },
+    {
+     "t": "list",
+     "items": [
+      "整组重复",
+      "圈出数组",
+      "按组判断",
+      "周期思想"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "p1b-pattern-make",
+   "title": "自己创造规律",
+   "summary": "按规律涂色、画图、写数：自己定一个重复的单位，别人能接着你的往下排。",
+   "keyPoints": [
+    "自创规律：**先定一组**",
+    "重复排列 ≥ 3 组才算规律",
+    "规律要**让别人看得懂**",
+    "开放题答案不唯一"
+   ],
+   "prerequisites": [
+    "p1b-pattern-array"
+   ],
+   "viz": {
+    "type": "p1b-pattern",
+    "title": "模式 3：设计自己的规律",
+    "values": {
+     "mode": 3
+    }
+   },
+   "apply": "设计班徽花边：三角形、圆、圆、三角形、圆、圆……",
+   "blocks": [
+    {
+     "t": "p",
+     "text": "创造规律：定好一组（如 △○○），**至少重复三次**，规律才明显。"
+    },
+    {
+     "t": "viz",
+     "viz": {
+      "type": "p1b-pattern",
+      "title": "模式 3：我做主设计",
+      "values": {
+       "mode": 3
+      }
+     }
+    },
+    {
+     "t": "p",
+     "text": "检验自己的规律：让别人接着画，能接上就说明规律清楚。"
+    },
+    {
+     "t": "list",
+     "items": [
+      "定一组",
+      "重复三次以上",
+      "可被接着排",
+      "答案开放"
+     ]
+    }
+   ]
+  }
+ ],
+ "examples": [
+  {
+   "id": "p1b-pattern-e1",
+   "point": "p1b-pattern-shape",
+   "title": "接着画",
+   "question": "●▲●▲●▲……接下来画什么？",
+   "steps": [
+    {
+     "text": "一组是「●▲」。",
+     "math": ""
+    },
+    {
+     "text": "下一个是 ●。",
+     "math": ""
+    }
+   ],
+   "answer": "●"
+  },
+  {
+   "id": "p1b-pattern-e2",
+   "point": "p1b-pattern-num",
+   "title": "数列规律",
+   "question": "找规律填数：3、6、9、12、____。",
+   "steps": [
+    {
+     "text": "相邻差都是 3。",
+     "math": ""
+    },
+    {
+     "text": "12 + 3 = 15。",
+     "math": ""
+    }
+   ],
+   "answer": "15"
+  },
+  {
+   "id": "p1b-pattern-e3",
+   "point": "p1b-pattern-num",
+   "title": "递减规律",
+   "question": "找规律填数：20、17、14、____。",
+   "steps": [
+    {
+     "text": "每次减 3。",
+     "math": ""
+    },
+    {
+     "text": "14 − 3 = 11。",
+     "math": ""
+    }
+   ],
+   "answer": "11"
+  },
+  {
+   "id": "p1b-pattern-e4",
+   "point": "p1b-pattern-array",
+   "title": "数组规律",
+   "question": "1、1、2、1、1、2、1、1、2……第 8 个数是几？",
+   "steps": [
+    {
+     "text": "一组是「1、1、2」。",
+     "math": ""
+    },
+    {
+     "text": "第 8 个在第三组的第 2 位。",
+     "math": "1"
+    }
+   ],
+   "answer": "1"
+  },
+  {
+   "id": "p1b-pattern-e5",
+   "point": "p1b-pattern-shape",
+   "title": "判断第几个",
+   "question": "红黄蓝红黄蓝……第 7 个是什么颜色？",
+   "steps": [
+    {
+     "text": "一组 3 个。",
+     "math": "7 = 3 + 3 + 1"
+    },
+    {
+     "text": "第 7 个是一组里的第 1 个。",
+     "math": "红"
+    }
+   ],
+   "answer": "红色"
+  },
+  {
+   "id": "p1b-pattern-e6",
+   "point": "p1b-pattern-make",
+   "title": "设计规律",
+   "question": "用 △ 和 ○ 设计一个规律，至少重复 3 组。",
+   "steps": [
+    {
+     "text": "定一组。",
+     "math": "△○○"
+    },
+    {
+     "text": "重复。",
+     "math": "△○○ △○○ △○○"
+    }
+   ],
+   "answer": "答案不唯一"
+  }
+ ],
+ "patterns": {
+  "asks": [
+   {
+    "k": "图形规律",
+    "desc": "图形排列找规律"
+   },
+   {
+    "k": "数列规律",
+    "desc": "数字增减规律"
+   },
+   {
+    "k": "数组循环",
+    "desc": "一组数的循环"
+   },
+   {
+    "k": "判断第几个",
+    "desc": "周期位置判断"
+   },
+   {
+    "k": "自创规律",
+    "desc": "设计排列规律"
+   }
+  ],
+  "features": [
+   "先圈出重复的一组",
+   "数列先算差",
+   "判断第几个按组数",
+   "自创规律要重复三次"
+  ],
+  "patterns": [
+   {
+    "no": "基础 1",
+    "id": "p1b-pattern-t-shape",
+    "title": "图形规律",
+    "level": "基础",
+    "kind": "应用",
+    "asks": [
+     "图形规律"
+    ],
+    "signals": [
+     "接着画"
+    ],
+    "chain": [
+     {
+      "point": "p1b-pattern-shape",
+      "role": "圈一组"
+     }
+    ],
+    "locate": "找最小重复单位。",
+    "stem": "○△△○△△……接着画一个什么？",
+    "solution": [
+     {
+      "text": "一组是「○△△」。",
+      "math": ""
+     },
+     {
+      "text": "接下来是 ○。",
+      "math": ""
+     }
+    ],
+    "trap": "一组圈错。",
+    "route": [
+     "/p1b-pattern/p1b-pattern-shape"
+    ]
+   },
+   {
+    "no": "基础 2",
+    "id": "p1b-pattern-t-num",
+    "title": "数列规律",
+    "level": "基础",
+    "kind": "计算",
+    "asks": [
+     "数列规律"
+    ],
+    "signals": [
+     "找规律填数"
+    ],
+    "chain": [
+     {
+      "point": "p1b-pattern-num",
+      "role": "算差"
+     }
+    ],
+    "locate": "后一个减前一个。",
+    "stem": "找规律填数：5、10、15、____。",
+    "solution": [
+     {
+      "text": "每次加 5。",
+      "math": "15 + 5 = 20"
+     }
+    ],
+    "trap": "差算错。",
+    "route": [
+     "/p1b-pattern/p1b-pattern-num"
+    ]
+   },
+   {
+    "no": "中档 1",
+    "id": "p1b-pattern-t-dec",
+    "title": "递减规律",
+    "level": "中档",
+    "kind": "计算",
+    "asks": [
+     "数列规律"
+    ],
+    "signals": [
+     "递减"
+    ],
+    "chain": [
+     {
+      "point": "p1b-pattern-num",
+      "role": "减法规律"
+     }
+    ],
+    "locate": "差为负数，依次减。",
+    "stem": "找规律填数：25、22、19、____。",
+    "solution": [
+     {
+      "text": "每次减 3。",
+      "math": "19 − 3 = 16"
+     }
+    ],
+    "trap": "当成加法规律。",
+    "route": [
+     "/p1b-pattern/p1b-pattern-num"
+    ]
+   },
+   {
+    "no": "中档 2",
+    "id": "p1b-pattern-t-cyc",
+    "title": "判断第几个",
+    "level": "中档",
+    "kind": "应用",
+    "asks": [
+     "判断第几个"
+    ],
+    "signals": [
+     "第几个是什么"
+    ],
+    "chain": [
+     {
+      "point": "p1b-pattern-array",
+      "role": "按组定位"
+     }
+    ],
+    "locate": "除以组内个数看余数。",
+    "stem": "按「●●○」循环排列，第 11 个是什么？",
+    "solution": [
+     {
+      "text": "11 = 3×3 + 2。",
+      "math": ""
+     },
+     {
+      "text": "第 2 个是 ●。",
+      "math": "●"
+     }
+    ],
+    "trap": "数错周期。",
+    "route": [
+     "/p1b-pattern/p1b-pattern-array"
+    ]
+   },
+   {
+    "no": "提升 1",
+    "id": "p1b-pattern-t-make",
+    "title": "自创规律",
+    "level": "提升",
+    "kind": "综合",
+    "asks": [
+     "自创规律"
+    ],
+    "signals": [
+     "设计",
+     "涂色"
+    ],
+    "chain": [
+     {
+      "point": "p1b-pattern-make",
+      "role": "定组重复"
+     }
+    ],
+    "locate": "定一组，重复三次以上。",
+    "stem": "用三种颜色设计一条有规律的花边。",
+    "solution": [
+     {
+      "text": "如红黄蓝、红黄蓝、红黄蓝。",
+      "math": ""
+     }
+    ],
+    "trap": "颜色随机没有重复单位。",
+    "route": [
+     "/p1b-pattern/p1b-pattern-make"
+    ]
+   }
+  ]
+ }
+}

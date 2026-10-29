@@ -1,0 +1,504 @@
+{
+ "meta": {
+  "id": "p2b-weight",
+  "title": "克和千克",
+  "grade": "二年级下册",
+  "bookNo": 8,
+  "order": 48,
+  "unit": true,
+  "status": "done",
+  "prereqChapters": [
+   "p1b-100"
+  ],
+  "tagline": "一枚 2 分硬币约重 1 克、两袋盐重 1 千克——轻的用克、重的用千克，1 千克 = 1000 克。",
+  "textbook": "人教版二年级下册第八单元",
+  "intro": "质量单位第一次亮相：**克（g）量轻的**（一枚硬币、一颗糖），**千克（kg）量重的**（两袋盐、一袋大米）。**1 千克 = 1000 克**。认识天平、电子秤、盘秤；会估计物品轻重并选择合适的单位。",
+  "examShare": "必考：填合适的单位、千克克换算、看秤读数、估测。失分点是单位选错（一个苹果重 200 千克）和换算进率记错。",
+  "emoji": "⚖️"
+ },
+ "points": [
+  {
+   "id": "p2b-weight-g",
+   "title": "克的相识",
+   "summary": "克是较小的质量单位：1 枚 2 分硬币约重 1 克；计量较轻物品用克（g）。",
+   "keyPoints": [
+    "**克（g）**：量较轻物品",
+    "1 枚 2 分硬币 ≈ **1 克**",
+    "常见的克：糖 5 克、饼干 100 克",
+    "用**天平**称很轻的东西"
+   ],
+   "prerequisites": [],
+   "viz": {
+    "type": "p2b-weight",
+    "title": "模式 0：一克有多重",
+    "values": {
+     "mode": 0
+    }
+   },
+   "apply": "食品包装上的「净含量 250g」就是克。",
+   "blocks": [
+    {
+     "t": "p",
+     "text": "掂一掂硬币：**这就是 1 克的手感**。"
+    },
+    {
+     "t": "viz",
+     "viz": {
+      "type": "p2b-weight",
+      "title": "模式 0：克的天平",
+      "values": {
+       "mode": 0
+      }
+     }
+    },
+    {
+     "t": "p",
+     "text": "估重量用参照物：一颗糖约 5 克、一个鸡蛋约 50 克。"
+    },
+    {
+     "t": "list",
+     "items": [
+      "克量轻物",
+      "硬币 1 克",
+      "参照估重",
+      "天平称轻"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "p2b-weight-kg",
+   "title": "千克的相识",
+   "summary": "千克是较大的质量单位：2 袋盐（每袋 500 克）正好 1 千克。",
+   "keyPoints": [
+    "**千克（kg）**：量较重物品",
+    "**2 袋 500 克的盐 = 1 千克**",
+    "1 千克 = **1000 克**",
+    "用**盘秤、电子秤**称"
+   ],
+   "prerequisites": [
+    "p2b-weight-g"
+   ],
+   "viz": {
+    "type": "p2b-weight",
+    "title": "模式 1：两袋盐一千克",
+    "values": {
+     "mode": 1
+    }
+   },
+   "apply": "买水果按千克称重——超市电子秤显示 kg。",
+   "blocks": [
+    {
+     "t": "p",
+     "text": "1 千克 = 1000 克，**进率是一千**。"
+    },
+    {
+     "t": "viz",
+     "viz": {
+      "type": "p2b-weight",
+      "title": "模式 1：进率 1000",
+      "values": {
+       "mode": 1
+      }
+     }
+    },
+    {
+     "t": "p",
+     "text": "感受 1 千克：两瓶 500 mL 矿泉水差不多。"
+    },
+    {
+     "t": "list",
+     "items": [
+      "千克量重物",
+      "进率 1000",
+      "两瓶水 1 kg",
+      "秤选择"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "p2b-weight-scale",
+   "title": "认识秤与读数",
+   "summary": "常见秤有天平、电子秤、盘秤、弹簧秤；读数看单位和指针（或数字）。",
+   "keyPoints": [
+    "**天平**：比较轻重",
+    "**电子秤**：直接显示数字",
+    "读数先看**单位**（g 还是 kg）",
+    "指针秤看**刻度对齐**"
+   ],
+   "prerequisites": [
+    "p2b-weight-kg"
+   ],
+   "viz": {
+    "type": "p2b-weight",
+    "title": "模式 2：秤上读数",
+    "values": {
+     "mode": 2
+    }
+   },
+   "apply": "菜市场的盘秤、快递站的电子秤。",
+   "blocks": [
+    {
+     "t": "p",
+     "text": "读秤两步：**看单位、读数字**。"
+    },
+    {
+     "t": "viz",
+     "viz": {
+      "type": "p2b-weight",
+      "title": "模式 2：指针指哪里",
+      "values": {
+       "mode": 2
+      }
+     }
+    },
+    {
+     "t": "p",
+     "text": "天平平衡说明**两边一样重**——砝码总量就是物体重量。"
+    },
+    {
+     "t": "list",
+     "items": [
+      "先看单位",
+      "指针读刻度",
+      "天平比轻重",
+      "电子直读"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "p2b-weight-est",
+   "title": "估测与合理单位",
+   "summary": "填单位靠想象实物：一个苹果约 200 克、一头牛约 300 千克——太大太小都不合理。",
+   "keyPoints": [
+    "想象**实物大小**选单位",
+    "常见的参照：鸡蛋 50 g、西瓜 4 kg、人 30 kg",
+    "换算后再比较",
+    "检查**合理性**"
+   ],
+   "prerequisites": [
+    "p2b-weight-scale"
+   ],
+   "viz": {
+    "type": "p2b-weight",
+    "title": "模式 3：选对单位",
+    "values": {
+     "mode": 3
+    }
+   },
+   "apply": "「一只鸡重 2（千克）」合理；「2 克」就像一颗纽扣。",
+   "blocks": [
+    {
+     "t": "p",
+     "text": "单位选错闹笑话：**一个苹果 200 千克**？那是两头猪。"
+    },
+    {
+     "t": "viz",
+     "viz": {
+      "type": "p2b-weight",
+      "title": "模式 3：合理检查",
+      "values": {
+       "mode": 3
+      }
+     }
+    },
+    {
+     "t": "p",
+     "text": "估完再换算验证：2 kg = 2000 g，接近实际。"
+    },
+    {
+     "t": "list",
+     "items": [
+      "想象实物",
+      "参照估测",
+      "换算验证",
+      "合理即对"
+     ]
+    }
+   ]
+  }
+ ],
+ "examples": [
+  {
+   "id": "p2b-weight-e1",
+   "point": "p2b-weight-g",
+   "title": "克的认识",
+   "question": "1 枚 2 分硬币大约重多少？",
+   "steps": [
+    {
+     "text": "约 1 克。",
+     "math": ""
+    }
+   ],
+   "answer": "1 克"
+  },
+  {
+   "id": "p2b-weight-e2",
+   "point": "p2b-weight-kg",
+   "title": "进率换算",
+   "question": "3 千克 = （　）克。",
+   "steps": [
+    {
+     "text": "1 千克 = 1000 克。",
+     "math": "3000 克"
+    }
+   ],
+   "answer": "3000 克"
+  },
+  {
+   "id": "p2b-weight-e3",
+   "point": "p2b-weight-kg",
+   "title": "反换算",
+   "question": "5000 克 = （　）千克。",
+   "steps": [
+    {
+     "text": "1000 克 = 1 千克。",
+     "math": "5 千克"
+    }
+   ],
+   "answer": "5 千克"
+  },
+  {
+   "id": "p2b-weight-e4",
+   "point": "p2b-weight-scale",
+   "title": "读秤",
+   "question": "电子秤显示「1.5 kg」，是多重？",
+   "steps": [
+    {
+     "text": "单位 kg。",
+     "math": "1 千克 500 克（1500 克）"
+    }
+   ],
+   "answer": "1 千克 500 克"
+  },
+  {
+   "id": "p2b-weight-e5",
+   "point": "p2b-weight-est",
+   "title": "填单位",
+   "question": "填单位：一个西瓜约 4（　）；一块橡皮约 10（　）。",
+   "steps": [
+    {
+     "text": "想象实物。",
+     "math": ""
+    },
+    {
+     "text": "千克；克。",
+     "math": ""
+    }
+   ],
+   "answer": "千克；克"
+  },
+  {
+   "id": "p2b-weight-e6",
+   "point": "p2b-weight-est",
+   "title": "比轻重",
+   "question": "1 千克棉花和 1 千克铁哪个重？",
+   "steps": [
+    {
+     "text": "质量相等。",
+     "math": ""
+    },
+    {
+     "text": "一样重。",
+     "math": ""
+    }
+   ],
+   "answer": "一样重"
+  }
+ ],
+ "patterns": {
+  "asks": [
+   {
+    "k": "选单位",
+    "desc": "克与千克的选择"
+   },
+   {
+    "k": "换算",
+    "desc": "千克与克互化"
+   },
+   {
+    "k": "读秤",
+    "desc": "从秤上读质量"
+   },
+   {
+    "k": "估测",
+    "desc": "估物品质量"
+   },
+   {
+    "k": "比较",
+    "desc": "比较轻重"
+   }
+  ],
+  "features": [
+   "克量轻、千克量重",
+   "1 千克 = 1000 克",
+   "读秤先看单位",
+   "参照物估测"
+  ],
+  "patterns": [
+   {
+    "no": "基础 1",
+    "id": "p2b-weight-t-unit",
+    "title": "选单位",
+    "level": "基础",
+    "kind": "概念",
+    "asks": [
+     "选单位"
+    ],
+    "signals": [
+     "填 g 或 kg"
+    ],
+    "chain": [
+     {
+      "point": "p2b-weight-est",
+      "role": "想象实物"
+     }
+    ],
+    "locate": "轻用克、重用千克。",
+    "stem": "一个书包约重 2（　）。",
+    "solution": [
+     {
+      "text": "书包不轻。",
+      "math": "千克"
+     }
+    ],
+    "trap": "填成克。",
+    "route": [
+     "/p2b-weight/p2b-weight-est"
+    ]
+   },
+   {
+    "no": "基础 2",
+    "id": "p2b-weight-t-conv",
+    "title": "换算",
+    "level": "基础",
+    "kind": "计算",
+    "asks": [
+     "换算"
+    ],
+    "signals": [
+     "= g",
+     "= kg"
+    ],
+    "chain": [
+     {
+      "point": "p2b-weight-kg",
+      "role": "进率 1000"
+     }
+    ],
+    "locate": "乘或除 1000。",
+    "stem": "6 千克 = （　）克。",
+    "solution": [
+     {
+      "text": "6 × 1000。",
+      "math": "6000 克"
+     }
+    ],
+    "trap": "乘 100。",
+    "route": [
+     "/p2b-weight/p2b-weight-kg"
+    ]
+   },
+   {
+    "no": "中档 1",
+    "id": "p2b-weight-t-scale",
+    "title": "读秤",
+    "level": "中档",
+    "kind": "应用",
+    "asks": [
+     "读秤"
+    ],
+    "signals": [
+     "秤上显示"
+    ],
+    "chain": [
+     {
+      "point": "p2b-weight-scale",
+      "role": "单位 + 数字"
+     }
+    ],
+    "locate": "先看单位再读数。",
+    "stem": "盘秤上放苹果指针指 3（单位 kg），苹果多重？",
+    "solution": [
+     {
+      "text": "3 千克。",
+      "math": ""
+     }
+    ],
+    "trap": "当成 3 克。",
+    "route": [
+     "/p2b-weight/p2b-weight-scale"
+    ]
+   },
+   {
+    "no": "中档 2",
+    "id": "p2b-weight-t-est",
+    "title": "估测",
+    "level": "中档",
+    "kind": "综合",
+    "asks": [
+     "估测"
+    ],
+    "signals": [
+     "大约",
+     "估一估"
+    ],
+    "chain": [
+     {
+      "point": "p2b-weight-est",
+      "role": "参照估重"
+     }
+    ],
+    "locate": "用常见物品做参照。",
+    "stem": "一个西瓜约 4 千克，两个这样的西瓜约多重？",
+    "solution": [
+     {
+      "text": "4 × 2。",
+      "math": "8 千克"
+     }
+    ],
+    "trap": "估得太离谱。",
+    "route": [
+     "/p2b-weight/p2b-weight-est"
+    ]
+   },
+   {
+    "no": "提升 1",
+    "id": "p2b-weight-t-compare",
+    "title": "比较轻重",
+    "level": "提升",
+    "kind": "综合",
+    "asks": [
+     "比较"
+    ],
+    "signals": [
+     "哪个重"
+    ],
+    "chain": [
+     {
+      "point": "p2b-weight-kg",
+      "role": "统一单位"
+     }
+    ],
+    "locate": "先统一单位再比。",
+    "stem": "800 克和 1 千克，哪个重？",
+    "solution": [
+     {
+      "text": "1 千克 = 1000 克。",
+      "math": ""
+     },
+     {
+      "text": "1 千克重。",
+      "math": ""
+     }
+    ],
+    "trap": "只比数字 800 与 1。",
+    "route": [
+     "/p2b-weight/p2b-weight-kg"
+    ]
+   }
+  ]
+ }
+}

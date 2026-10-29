@@ -1,0 +1,518 @@
+{
+ "meta": {
+  "id": "p2b-motion",
+  "title": "图形的运动（一）",
+  "grade": "二年级下册",
+  "bookNo": 3,
+  "order": 43,
+  "unit": true,
+  "status": "done",
+  "prereqChapters": [
+   "p1b-shape2"
+  ],
+  "tagline": "对称轴一折两边重合；平移沿着直线滑、旋转绕着点转——三种运动认一认。",
+  "textbook": "人教版二年级下册第三单元",
+  "intro": "图形会动：**轴对称**（对折两边完全重合，折痕是对称轴）、**平移**（沿直线滑动，方向大小不变）、**旋转**（绕一个点转圈）。会剪对称图形、会在方格纸上数平移格数、认出生活中的三种运动。",
+  "examShare": "必考：判断对称图形及对称轴数量、区分平移与旋转、数平移格数。失分点是把旋转当平移、对称轴数量数错。",
+  "emoji": "🪞"
+ },
+ "points": [
+  {
+   "id": "p2b-motion-sym",
+   "title": "轴对称图形",
+   "summary": "对折后两边完全重合的图形是轴对称图形：蝴蝶、树叶、字母 A 都是对称的。",
+   "keyPoints": [
+    "**对折重合** → 轴对称",
+    "折痕就是**对称轴**",
+    "对称轴可以**不止一条**（正方形有 4 条）",
+    "对称图形**两边一样**"
+   ],
+   "prerequisites": [],
+   "viz": {
+    "type": "p2b-motion",
+    "title": "模式 0：对折重合",
+    "values": {
+     "mode": 0
+    }
+   },
+   "apply": "剪纸：纸对折剪一刀，展开就是对称图案。",
+   "blocks": [
+    {
+     "t": "p",
+     "text": "判断对称就看**能不能对折重合**。"
+    },
+    {
+     "t": "viz",
+     "viz": {
+      "type": "p2b-motion",
+      "title": "模式 0：折一折看一看",
+      "values": {
+       "mode": 0
+      }
+     }
+    },
+    {
+     "t": "p",
+     "text": "对称轴是**直线**：有的图形多条（圆有无数条）。"
+    },
+    {
+     "t": "list",
+     "items": [
+      "对折重合",
+      "折痕即轴",
+      "轴可多条",
+      "两边一致"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "p2b-motion-slide",
+   "title": "平移",
+   "summary": "平移是沿直线滑动：滑梯上的滑块、推拉窗、电梯升降——方向不变、大小不变。",
+   "keyPoints": [
+    "平移**沿直线**移动",
+    "**方向、形状、大小都不变**",
+    "只改变**位置**",
+    "在方格纸上**数格**判断"
+   ],
+   "prerequisites": [
+    "p2b-motion-sym"
+   ],
+   "viz": {
+    "type": "p2b-motion",
+    "title": "模式 1：左右平移",
+    "values": {
+     "mode": 1
+    }
+   },
+   "apply": "电梯上上下下是竖直平移，缆车沿索道平移。",
+   "blocks": [
+    {
+     "t": "p",
+     "text": "平移三不变：**方向、形状、大小**；唯一变的是**位置**。"
+    },
+    {
+     "t": "viz",
+     "viz": {
+      "type": "p2b-motion",
+      "title": "模式 1：拖滑块平移",
+      "values": {
+       "mode": 1
+      }
+     }
+    },
+    {
+     "t": "p",
+     "text": "数平移格数：**找图形上的一个点**，数它移动了几格（不是数两个图形间的空格）。"
+    },
+    {
+     "t": "list",
+     "items": [
+      "沿直线",
+      "形状不变",
+      "数点数格",
+      "只变位置"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "p2b-motion-spin",
+   "title": "旋转",
+   "summary": "旋转是绕一个点转：风车、摩天轮、钟面指针——大小形状不变，方向在变。",
+   "keyPoints": [
+    "绕**一个点（中心）**转动",
+    "形状大小不变，**方向改变**",
+    "生活中的旋转：风扇、指针、风车",
+    "**转动**不是滑动"
+   ],
+   "prerequisites": [
+    "p2b-motion-slide"
+   ],
+   "viz": {
+    "type": "p2b-motion",
+    "title": "模式 2：风车转起来",
+    "values": {
+     "mode": 2
+    }
+   },
+   "apply": "拧水龙头、荡秋千（摆动）都有旋转的影子。",
+   "blocks": [
+    {
+     "t": "p",
+     "text": "旋转找**中心点**：绕着谁转。"
+    },
+    {
+     "t": "viz",
+     "viz": {
+      "type": "p2b-motion",
+      "title": "模式 2：绕中心旋转",
+      "values": {
+       "mode": 2
+      }
+     }
+    },
+    {
+     "t": "p",
+     "text": "平移与旋转的区别：**走直线还是绕圈**。"
+    },
+    {
+     "t": "list",
+     "items": [
+      "绕中心",
+      "方向变",
+      "风车轮",
+      "对比平移"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "p2b-motion-life",
+   "title": "生活中的三种运动",
+   "summary": "分类判断：剪纸对称、缆车平移、摩天轮旋转——同一现象要选准关键词。",
+   "keyPoints": [
+    "**对称**：找折痕",
+    "**平移**：找直线运动",
+    "**旋转**：找绕点转动",
+    "组合运动要**分步骤判断**"
+   ],
+   "prerequisites": [
+    "p2b-motion-spin"
+   ],
+   "viz": {
+    "type": "p2b-motion",
+    "title": "模式 3：对号入座",
+    "values": {
+     "mode": 3
+    }
+   },
+   "apply": "拉抽屉平移、拧瓶盖旋转、天安门城楼对称。",
+   "blocks": [
+    {
+     "t": "p",
+     "text": "判断三问：**能对折吗？沿直线动吗？绕点转吗？**"
+    },
+    {
+     "t": "viz",
+     "viz": {
+      "type": "p2b-motion",
+      "title": "模式 3：贴标签",
+      "values": {
+       "mode": 3
+      }
+     }
+    },
+    {
+     "t": "p",
+     "text": "有的物体既有平移又有旋转（如直升机的机身平移、螺旋桨旋转）。"
+    },
+    {
+     "t": "list",
+     "items": [
+      "三问判断",
+      "关键词定位",
+      "可组合出现",
+      "联系生活"
+     ]
+    }
+   ]
+  }
+ ],
+ "examples": [
+  {
+   "id": "p2b-motion-e1",
+   "point": "p2b-motion-sym",
+   "title": "判断对称",
+   "question": "字母 A、F、H 中哪些是轴对称图形？",
+   "steps": [
+    {
+     "text": "A 左右对折重合。",
+     "math": "A 是"
+    },
+    {
+     "text": "F 不对称；H 左右对称。",
+     "math": ""
+    }
+   ],
+   "answer": "A 和 H"
+  },
+  {
+   "id": "p2b-motion-e2",
+   "point": "p2b-motion-sym",
+   "title": "对称轴数量",
+   "question": "正方形有几条对称轴？",
+   "steps": [
+    {
+     "text": "横、竖、两条对角线。",
+     "math": "4 条"
+    }
+   ],
+   "answer": "4 条"
+  },
+  {
+   "id": "p2b-motion-e3",
+   "point": "p2b-motion-slide",
+   "title": "数平移格",
+   "question": "小船向右平移 5 格，怎么数？",
+   "steps": [
+    {
+     "text": "盯住船头一点。",
+     "math": ""
+    },
+    {
+     "text": "数它移动的格数。",
+     "math": "5 格"
+    }
+   ],
+   "answer": "盯一点数 5 格"
+  },
+  {
+   "id": "p2b-motion-e4",
+   "point": "p2b-motion-spin",
+   "title": "判断旋转",
+   "question": "下列哪些是旋转：推门、拉抽屉、转呼啦圈？",
+   "steps": [
+    {
+     "text": "推门绕轴转。",
+     "math": "旋转"
+    },
+    {
+     "text": "拉抽屉平移；呼啦圈旋转。",
+     "math": ""
+    }
+   ],
+   "answer": "推门、转呼啦圈"
+  },
+  {
+   "id": "p2b-motion-e5",
+   "point": "p2b-motion-life",
+   "title": "生活分类",
+   "question": "电梯升降、拧水龙头、剪纸窗花分别属于什么？",
+   "steps": [
+    {
+     "text": "电梯：平移。",
+     "math": ""
+    },
+    {
+     "text": "拧瓶盖：旋转；窗花：轴对称。",
+     "math": ""
+    }
+   ],
+   "answer": "平移；旋转；轴对称"
+  },
+  {
+   "id": "p2b-motion-e6",
+   "point": "p2b-motion-slide",
+   "title": "平移性质",
+   "question": "平移后的图形和原图形相比，什么变了、什么没变？",
+   "steps": [
+    {
+     "text": "位置变了。",
+     "math": ""
+    },
+    {
+     "text": "形状大小方向没变。",
+     "math": ""
+    }
+   ],
+   "answer": "位置变，其余不变"
+  }
+ ],
+ "patterns": {
+  "asks": [
+   {
+    "k": "判断对称",
+    "desc": "轴对称图形的判断"
+   },
+   {
+    "k": "对称轴",
+    "desc": "对称轴的数量"
+   },
+   {
+    "k": "平移",
+    "desc": "平移的判断与格数"
+   },
+   {
+    "k": "旋转",
+    "desc": "旋转的判断"
+   },
+   {
+    "k": "生活分类",
+    "desc": "生活现象分类"
+   }
+  ],
+  "features": [
+   "对折重合才是对称",
+   "数平移盯住一点",
+   "旋转找中心",
+   "结论要贴标签"
+  ],
+  "patterns": [
+   {
+    "no": "基础 1",
+    "id": "p2b-motion-t-sym",
+    "title": "判断对称",
+    "level": "基础",
+    "kind": "概念",
+    "asks": [
+     "判断对称"
+    ],
+    "signals": [
+     "轴对称"
+    ],
+    "chain": [
+     {
+      "point": "p2b-motion-sym",
+      "role": "对折想象"
+     }
+    ],
+    "locate": "想象对折是否重合。",
+    "stem": "数字 8 是轴对称图形吗？",
+    "solution": [
+     {
+      "text": "上下、左右对折都重合（近似）。",
+      "math": ""
+     },
+     {
+      "text": "是。",
+      "math": ""
+     }
+    ],
+    "trap": "把不对称的判成对称。",
+    "route": [
+     "/p2b-motion/p2b-motion-sym"
+    ]
+   },
+   {
+    "no": "基础 2",
+    "id": "p2b-motion-t-axis",
+    "title": "对称轴",
+    "level": "基础",
+    "kind": "概念",
+    "asks": [
+     "对称轴"
+    ],
+    "signals": [
+     "几条"
+    ],
+    "chain": [
+     {
+      "point": "p2b-motion-sym",
+      "role": "数折痕"
+     }
+    ],
+    "locate": "想象各种折法。",
+    "stem": "等腰三角形（两边相等）有几条对称轴？",
+    "solution": [
+     {
+      "text": "从顶角到底边的折痕。",
+      "math": "1 条"
+     }
+    ],
+    "trap": "答 3 条。",
+    "route": [
+     "/p2b-motion/p2b-motion-sym"
+    ]
+   },
+   {
+    "no": "中档 1",
+    "id": "p2b-motion-t-slide",
+    "title": "平移格数",
+    "level": "中档",
+    "kind": "应用",
+    "asks": [
+     "平移"
+    ],
+    "signals": [
+     "平移几格"
+    ],
+    "chain": [
+     {
+      "point": "p2b-motion-slide",
+      "role": "盯点数格"
+     }
+    ],
+    "locate": "选一点数移动距离。",
+    "stem": "三角形向右平移 4 格，原图与移后图之间隔 3 格空白，对吗？",
+    "solution": [
+     {
+      "text": "平移距离按点算。",
+      "math": ""
+     },
+     {
+      "text": "应该数对应点间的格数 = 4。",
+      "math": ""
+     }
+    ],
+    "trap": "数成两图间的空白。",
+    "route": [
+     "/p2b-motion/p2b-motion-slide"
+    ]
+   },
+   {
+    "no": "中档 2",
+    "id": "p2b-motion-t-spin",
+    "title": "旋转判断",
+    "level": "中档",
+    "kind": "概念",
+    "asks": [
+     "旋转"
+    ],
+    "signals": [
+     "旋转"
+    ],
+    "chain": [
+     {
+      "point": "p2b-motion-spin",
+      "role": "找中心"
+     }
+    ],
+    "locate": "看是否绕点转。",
+    "stem": "秋千来回摆动是旋转吗？",
+    "solution": [
+     {
+      "text": "绕悬挂点摆动，属于旋转现象。",
+      "math": ""
+     }
+    ],
+    "trap": "认为只有转整圈才算。",
+    "route": [
+     "/p2b-motion/p2b-motion-spin"
+    ]
+   },
+   {
+    "no": "提升 1",
+    "id": "p2b-motion-t-life",
+    "title": "生活分类",
+    "level": "提升",
+    "kind": "综合",
+    "asks": [
+     "生活分类"
+    ],
+    "signals": [
+     "属于什么"
+    ],
+    "chain": [
+     {
+      "point": "p2b-motion-life",
+      "role": "三问判断"
+     }
+    ],
+    "locate": "对称/平移/旋转逐一对号。",
+    "stem": "国旗升起、风车转动、蝴蝶翅膀，各是什么现象？",
+    "solution": [
+     {
+      "text": "升起平移、风车旋转、蝴蝶对称。",
+      "math": ""
+     }
+    ],
+    "trap": "现象混淆。",
+    "route": [
+     "/p2b-motion/p2b-motion-life"
+    ]
+   }
+  ]
+ }
+}
