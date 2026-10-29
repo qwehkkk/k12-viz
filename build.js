@@ -28,7 +28,13 @@ const SITE = {
 };
 
 /* 年级学期顺序（人教版目录分组用） */
-const GRADE_TERMS = ['七年级上册', '七年级下册', '八年级上册', '八年级下册', '九年级上册', '九年级下册', '高一上册', '高一下册', '高二上册', '高二下册', '高三上册', '高三下册'];
+const GRADE_TERMS = ['一年级上册', '一年级下册', '二年级上册', '二年级下册', '三年级上册', '三年级下册', '四年级上册', '四年级下册', '五年级上册', '五年级下册', '六年级上册', '六年级下册', '七年级上册', '七年级下册', '八年级上册', '八年级下册', '九年级上册', '九年级下册', '高一上册', '高一下册', '高二上册', '高二下册', '高三上册', '高三下册'];
+const STAGE_GROUPS = [
+  { name: '小学', cls: 'stage-primary', grades: GRADE_TERMS.slice(0, 12) },
+  { name: '初中', cls: 'stage-junior', grades: GRADE_TERMS.slice(12, 18) },
+  { name: '高中', cls: 'stage-senior', grades: GRADE_TERMS.slice(18) }
+];
+const unitWord = ch => (ch.meta.unit ? '单元' : '章');
 
 /* ---------- 载入所有章节 ---------- */
 const chapters = fs.readdirSync(DATA_DIR)
@@ -223,7 +229,7 @@ function chapterCard(ch) {
   const n = ch.points.length;
   return `<a class="chapter-card" href="${ch.meta.id}/index.html">
   <div class="cc-head">
-    <span class="cc-order">第 ${ch.meta.bookNo || ch.meta.order} 章</span>
+    <span class="cc-order">第 ${ch.meta.bookNo || ch.meta.order} ${unitWord(ch)}</span>
     <span class="cc-grade">${esc(ch.meta.grade)}</span>
   </div>
   <h3>${esc(ch.meta.title)}</h3>
@@ -255,12 +261,13 @@ ${list.map(chapterCard).join('\n')}
   </div>
 </div>`;
   };
-  const JUNIOR = GRADE_TERMS.slice(0, 6), SENIOR = GRADE_TERMS.slice(6);
-  const stage = (name, cls, grades) => `<div class="stage-block ${cls}">
-  <h2 class="stage-title">${name}<span class="stage-count">${grades.filter(g => chapters.some(c => c.meta.grade === g)).length} 个学期</span></h2>
-${grades.map(gradeBlock).join('\n')}
+  const gradeHtml = STAGE_GROUPS.map(sg => {
+    const n = sg.grades.filter(g => chapters.some(c => c.meta.grade === g)).length;
+    return `<div class="stage-block ${sg.cls}">
+  <h2 class="stage-title">${sg.name}<span class="stage-count">${n} 个学期已上线</span></h2>
+${sg.grades.map(gradeBlock).join('\n')}
 </div>`;
-  const gradeHtml = stage('初中', 'stage-junior', JUNIOR) + '\n' + stage('高中', 'stage-senior', SENIOR);
+  }).join('\n');
 
   const strandHtml = STRANDS.map(st => {
     const n = st.chapters.length;
@@ -276,7 +283,7 @@ ${grades.map(gradeBlock).join('\n')}
 <div class="hero">
   <h1>数学 · 可视化学习</h1>
   <p>把知识点画出来、把过程动起来、把题型拆开来看。不是又一份知识点总结，而是让你看见「这个式子是怎么长出来的、这类题是由哪几块拼起来的」。</p>
-  <p class="hero-sub">每个知识点都配交互实验、分步题解和现实场景；每类题型都拆解它调用了哪些知识点、从哪一步下手。目录按<b>初中</b>和<b>高中</b>分成两大组，各取所需。</p>
+  <p class="hero-sub">每个知识点都配交互实验、分步题解和现实场景；每类题型都拆解它调用了哪些知识点、从哪一步下手。目录按<b>小学</b>、<b>初中</b>、<b>高中</b>分成三组，各取所需。</p>
   <div class="chips">
     <span class="chip green">${chapters.length} 章</span>
     <span class="chip green">${totalPoints} 个知识点</span>
@@ -287,7 +294,7 @@ ${grades.map(gradeBlock).join('\n')}
 
 <div class="section-head" style="margin-top:0">
   <h2>课程目录 · 按年级</h2>
-  <p>跟人教版教材章节编号一致（如「九年级上册 · 第 21 章」），<b>初中</b>与<b>高中</b>分成两大组，按需查看。</p>
+  <p>跟人教版教材目录一致（如「九年级上册 · 第 21 章」「三年级上册 · 第 8 单元」），<b>小学、初中、高中</b>分成三组，按需查看。</p>
 </div>
 ${gradeHtml}
 
@@ -746,6 +753,10 @@ ${foot()}`;
 }
 
 /* ---------- 专项图谱页 ---------- */
+const TRACK_GRADES = GRADE_TERMS.filter(g => STRANDS.some(st =>
+  st.chapters.some(cid => chapterById[cid].meta.grade === g) ||
+  st.ghosts.some(x => x.split('|')[1] === g)));
+
 function renderTracks() {
   // ---- 布局参数 ----
   const COLW = 158, NW = 138, NH = 34, STACK = 44;
@@ -756,13 +767,13 @@ function renderTracks() {
   STRANDS.forEach((st, si) => {
     st.chapters.forEach(cid => {
       const ch = chapterById[cid];
-      const ci = GRADE_TERMS.indexOf(ch.meta.grade);
+      const ci = TRACK_GRADES.indexOf(ch.meta.grade);
       const key = si + '-' + ci;
       (cells[key] = cells[key] || []).push({ kind: 'ch', cid, title: ch.meta.title });
     });
     st.ghosts.forEach(g => {
       const [title, grade] = g.split('|');
-      const ci = GRADE_TERMS.indexOf(grade);
+      const ci = TRACK_GRADES.indexOf(grade);
       const key = si + '-' + ci;
       (cells[key] = cells[key] || []).push({ kind: 'ghost', title });
     });
@@ -776,7 +787,7 @@ function renderTracks() {
   STRANDS.forEach((st, si) => {
     const bandY = y;
     let maxStack = 1;
-    for (let ci = 0; ci < GRADE_TERMS.length; ci++) {
+    for (let ci = 0; ci < TRACK_GRADES.length; ci++) {
       const cell = cells[si + '-' + ci] || [];
       cell.forEach((item, k) => {
         const x = PADL + ci * COLW + 8;
@@ -789,7 +800,7 @@ function renderTracks() {
     rowBands.push({ y: bandY, h: maxStack * STACK + 6 });
     y += maxStack * STACK + ROWGAP;
   });
-  const svgW = PADL + GRADE_TERMS.length * COLW + PADR;
+  const svgW = PADL + TRACK_GRADES.length * COLW + PADR;
   const svgH = y;
 
   // ---- 连线（前置 → 本章）----
@@ -800,7 +811,7 @@ function renderTracks() {
       if (!nodePos[pc.meta.id] || !nodePos[cid]) return;
       const a = nodePos[pc.meta.id], b = nodePos[cid];
       let x1, y1, x2, y2;
-      const aci = GRADE_TERMS.indexOf(pc.meta.grade), bci = GRADE_TERMS.indexOf(ch.meta.grade);
+      const aci = TRACK_GRADES.indexOf(pc.meta.grade), bci = TRACK_GRADES.indexOf(ch.meta.grade);
       if (bci > aci) { x1 = a.x + NW; y1 = a.y + NH / 2; x2 = b.x; y2 = b.y + NH / 2; }
       else { x1 = a.x + NW / 2; y1 = a.y + NH; x2 = b.x + NW / 2; y2 = b.y; }
       const dx = Math.max(30, (x2 - x1) * 0.45);
@@ -809,7 +820,7 @@ function renderTracks() {
   }));
 
   // ---- SVG ----
-  const colHeaders = GRADE_TERMS.map((g, ci) =>
+  const colHeaders = TRACK_GRADES.map((g, ci) =>
     `<text x="${PADL + ci * COLW + 8 + NW / 2}" y="34" text-anchor="middle" class="tg-col">${g}</text>`).join('\n');
   const rowLabels = STRANDS.map((st, si) => {
     const b = rowBands[si];
@@ -844,7 +855,7 @@ ${ghostHtml}
       const ch = chapterById[cid];
       const links = (ch.prereqCh || []).map(pc => esc(pc.meta.title)).join('、') || '无（这条线的起点）';
       return `<a class="card strand-ch-card" href="../${cid}/index.html" style="--sc:${st.color}">
-  <span class="num">${esc(ch.meta.grade)} · 第 ${ch.meta.bookNo} 章</span>
+  <span class="num">${esc(ch.meta.grade)} · 第 ${ch.meta.bookNo} ${unitWord(ch)}</span>
   <h3>${esc(ch.meta.title)}</h3>
   <p>${esc(ch.meta.tagline || '')}</p>
   <div class="meta"><span class="badge blue">${ch.points.length} 知识点</span><span class="badge">先学：${links}</span></div>

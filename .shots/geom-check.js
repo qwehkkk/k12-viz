@@ -12,11 +12,11 @@ function makeRec() {
     r.minY = Math.min(r.minY, y); r.maxY = Math.max(r.maxY, y);
   };
   r.box = (x, y, w, h) => { r.pt(x, y); r.pt(x + w, y + h); };
-  r.text = (t, x, y) => {
+  r.text = (t, x, y, align, rotated) => {
     if (!isFinite(x) || !isFinite(y)) { r.nan++; return; }
     let w = 0;
     for (const ch of String(t)) w += ch.charCodeAt(0) > 255 ? 12 : 7;
-    r.texts.push({ t, x, y, w });
+    r.texts.push({ t, x, y, w, align: align || 'start', rotated: !!rotated });
   };
   r.reset = () => { r.minX = 1e9; r.maxX = -1e9; r.minY = 1e9; r.maxY = -1e9; r.nan = 0; r.texts = []; };
   return r;
@@ -24,9 +24,16 @@ function makeRec() {
 
 function makeCtx(rec) {
   const noop = () => {};
+  const st = { align: 'start', rot: 0 };
+  const stack = [];
   return {
-    canvas: null, save: noop, restore: noop, setTransform: noop, setLineDash: noop,
-    translate: noop, rotate: noop, scale: noop, drawImage: noop, createLinearGradient: () => ({ addColorStop: noop }),
+    canvas: null,
+    save: () => { stack.push({ align: st.align, rot: st.rot }); },
+    restore: () => { const s = stack.pop(); if (s) { st.align = s.align; st.rot = s.rot; } },
+    setTransform: noop, setLineDash: noop,
+    translate: noop, rotate: () => { st.rot++; }, scale: noop, drawImage: noop, createLinearGradient: () => ({ addColorStop: noop }),
+    get textAlign() { return st.align; },
+    set textAlign(v) { st.align = v; },
     beginPath: noop, closePath: noop, stroke: noop, fill: noop, clip: noop,
     moveTo: (x, y) => rec.pt(x, y),
     lineTo: (x, y) => rec.pt(x, y),
@@ -35,7 +42,7 @@ function makeCtx(rec) {
     rect: (x, y, w, h) => rec.box(x, y, w, h),
     fillRect: (x, y, w, h) => rec.box(x, y, w, h),
     strokeRect: (x, y, w, h) => rec.box(x, y, w, h),
-    fillText: (t, x, y) => rec.text(t, x, y),
+    fillText: (t, x, y) => rec.text(t, x, y, st.align, st.rot > 0),
     measureText: (t) => ({ width: t.length * 10 })
   };
 }
@@ -80,7 +87,11 @@ function audit(rec, label) {
       out.push('图元越界 bbox=[' + rec.minX.toFixed(0) + ',' + rec.minY.toFixed(0) + ' ~ ' + rec.maxX.toFixed(0) + ',' + rec.maxY.toFixed(0) + ']');
     }
   }
-  const over = rec.texts.filter(t => t.x - t.w / 2 < -4 || t.x + t.w / 2 > W + 4 || t.y < 0 || t.y > H);
+  const over = rec.texts.filter(t => {
+    if (t.rotated) return t.y < -4 || t.y > H + 4;   // 旋转文字只查纵向
+    const x0 = t.align === 'center' ? t.x - t.w / 2 : t.align === 'right' || t.align === 'end' ? t.x - t.w : t.x;
+    return x0 < -4 || x0 + t.w > W + 4 || t.y < 0 || t.y > H;
+  });
   if (over.length) out.push('文字溢出(' + label + '): ' + over.map(t => t.t).join(' / '));
   return out;
 }

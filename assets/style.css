@@ -592,6 +592,7 @@ ul.lesson-list li::before {
   font-size: 21px; font-weight: 700; margin: 0 0 8px;
   padding-left: 12px; border-left: 5px solid var(--accent);
 }
+.stage-primary .stage-title { border-left-color: #b26b00; }
 .stage-senior .stage-title { border-left-color: var(--green); }
 .stage-count { font-size: 12px; font-weight: 400; color: var(--muted); }
 

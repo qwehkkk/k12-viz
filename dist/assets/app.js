@@ -246,6 +246,14 @@
       else if (cfg.type === 'pd-fit') VIZ.pdFitLab(el, cfg);
       else if (cfg.type === 'pd-table') VIZ.pdTableLab(el, cfg);
       else if (cfg.type === 'pd-chi2') VIZ.pdChi2Lab(el, cfg);
+      else if (cfg.type === 'pm-clock') VIZ.pmClockLab(el, cfg);
+      else if (cfg.type === 'pm-oral') VIZ.pmOralLab(el, cfg);
+      else if (cfg.type === 'pm-measure') VIZ.pmMeasureLab(el, cfg);
+      else if (cfg.type === 'pm-vertical') VIZ.pmVerticalLab(el, cfg);
+      else if (cfg.type === 'pm-times') VIZ.pmTimesLab(el, cfg);
+      else if (cfg.type === 'pm-mult') VIZ.pmMultLab(el, cfg);
+      else if (cfg.type === 'pm-rect') VIZ.pmRectLab(el, cfg);
+      else if (cfg.type === 'pm-frac') VIZ.pmFracLab(el, cfg);
     });
   });
 })();
