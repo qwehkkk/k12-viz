@@ -286,6 +286,14 @@
       else if (cfg.type === 'p5a-eq') VIZ.p5aEqLab(el, cfg);
       else if (cfg.type === 'p5a-area') VIZ.p5aAreaLab(el, cfg);
       else if (cfg.type === 'p5a-tree') VIZ.p5aTreeLab(el, cfg);
+      else if (cfg.type === 'p5b-view3') VIZ.p5bView3Lab(el, cfg);
+      else if (cfg.type === 'p5b-factor') VIZ.p5bFactorLab(el, cfg);
+      else if (cfg.type === 'p5b-box') VIZ.p5bBoxLab(el, cfg);
+      else if (cfg.type === 'p5b-frac') VIZ.p5bFracLab(el, cfg);
+      else if (cfg.type === 'p5b-rot') VIZ.p5bRotLab(el, cfg);
+      else if (cfg.type === 'p5b-fadd') VIZ.p5bFaddLab(el, cfg);
+      else if (cfg.type === 'p5b-line') VIZ.p5bLineLab(el, cfg);
+      else if (cfg.type === 'p5b-find') VIZ.p5bFindLab(el, cfg);
     });
   });
 })();

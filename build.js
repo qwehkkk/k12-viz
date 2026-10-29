@@ -786,19 +786,19 @@ const TRACK_GRADES = GRADE_TERMS.filter(g => STRANDS.some(st =>
 const PRIMARY_STRANDS = [
   { id: 'pnum', name: '数与运算', color: '#c0392b',
     desc: '小学六年的主干：从万以内加减到大数、乘除、分数、小数。同一种能力在六年里反复加码，一条线走完计算才不会断层。',
-    chapters: ['p3a-add1', 'p3a-add2', 'p3a-times', 'p3a-mult', 'p3a-frac', 'p4a-bignum', 'p4a-mult3', 'p4b-arith', 'p4b-law', 'p4b-dec2', 'p4b-decalc', 'p5a-decmul', 'p5a-decdiv', 'p5a-eq', 'p3b-div', 'p3b-mul2', 'p3b-dec'],
-    ghosts: ['分数加减法|五年级下册'] },
+    chapters: ['p3a-add1', 'p3a-add2', 'p3a-times', 'p3a-mult', 'p3a-frac', 'p4a-bignum', 'p4a-mult3', 'p4b-arith', 'p4b-law', 'p4b-dec2', 'p4b-decalc', 'p5a-decmul', 'p5a-decdiv', 'p5a-eq', 'p5b-factor', 'p5b-frac', 'p5b-fadd', 'p3b-div', 'p3b-mul2', 'p3b-dec'],
+    ghosts: [] },
   { id: 'pmeasure', name: '量与测量', color: '#8a5a00',
     desc: '时间、长度、质量、面积——全是「用单位去量」。单位之间为什么有的进 10、有的进 60、有的进 10000，答案都在这条线上。',
     chapters: ['p3a-time', 'p3a-measure', 'p3b-cal', 'p4a-hm2'],
     ghosts: [] },
   { id: 'pgeo', name: '图形与几何', color: '#0f6e56',
     desc: '认方向、辨图形、量角和面积；到高年级的面积体积公式，都是这条线往上走的结果。',
-    chapters: ['p3b-dir', 'p3a-rect', 'p3b-area', 'p4a-angle', 'p4a-quad', 'p4b-view', 'p4b-tri', 'p4b-motion', 'p5a-pos', 'p5a-area'],
+    chapters: ['p3b-dir', 'p3a-rect', 'p3b-area', 'p4a-angle', 'p4a-quad', 'p4b-view', 'p4b-tri', 'p4b-motion', 'p5a-pos', 'p5a-area', 'p5b-view3', 'p5b-box', 'p5b-rot'],
     ghosts: [] },
   { id: 'pstat', name: '统计与综合', color: '#185fa5',
     desc: '统计表、统计图、搭配与推理——既学「用数据说话」，也练「想全不漏」的思维。数学广角都在这条线上。',
-    chapters: ['p3b-table', 'p3b-match', 'p4a-bar', 'p4a-opt', 'p4b-avg', 'p4b-cage', 'p5a-poss', 'p5a-tree'],
+    chapters: ['p3b-table', 'p3b-match', 'p4a-bar', 'p4a-opt', 'p4b-avg', 'p4b-cage', 'p5a-poss', 'p5a-tree', 'p5b-line', 'p5b-find'],
     ghosts: [] }
 ];
 const PRIMARY_GRADES = GRADE_TERMS.filter(g => PRIMARY_STRANDS.some(st =>
