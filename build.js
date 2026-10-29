@@ -918,6 +918,17 @@ ${urls.map(u => `  <url><loc>${u.loc}</loc><priority>${u.priority}</priority></u
 fs.mkdirSync(DIST, { recursive: true });
 fs.cpSync(path.join(ROOT, 'assets'), path.join(DIST, 'assets'), { recursive: true });
 
+// robots.txt 与 IndexNow key 文件（site.json 的 indexNowKey）必须随构建进 dist
+if (fs.existsSync(path.join(ROOT, 'robots.txt'))) {
+  fs.copyFileSync(path.join(ROOT, 'robots.txt'), path.join(DIST, 'robots.txt'));
+}
+try {
+  const siteCfg = JSON.parse(fs.readFileSync(path.join(ROOT, 'site.json'), 'utf8'));
+  if (siteCfg.indexNowKey) {
+    fs.writeFileSync(path.join(DIST, siteCfg.indexNowKey + '.txt'), siteCfg.indexNowKey + '\n');
+  }
+} catch (e) { /* site.json 不存在时跳过 */ }
+
 fs.writeFileSync(path.join(DIST, 'index.html'), renderHome());
 
 fs.mkdirSync(path.join(DIST, 'tracks'), { recursive: true });
