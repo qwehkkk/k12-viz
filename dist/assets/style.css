@@ -585,16 +585,36 @@ ul.lesson-list li::before {
 .lab-card { border-left: 3px solid var(--green); }
 .lab-card .num { color: var(--green); }
 
-/* ---------- 首页：初中/高中两大组 ---------- */
-.stage-block { margin: 34px 0 10px; }
-.stage-title {
-  display: flex; align-items: baseline; gap: 10px;
-  font-size: 21px; font-weight: 700; margin: 0 0 8px;
-  padding-left: 12px; border-left: 5px solid var(--accent);
+/* ---------- 首页：学段分页签（小学 / 初中 / 高中） ---------- */
+.stage-tabs { position: relative; margin-top: 6px; }
+.stage-tabs > input { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+.tab-bar { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.tab-btn {
+  display: flex; flex-direction: column; gap: 3px; cursor: pointer;
+  padding: 13px 16px; border: 1px solid var(--border); border-left-width: 4px;
+  border-radius: 12px; background: var(--surface);
+  transition: box-shadow .16s, background .16s, transform .16s;
 }
-.stage-primary .stage-title { border-left-color: #b26b00; }
-.stage-senior .stage-title { border-left-color: var(--green); }
-.stage-count { font-size: 12px; font-weight: 400; color: var(--muted); }
+.tab-btn .tb-name { font-size: 18px; font-weight: 700; color: var(--text); line-height: 1.2; }
+.tab-btn .tb-meta { font-size: 12px; color: var(--muted); }
+.tab-btn:hover { background: #fbfcfd; }
+.tab-btn.stage-primary { border-left-color: #b26b00; }
+.tab-btn.stage-junior { border-left-color: var(--accent); }
+.tab-btn.stage-senior { border-left-color: var(--green); }
+#tab-primary:checked ~ .tab-bar .stage-primary,
+#tab-junior:checked ~ .tab-bar .stage-junior,
+#tab-senior:checked ~ .tab-bar .stage-senior {
+  background: #fff; box-shadow: 0 2px 12px rgba(16, 42, 67, .11); transform: translateY(-1px);
+}
+#tab-primary:checked ~ .tab-bar .stage-primary { border-color: #b26b00; }
+#tab-junior:checked ~ .tab-bar .stage-junior { border-color: var(--accent); }
+#tab-senior:checked ~ .tab-bar .stage-senior { border-color: var(--green); }
+.tab-panels { padding-top: 24px; }
+.stage-panel { display: none; }
+#tab-primary:checked ~ .tab-panels .stage-panel.stage-primary,
+#tab-junior:checked ~ .tab-panels .stage-panel.stage-junior,
+#tab-senior:checked ~ .tab-panels .stage-panel.stage-senior { display: block; }
+.stage-lead { font-size: 13px; color: var(--muted); margin: 0 0 6px; }
 
 /* ---------- 首页：年级分组 ---------- */
 .grade-block { margin-bottom: 26px; }
@@ -631,8 +651,58 @@ ul.lesson-list li::before {
 .strand-more a { color: var(--accent); }
 
 /* ---------- 专项图谱页 ---------- */
-.tg-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: 10px; background: var(--surface); }
-.tg-svg { display: block; min-width: 860px; width: 100%; height: auto; }
+/* 聚焦条：只看一条专项线 */
+.tg-focus { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+.tg-focus button {
+  display: inline-flex; align-items: center; gap: 6px;
+  font: inherit; font-size: 13px; cursor: pointer; padding: 6px 14px;
+  border: 1px solid var(--border); border-radius: 999px; background: var(--surface); color: var(--text);
+  transition: background .15s, border-color .15s;
+}
+.tg-focus button:hover { border-color: #b9c6d3; }
+.tg-focus button.is-on { background: #eef3f8; border-color: #9fb4c8; font-weight: 600; }
+.tf-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--c, #999); }
+
+/* 可拖动 / 缩放的画布；无 JS 时退化为横向滚动 */
+.tg-pz {
+  position: relative; overflow: hidden;
+  border: 1px solid var(--border); border-radius: 12px; background: var(--surface);
+  height: 620px; max-height: 76vh;
+}
+.tg-pz:not(.is-live) { height: auto; max-height: none; overflow-x: auto; }
+.tg-stage { position: absolute; top: 0; left: 0; transform-origin: 0 0; }
+.tg-pz:not(.is-live) .tg-stage { position: static; }
+.tg-pz.is-live { cursor: grab; touch-action: none; }
+.tg-pz.is-grabbing { cursor: grabbing; }
+.tg-pz.is-full {
+  position: fixed; inset: 0; height: 100dvh; max-height: none;
+  border: 0; border-radius: 0; z-index: 80;
+}
+.tg-pz.is-full .tg-tools { right: 18px; bottom: 18px; }
+body.pz-lock { overflow: hidden; }
+
+.tg-svg { display: block; }
+.tg-tools {
+  position: absolute; right: 12px; bottom: 12px; z-index: 3;
+  display: flex; gap: 6px;
+}
+.tg-tools button {
+  font: inherit; font-size: 15px; line-height: 1; cursor: pointer;
+  width: 40px; height: 40px; border-radius: 10px;
+  border: 1px solid var(--border); background: rgba(255, 255, 255, .95); color: var(--text);
+  box-shadow: 0 1px 4px rgba(16, 42, 67, .09);
+}
+.tg-tools button[data-pz-act="fit"],
+.tg-tools button[data-pz-act="full"] { width: auto; padding: 0 13px; font-size: 13px; }
+.tg-tools button:hover { background: #fff; border-color: #b9c6d3; }
+.tg-hint {
+  position: absolute; left: 12px; bottom: 12px; z-index: 2; pointer-events: none;
+  font-size: 12px; color: var(--muted); background: rgba(255, 255, 255, .92);
+  border: 1px solid var(--border); border-radius: 999px; padding: 5px 12px;
+  transition: opacity .35s;
+}
+.tg-pz.has-moved .tg-hint { opacity: 0; }
+
 /* 小学 / 中学专项图谱互跳 */
 .tg-cross-row { margin: 16px 0 0; }
 .tg-cross { display: inline-block; padding: 7px 18px; border: 1px solid #185fa5; color: #185fa5;
@@ -646,6 +716,21 @@ a:hover .tg-node { stroke-width: 2.4; }
 .tg-text { font-size: 12.5px; fill: var(--text); }
 .tg-ghost rect { fill: transparent; stroke: var(--border); stroke-dasharray: 5 4; }
 .tg-ghost text { font-size: 12px; fill: var(--muted); opacity: 0.75; }
+.tg-rule { stroke: #eef2f6; stroke-width: 1; stroke-dasharray: 3 6; }
+.tg-band { transition: opacity .22s; }
+.tg-svg[data-focus] .tg-band:not(.is-focus) { opacity: 0.12; }
+.tg-svg[data-focus] .tg-band.is-focus .tg-edge { stroke-width: 2; }
+
+/* 移动端：图谱占满宽度，工具条不挡内容 */
+@media (max-width: 640px) {
+  .tab-btn { padding: 10px 12px; border-radius: 10px; }
+  .tab-btn .tb-name { font-size: 15px; }
+  .tab-btn .tb-meta { font-size: 10.5px; }
+  .tg-pz { height: 66vh; min-height: 340px; }
+  .tg-tools { right: 8px; bottom: 8px; gap: 5px; }
+  .tg-tools button { width: 36px; height: 36px; }
+  .tg-hint { left: 8px; bottom: 8px; font-size: 11px; padding: 4px 10px; }
+}
 
 /* ---------- 专项分区 ---------- */
 .strand-section { margin: 34px 0; scroll-margin-top: 20px; }

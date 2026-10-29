@@ -260,19 +260,39 @@ function renderHome() {
 </div>`;
     }
     return `<div class="grade-block">
-  <div class="grade-head"><h3>${g}</h3><span class="grade-count">${list.length} 章</span></div>
+  <div class="grade-head"><h3>${g}</h3><span class="grade-count">${list.length} ${list[0].meta.unit ? '单元' : '章'}</span></div>
   <div class="chapter-grid">
 ${list.map(chapterCard).join('\n')}
   </div>
 </div>`;
   };
-  const gradeHtml = STAGE_GROUPS.map(sg => {
-    const n = sg.grades.filter(g => chapters.some(c => c.meta.grade === g)).length;
-    return `<div class="stage-block ${sg.cls}">
-  <h2 class="stage-title">${sg.name}<span class="stage-count">${n} 个学期已上线</span></h2>
-${sg.grades.map(gradeBlock).join('\n')}
+
+  // 三大组做成分页签：默认只展开一组，页面不再是一条长目录
+  const tabs = STAGE_GROUPS.map((sg, i) => {
+    const live = sg.grades.filter(g => chapters.some(c => c.meta.grade === g));
+    const chs = chapters.filter(c => sg.grades.indexOf(c.meta.grade) >= 0);
+    const word = sg.grades[0] === GRADE_TERMS[0] || i === 0 ? '单元' : '章';
+    return { sg, i, live, chs, meta: `${live.length} 册 · ${chs.length} ${word}` };
+  });
+  const gradeHtml = `<div class="stage-tabs">
+${tabs.map(t => `<input type="radio" name="stage-tab" id="tab-${t.sg.cls.replace('stage-', '')}"${t.i === 1 ? ' checked' : ''}>`).join('\n')}
+  <div class="tab-bar">
+${tabs.map(t => `<label class="tab-btn ${t.sg.cls}" for="tab-${t.sg.cls.replace('stage-', '')}">
+    <span class="tb-name">${t.sg.name}</span>
+    <span class="tb-meta">${t.meta}</span>
+  </label>`).join('\n')}
+  </div>
+  <div class="tab-panels">
+${tabs.map(t => `<div class="stage-panel ${t.sg.cls}">
+  <p class="stage-lead">${t.i === 0
+    ? '人教版小学数学，按册次与单元编号排列。'
+    : t.i === 1
+      ? '人教版初中数学，章节编号与教材目录一致。'
+      : '人教 A 版高中数学，必修与选择性必修分册排列。'}</p>
+${t.sg.grades.map(gradeBlock).join('\n')}
+</div>`).join('\n')}
+  </div>
 </div>`;
-  }).join('\n');
 
   const strandHtml = STRANDS.map(st => {
     const n = st.chapters.length;
@@ -299,7 +319,7 @@ ${sg.grades.map(gradeBlock).join('\n')}
 
 <div class="section-head" style="margin-top:0">
   <h2>课程目录 · 按年级</h2>
-  <p>跟人教版教材目录一致（如「九年级上册 · 第 21 章」「三年级上册 · 第 8 单元」），<b>小学、初中、高中</b>分成三组，按需查看。</p>
+  <p><b>先选学段，再看册次</b>：跟人教版教材目录一致（如「九年级上册 · 第 21 章」「三年级上册 · 第 8 单元」）。</p>
 </div>
 ${gradeHtml}
 
@@ -827,7 +847,7 @@ function renderTracks(opt) {
         const x = PADL + ci * COLW + 8;
         const ny = bandY + k * STACK;
         if (item.kind === 'ch') nodePos[item.cid] = { x, y: ny };
-        else ghostPos.push({ x, y: ny, title: item.title });
+        else ghostPos.push({ x, y: ny, title: item.title, si });
       });
       if (cell.length > maxStack) maxStack = cell.length;
     }
@@ -838,8 +858,8 @@ function renderTracks(opt) {
   const svgH = y;
 
   // ---- 连线（前置 → 本章）----
-  const edges = [];
-  S.forEach(st => st.chapters.forEach(cid => {
+  const edgesByBand = S.map(() => []);
+  S.forEach((st, si) => st.chapters.forEach(cid => {
     const ch = chapterById[cid];
     (ch.prereqCh || []).forEach(pc => {
       if (!nodePos[pc.meta.id] || !nodePos[cid]) return;
@@ -849,39 +869,64 @@ function renderTracks(opt) {
       if (bci > aci) { x1 = a.x + NW; y1 = a.y + NH / 2; x2 = b.x; y2 = b.y + NH / 2; }
       else { x1 = a.x + NW / 2; y1 = a.y + NH; x2 = b.x + NW / 2; y2 = b.y; }
       const dx = Math.max(30, (x2 - x1) * 0.45);
-      edges.push(`M ${x1} ${y1} C ${x1 + dx} ${y1}, ${x2 - dx} ${y2}, ${x2} ${y2}`);
+      edgesByBand[si].push(`M ${x1} ${y1} C ${x1 + dx} ${y1}, ${x2 - dx} ${y2}, ${x2} ${y2}`);
     });
   }));
 
   // ---- SVG ----
   const colHeaders = G.map((g, ci) =>
     `<text x="${PADL + ci * COLW + 8 + NW / 2}" y="34" text-anchor="middle" class="tg-col">${g}</text>`).join('\n');
-  const rowLabels = S.map((st, si) => {
+  const colRules = G.map((g, ci) =>
+    `<line x1="${PADL + (ci + 1) * COLW}" y1="20" x2="${PADL + (ci + 1) * COLW}" y2="${svgH - 14}" class="tg-rule"/>`).join('\n');
+
+  // 每条专项包成一个 band：聚焦某条线时可以单独淡化其余、单独定位
+  const bandHtml = S.map((st, si) => {
     const b = rowBands[si];
-    return `<line x1="${PADL - 14}" y1="${b.y + 14}" x2="${PADL - 14}" y2="${b.y + b.h - 22}" stroke="${st.color}" stroke-width="3"/>
-<rect x="6" y="${b.y + 8}" width="${PADL - 30}" height="${b.h - 26}" rx="7" fill="${st.color}" opacity="0.09"/>
-<text x="${(PADL - 30) / 2 + 6}" y="${b.y + b.h / 2 - 4}" text-anchor="middle" class="tg-row" fill="${st.color}">${st.name}</text>`;
-  }).join('\n');
-  const edgeHtml = edges.map(d => `<path d="${d}" class="tg-edge"/>`).join('\n');
-  const nodeHtml = S.map(st => st.chapters.map(cid => {
-    const n = nodePos[cid], ch = chapterById[cid];
-    return `<a href="${UP}${cid}/index.html">
+    const nodes = st.chapters.map(cid => {
+      const n = nodePos[cid], ch = chapterById[cid];
+      return `<a href="${UP}${cid}/index.html">
 <rect x="${n.x}" y="${n.y}" width="${NW}" height="${NH}" rx="8" class="tg-node" style="stroke:${st.color}"/>
 <rect x="${n.x}" y="${n.y}" width="5" height="${NH}" rx="2.5" fill="${st.color}"/>
 <text x="${n.x + NW / 2 + 2}" y="${n.y + NH / 2 + 4}" text-anchor="middle" class="tg-text">${esc(ch.meta.title)}</text>
 </a>`;
-  }).join('\n')).join('\n');
-  const ghostHtml = ghostPos.map(g =>
-    `<g class="tg-ghost"><rect x="${g.x}" y="${g.y}" width="${NW}" height="${NH}" rx="8"/><text x="${g.x + NW / 2}" y="${g.y + NH / 2 + 4}" text-anchor="middle">${esc(g.title)}</text></g>`).join('\n');
+    }).join('\n');
+    const ghosts = ghostPos.filter(g => g.si === si).map(g =>
+      `<g class="tg-ghost"><rect x="${g.x}" y="${g.y}" width="${NW}" height="${NH}" rx="8"/><text x="${g.x + NW / 2}" y="${g.y + NH / 2 + 4}" text-anchor="middle">${esc(g.title)}</text></g>`).join('\n');
+    return `<g class="tg-band" data-band="${si}" data-y="${b.y}" data-h="${b.h}">
+<rect x="6" y="${b.y + 8}" width="${PADL - 30}" height="${b.h - 26}" rx="7" fill="${st.color}" opacity="0.09"/>
+<line x1="${PADL - 14}" y1="${b.y + 14}" x2="${PADL - 14}" y2="${b.y + b.h - 22}" stroke="${st.color}" stroke-width="3"/>
+<text x="${(PADL - 30) / 2 + 6}" y="${b.y + b.h / 2 - 4}" text-anchor="middle" class="tg-row" fill="${st.color}">${st.name}</text>
+${edgesByBand[si].map(d => `<path d="${d}" class="tg-edge"/>`).join('\n')}
+${nodes}
+${ghosts}
+</g>`;
+  }).join('\n');
 
-  const graphSvg = `<svg viewBox="0 0 ${svgW} ${svgH}" class="tg-svg" role="img" aria-label="初中高中数学专项知识图谱：按专项分五条横线，按年级分列，箭头表示先学谁">
+  const graphSvg = `<svg viewBox="0 0 ${svgW} ${svgH}" width="${svgW}" height="${svgH}" class="tg-svg" role="img" aria-label="数学专项知识图谱：${S.map(x => x.name).join('、')}，每条横线是一条专项，竖列是年级学期，箭头表示先学谁">
 <defs><marker id="tg-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#9aa7b5"/></marker></defs>
+<g class="tg-head">
 ${colHeaders}
-${rowLabels}
-${edgeHtml}
-${nodeHtml}
-${ghostHtml}
+${colRules}
+</g>
+${bandHtml}
 </svg>`;
+
+  // 图谱交互层：聚焦按钮 + 可拖动缩放画布（无 JS 时退化为横向滚动）
+  const focusBar = `<div class="tg-focus" data-tg-focus>
+  <button type="button" class="is-on" data-band="all">全部</button>
+${S.map((st, si) => `  <button type="button" data-band="${si}" style="--c:${st.color}"><span class="tf-dot"></span>${st.name}</button>`).join('\n')}
+</div>`;
+  const graphBox = `${focusBar}
+<div class="tg-pz" data-pz>
+  <div class="tg-stage">${graphSvg}</div>
+  <div class="tg-tools">
+    <button type="button" data-pz-act="out" aria-label="缩小">−</button>
+    <button type="button" data-pz-act="in" aria-label="放大">+</button>
+    <button type="button" data-pz-act="fit">适配</button>
+    <button type="button" data-pz-act="full">全屏</button>
+  </div>
+  <div class="tg-hint">拖动查看 · 双指 / 滚轮缩放</div>
+</div>`;
 
   // ---- 每条专项的章节卡 ----
   const strandSections = S.map(st => {
@@ -923,9 +968,9 @@ ${cards}
 
 <div class="section-head" style="margin-top:0">
   <h2>${PG.section1 || '一图看懂：谁是谁的前置'}</h2>
-  <p>${PG.section1desc || '看不懂的地方顺着箭头往回找，通常卡住的原因在几册书之前。'}</p>
+  <p>${PG.section1desc || '看不懂的地方顺着箭头往回找，通常卡住的原因在几册书之前。图可以直接拖动、放大，也可以只看一条线。'}</p>
 </div>
-<div class="tg-wrap">${graphSvg}</div>
+${graphBox}
 
 <div class="section-head">
   <h2>${PG.section2 || '五条专项线'}</h2>

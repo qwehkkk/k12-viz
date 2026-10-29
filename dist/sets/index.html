@@ -593,16 +593,36 @@ ul.lesson-list li::before {
 .lab-card { border-left: 3px solid var(--green); }
 .lab-card .num { color: var(--green); }
 
-/* ---------- 首页：初中/高中两大组 ---------- */
-.stage-block { margin: 34px 0 10px; }
-.stage-title {
-  display: flex; align-items: baseline; gap: 10px;
-  font-size: 21px; font-weight: 700; margin: 0 0 8px;
-  padding-left: 12px; border-left: 5px solid var(--accent);
+/* ---------- 首页：学段分页签（小学 / 初中 / 高中） ---------- */
+.stage-tabs { position: relative; margin-top: 6px; }
+.stage-tabs > input { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+.tab-bar { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.tab-btn {
+  display: flex; flex-direction: column; gap: 3px; cursor: pointer;
+  padding: 13px 16px; border: 1px solid var(--border); border-left-width: 4px;
+  border-radius: 12px; background: var(--surface);
+  transition: box-shadow .16s, background .16s, transform .16s;
 }
-.stage-primary .stage-title { border-left-color: #b26b00; }
-.stage-senior .stage-title { border-left-color: var(--green); }
-.stage-count { font-size: 12px; font-weight: 400; color: var(--muted); }
+.tab-btn .tb-name { font-size: 18px; font-weight: 700; color: var(--text); line-height: 1.2; }
+.tab-btn .tb-meta { font-size: 12px; color: var(--muted); }
+.tab-btn:hover { background: #fbfcfd; }
+.tab-btn.stage-primary { border-left-color: #b26b00; }
+.tab-btn.stage-junior { border-left-color: var(--accent); }
+.tab-btn.stage-senior { border-left-color: var(--green); }
+#tab-primary:checked ~ .tab-bar .stage-primary,
+#tab-junior:checked ~ .tab-bar .stage-junior,
+#tab-senior:checked ~ .tab-bar .stage-senior {
+  background: #fff; box-shadow: 0 2px 12px rgba(16, 42, 67, .11); transform: translateY(-1px);
+}
+#tab-primary:checked ~ .tab-bar .stage-primary { border-color: #b26b00; }
+#tab-junior:checked ~ .tab-bar .stage-junior { border-color: var(--accent); }
+#tab-senior:checked ~ .tab-bar .stage-senior { border-color: var(--green); }
+.tab-panels { padding-top: 24px; }
+.stage-panel { display: none; }
+#tab-primary:checked ~ .tab-panels .stage-panel.stage-primary,
+#tab-junior:checked ~ .tab-panels .stage-panel.stage-junior,
+#tab-senior:checked ~ .tab-panels .stage-panel.stage-senior { display: block; }
+.stage-lead { font-size: 13px; color: var(--muted); margin: 0 0 6px; }
 
 /* ---------- 首页：年级分组 ---------- */
 .grade-block { margin-bottom: 26px; }
@@ -639,8 +659,58 @@ ul.lesson-list li::before {
 .strand-more a { color: var(--accent); }
 
 /* ---------- 专项图谱页 ---------- */
-.tg-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: 10px; background: var(--surface); }
-.tg-svg { display: block; min-width: 860px; width: 100%; height: auto; }
+/* 聚焦条：只看一条专项线 */
+.tg-focus { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+.tg-focus button {
+  display: inline-flex; align-items: center; gap: 6px;
+  font: inherit; font-size: 13px; cursor: pointer; padding: 6px 14px;
+  border: 1px solid var(--border); border-radius: 999px; background: var(--surface); color: var(--text);
+  transition: background .15s, border-color .15s;
+}
+.tg-focus button:hover { border-color: #b9c6d3; }
+.tg-focus button.is-on { background: #eef3f8; border-color: #9fb4c8; font-weight: 600; }
+.tf-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--c, #999); }
+
+/* 可拖动 / 缩放的画布；无 JS 时退化为横向滚动 */
+.tg-pz {
+  position: relative; overflow: hidden;
+  border: 1px solid var(--border); border-radius: 12px; background: var(--surface);
+  height: 620px; max-height: 76vh;
+}
+.tg-pz:not(.is-live) { height: auto; max-height: none; overflow-x: auto; }
+.tg-stage { position: absolute; top: 0; left: 0; transform-origin: 0 0; }
+.tg-pz:not(.is-live) .tg-stage { position: static; }
+.tg-pz.is-live { cursor: grab; touch-action: none; }
+.tg-pz.is-grabbing { cursor: grabbing; }
+.tg-pz.is-full {
+  position: fixed; inset: 0; height: 100dvh; max-height: none;
+  border: 0; border-radius: 0; z-index: 80;
+}
+.tg-pz.is-full .tg-tools { right: 18px; bottom: 18px; }
+body.pz-lock { overflow: hidden; }
+
+.tg-svg { display: block; }
+.tg-tools {
+  position: absolute; right: 12px; bottom: 12px; z-index: 3;
+  display: flex; gap: 6px;
+}
+.tg-tools button {
+  font: inherit; font-size: 15px; line-height: 1; cursor: pointer;
+  width: 40px; height: 40px; border-radius: 10px;
+  border: 1px solid var(--border); background: rgba(255, 255, 255, .95); color: var(--text);
+  box-shadow: 0 1px 4px rgba(16, 42, 67, .09);
+}
+.tg-tools button[data-pz-act="fit"],
+.tg-tools button[data-pz-act="full"] { width: auto; padding: 0 13px; font-size: 13px; }
+.tg-tools button:hover { background: #fff; border-color: #b9c6d3; }
+.tg-hint {
+  position: absolute; left: 12px; bottom: 12px; z-index: 2; pointer-events: none;
+  font-size: 12px; color: var(--muted); background: rgba(255, 255, 255, .92);
+  border: 1px solid var(--border); border-radius: 999px; padding: 5px 12px;
+  transition: opacity .35s;
+}
+.tg-pz.has-moved .tg-hint { opacity: 0; }
+
 /* 小学 / 中学专项图谱互跳 */
 .tg-cross-row { margin: 16px 0 0; }
 .tg-cross { display: inline-block; padding: 7px 18px; border: 1px solid #185fa5; color: #185fa5;
@@ -654,6 +724,21 @@ a:hover .tg-node { stroke-width: 2.4; }
 .tg-text { font-size: 12.5px; fill: var(--text); }
 .tg-ghost rect { fill: transparent; stroke: var(--border); stroke-dasharray: 5 4; }
 .tg-ghost text { font-size: 12px; fill: var(--muted); opacity: 0.75; }
+.tg-rule { stroke: #eef2f6; stroke-width: 1; stroke-dasharray: 3 6; }
+.tg-band { transition: opacity .22s; }
+.tg-svg[data-focus] .tg-band:not(.is-focus) { opacity: 0.12; }
+.tg-svg[data-focus] .tg-band.is-focus .tg-edge { stroke-width: 2; }
+
+/* 移动端：图谱占满宽度，工具条不挡内容 */
+@media (max-width: 640px) {
+  .tab-btn { padding: 10px 12px; border-radius: 10px; }
+  .tab-btn .tb-name { font-size: 15px; }
+  .tab-btn .tb-meta { font-size: 10.5px; }
+  .tg-pz { height: 66vh; min-height: 340px; }
+  .tg-tools { right: 8px; bottom: 8px; gap: 5px; }
+  .tg-tools button { width: 36px; height: 36px; }
+  .tg-hint { left: 8px; bottom: 8px; font-size: 11px; padding: 4px 10px; }
+}
 
 /* ---------- 专项分区 ---------- */
 .strand-section { margin: 34px 0; scroll-margin-top: 20px; }
@@ -16637,6 +16722,212 @@ function epMatchLab(el, cfg) {
   }
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
+})();
+
+/* ---------- 专项图谱：拖动 / 缩放 / 全屏 / 单线聚焦 ---------- */
+(function () {
+  'use strict';
+
+  function initPZ(root) {
+    var stage = root.querySelector('.tg-stage');
+    var svg = root.querySelector('.tg-svg');
+    if (!stage || !svg) return;
+
+    var vb = svg.viewBox && svg.viewBox.baseVal;
+    var W = parseFloat(svg.getAttribute('width')) || (vb ? vb.width : 1200);
+    var H = parseFloat(svg.getAttribute('height')) || (vb ? vb.height : 800);
+    var MINS = 0.12, MAXS = 3;
+    var s = 1, tx = 0, ty = 0;
+
+    root.classList.add('is-live');
+
+    function clamp(v, a, b) { return v < a ? a : (v > b ? b : v); }
+    function apply() {
+      stage.style.transform = 'translate(' + tx + 'px,' + ty + 'px) scale(' + s + ')';
+    }
+
+    function fit(keepScale) {
+      var rw = root.clientWidth, rh = root.clientHeight;
+      if (!rw || !rh) return;
+      if (keepScale) {
+        s = clamp(s, MINS, MAXS);
+      } else {
+        var base = Math.min(rw / W, rh / H);
+        // 桌面优先看全貌；窄屏全貌太小看不清字，保底 0.5
+        s = clamp(rw < 640 ? Math.max(base, 0.5) : base, MINS, MAXS);
+      }
+      tx = rw > W * s ? (rw - W * s) / 2 : 0;
+      ty = rh > H * s ? (rh - H * s) / 2 : 0;
+      apply();
+    }
+
+    function zoomAt(ns, cx, cy) {
+      ns = clamp(ns, MINS, MAXS);
+      var k = ns / s;
+      tx = cx - (cx - tx) * k;
+      ty = cy - (cy - ty) * k;
+      s = ns;
+      apply();
+    }
+
+    function local(e) {
+      var r = root.getBoundingClientRect();
+      return { x: e.clientX - r.left, y: e.clientY - r.top };
+    }
+
+    /* 拖动 + 双指缩放 */
+    var pts = {}, dragging = false, moved = false, sx = 0, sy = 0, pinchD = 0;
+
+    function count() { return Object.keys(pts).length; }
+    function pairDist() {
+      var k = Object.keys(pts);
+      var a = pts[k[0]], b = pts[k[1]];
+      return Math.sqrt(Math.pow(a.x - b.x, 2) + Math.pow(a.y - b.y, 2));
+    }
+    function pairMid() {
+      var k = Object.keys(pts);
+      var a = pts[k[0]], b = pts[k[1]];
+      return { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 };
+    }
+
+    root.addEventListener('pointerdown', function (e) {
+      if (e.pointerType === 'mouse' && e.button !== 0) return;
+      pts[e.pointerId] = local(e);
+      if (count() === 1) {
+        dragging = true; moved = false; sx = e.clientX; sy = e.clientY;
+        root.classList.add('is-grabbing');
+      } else if (count() === 2) {
+        pinchD = pairDist();
+      }
+      if (root.setPointerCapture) {
+        try { root.setPointerCapture(e.pointerId); } catch (err) {}
+      }
+    });
+
+    root.addEventListener('pointermove', function (e) {
+      if (!pts[e.pointerId]) return;
+      pts[e.pointerId] = local(e);
+
+      if (count() >= 2) {
+        var d = pairDist();
+        if (pinchD > 0 && d > 0) {
+          var m = pairMid();
+          zoomAt(s * (d / pinchD), m.x, m.y);
+        }
+        pinchD = d;
+        moved = true;
+        root.classList.add('has-moved');
+        return;
+      }
+
+      if (dragging) {
+        tx += e.clientX - sx;
+        ty += e.clientY - sy;
+        if (!moved && (Math.abs(e.clientX - sx) > 3 || Math.abs(e.clientY - sy) > 3)) {
+          moved = true;
+          root.classList.add('has-moved');
+        }
+        apply();
+      }
+    });
+
+    function release(e) {
+      delete pts[e.pointerId];
+      if (!count()) {
+        dragging = false; pinchD = 0;
+        root.classList.remove('is-grabbing');
+      }
+    }
+    root.addEventListener('pointerup', release);
+    root.addEventListener('pointercancel', release);
+
+    /* 拖动结束的那次 click 不该跳到章节页 */
+    root.addEventListener('click', function (e) {
+      if (moved) { e.preventDefault(); e.stopPropagation(); moved = false; }
+    }, true);
+
+    root.addEventListener('wheel', function (e) {
+      e.preventDefault();
+      var p = local(e);
+      zoomAt(s * (e.deltaY > 0 ? 0.9 : 1.1), p.x, p.y);
+      root.classList.add('has-moved');
+    }, { passive: false });
+
+    root.addEventListener('dblclick', function (e) {
+      var p = local(e);
+      zoomAt(s < 1.5 ? s * 1.6 : 1, p.x, p.y);
+    });
+
+    /* 全屏 */
+    function toggleFull() {
+      var on = root.classList.toggle('is-full');
+      document.body.classList.toggle('pz-lock', on);
+      var b = root.querySelector('[data-pz-act="full"]');
+      if (b) b.textContent = on ? '退出' : '全屏';
+      requestAnimationFrame(function () { fit(); });
+    }
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && root.classList.contains('is-full')) toggleFull();
+    });
+
+    var tools = root.querySelector('.tg-tools');
+    if (tools) {
+      tools.addEventListener('click', function (e) {
+        var b = e.target.closest('button');
+        if (!b) return;
+        var act = b.getAttribute('data-pz-act');
+        var rw = root.clientWidth, rh = root.clientHeight;
+        if (act === 'in') zoomAt(s * 1.3, rw / 2, rh / 2);
+        else if (act === 'out') zoomAt(s / 1.3, rw / 2, rh / 2);
+        else if (act === 'fit') fit();
+        else if (act === 'full') toggleFull();
+      });
+    }
+
+    /* 单线聚焦 */
+    function focusBand(bi) {
+      var g = svg.querySelector('.tg-band[data-band="' + bi + '"]');
+      if (!g) return;
+      var by = parseFloat(g.getAttribute('data-y')) || 0;
+      var bh = parseFloat(g.getAttribute('data-h')) || 120;
+      var rw = root.clientWidth, rh = root.clientHeight;
+      s = clamp(Math.max(rw / W, 0.55), MINS, MAXS);
+      tx = 0;
+      ty = clamp((rh - bh * s) / 2 - by * s, -(H * s - rh + 20), 20);
+      apply();
+    }
+
+    var bar = root.previousElementSibling;
+    if (bar && bar.hasAttribute('data-tg-focus')) {
+      bar.addEventListener('click', function (e) {
+        var b = e.target.closest('button');
+        if (!b) return;
+        var bi = b.getAttribute('data-band');
+        Array.prototype.forEach.call(bar.querySelectorAll('button'), function (x) {
+          x.classList.toggle('is-on', x === b);
+        });
+        Array.prototype.forEach.call(svg.querySelectorAll('.tg-band'), function (g) {
+          g.classList.toggle('is-focus', bi !== 'all' && g.getAttribute('data-band') === bi);
+        });
+        if (bi === 'all') { svg.removeAttribute('data-focus'); fit(); }
+        else { svg.setAttribute('data-focus', bi); focusBand(bi); }
+      });
+    }
+
+    var rt;
+    window.addEventListener('resize', function () {
+      clearTimeout(rt);
+      rt = setTimeout(function () { fit(true); }, 180);
+    });
+
+    fit();
+  }
+
+  function boot() {
+    Array.prototype.forEach.call(document.querySelectorAll('[data-pz]'), initPZ);
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
+  else boot();
 })();
 
 </script>

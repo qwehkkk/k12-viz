@@ -376,3 +376,209 @@
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
 })();
+
+/* ---------- 专项图谱：拖动 / 缩放 / 全屏 / 单线聚焦 ---------- */
+(function () {
+  'use strict';
+
+  function initPZ(root) {
+    var stage = root.querySelector('.tg-stage');
+    var svg = root.querySelector('.tg-svg');
+    if (!stage || !svg) return;
+
+    var vb = svg.viewBox && svg.viewBox.baseVal;
+    var W = parseFloat(svg.getAttribute('width')) || (vb ? vb.width : 1200);
+    var H = parseFloat(svg.getAttribute('height')) || (vb ? vb.height : 800);
+    var MINS = 0.12, MAXS = 3;
+    var s = 1, tx = 0, ty = 0;
+
+    root.classList.add('is-live');
+
+    function clamp(v, a, b) { return v < a ? a : (v > b ? b : v); }
+    function apply() {
+      stage.style.transform = 'translate(' + tx + 'px,' + ty + 'px) scale(' + s + ')';
+    }
+
+    function fit(keepScale) {
+      var rw = root.clientWidth, rh = root.clientHeight;
+      if (!rw || !rh) return;
+      if (keepScale) {
+        s = clamp(s, MINS, MAXS);
+      } else {
+        var base = Math.min(rw / W, rh / H);
+        // 桌面优先看全貌；窄屏全貌太小看不清字，保底 0.5
+        s = clamp(rw < 640 ? Math.max(base, 0.5) : base, MINS, MAXS);
+      }
+      tx = rw > W * s ? (rw - W * s) / 2 : 0;
+      ty = rh > H * s ? (rh - H * s) / 2 : 0;
+      apply();
+    }
+
+    function zoomAt(ns, cx, cy) {
+      ns = clamp(ns, MINS, MAXS);
+      var k = ns / s;
+      tx = cx - (cx - tx) * k;
+      ty = cy - (cy - ty) * k;
+      s = ns;
+      apply();
+    }
+
+    function local(e) {
+      var r = root.getBoundingClientRect();
+      return { x: e.clientX - r.left, y: e.clientY - r.top };
+    }
+
+    /* 拖动 + 双指缩放 */
+    var pts = {}, dragging = false, moved = false, sx = 0, sy = 0, pinchD = 0;
+
+    function count() { return Object.keys(pts).length; }
+    function pairDist() {
+      var k = Object.keys(pts);
+      var a = pts[k[0]], b = pts[k[1]];
+      return Math.sqrt(Math.pow(a.x - b.x, 2) + Math.pow(a.y - b.y, 2));
+    }
+    function pairMid() {
+      var k = Object.keys(pts);
+      var a = pts[k[0]], b = pts[k[1]];
+      return { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 };
+    }
+
+    root.addEventListener('pointerdown', function (e) {
+      if (e.pointerType === 'mouse' && e.button !== 0) return;
+      pts[e.pointerId] = local(e);
+      if (count() === 1) {
+        dragging = true; moved = false; sx = e.clientX; sy = e.clientY;
+        root.classList.add('is-grabbing');
+      } else if (count() === 2) {
+        pinchD = pairDist();
+      }
+      if (root.setPointerCapture) {
+        try { root.setPointerCapture(e.pointerId); } catch (err) {}
+      }
+    });
+
+    root.addEventListener('pointermove', function (e) {
+      if (!pts[e.pointerId]) return;
+      pts[e.pointerId] = local(e);
+
+      if (count() >= 2) {
+        var d = pairDist();
+        if (pinchD > 0 && d > 0) {
+          var m = pairMid();
+          zoomAt(s * (d / pinchD), m.x, m.y);
+        }
+        pinchD = d;
+        moved = true;
+        root.classList.add('has-moved');
+        return;
+      }
+
+      if (dragging) {
+        tx += e.clientX - sx;
+        ty += e.clientY - sy;
+        if (!moved && (Math.abs(e.clientX - sx) > 3 || Math.abs(e.clientY - sy) > 3)) {
+          moved = true;
+          root.classList.add('has-moved');
+        }
+        apply();
+      }
+    });
+
+    function release(e) {
+      delete pts[e.pointerId];
+      if (!count()) {
+        dragging = false; pinchD = 0;
+        root.classList.remove('is-grabbing');
+      }
+    }
+    root.addEventListener('pointerup', release);
+    root.addEventListener('pointercancel', release);
+
+    /* 拖动结束的那次 click 不该跳到章节页 */
+    root.addEventListener('click', function (e) {
+      if (moved) { e.preventDefault(); e.stopPropagation(); moved = false; }
+    }, true);
+
+    root.addEventListener('wheel', function (e) {
+      e.preventDefault();
+      var p = local(e);
+      zoomAt(s * (e.deltaY > 0 ? 0.9 : 1.1), p.x, p.y);
+      root.classList.add('has-moved');
+    }, { passive: false });
+
+    root.addEventListener('dblclick', function (e) {
+      var p = local(e);
+      zoomAt(s < 1.5 ? s * 1.6 : 1, p.x, p.y);
+    });
+
+    /* 全屏 */
+    function toggleFull() {
+      var on = root.classList.toggle('is-full');
+      document.body.classList.toggle('pz-lock', on);
+      var b = root.querySelector('[data-pz-act="full"]');
+      if (b) b.textContent = on ? '退出' : '全屏';
+      requestAnimationFrame(function () { fit(); });
+    }
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && root.classList.contains('is-full')) toggleFull();
+    });
+
+    var tools = root.querySelector('.tg-tools');
+    if (tools) {
+      tools.addEventListener('click', function (e) {
+        var b = e.target.closest('button');
+        if (!b) return;
+        var act = b.getAttribute('data-pz-act');
+        var rw = root.clientWidth, rh = root.clientHeight;
+        if (act === 'in') zoomAt(s * 1.3, rw / 2, rh / 2);
+        else if (act === 'out') zoomAt(s / 1.3, rw / 2, rh / 2);
+        else if (act === 'fit') fit();
+        else if (act === 'full') toggleFull();
+      });
+    }
+
+    /* 单线聚焦 */
+    function focusBand(bi) {
+      var g = svg.querySelector('.tg-band[data-band="' + bi + '"]');
+      if (!g) return;
+      var by = parseFloat(g.getAttribute('data-y')) || 0;
+      var bh = parseFloat(g.getAttribute('data-h')) || 120;
+      var rw = root.clientWidth, rh = root.clientHeight;
+      s = clamp(Math.max(rw / W, 0.55), MINS, MAXS);
+      tx = 0;
+      ty = clamp((rh - bh * s) / 2 - by * s, -(H * s - rh + 20), 20);
+      apply();
+    }
+
+    var bar = root.previousElementSibling;
+    if (bar && bar.hasAttribute('data-tg-focus')) {
+      bar.addEventListener('click', function (e) {
+        var b = e.target.closest('button');
+        if (!b) return;
+        var bi = b.getAttribute('data-band');
+        Array.prototype.forEach.call(bar.querySelectorAll('button'), function (x) {
+          x.classList.toggle('is-on', x === b);
+        });
+        Array.prototype.forEach.call(svg.querySelectorAll('.tg-band'), function (g) {
+          g.classList.toggle('is-focus', bi !== 'all' && g.getAttribute('data-band') === bi);
+        });
+        if (bi === 'all') { svg.removeAttribute('data-focus'); fit(); }
+        else { svg.setAttribute('data-focus', bi); focusBand(bi); }
+      });
+    }
+
+    var rt;
+    window.addEventListener('resize', function () {
+      clearTimeout(rt);
+      rt = setTimeout(function () { fit(true); }, 180);
+    });
+
+    fit();
+  }
+
+  function boot() {
+    Array.prototype.forEach.call(document.querySelectorAll('[data-pz]'), initPZ);
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
+  else boot();
+})();
