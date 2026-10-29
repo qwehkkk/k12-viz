@@ -254,6 +254,14 @@
       else if (cfg.type === 'pm-mult') VIZ.pmMultLab(el, cfg);
       else if (cfg.type === 'pm-rect') VIZ.pmRectLab(el, cfg);
       else if (cfg.type === 'pm-frac') VIZ.pmFracLab(el, cfg);
+      else if (cfg.type === 'ep-dir') VIZ.epDirLab(el, cfg);
+      else if (cfg.type === 'ep-div') VIZ.epDivLab(el, cfg);
+      else if (cfg.type === 'ep-table') VIZ.epTableLab(el, cfg);
+      else if (cfg.type === 'ep-mul') VIZ.epMulLab(el, cfg);
+      else if (cfg.type === 'ep-area') VIZ.epAreaLab(el, cfg);
+      else if (cfg.type === 'ep-cal') VIZ.epCalLab(el, cfg);
+      else if (cfg.type === 'ep-dec') VIZ.epDecLab(el, cfg);
+      else if (cfg.type === 'ep-match') VIZ.epMatchLab(el, cfg);
     });
   });
 })();

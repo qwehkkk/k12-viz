@@ -131,6 +131,10 @@ function esc(s) {
 function rich(s) {
   return esc(s).replace(/\*\*([^*]+)\*\*/g, '<b>$1</b>').replace(/`([^`]+)`/g, '<code>$1</code>');
 }
+/* 纯文本化：去掉 ** 与 ` 标记，用于摘要截断和 meta description */
+function plain(s) {
+  return String(s == null ? '' : s).replace(/\*\*([^*]+)\*\*/g, '$1').replace(/`([^`]+)`/g, '$1');
+}
 function attrJson(obj) { return esc(JSON.stringify(obj)); }
 function kindClass(k) { return kindGroup(k) === '组合型' ? 'combo' : (kindGroup(k) === '综合型' ? 'full' : ''); }
 /* 题型归类：数据里的 kind 写法很杂（计算/证明/应用型/综合…），
@@ -161,7 +165,7 @@ function head(title, desc, root, ch, cur) {
       { k: 'points', label: '知识点', href: base + 'index.html' },
       { k: 'patterns', label: '题型库', href: base + 'patterns.html' },
       { k: 'locate', label: '题目定位器', href: base + 'locate.html' },
-      { k: 'tracks', label: '专项图谱', href: root + 'tracks/' }
+      { k: 'tracks', label: '专项图谱', href: root + (ch.meta.unit ? 'tracks/primary/' : 'tracks/') }
     ];
   } else {
     nav = [
@@ -248,10 +252,11 @@ function renderHome() {
     .filter(x => x.list.length);
   const gradeBlock = g => {
     const list = chapters.filter(c => c.meta.grade === g);
+    const trackHref = GRADE_TERMS.indexOf(g) < 12 ? 'tracks/primary/' : 'tracks/';
     if (!list.length) {
       return `<div class="grade-block">
   <div class="grade-head"><h3>${g}</h3><span class="grade-soon">即将上线</span></div>
-  <p class="grade-empty">这一册的章节正在路上。可以先在 <a href="tracks/">专项图谱</a> 里看它属于哪条知识线。</p>
+  <p class="grade-empty">这一册的章节正在路上。可以先在 <a href="${trackHref}">专项图谱</a> 里看它属于哪条知识线。</p>
 </div>`;
     }
     return `<div class="grade-block">
@@ -305,7 +310,7 @@ ${gradeHtml}
 <div class="strand-grid">
 ${strandHtml}
 </div>
-<p class="strand-more">五条主线之间的关系图（谁是谁的前置）在 <a href="tracks/">专项图谱</a> 页。</p>
+<p class="strand-more">五条主线之间的关系图（谁是谁的前置）在 <a href="tracks/">专项图谱</a> 页。小学的「数与运算 / 量与测量 / 图形与几何 / 统计与综合」四条线，单独放在 <a href="tracks/primary/">小学数学专项图谱</a>。</p>
 
 <div class="section-head">
   <h2>这个站怎么用</h2>
@@ -335,7 +340,7 @@ function renderChapter(ch) {
     return `<a class="card" href="${p.id}.html">
   <span class="num">${String(i + 1).padStart(2, '0')} / ${ch.points.length}</span>
   <h3>${esc(p.title)}</h3>
-  <p>${esc(p.summary.slice(0, 42))}…</p>
+  <p>${esc(plain(p.summary).slice(0, 42))}…</p>
   <div class="meta">
     <span class="badge blue">${n} 道例题</span>
     <span class="badge blue">${nt} 类题型</span>
@@ -363,7 +368,7 @@ function renderChapter(ch) {
 ${labs.map(x => `<a class="card lab-card" href="${x.p.id}.html">
   <span class="num">实验台 ${String(x.i + 1).padStart(2, '0')}</span>
   <h3>${esc(x.p.title)}</h3>
-  <p>${esc(String(x.p.summary || '').slice(0, 40))}…</p>
+  <p>${esc(plain(x.p.summary).slice(0, 40))}…</p>
   <div class="meta"><span class="badge">${x.n} 个可拖演示</span></div>
 </a>`).join('\n')}
 </div>` : '';
@@ -464,7 +469,7 @@ function renderPoint(ch, p, idx) {
   </div>
 </section>` : '';
 
-  return `${head(`${p.title} - ${ch.meta.title} - ${SITE.name}`, p.summary.slice(0, 120), '../', ch, 'points')}
+  return `${head(`${p.title} - ${ch.meta.title} - ${SITE.name}`, plain(p.summary).slice(0, 120), '../', ch, 'points')}
 <p class="crumb"><a href="../index.html">课程目录</a> / <a href="index.html">${esc(ch.meta.title)}</a> / ${esc(p.title)}</p>
 <article class="point">
   <h1>${esc(p.title)}</h1>
@@ -480,7 +485,7 @@ function renderPoint(ch, p, idx) {
   <section class="blk">
     <h2>知识要点</h2>
     <ul class="checklist">
-      ${p.keyPoints.map(k => `<li>${esc(k)}</li>`).join('\n      ')}
+      ${p.keyPoints.map(k => `<li>${rich(k)}</li>`).join('\n      ')}
     </ul>
   </section>
 
@@ -757,23 +762,52 @@ const TRACK_GRADES = GRADE_TERMS.filter(g => STRANDS.some(st =>
   st.chapters.some(cid => chapterById[cid].meta.grade === g) ||
   st.ghosts.some(x => x.split('|')[1] === g)));
 
-function renderTracks() {
+/* 小学专项线：三上、三下已上线，其余册次用 ghost 占位 */
+const PRIMARY_STRANDS = [
+  { id: 'pnum', name: '数与运算', color: '#c0392b',
+    desc: '小学六年的主干：从万以内加减到分数、小数、百分数。同一种能力在六年里反复加码，一条线走完计算才不会断层。',
+    chapters: ['p3a-add1', 'p3a-add2', 'p3a-times', 'p3a-mult', 'p3a-frac', 'p3b-div', 'p3b-mul2', 'p3b-dec'],
+    ghosts: ['四则运算与运算定律|四年级下册', '小数乘法与除法|五年级上册', '分数加减法|五年级下册'] },
+  { id: 'pmeasure', name: '量与测量', color: '#8a5a00',
+    desc: '时间、长度、质量、面积——全是「用单位去量」。单位之间为什么有的进 10、有的进 60、有的进 100，答案都在这条线上。',
+    chapters: ['p3a-time', 'p3a-measure', 'p3b-cal'],
+    ghosts: ['公顷与平方千米|四年级上册'] },
+  { id: 'pgeo', name: '图形与几何', color: '#0f6e56',
+    desc: '认方向、辨图形、量长度和面积；到高年级的面积体积公式，都是这条线往上走的结果。',
+    chapters: ['p3b-dir', 'p3a-rect', 'p3b-area'],
+    ghosts: ['角的度量|四年级上册', '三角形|四年级下册'] },
+  { id: 'pstat', name: '统计与综合', color: '#185fa5',
+    desc: '统计表、统计图、搭配与推理——既学「用数据说话」，也练「想全不漏」的思维。数学广角都在这条线上。',
+    chapters: ['p3b-table', 'p3b-match'],
+    ghosts: ['条形统计图|四年级上册'] }
+];
+const PRIMARY_GRADES = GRADE_TERMS.filter(g => PRIMARY_STRANDS.some(st =>
+  st.chapters.some(cid => chapterById[cid] && chapterById[cid].meta.grade === g) ||
+  st.ghosts.some(x => x.split('|')[1] === g)));
+
+function renderTracks(opt) {
+  opt = opt || {};
+  const S = opt.strands || STRANDS;
+  const G = opt.grades || TRACK_GRADES;
+  const UP = opt.up || '../';
+  const PG = opt.page || {};
+
   // ---- 布局参数 ----
   const COLW = 158, NW = 138, NH = 34, STACK = 44;
   const PADL = 118, PADT = 58, PADR = 26, ROWGAP = 30;
 
   // 每个（专项行 × 年级列）格子里的节点，算堆叠
   const cells = {};   // 'si-ci' -> [{kind:'ch'|'ghost', ...}]
-  STRANDS.forEach((st, si) => {
+  S.forEach((st, si) => {
     st.chapters.forEach(cid => {
       const ch = chapterById[cid];
-      const ci = TRACK_GRADES.indexOf(ch.meta.grade);
+      const ci = G.indexOf(ch.meta.grade);
       const key = si + '-' + ci;
       (cells[key] = cells[key] || []).push({ kind: 'ch', cid, title: ch.meta.title });
     });
     st.ghosts.forEach(g => {
       const [title, grade] = g.split('|');
-      const ci = TRACK_GRADES.indexOf(grade);
+      const ci = G.indexOf(grade);
       const key = si + '-' + ci;
       (cells[key] = cells[key] || []).push({ kind: 'ghost', title });
     });
@@ -784,10 +818,10 @@ function renderTracks() {
   const ghostPos = [];
   let y = PADT;
   const rowBands = [];
-  STRANDS.forEach((st, si) => {
+  S.forEach((st, si) => {
     const bandY = y;
     let maxStack = 1;
-    for (let ci = 0; ci < TRACK_GRADES.length; ci++) {
+    for (let ci = 0; ci < G.length; ci++) {
       const cell = cells[si + '-' + ci] || [];
       cell.forEach((item, k) => {
         const x = PADL + ci * COLW + 8;
@@ -800,18 +834,18 @@ function renderTracks() {
     rowBands.push({ y: bandY, h: maxStack * STACK + 6 });
     y += maxStack * STACK + ROWGAP;
   });
-  const svgW = PADL + TRACK_GRADES.length * COLW + PADR;
+  const svgW = PADL + G.length * COLW + PADR;
   const svgH = y;
 
   // ---- 连线（前置 → 本章）----
   const edges = [];
-  STRANDS.forEach(st => st.chapters.forEach(cid => {
+  S.forEach(st => st.chapters.forEach(cid => {
     const ch = chapterById[cid];
     (ch.prereqCh || []).forEach(pc => {
       if (!nodePos[pc.meta.id] || !nodePos[cid]) return;
       const a = nodePos[pc.meta.id], b = nodePos[cid];
       let x1, y1, x2, y2;
-      const aci = TRACK_GRADES.indexOf(pc.meta.grade), bci = TRACK_GRADES.indexOf(ch.meta.grade);
+      const aci = G.indexOf(pc.meta.grade), bci = G.indexOf(ch.meta.grade);
       if (bci > aci) { x1 = a.x + NW; y1 = a.y + NH / 2; x2 = b.x; y2 = b.y + NH / 2; }
       else { x1 = a.x + NW / 2; y1 = a.y + NH; x2 = b.x + NW / 2; y2 = b.y; }
       const dx = Math.max(30, (x2 - x1) * 0.45);
@@ -820,18 +854,18 @@ function renderTracks() {
   }));
 
   // ---- SVG ----
-  const colHeaders = TRACK_GRADES.map((g, ci) =>
+  const colHeaders = G.map((g, ci) =>
     `<text x="${PADL + ci * COLW + 8 + NW / 2}" y="34" text-anchor="middle" class="tg-col">${g}</text>`).join('\n');
-  const rowLabels = STRANDS.map((st, si) => {
+  const rowLabels = S.map((st, si) => {
     const b = rowBands[si];
     return `<line x1="${PADL - 14}" y1="${b.y + 14}" x2="${PADL - 14}" y2="${b.y + b.h - 22}" stroke="${st.color}" stroke-width="3"/>
 <rect x="6" y="${b.y + 8}" width="${PADL - 30}" height="${b.h - 26}" rx="7" fill="${st.color}" opacity="0.09"/>
 <text x="${(PADL - 30) / 2 + 6}" y="${b.y + b.h / 2 - 4}" text-anchor="middle" class="tg-row" fill="${st.color}">${st.name}</text>`;
   }).join('\n');
   const edgeHtml = edges.map(d => `<path d="${d}" class="tg-edge"/>`).join('\n');
-  const nodeHtml = STRANDS.map(st => st.chapters.map(cid => {
+  const nodeHtml = S.map(st => st.chapters.map(cid => {
     const n = nodePos[cid], ch = chapterById[cid];
-    return `<a href="../${cid}/index.html">
+    return `<a href="${UP}${cid}/index.html">
 <rect x="${n.x}" y="${n.y}" width="${NW}" height="${NH}" rx="8" class="tg-node" style="stroke:${st.color}"/>
 <rect x="${n.x}" y="${n.y}" width="5" height="${NH}" rx="2.5" fill="${st.color}"/>
 <text x="${n.x + NW / 2 + 2}" y="${n.y + NH / 2 + 4}" text-anchor="middle" class="tg-text">${esc(ch.meta.title)}</text>
@@ -850,11 +884,11 @@ ${ghostHtml}
 </svg>`;
 
   // ---- 每条专项的章节卡 ----
-  const strandSections = STRANDS.map(st => {
+  const strandSections = S.map(st => {
     const cards = st.chapters.map(cid => {
       const ch = chapterById[cid];
       const links = (ch.prereqCh || []).map(pc => esc(pc.meta.title)).join('、') || '无（这条线的起点）';
-      return `<a class="card strand-ch-card" href="../${cid}/index.html" style="--sc:${st.color}">
+      return `<a class="card strand-ch-card" href="${UP}${cid}/index.html" style="--sc:${st.color}">
   <span class="num">${esc(ch.meta.grade)} · 第 ${ch.meta.bookNo} ${unitWord(ch)}</span>
   <h3>${esc(ch.meta.title)}</h3>
   <p>${esc(ch.meta.tagline || '')}</p>
@@ -873,32 +907,33 @@ ${cards}
 </div>`;
   }).join('\n');
 
-  const learnPaths = [
-    { who: '跟着学校进度学', how: '回<a href="../index.html">课程目录</a>，按年级册次找当前章——编号和教材一致。' },
+  const learnPaths = (PG.paths || [
+    { who: '跟着学校进度学', how: `回<a href="${UP}index.html">课程目录</a>，按年级册次找当前章——编号和教材一致。` },
     { who: '某一块一直学不透', how: '在上面的图里找到那条专项线，从最左边的章开始补，箭头指哪就先学哪。' },
     { who: '初三总复习', how: '图形与几何一条线有 11 章，从头过一遍比刷卷子更能看出题和题之间的联系。' }
-  ].map(x => `<div class="guide-item"><h3>${x.who}</h3><p>${x.how}</p></div>`).join('\n');
+  ]).map(x => `<div class="guide-item"><h3>${x.who}</h3><p>${x.how}</p></div>`).join('\n');
 
-  return `${head(`专项知识图谱 - ${SITE.name}`, '初中高中数学五条专项知识主线（数与式 / 方程与不等式 / 函数 / 图形与几何 / 统计与概率）的关系图谱：箭头指向先学的章节，既可按年级走，也可按专项走。', '../', null, 'tracks')}
+  return `${head(PG.title || `专项知识图谱 - ${SITE.name}`, PG.desc || '初中高中数学五条专项知识主线（数与式 / 方程与不等式 / 函数 / 图形与几何 / 统计与概率）的关系图谱：箭头指向先学的章节，既可按年级走，也可按专项走。', UP, null, 'tracks')}
 <div class="hero">
-  <h1>专项知识图谱</h1>
-  <p>初中加高中，数学其实还是那五条主线。课程目录按年级排，适合跟着学校走；这张图按专项排，适合补短板和总复习。</p>
-  <p class="hero-sub">横线是专项，竖列是年级学期；<b>箭头从「先学的章」指向「后用的章」</b>。虚线框是还没上线的章节。</p>
+  <h1>${PG.h1 || '专项知识图谱'}</h1>
+  <p>${PG.p || '初中加高中，数学其实还是那五条主线。课程目录按年级排，适合跟着学校走；这张图按专项排，适合补短板和总复习。'}</p>
+  <p class="hero-sub">${PG.sub || '横线是专项，竖列是年级学期；<b>箭头从「先学的章」指向「后用的章」</b>。虚线框是还没上线的章节。'}</p>
+  ${PG.cross || ''}
 </div>
 
 <div class="section-head" style="margin-top:0">
-  <h2>一图看懂：谁是谁的前置</h2>
-  <p>看不懂的地方顺着箭头往回找，通常卡住的原因在几册书之前。</p>
+  <h2>${PG.section1 || '一图看懂：谁是谁的前置'}</h2>
+  <p>${PG.section1desc || '看不懂的地方顺着箭头往回找，通常卡住的原因在几册书之前。'}</p>
 </div>
 <div class="tg-wrap">${graphSvg}</div>
 
 <div class="section-head">
-  <h2>五条专项线</h2>
+  <h2>${PG.section2 || '五条专项线'}</h2>
 </div>
 ${strandSections}
 
 <div class="section-head">
-  <h2>三种用法</h2>
+  <h2>${PG.section3 || '三种用法'}</h2>
 </div>
 <div class="guide-grid">
 ${learnPaths}
@@ -908,7 +943,8 @@ ${foot()}`;
 
 /* ---------- sitemap ---------- */
 function renderSitemap() {
-  const urls = [{ loc: `${SITE.base}/`, priority: '1.0' }, { loc: `${SITE.base}/tracks/`, priority: '0.9' }];
+  const urls = [{ loc: `${SITE.base}/`, priority: '1.0' }, { loc: `${SITE.base}/tracks/`, priority: '0.9' },
+    { loc: `${SITE.base}/tracks/primary/`, priority: '0.8' }];
   chapters.forEach(ch => {
     const base = `${SITE.base}/${ch.meta.id}`;
     urls.push({ loc: `${base}/index.html`, priority: '0.9' });
@@ -943,7 +979,34 @@ try {
 fs.writeFileSync(path.join(DIST, 'index.html'), renderHome());
 
 fs.mkdirSync(path.join(DIST, 'tracks'), { recursive: true });
-fs.writeFileSync(path.join(DIST, 'tracks', 'index.html'), renderTracks());
+fs.writeFileSync(path.join(DIST, 'tracks', 'index.html'), renderTracks({
+  page: { cross: '<p class="tg-cross-row"><a class="tg-cross" href="primary/index.html">看小学专项图谱 →</a></p>' }
+}));
+
+/* 小学专项图谱（独立一页，避免 24 个学期挤在一张图里） */
+fs.mkdirSync(path.join(DIST, 'tracks', 'primary'), { recursive: true });
+fs.writeFileSync(path.join(DIST, 'tracks', 'primary', 'index.html'), renderTracks({
+  strands: PRIMARY_STRANDS,
+  grades: PRIMARY_GRADES,
+  up: '../../',
+  page: {
+    title: `小学数学专项图谱 - ${SITE.name}`,
+    desc: '小学数学四类知识主线（数与运算 / 量与测量 / 图形与几何 / 统计与综合）的关系图谱：三年级上下册已上线，虚线框是后续册次，按专项看能提前知道每块内容后面长成什么样。',
+    h1: '小学数学专项图谱',
+    p: '小学六年看着是几十个单元，其实只有四类事：算数、量东西、认图形、看数据。按年级学是跟着课堂走，按专项看能发现——同一个能力在六年里反复加码。',
+    sub: '横线是专项，竖列是册次；<b>箭头从「先学的单元」指向「后用的单元」</b>。虚线框是还没上线的单元。',
+    section1: '一图看懂：小学六年的四条主线',
+    section1desc: '按册次学适合跟着课堂走；按专项看，才知道这一块后面还会长成什么样。',
+    section2: '四条专项线',
+    section3: '三种用法',
+    cross: '<p class="tg-cross-row"><a class="tg-cross" href="../index.html">看初中 · 高中专项图谱 →</a></p>',
+    paths: [
+      { who: '跟着课堂学', how: '回<a href="../../index.html">课程目录</a>，按册次找当前单元——单元编号和教材一致。' },
+      { who: '想把一块补牢', how: '在图上找到那条线，从最左边的单元开始往回捋，箭头指哪就先学哪。' },
+      { who: '家长想看清全局', how: '比如「数与运算」从万以内加减一路走到分数、小数——这是同一个能力的六年加码，不是六个独立科目。' }
+    ]
+  }
+}));
 
 chapters.forEach(ch => {
   const dir = path.join(DIST, ch.meta.id);

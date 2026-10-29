@@ -2,6 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://teach.toolona.com/</loc><priority>1.0</priority></url>
   <url><loc>https://teach.toolona.com/tracks/</loc><priority>0.9</priority></url>
+  <url><loc>https://teach.toolona.com/tracks/primary/</loc><priority>0.8</priority></url>
   <url><loc>https://teach.toolona.com/p3a-time/index.html</loc><priority>0.9</priority></url>
   <url><loc>https://teach.toolona.com/p3a-time/p3a-time-hm.html</loc><priority>0.8</priority></url>
   <url><loc>https://teach.toolona.com/p3a-time/p3a-time-read.html</loc><priority>0.8</priority></url>
@@ -98,6 +99,102 @@
   <url><loc>https://teach.toolona.com/p3a-frac/pattern/p3a-frac-t-add.html</loc><priority>0.7</priority></url>
   <url><loc>https://teach.toolona.com/p3a-frac/pattern/p3a-frac-t-one.html</loc><priority>0.7</priority></url>
   <url><loc>https://teach.toolona.com/p3a-frac/pattern/p3a-frac-t-avg.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/p3b-dir/index.html</loc><priority>0.9</priority></url>
+  <url><loc>https://teach.toolona.com/p3b-dir/p3b-dir-8.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/p3b-dir/p3b-dir-rel.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/p3b-dir/p3b-dir-walk.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/p3b-dir/p3b-dir-map.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/p3b-dir/patterns.html</loc><priority>0.9</priority></url>
+  <url><loc>https://teach.toolona.com/p3b-dir/locate.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/p3b-dir/pattern/p3b-dir-t-rev.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/p3b-dir/pattern/p3b-dir-t-eight.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/p3b-dir/pattern/p3b-dir-t-back.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/p3b-dir/pattern/p3b-dir-t-map.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/p3b-dir/pattern/p3b-dir-t-sun.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/p3b-div/index.html</loc><priority>0.9</priority></url>
+  <url><loc>https://teach.toolona.com/p3b-div/p3b-div-mean.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/p3b-div/p3b-div-oral.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/p3b-div/p3b-div-vert.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/p3b-div/p3b-div-zero.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/p3b-div/patterns.html</loc><priority>0.9</priority></url>
+  <url><loc>https://teach.toolona.com/p3b-div/locate.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/p3b-div/pattern/p3b-div-t-vert.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/p3b-div/pattern/p3b-div-t-zero-mid.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/p3b-div/pattern/p3b-div-t-rem.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/p3b-div/pattern/p3b-div-t-apply.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/p3b-div/pattern/p3b-div-t-remmax.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/p3b-table/index.html</loc><priority>0.9</priority></url>
+  <url><loc>https://teach.toolona.com/p3b-table/p3b-table-single.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/p3b-table/p3b-table-double.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/p3b-table/p3b-table-read.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/p3b-table/p3b-table-total.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/p3b-table/patterns.html</loc><priority>0.9</priority></url>
+  <url><loc>https://teach.toolona.com/p3b-table/locate.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/p3b-table/pattern/p3b-table-t-read.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/p3b-table/pattern/p3b-table-t-head.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/p3b-table/pattern/p3b-table-t-total.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/p3b-table/pattern/p3b-table-t-fill.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/p3b-table/pattern/p3b-table-t-concl.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/p3b-mul2/index.html</loc><priority>0.9</priority></url>
+  <url><loc>https://teach.toolona.com/p3b-mul2/p3b-mul2-oral.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/p3b-mul2/p3b-mul2-model.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/p3b-mul2/p3b-mul2-vert.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/p3b-mul2/p3b-mul2-est.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/p3b-mul2/patterns.html</loc><priority>0.9</priority></url>
+  <url><loc>https://teach.toolona.com/p3b-mul2/locate.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/p3b-mul2/pattern/p3b-mul2-t-vert.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/p3b-mul2/pattern/p3b-mul2-t-oral.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/p3b-mul2/pattern/p3b-mul2-t-est.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/p3b-mul2/pattern/p3b-mul2-t-apply.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/p3b-mul2/pattern/p3b-mul2-t-digits.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/p3b-area/index.html</loc><priority>0.9</priority></url>
+  <url><loc>https://teach.toolona.com/p3b-area/p3b-area-concept.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/p3b-area/p3b-area-unit.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/p3b-area/p3b-area-rect.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/p3b-area/p3b-area-convert.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/p3b-area/patterns.html</loc><priority>0.9</priority></url>
+  <url><loc>https://teach.toolona.com/p3b-area/locate.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/p3b-area/pattern/p3b-area-t-rect.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/p3b-area/pattern/p3b-area-t-convert.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/p3b-area/pattern/p3b-area-t-diff.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/p3b-area/pattern/p3b-area-t-tile.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/p3b-area/pattern/p3b-area-t-rev.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/p3b-cal/index.html</loc><priority>0.9</priority></url>
+  <url><loc>https://teach.toolona.com/p3b-cal/p3b-cal-month.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/p3b-cal/p3b-cal-feb.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/p3b-cal/p3b-cal-year.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/p3b-cal/p3b-cal-24h.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/p3b-cal/patterns.html</loc><priority>0.9</priority></url>
+  <url><loc>https://teach.toolona.com/p3b-cal/locate.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/p3b-cal/pattern/p3b-cal-t-leap.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/p3b-cal/pattern/p3b-cal-t-convert.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/p3b-cal/pattern/p3b-cal-t-duration.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/p3b-cal/pattern/p3b-cal-t-days.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/p3b-cal/pattern/p3b-cal-t-half.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/p3b-dec/index.html</loc><priority>0.9</priority></url>
+  <url><loc>https://teach.toolona.com/p3b-dec/p3b-dec-concept.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/p3b-dec/p3b-dec-money.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/p3b-dec/p3b-dec-line.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/p3b-dec/p3b-dec-compare.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/p3b-dec/patterns.html</loc><priority>0.9</priority></url>
+  <url><loc>https://teach.toolona.com/p3b-dec/locate.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/p3b-dec/pattern/p3b-dec-t-read.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/p3b-dec/pattern/p3b-dec-t-money.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/p3b-dec/pattern/p3b-dec-t-compare.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/p3b-dec/pattern/p3b-dec-t-apply.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/p3b-dec/pattern/p3b-dec-t-frac.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/p3b-match/index.html</loc><priority>0.9</priority></url>
+  <url><loc>https://teach.toolona.com/p3b-match/p3b-match-tree.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/p3b-match/p3b-match-mul.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/p3b-match/p3b-match-order.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/p3b-match/p3b-match-apply.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/p3b-match/patterns.html</loc><priority>0.9</priority></url>
+  <url><loc>https://teach.toolona.com/p3b-match/locate.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/p3b-match/pattern/p3b-match-t-basic.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/p3b-match/pattern/p3b-match-t-list.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/p3b-match/pattern/p3b-match-t-digits.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/p3b-match/pattern/p3b-match-t-route.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/p3b-match/pattern/p3b-match-t-order.html</loc><priority>0.7</priority></url>
   <url><loc>https://teach.toolona.com/rational/index.html</loc><priority>0.9</priority></url>
   <url><loc>https://teach.toolona.com/rational/rat-posneg.html</loc><priority>0.8</priority></url>
   <url><loc>https://teach.toolona.com/rational/rat-nums.html</loc><priority>0.8</priority></url>

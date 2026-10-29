@@ -37,6 +37,8 @@ function makeCtx(rec) {
     beginPath: noop, closePath: noop, stroke: noop, fill: noop, clip: noop,
     moveTo: (x, y) => rec.pt(x, y),
     lineTo: (x, y) => rec.pt(x, y),
+    bezierCurveTo: (a, b, c, d, x, y) => { rec.pt(a, b); rec.pt(c, d); rec.pt(x, y); },
+    quadraticCurveTo: (a, b, x, y) => { rec.pt(a, b); rec.pt(x, y); },
     arc: (x, y, r) => { rec.pt(x - r, y - r); rec.pt(x + r, y + r); },
     ellipse: (x, y, rx, ry) => { rec.pt(x - rx, y - ry); rec.pt(x + rx, y + ry); },
     rect: (x, y, w, h) => rec.box(x, y, w, h),

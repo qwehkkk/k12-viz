@@ -633,6 +633,11 @@ ul.lesson-list li::before {
 /* ---------- 专项图谱页 ---------- */
 .tg-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: 10px; background: var(--surface); }
 .tg-svg { display: block; min-width: 860px; width: 100%; height: auto; }
+/* 小学 / 中学专项图谱互跳 */
+.tg-cross-row { margin: 16px 0 0; }
+.tg-cross { display: inline-block; padding: 7px 18px; border: 1px solid #185fa5; color: #185fa5;
+  border-radius: 999px; font-size: 14px; text-decoration: none; transition: background .15s; }
+.tg-cross:hover { background: rgba(24, 95, 165, .08); }
 .tg-col { font-size: 13px; fill: var(--muted); font-weight: 500; }
 .tg-row { font-size: 14px; font-weight: 600; }
 .tg-edge { fill: none; stroke: #9aa7b5; stroke-width: 1.6; marker-end: url(#tg-arrow); opacity: 0.85; }
