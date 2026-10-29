@@ -270,6 +270,15 @@
       else if (cfg.type === 'p4-div') VIZ.p4DivLab(el, cfg);
       else if (cfg.type === 'p4-bar') VIZ.p4BarLab(el, cfg);
       else if (cfg.type === 'p4-opt') VIZ.p4OptLab(el, cfg);
+      else if (cfg.type === 'p4b-arith') VIZ.p4bArithLab(el, cfg);
+      else if (cfg.type === 'p4b-view') VIZ.p4bViewLab(el, cfg);
+      else if (cfg.type === 'p4b-law') VIZ.p4bLawLab(el, cfg);
+      else if (cfg.type === 'p4b-dec2') VIZ.p4bDec2Lab(el, cfg);
+      else if (cfg.type === 'p4b-tri') VIZ.p4bTriLab(el, cfg);
+      else if (cfg.type === 'p4b-decalc') VIZ.p4bDecalcLab(el, cfg);
+      else if (cfg.type === 'p4b-motion') VIZ.p4bMotionLab(el, cfg);
+      else if (cfg.type === 'p4b-avg') VIZ.p4bAvgLab(el, cfg);
+      else if (cfg.type === 'p4b-cage') VIZ.p4bCageLab(el, cfg);
     });
   });
 })();
