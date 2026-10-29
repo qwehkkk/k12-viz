@@ -302,6 +302,11 @@
       else if (cfg.type === 'p6a-pct') VIZ.p6aPctLab(el, cfg);
       else if (cfg.type === 'p6a-pie') VIZ.p6aPieLab(el, cfg);
       else if (cfg.type === 'p6a-numshape') VIZ.p6aNumshapeLab(el, cfg);
+      else if (cfg.type === 'p6b-neg') VIZ.p6bNegLab(el, cfg);
+      else if (cfg.type === 'p6b-pct2') VIZ.p6bPct2Lab(el, cfg);
+      else if (cfg.type === 'p6b-cyl') VIZ.p6bCylLab(el, cfg);
+      else if (cfg.type === 'p6b-prop') VIZ.p6bPropLab(el, cfg);
+      else if (cfg.type === 'p6b-pigeon') VIZ.p6bPigeonLab(el, cfg);
     });
   });
 })();

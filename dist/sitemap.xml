@@ -675,6 +675,66 @@
   <url><loc>https://teach.toolona.com/p6a-numshape/pattern/p6a-numshape-t-frac.html</loc><priority>0.7</priority></url>
   <url><loc>https://teach.toolona.com/p6a-numshape/pattern/p6a-numshape-t-nth.html</loc><priority>0.7</priority></url>
   <url><loc>https://teach.toolona.com/p6a-numshape/pattern/p6a-numshape-t-combine.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/p6b-neg/index.html</loc><priority>0.9</priority></url>
+  <url><loc>https://teach.toolona.com/p6b-neg/p6b-neg-mean.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/p6b-neg/p6b-neg-axis.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/p6b-neg/p6b-neg-cmp.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/p6b-neg/p6b-neg-life.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/p6b-neg/patterns.html</loc><priority>0.9</priority></url>
+  <url><loc>https://teach.toolona.com/p6b-neg/locate.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/p6b-neg/pattern/p6b-neg-t-sign.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/p6b-neg/pattern/p6b-neg-t-axis.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/p6b-neg/pattern/p6b-neg-t-cmp.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/p6b-neg/pattern/p6b-neg-t-opp.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/p6b-neg/pattern/p6b-neg-t-life.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/p6b-pct2/index.html</loc><priority>0.9</priority></url>
+  <url><loc>https://teach.toolona.com/p6b-pct2/p6b-pct2-disc.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/p6b-pct2/p6b-pct2-cheng.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/p6b-pct2/p6b-pct2-tax.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/p6b-pct2/p6b-pct2-rate.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/p6b-pct2/patterns.html</loc><priority>0.9</priority></url>
+  <url><loc>https://teach.toolona.com/p6b-pct2/locate.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/p6b-pct2/pattern/p6b-pct2-t-price.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/p6b-pct2/pattern/p6b-pct2-t-back.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/p6b-pct2/pattern/p6b-pct2-t-cheng.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/p6b-pct2/pattern/p6b-pct2-t-tax.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/p6b-pct2/pattern/p6b-pct2-t-rate.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/p6b-cyl/index.html</loc><priority>0.9</priority></url>
+  <url><loc>https://teach.toolona.com/p6b-cyl/p6b-cyl-surface.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/p6b-cyl/p6b-cyl-volume.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/p6b-cyl/p6b-cone-mean.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/p6b-cyl/p6b-cone-volume.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/p6b-cyl/patterns.html</loc><priority>0.9</priority></url>
+  <url><loc>https://teach.toolona.com/p6b-cyl/locate.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/p6b-cyl/pattern/p6b-cyl-t-side.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/p6b-cyl/pattern/p6b-cyl-t-surf.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/p6b-cyl/pattern/p6b-cyl-t-vol.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/p6b-cyl/pattern/p6b-cyl-t-cone.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/p6b-cyl/pattern/p6b-cyl-t-rel.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/p6b-prop/index.html</loc><priority>0.9</priority></url>
+  <url><loc>https://teach.toolona.com/p6b-prop/p6b-prop-mean.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/p6b-prop/p6b-prop-direct.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/p6b-prop/p6b-prop-inverse.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/p6b-prop/p6b-prop-scale.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/p6b-prop/patterns.html</loc><priority>0.9</priority></url>
+  <url><loc>https://teach.toolona.com/p6b-prop/locate.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/p6b-prop/pattern/p6b-prop-t-solve.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/p6b-prop/pattern/p6b-prop-t-judge.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/p6b-prop/pattern/p6b-prop-t-direct.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/p6b-prop/pattern/p6b-prop-t-inverse.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/p6b-prop/pattern/p6b-prop-t-scale.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/p6b-pigeon/index.html</loc><priority>0.9</priority></url>
+  <url><loc>https://teach.toolona.com/p6b-pigeon/p6b-pigeon-mean.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/p6b-pigeon/p6b-pigeon-worst.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/p6b-pigeon/p6b-pigeon-apply.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/p6b-pigeon/p6b-pigeon-proof.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/p6b-pigeon/patterns.html</loc><priority>0.9</priority></url>
+  <url><loc>https://teach.toolona.com/p6b-pigeon/locate.html</loc><priority>0.8</priority></url>
+  <url><loc>https://teach.toolona.com/p6b-pigeon/pattern/p6b-pigeon-t-basic.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/p6b-pigeon/pattern/p6b-pigeon-t-exact.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/p6b-pigeon/pattern/p6b-pigeon-t-worst.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/p6b-pigeon/pattern/p6b-pigeon-t-color.html</loc><priority>0.7</priority></url>
+  <url><loc>https://teach.toolona.com/p6b-pigeon/pattern/p6b-pigeon-t-proof.html</loc><priority>0.7</priority></url>
   <url><loc>https://teach.toolona.com/rational/index.html</loc><priority>0.9</priority></url>
   <url><loc>https://teach.toolona.com/rational/rat-posneg.html</loc><priority>0.8</priority></url>
   <url><loc>https://teach.toolona.com/rational/rat-nums.html</loc><priority>0.8</priority></url>
