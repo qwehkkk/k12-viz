@@ -262,6 +262,14 @@
       else if (cfg.type === 'ep-cal') VIZ.epCalLab(el, cfg);
       else if (cfg.type === 'ep-dec') VIZ.epDecLab(el, cfg);
       else if (cfg.type === 'ep-match') VIZ.epMatchLab(el, cfg);
+      else if (cfg.type === 'p4-num') VIZ.p4NumLab(el, cfg);
+      else if (cfg.type === 'p4-area2') VIZ.p4Area2Lab(el, cfg);
+      else if (cfg.type === 'p4-ang') VIZ.p4AngLab(el, cfg);
+      else if (cfg.type === 'p4-mult') VIZ.p4MultLab(el, cfg);
+      else if (cfg.type === 'p4-quad') VIZ.p4QuadLab(el, cfg);
+      else if (cfg.type === 'p4-div') VIZ.p4DivLab(el, cfg);
+      else if (cfg.type === 'p4-bar') VIZ.p4BarLab(el, cfg);
+      else if (cfg.type === 'p4-opt') VIZ.p4OptLab(el, cfg);
     });
   });
 })();
