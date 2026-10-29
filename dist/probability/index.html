@@ -16826,17 +16826,26 @@ function epMatchLab(el, cfg) {
       return { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 };
     }
 
+    function cap(id) {
+      if (root.setPointerCapture) {
+        try { root.setPointerCapture(id); } catch (err) {}
+      }
+    }
+
     root.addEventListener('pointerdown', function (e) {
       if (e.pointerType === 'mouse' && e.button !== 0) return;
+      // 工具条按钮不能当成拖动起点，否则指针捕获会把 click 吞掉
+      if (e.target.closest && e.target.closest('.tg-tools')) return;
       pts[e.pointerId] = local(e);
       if (count() === 1) {
         dragging = true; moved = false; sx = e.clientX; sy = e.clientY;
         root.classList.add('is-grabbing');
       } else if (count() === 2) {
         pinchD = pairDist();
-      }
-      if (root.setPointerCapture) {
-        try { root.setPointerCapture(e.pointerId); } catch (err) {}
+        // 双指都捕获，抬指在容器外也能收到 pointerup
+        cap(e.pointerId);
+        var ks = Object.keys(pts);
+        for (var i = 0; i < ks.length; i++) cap(+ks[i]);
       }
     });
 
@@ -16856,20 +16865,32 @@ function epMatchLab(el, cfg) {
         return;
       }
 
-      if (dragging) {
-        tx += e.clientX - sx;
-        ty += e.clientY - sy;
-        if (!moved && (Math.abs(e.clientX - sx) > 3 || Math.abs(e.clientY - sy) > 3)) {
-          moved = true;
-          root.classList.add('has-moved');
-        }
-        apply();
+      if (!dragging) return;
+      var dx = e.clientX - sx, dy = e.clientY - sy;
+      // 位移超过阈值才认定为拖动：普通点击（章节链接）不受影响
+      if (!moved && Math.abs(dx) <= 3 && Math.abs(dy) <= 3) return;
+      if (!moved) {
+        moved = true;
+        root.classList.add('has-moved');
+        // 拖动确认后才捕获指针，保证拖出容器后仍能持续跟随
+        cap(e.pointerId);
       }
+      // 以「上一次事件位置」为基准累加，而不是按下的原始点，否则会越拖越飞
+      tx += dx;
+      ty += dy;
+      sx = e.clientX; sy = e.clientY;
+      apply();
     });
 
     function release(e) {
       delete pts[e.pointerId];
-      if (!count()) {
+      var left = Object.keys(pts).length;
+      if (left) {
+        // 双指变单指：用剩下的手指重置拖动基准，避免内容跳位
+        var p = pts[Object.keys(pts)[0]];
+        var r = root.getBoundingClientRect();
+        sx = p.x + r.left; sy = p.y + r.top;
+      } else {
         dragging = false; pinchD = 0;
         root.classList.remove('is-grabbing');
       }
