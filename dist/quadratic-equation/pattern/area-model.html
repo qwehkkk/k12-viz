@@ -19177,7 +19177,6 @@ function p5bLineLab(el, cfg) {
   var s0 = circleScaffold(el);
   var mode = Math.round(p.mode), W = Math.round(p.w);
   var info = s0.info;
-  var data = [12, 15, 14, 18, 20];
   var days = ['一', '二', '三', '四', '五'];
   function draw() {
     var m = linMap(s0.cv, { xmin: 0, xmax: 640, ymin: 0, ymax: 400 }, 0);
@@ -19185,6 +19184,8 @@ function p5bLineLab(el, cfg) {
     ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, w, h);
     ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
     var i;
+    // 周五气温由滑块控制，四个模式共用同一份数据
+    var data = [12, 15, 14, 18, W];
     var gx = 90, gy = 330, gw = 420, gh = 250, ymax2 = 30;
     function pt(i2, val, off) { return [gx + gw * i2 / 4, gy - gh * val / ymax2 - (off || 0)]; }
     // 轴
@@ -19218,9 +19219,9 @@ function p5bLineLab(el, cfg) {
         ctx.fillText(String(vals[i]), q[0] + 7, q[1] - 12);
       }
     }
-    var data2 = [data[0], data[1], data[2], data[3], W];
     if (mode === 0) {
       p5bTxt(ctx, 60, 45, '一周气温折线图：描点 → 标数 → 连线', '#2c3e50', 1);
+      p5bTxt(ctx, 560, 45, '拖滑块改周五', '#6b7a89', 0, 1);
       drawLine(data, '#185fa5', false, 0);
       drawPts(data, '#185fa5', 0);
     } else if (mode === 1) {
@@ -19233,7 +19234,11 @@ function p5bLineLab(el, cfg) {
       var q3 = pt(3, data[3]), q4 = pt(4, data[4]);
       ctx.beginPath(); ctx.moveTo(q3[0], q3[1]); ctx.lineTo(q4[0], q4[1]); ctx.stroke();
       drawPts(data, '#6b7a89', 0);
-      p5bTxt(ctx, 60, 385, '升 3℃（红）比升 2℃（绿）更陡更快', '#c0392b');
+      var d01 = data[1] - data[0], d34 = data[4] - data[3];
+      var seg34 = d34 > 0 ? '升 ' + d34 + '℃' : d34 < 0 ? '降 ' + (-d34) + '℃' : '持平';
+      var steeper = Math.abs(d34) > Math.abs(d01) ? '绿段更陡、变化更快'
+        : Math.abs(d34) < Math.abs(d01) ? '红段更陡、变化更快' : '两段一样陡';
+      p5bTxt(ctx, 60, 385, '红：升 ' + d01 + '℃，绿：' + seg34 + ' → ' + steeper, '#c0392b');
     } else if (mode === 2) {
       p5bTxt(ctx, 60, 45, '复式：两地气温对比', '#2c3e50', 1);
       drawLine(data, '#185fa5', false, 0);
@@ -19245,12 +19250,16 @@ function p5bLineLab(el, cfg) {
       p5bTxt(ctx, 60, 385, '两线靠近 = 温差缩小，张开 = 拉大', '#6b7a89');
     } else {
       p5bTxt(ctx, 60, 45, '顺着趋势预测（虚线外推）', '#2c3e50', 1);
-      drawLine(data2.slice(0, 4), '#185fa5', false, 0);
-      drawPts(data2.slice(0, 4), '#185fa5', 0);
-      drawLine([data2[3], data2[4]], '#c0392b', true, 0);
-      var q5 = pt(4, data2[4]);
+      drawLine(data.slice(0, 4), '#185fa5', false, 0);
+      drawPts(data.slice(0, 4), '#185fa5', 0);
+      // 两元素数组会按索引 0、1 落到周一/周二，必须显式用 3、4 两个横坐标
+      var qa = pt(3, data[3]), qb = pt(4, data[4]);
+      ctx.strokeStyle = '#c0392b'; ctx.lineWidth = 3; ctx.setLineDash([6, 5]);
+      ctx.beginPath(); ctx.moveTo(qa[0], qa[1]); ctx.lineTo(qb[0], qb[1]); ctx.stroke(); ctx.setLineDash([]);
+      var q5 = pt(4, data[4]);
       ctx.fillStyle = '#c0392b'; ctx.beginPath(); ctx.arc(q5[0], q5[1], 5, 0, Math.PI * 2); ctx.fill();
-      p5bTxt(ctx, 60, 385, '连续缓升 → 周五「可能」' + W + '℃（留余地）', '#c0392b');
+      var tri = W > data[3] ? '仍在升' : W < data[3] ? '转为回落' : '与周四持平';
+      p5bTxt(ctx, 60, 385, '顺着前 4 天走势 → 周五「可能」' + W + '℃（' + tri + '，用「可能」留余地）', '#c0392b');
     }
     info.innerHTML = '<span class="viz-meta">' +
       (mode === 0 ? '**描点、标数、顺次连线**。'
