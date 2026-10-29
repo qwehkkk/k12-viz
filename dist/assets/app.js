@@ -279,6 +279,13 @@
       else if (cfg.type === 'p4b-motion') VIZ.p4bMotionLab(el, cfg);
       else if (cfg.type === 'p4b-avg') VIZ.p4bAvgLab(el, cfg);
       else if (cfg.type === 'p4b-cage') VIZ.p4bCageLab(el, cfg);
+      else if (cfg.type === 'p5a-decmul') VIZ.p5aDecmulLab(el, cfg);
+      else if (cfg.type === 'p5a-pos') VIZ.p5aPosLab(el, cfg);
+      else if (cfg.type === 'p5a-decdiv') VIZ.p5aDecdivLab(el, cfg);
+      else if (cfg.type === 'p5a-poss') VIZ.p5aPossLab(el, cfg);
+      else if (cfg.type === 'p5a-eq') VIZ.p5aEqLab(el, cfg);
+      else if (cfg.type === 'p5a-area') VIZ.p5aAreaLab(el, cfg);
+      else if (cfg.type === 'p5a-tree') VIZ.p5aTreeLab(el, cfg);
     });
   });
 })();
