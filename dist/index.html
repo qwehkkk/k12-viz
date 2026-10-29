@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>初中数学可视化学习 - 图知学堂</title>
-<meta name="description" content="初中数学可视化学习：45 章、269 个知识点，每个知识点都有可拖动的交互演示、分步题解、经典题型拆解和现实应用场景。">
+<title>初中高中数学可视化学习 - 图知学堂</title>
+<meta name="description" content="初中高中数学可视化学习：45 章、269 个知识点，每个知识点都有可拖动的交互演示、分步题解、经典题型拆解和现实应用场景。">
 <style>
 :root {
   --bg: #fafaf8;
@@ -593,6 +593,16 @@ ul.lesson-list li::before {
 .lab-card { border-left: 3px solid var(--green); }
 .lab-card .num { color: var(--green); }
 
+/* ---------- 首页：初中/高中两大组 ---------- */
+.stage-block { margin: 34px 0 10px; }
+.stage-title {
+  display: flex; align-items: baseline; gap: 10px;
+  font-size: 21px; font-weight: 700; margin: 0 0 8px;
+  padding-left: 12px; border-left: 5px solid var(--accent);
+}
+.stage-senior .stage-title { border-left-color: var(--green); }
+.stage-count { font-size: 12px; font-weight: 400; color: var(--muted); }
+
 /* ---------- 首页：年级分组 ---------- */
 .grade-block { margin-bottom: 26px; }
 .grade-head {
@@ -662,9 +672,9 @@ a:hover .tg-node { stroke-width: 2.4; }
 </div></header>
 <main><div class="container">
 <div class="hero">
-  <h1>初中数学 · 可视化学习</h1>
+  <h1>数学 · 可视化学习</h1>
   <p>把知识点画出来、把过程动起来、把题型拆开来看。不是又一份知识点总结，而是让你看见「这个式子是怎么长出来的、这类题是由哪几块拼起来的」。</p>
-  <p class="hero-sub">每个知识点都配交互实验、分步题解和现实场景；每类题型都拆解它调用了哪些知识点、从哪一步下手。</p>
+  <p class="hero-sub">每个知识点都配交互实验、分步题解和现实场景；每类题型都拆解它调用了哪些知识点、从哪一步下手。目录按<b>初中</b>和<b>高中</b>分成两大组，各取所需。</p>
   <div class="chips">
     <span class="chip green">45 章</span>
     <span class="chip green">269 个知识点</span>
@@ -675,8 +685,10 @@ a:hover .tg-node { stroke-width: 2.4; }
 
 <div class="section-head" style="margin-top:0">
   <h2>课程目录 · 按年级</h2>
-  <p>跟人教版教材章节编号一致（如「九年级上册 · 第 21 章」），按学校进度找就行。</p>
+  <p>跟人教版教材章节编号一致（如「九年级上册 · 第 21 章」），<b>初中</b>与<b>高中</b>分成两大组，按需查看。</p>
 </div>
+<div class="stage-block stage-junior">
+  <h2 class="stage-title">初中<span class="stage-count">6 个学期</span></h2>
 <div class="grade-block">
   <div class="grade-head"><h3>七年级上册</h3><span class="grade-count">4 章</span></div>
   <div class="chapter-grid">
@@ -1058,6 +1070,9 @@ a:hover .tg-node { stroke-width: 2.4; }
 </a>
   </div>
 </div>
+</div>
+<div class="stage-block stage-senior">
+  <h2 class="stage-title">高中<span class="stage-count">5 个学期</span></h2>
 <div class="grade-block">
   <div class="grade-head"><h3>高一上册</h3><span class="grade-count">6 章</span></div>
   <div class="chapter-grid">
@@ -1199,16 +1214,12 @@ a:hover .tg-node { stroke-width: 2.4; }
   </div>
 </div>
 <div class="grade-block">
-  <div class="grade-head"><h3>高二上册</h3><span class="grade-soon">即将上线</span></div>
-  <p class="grade-empty">这一册的章节正在路上。可以先在 <a href="tracks/">专项图谱</a> 里看它属于哪条知识线。</p>
-</div>
-<div class="grade-block">
-  <div class="grade-head"><h3>高二下册</h3><span class="grade-count">3 章</span></div>
+  <div class="grade-head"><h3>高二上册</h3><span class="grade-count">3 章</span></div>
   <div class="chapter-grid">
 <a class="chapter-card" href="space-vector/index.html">
   <div class="cc-head">
     <span class="cc-order">第 1 章</span>
-    <span class="cc-grade">高二下册</span>
+    <span class="cc-grade">高二上册</span>
   </div>
   <h3>空间向量与立体几何</h3>
   <p class="cc-tagline">几何证明靠「看图找辅助线」，向量计算靠「建系代公式」——把证明题变成算数题。</p>
@@ -1221,7 +1232,7 @@ a:hover .tg-node { stroke-width: 2.4; }
 <a class="chapter-card" href="line-circle/index.html">
   <div class="cc-head">
     <span class="cc-order">第 2 章</span>
-    <span class="cc-grade">高二下册</span>
+    <span class="cc-grade">高二上册</span>
   </div>
   <h3>直线和圆的方程</h3>
   <p class="cc-tagline">把「图」翻译成「式」：直线是二元一次方程，圆是二元二次方程。</p>
@@ -1234,7 +1245,7 @@ a:hover .tg-node { stroke-width: 2.4; }
 <a class="chapter-card" href="conic/index.html">
   <div class="cc-head">
     <span class="cc-order">第 3 章</span>
-    <span class="cc-grade">高二下册</span>
+    <span class="cc-grade">高二上册</span>
   </div>
   <h3>圆锥曲线的方程</h3>
   <p class="cc-tagline">一个平面斜着切圆锥，切出的边缘就是椭圆、抛物线、双曲线——三种曲线，同一个祖宗。</p>
@@ -1247,12 +1258,12 @@ a:hover .tg-node { stroke-width: 2.4; }
   </div>
 </div>
 <div class="grade-block">
-  <div class="grade-head"><h3>高三上册</h3><span class="grade-count">2 章</span></div>
+  <div class="grade-head"><h3>高二下册</h3><span class="grade-count">2 章</span></div>
   <div class="chapter-grid">
 <a class="chapter-card" href="sequence/index.html">
   <div class="cc-head">
     <span class="cc-order">第 4 章</span>
-    <span class="cc-grade">高三上册</span>
+    <span class="cc-grade">高二下册</span>
   </div>
   <h3>数列</h3>
   <p class="cc-tagline">一串按顺序排好的数，本质是「定义在正整数上的函数」——所以能画图象、能看增减。</p>
@@ -1265,7 +1276,7 @@ a:hover .tg-node { stroke-width: 2.4; }
 <a class="chapter-card" href="derivative/index.html">
   <div class="cc-head">
     <span class="cc-order">第 5 章</span>
-    <span class="cc-grade">高三上册</span>
+    <span class="cc-grade">高二下册</span>
   </div>
   <h3>一元函数的导数及其应用</h3>
   <p class="cc-tagline">导数就是「瞬时变化率」：把放大镜架到曲线上，曲线看起来就成了一条直线。</p>
@@ -1278,12 +1289,12 @@ a:hover .tg-node { stroke-width: 2.4; }
   </div>
 </div>
 <div class="grade-block">
-  <div class="grade-head"><h3>高三下册</h3><span class="grade-count">3 章</span></div>
+  <div class="grade-head"><h3>高三上册</h3><span class="grade-count">3 章</span></div>
   <div class="chapter-grid">
 <a class="chapter-card" href="counting/index.html">
   <div class="cc-head">
     <span class="cc-order">第 1 章</span>
-    <span class="cc-grade">高三下册</span>
+    <span class="cc-grade">高三上册</span>
   </div>
   <h3>计数原理</h3>
   <p class="cc-tagline">数数也是一门手艺：分类「或」相加、分步「且」相乘，排列管排队、组合管组队。</p>
@@ -1296,7 +1307,7 @@ a:hover .tg-node { stroke-width: 2.4; }
 <a class="chapter-card" href="randvar/index.html">
   <div class="cc-head">
     <span class="cc-order">第 2 章</span>
-    <span class="cc-grade">高三下册</span>
+    <span class="cc-grade">高三上册</span>
   </div>
   <h3>随机变量及其分布</h3>
   <p class="cc-tagline">给随机结果编上号，一张分布列管住所有可能性——期望是重心，方差是散度。</p>
@@ -1309,7 +1320,7 @@ a:hover .tg-node { stroke-width: 2.4; }
 <a class="chapter-card" href="pairstat/index.html">
   <div class="cc-head">
     <span class="cc-order">第 3 章</span>
-    <span class="cc-grade">高三下册</span>
+    <span class="cc-grade">高三上册</span>
   </div>
   <h3>成对数据的统计分析</h3>
   <p class="cc-tagline">两个变量之间有没有关系？散点图看形状，回归方程定数量，列联表做检验。</p>
@@ -1320,6 +1331,11 @@ a:hover .tg-node { stroke-width: 2.4; }
   </div>
 </a>
   </div>
+</div>
+<div class="grade-block">
+  <div class="grade-head"><h3>高三下册</h3><span class="grade-soon">即将上线</span></div>
+  <p class="grade-empty">这一册的章节正在路上。可以先在 <a href="tracks/">专项图谱</a> 里看它属于哪条知识线。</p>
+</div>
 </div>
 
 <div class="section-head">
@@ -1379,7 +1395,7 @@ a:hover .tg-node { stroke-width: 2.4; }
 </div>
 </div></main>
 <footer class="site"><div class="container">
-  图知学堂 · 初中数学可视化学习 · 知识点图谱 + 题型层 + 交互组件
+  图知学堂 · 初中·高中数学可视化学习 · 知识点图谱 + 题型层 + 交互组件
 </div></footer>
 <script>
 (function () {

@@ -189,7 +189,7 @@ ${CSS}
 function foot() {
   return `</div></main>
 <footer class="site"><div class="container">
-  ${SITE.name} · 初中数学可视化学习 · 知识点图谱 + 题型层 + 交互组件
+  ${SITE.name} · 初中·高中数学可视化学习 · 知识点图谱 + 题型层 + 交互组件
 </div></footer>
 <script>
 ${VIZJS}
@@ -240,7 +240,7 @@ function renderHome() {
   const groups = GRADE_TERMS
     .map(g => ({ g, list: chapters.filter(c => c.meta.grade === g) }))
     .filter(x => x.list.length);
-  const gradeHtml = GRADE_TERMS.map(g => {
+  const gradeBlock = g => {
     const list = chapters.filter(c => c.meta.grade === g);
     if (!list.length) {
       return `<div class="grade-block">
@@ -254,7 +254,13 @@ function renderHome() {
 ${list.map(chapterCard).join('\n')}
   </div>
 </div>`;
-  }).join('\n');
+  };
+  const JUNIOR = GRADE_TERMS.slice(0, 6), SENIOR = GRADE_TERMS.slice(6);
+  const stage = (name, cls, grades) => `<div class="stage-block ${cls}">
+  <h2 class="stage-title">${name}<span class="stage-count">${grades.filter(g => chapters.some(c => c.meta.grade === g)).length} 个学期</span></h2>
+${grades.map(gradeBlock).join('\n')}
+</div>`;
+  const gradeHtml = stage('初中', 'stage-junior', JUNIOR) + '\n' + stage('高中', 'stage-senior', SENIOR);
 
   const strandHtml = STRANDS.map(st => {
     const n = st.chapters.length;
@@ -266,11 +272,11 @@ ${list.map(chapterCard).join('\n')}
 </a>`;
   }).join('\n');
 
-  return `${head(`初中数学可视化学习 - ${SITE.name}`, `初中数学可视化学习：${chapters.length} 章、${totalPoints} 个知识点，每个知识点都有可拖动的交互演示、分步题解、经典题型拆解和现实应用场景。`, '', null, 'home')}
+  return `${head(`初中高中数学可视化学习 - ${SITE.name}`, `初中高中数学可视化学习：${chapters.length} 章、${totalPoints} 个知识点，每个知识点都有可拖动的交互演示、分步题解、经典题型拆解和现实应用场景。`, '', null, 'home')}
 <div class="hero">
-  <h1>初中数学 · 可视化学习</h1>
+  <h1>数学 · 可视化学习</h1>
   <p>把知识点画出来、把过程动起来、把题型拆开来看。不是又一份知识点总结，而是让你看见「这个式子是怎么长出来的、这类题是由哪几块拼起来的」。</p>
-  <p class="hero-sub">每个知识点都配交互实验、分步题解和现实场景；每类题型都拆解它调用了哪些知识点、从哪一步下手。</p>
+  <p class="hero-sub">每个知识点都配交互实验、分步题解和现实场景；每类题型都拆解它调用了哪些知识点、从哪一步下手。目录按<b>初中</b>和<b>高中</b>分成两大组，各取所需。</p>
   <div class="chips">
     <span class="chip green">${chapters.length} 章</span>
     <span class="chip green">${totalPoints} 个知识点</span>
@@ -281,7 +287,7 @@ ${list.map(chapterCard).join('\n')}
 
 <div class="section-head" style="margin-top:0">
   <h2>课程目录 · 按年级</h2>
-  <p>跟人教版教材章节编号一致（如「九年级上册 · 第 21 章」），按学校进度找就行。</p>
+  <p>跟人教版教材章节编号一致（如「九年级上册 · 第 21 章」），<b>初中</b>与<b>高中</b>分成两大组，按需查看。</p>
 </div>
 ${gradeHtml}
 
@@ -823,7 +829,7 @@ function renderTracks() {
   const ghostHtml = ghostPos.map(g =>
     `<g class="tg-ghost"><rect x="${g.x}" y="${g.y}" width="${NW}" height="${NH}" rx="8"/><text x="${g.x + NW / 2}" y="${g.y + NH / 2 + 4}" text-anchor="middle">${esc(g.title)}</text></g>`).join('\n');
 
-  const graphSvg = `<svg viewBox="0 0 ${svgW} ${svgH}" class="tg-svg" role="img" aria-label="初中数学专项知识图谱：按专项分五条横线，按年级分六列，箭头表示先学谁">
+  const graphSvg = `<svg viewBox="0 0 ${svgW} ${svgH}" class="tg-svg" role="img" aria-label="初中高中数学专项知识图谱：按专项分五条横线，按年级分列，箭头表示先学谁">
 <defs><marker id="tg-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#9aa7b5"/></marker></defs>
 ${colHeaders}
 ${rowLabels}
@@ -862,10 +868,10 @@ ${cards}
     { who: '初三总复习', how: '图形与几何一条线有 11 章，从头过一遍比刷卷子更能看出题和题之间的联系。' }
   ].map(x => `<div class="guide-item"><h3>${x.who}</h3><p>${x.how}</p></div>`).join('\n');
 
-  return `${head(`专项知识图谱 - ${SITE.name}`, '初中数学五条专项知识主线（数与式 / 方程与不等式 / 函数 / 图形与几何 / 统计与概率）的关系图谱：箭头指向先学的章节，既可按年级走，也可按专项走。', '../', null, 'tracks')}
+  return `${head(`专项知识图谱 - ${SITE.name}`, '初中高中数学五条专项知识主线（数与式 / 方程与不等式 / 函数 / 图形与几何 / 统计与概率）的关系图谱：箭头指向先学的章节，既可按年级走，也可按专项走。', '../', null, 'tracks')}
 <div class="hero">
   <h1>专项知识图谱</h1>
-  <p>初中数学其实只有五条主线。课程目录按年级排，适合跟着学校走；这张图按专项排，适合补短板和总复习。</p>
+  <p>初中加高中，数学其实还是那五条主线。课程目录按年级排，适合跟着学校走；这张图按专项排，适合补短板和总复习。</p>
   <p class="hero-sub">横线是专项，竖列是年级学期；<b>箭头从「先学的章」指向「后用的章」</b>。虚线框是还没上线的章节。</p>
 </div>
 

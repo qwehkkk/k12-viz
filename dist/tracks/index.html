@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>专项知识图谱 - 图知学堂</title>
-<meta name="description" content="初中数学五条专项知识主线（数与式 / 方程与不等式 / 函数 / 图形与几何 / 统计与概率）的关系图谱：箭头指向先学的章节，既可按年级走，也可按专项走。">
+<meta name="description" content="初中高中数学五条专项知识主线（数与式 / 方程与不等式 / 函数 / 图形与几何 / 统计与概率）的关系图谱：箭头指向先学的章节，既可按年级走，也可按专项走。">
 <style>
 :root {
   --bg: #fafaf8;
@@ -593,6 +593,16 @@ ul.lesson-list li::before {
 .lab-card { border-left: 3px solid var(--green); }
 .lab-card .num { color: var(--green); }
 
+/* ---------- 首页：初中/高中两大组 ---------- */
+.stage-block { margin: 34px 0 10px; }
+.stage-title {
+  display: flex; align-items: baseline; gap: 10px;
+  font-size: 21px; font-weight: 700; margin: 0 0 8px;
+  padding-left: 12px; border-left: 5px solid var(--accent);
+}
+.stage-senior .stage-title { border-left-color: var(--green); }
+.stage-count { font-size: 12px; font-weight: 400; color: var(--muted); }
+
 /* ---------- 首页：年级分组 ---------- */
 .grade-block { margin-bottom: 26px; }
 .grade-head {
@@ -663,7 +673,7 @@ a:hover .tg-node { stroke-width: 2.4; }
 <main><div class="container">
 <div class="hero">
   <h1>专项知识图谱</h1>
-  <p>初中数学其实只有五条主线。课程目录按年级排，适合跟着学校走；这张图按专项排，适合补短板和总复习。</p>
+  <p>初中加高中，数学其实还是那五条主线。课程目录按年级排，适合跟着学校走；这张图按专项排，适合补短板和总复习。</p>
   <p class="hero-sub">横线是专项，竖列是年级学期；<b>箭头从「先学的章」指向「后用的章」</b>。虚线框是还没上线的章节。</p>
 </div>
 
@@ -671,7 +681,7 @@ a:hover .tg-node { stroke-width: 2.4; }
   <h2>一图看懂：谁是谁的前置</h2>
   <p>看不懂的地方顺着箭头往回找，通常卡住的原因在几册书之前。</p>
 </div>
-<div class="tg-wrap"><svg viewBox="0 0 2040 780" class="tg-svg" role="img" aria-label="初中数学专项知识图谱：按专项分五条横线，按年级分六列，箭头表示先学谁">
+<div class="tg-wrap"><svg viewBox="0 0 2040 780" class="tg-svg" role="img" aria-label="初中高中数学专项知识图谱：按专项分五条横线，按年级分列，箭头表示先学谁">
 <defs><marker id="tg-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#9aa7b5"/></marker></defs>
 <text x="195" y="34" text-anchor="middle" class="tg-col">七年级上册</text>
 <text x="353" y="34" text-anchor="middle" class="tg-col">七年级下册</text>
@@ -718,10 +728,10 @@ a:hover .tg-node { stroke-width: 2.4; }
 <path d="M 1143 328 C 1173 328, 1113 338, 1143 338" class="tg-edge"/>
 <path d="M 422 75 C 715.4000000000001 75, 780.5999999999999 355, 1074 355" class="tg-edge"/>
 <path d="M 1143 328 C 1173 328, 1113 382, 1143 382" class="tg-edge"/>
-<path d="M 1212 311 C 1434.3 311, 1483.7 311, 1706 311" class="tg-edge"/>
-<path d="M 738 311 C 1173.6 311, 1270.4 311, 1706 311" class="tg-edge"/>
-<path d="M 1212 311 C 1434.3 311, 1483.7 355, 1706 355" class="tg-edge"/>
-<path d="M 1212 237 C 1434.3 237, 1483.7 355, 1706 355" class="tg-edge"/>
+<path d="M 1212 311 C 1363.2 311, 1396.8 311, 1548 311" class="tg-edge"/>
+<path d="M 738 311 C 1102.5 311, 1183.5 311, 1548 311" class="tg-edge"/>
+<path d="M 1212 311 C 1363.2 311, 1396.8 355, 1548 355" class="tg-edge"/>
+<path d="M 1212 237 C 1363.2 237, 1396.8 355, 1548 355" class="tg-edge"/>
 <path d="M 264 473 C 344.1 473, 361.9 473, 442 473" class="tg-edge"/>
 <path d="M 511 490 C 541 490, 481 500, 511 500" class="tg-edge"/>
 <path d="M 511 534 C 541 534, 481 544, 511 544" class="tg-edge"/>
@@ -735,20 +745,20 @@ a:hover .tg-node { stroke-width: 2.4; }
 <path d="M 1054 517 C 1084 517, 1044 473, 1074 473" class="tg-edge"/>
 <path d="M 264 473 C 699.6 473, 796.4 473, 1232 473" class="tg-edge"/>
 <path d="M 896 517 C 1047.2 517, 1080.8 473, 1232 473" class="tg-edge"/>
-<path d="M 1212 473 C 1363.2 473, 1396.8 473, 1548 473" class="tg-edge"/>
-<path d="M 1370 473 C 1450.1 473, 1467.9 473, 1548 473" class="tg-edge"/>
-<path d="M 738 311 C 1102.5 311, 1183.5 517, 1548 517" class="tg-edge"/>
-<path d="M 738 473 C 1102.5 473, 1183.5 517, 1548 517" class="tg-edge"/>
-<path d="M 1617 534 C 1647 534, 1587 544, 1617 544" class="tg-edge"/>
-<path d="M 896 311 C 1189.4 311, 1254.6 561, 1548 561" class="tg-edge"/>
+<path d="M 1212 473 C 1292.1 473, 1309.9 473, 1390 473" class="tg-edge"/>
+<path d="M 1370 473 C 1400 473, 1360 473, 1390 473" class="tg-edge"/>
+<path d="M 738 311 C 1031.4 311, 1096.6 517, 1390 517" class="tg-edge"/>
+<path d="M 738 473 C 1031.4 473, 1096.6 517, 1390 517" class="tg-edge"/>
+<path d="M 1459 534 C 1489 534, 1429 544, 1459 544" class="tg-edge"/>
+<path d="M 896 311 C 1118.3 311, 1167.7 561, 1390 561" class="tg-edge"/>
 <path d="M 422 635 C 786.5 635, 867.5 635, 1232 635" class="tg-edge"/>
 <path d="M 738 635 C 960.3 635, 1009.7 635, 1232 635" class="tg-edge"/>
 <path d="M 896 635 C 1047.2 635, 1080.8 679, 1232 679" class="tg-edge"/>
 <path d="M 1301 652 C 1331 652, 1271 662, 1301 662" class="tg-edge"/>
-<path d="M 1370 679 C 1592.3 679, 1641.7 635, 1864 635" class="tg-edge"/>
-<path d="M 1933 652 C 1963 652, 1903 662, 1933 662" class="tg-edge"/>
-<path d="M 1370 679 C 1592.3 679, 1641.7 679, 1864 679" class="tg-edge"/>
-<path d="M 1370 635 C 1592.3 635, 1641.7 723, 1864 723" class="tg-edge"/>
+<path d="M 1370 679 C 1521.2 679, 1554.8 635, 1706 635" class="tg-edge"/>
+<path d="M 1775 652 C 1805 652, 1745 662, 1775 662" class="tg-edge"/>
+<path d="M 1370 679 C 1521.2 679, 1554.8 679, 1706 679" class="tg-edge"/>
+<path d="M 1370 635 C 1521.2 635, 1554.8 723, 1706 723" class="tg-edge"/>
 <a href="../rational/index.html">
 <rect x="126" y="58" width="138" height="34" rx="8" class="tg-node" style="stroke:#c0392b"/>
 <rect x="126" y="58" width="5" height="34" rx="2.5" fill="#c0392b"/>
@@ -845,14 +855,14 @@ a:hover .tg-node { stroke-width: 2.4; }
 <text x="1145" y="403" text-anchor="middle" class="tg-text">三角函数</text>
 </a>
 <a href="../sequence/index.html">
-<rect x="1706" y="294" width="138" height="34" rx="8" class="tg-node" style="stroke:#7d3c98"/>
-<rect x="1706" y="294" width="5" height="34" rx="2.5" fill="#7d3c98"/>
-<text x="1777" y="315" text-anchor="middle" class="tg-text">数列</text>
+<rect x="1548" y="294" width="138" height="34" rx="8" class="tg-node" style="stroke:#7d3c98"/>
+<rect x="1548" y="294" width="5" height="34" rx="2.5" fill="#7d3c98"/>
+<text x="1619" y="315" text-anchor="middle" class="tg-text">数列</text>
 </a>
 <a href="../derivative/index.html">
-<rect x="1706" y="338" width="138" height="34" rx="8" class="tg-node" style="stroke:#7d3c98"/>
-<rect x="1706" y="338" width="5" height="34" rx="2.5" fill="#7d3c98"/>
-<text x="1777" y="359" text-anchor="middle" class="tg-text">一元函数的导数及其应用</text>
+<rect x="1548" y="338" width="138" height="34" rx="8" class="tg-node" style="stroke:#7d3c98"/>
+<rect x="1548" y="338" width="5" height="34" rx="2.5" fill="#7d3c98"/>
+<text x="1619" y="359" text-anchor="middle" class="tg-text">一元函数的导数及其应用</text>
 </a>
 <a href="../geo-intro/index.html">
 <rect x="126" y="456" width="138" height="34" rx="8" class="tg-node" style="stroke:#0f6e56"/>
@@ -920,19 +930,19 @@ a:hover .tg-node { stroke-width: 2.4; }
 <text x="1303" y="477" text-anchor="middle" class="tg-text">立体几何初步</text>
 </a>
 <a href="../space-vector/index.html">
-<rect x="1548" y="456" width="138" height="34" rx="8" class="tg-node" style="stroke:#0f6e56"/>
-<rect x="1548" y="456" width="5" height="34" rx="2.5" fill="#0f6e56"/>
-<text x="1619" y="477" text-anchor="middle" class="tg-text">空间向量与立体几何</text>
+<rect x="1390" y="456" width="138" height="34" rx="8" class="tg-node" style="stroke:#0f6e56"/>
+<rect x="1390" y="456" width="5" height="34" rx="2.5" fill="#0f6e56"/>
+<text x="1461" y="477" text-anchor="middle" class="tg-text">空间向量与立体几何</text>
 </a>
 <a href="../line-circle/index.html">
-<rect x="1548" y="500" width="138" height="34" rx="8" class="tg-node" style="stroke:#0f6e56"/>
-<rect x="1548" y="500" width="5" height="34" rx="2.5" fill="#0f6e56"/>
-<text x="1619" y="521" text-anchor="middle" class="tg-text">直线和圆的方程</text>
+<rect x="1390" y="500" width="138" height="34" rx="8" class="tg-node" style="stroke:#0f6e56"/>
+<rect x="1390" y="500" width="5" height="34" rx="2.5" fill="#0f6e56"/>
+<text x="1461" y="521" text-anchor="middle" class="tg-text">直线和圆的方程</text>
 </a>
 <a href="../conic/index.html">
-<rect x="1548" y="544" width="138" height="34" rx="8" class="tg-node" style="stroke:#0f6e56"/>
-<rect x="1548" y="544" width="5" height="34" rx="2.5" fill="#0f6e56"/>
-<text x="1619" y="565" text-anchor="middle" class="tg-text">圆锥曲线的方程</text>
+<rect x="1390" y="544" width="138" height="34" rx="8" class="tg-node" style="stroke:#0f6e56"/>
+<rect x="1390" y="544" width="5" height="34" rx="2.5" fill="#0f6e56"/>
+<text x="1461" y="565" text-anchor="middle" class="tg-text">圆锥曲线的方程</text>
 </a>
 <a href="../datacollect/index.html">
 <rect x="284" y="618" width="138" height="34" rx="8" class="tg-node" style="stroke:#8a5a00"/>
@@ -960,19 +970,19 @@ a:hover .tg-node { stroke-width: 2.4; }
 <text x="1303" y="683" text-anchor="middle" class="tg-text">概率</text>
 </a>
 <a href="../counting/index.html">
-<rect x="1864" y="618" width="138" height="34" rx="8" class="tg-node" style="stroke:#8a5a00"/>
-<rect x="1864" y="618" width="5" height="34" rx="2.5" fill="#8a5a00"/>
-<text x="1935" y="639" text-anchor="middle" class="tg-text">计数原理</text>
+<rect x="1706" y="618" width="138" height="34" rx="8" class="tg-node" style="stroke:#8a5a00"/>
+<rect x="1706" y="618" width="5" height="34" rx="2.5" fill="#8a5a00"/>
+<text x="1777" y="639" text-anchor="middle" class="tg-text">计数原理</text>
 </a>
 <a href="../randvar/index.html">
-<rect x="1864" y="662" width="138" height="34" rx="8" class="tg-node" style="stroke:#8a5a00"/>
-<rect x="1864" y="662" width="5" height="34" rx="2.5" fill="#8a5a00"/>
-<text x="1935" y="683" text-anchor="middle" class="tg-text">随机变量及其分布</text>
+<rect x="1706" y="662" width="138" height="34" rx="8" class="tg-node" style="stroke:#8a5a00"/>
+<rect x="1706" y="662" width="5" height="34" rx="2.5" fill="#8a5a00"/>
+<text x="1777" y="683" text-anchor="middle" class="tg-text">随机变量及其分布</text>
 </a>
 <a href="../pairstat/index.html">
-<rect x="1864" y="706" width="138" height="34" rx="8" class="tg-node" style="stroke:#8a5a00"/>
-<rect x="1864" y="706" width="5" height="34" rx="2.5" fill="#8a5a00"/>
-<text x="1935" y="727" text-anchor="middle" class="tg-text">成对数据的统计分析</text>
+<rect x="1706" y="706" width="138" height="34" rx="8" class="tg-node" style="stroke:#8a5a00"/>
+<rect x="1706" y="706" width="5" height="34" rx="2.5" fill="#8a5a00"/>
+<text x="1777" y="727" text-anchor="middle" class="tg-text">成对数据的统计分析</text>
 </a>
 
 </svg></div>
@@ -1113,13 +1123,13 @@ a:hover .tg-node { stroke-width: 2.4; }
   <div class="meta"><span class="badge blue">6 知识点</span><span class="badge">先学：函数的概念与性质</span></div>
 </a>
 <a class="card strand-ch-card" href="../sequence/index.html" style="--sc:#7d3c98">
-  <span class="num">高三上册 · 第 4 章</span>
+  <span class="num">高二下册 · 第 4 章</span>
   <h3>数列</h3>
   <p>一串按顺序排好的数，本质是「定义在正整数上的函数」——所以能画图象、能看增减。</p>
   <div class="meta"><span class="badge blue">5 知识点</span><span class="badge">先学：函数的概念与性质、一次函数</span></div>
 </a>
 <a class="card strand-ch-card" href="../derivative/index.html" style="--sc:#7d3c98">
-  <span class="num">高三上册 · 第 5 章</span>
+  <span class="num">高二下册 · 第 5 章</span>
   <h3>一元函数的导数及其应用</h3>
   <p>导数就是「瞬时变化率」：把放大镜架到曲线上，曲线看起来就成了一条直线。</p>
   <div class="meta"><span class="badge blue">5 知识点</span><span class="badge">先学：函数的概念与性质、一元二次函数、方程和不等式</span></div>
@@ -1210,19 +1220,19 @@ a:hover .tg-node { stroke-width: 2.4; }
   <div class="meta"><span class="badge blue">6 知识点</span><span class="badge">先学：几何图形初步、圆</span></div>
 </a>
 <a class="card strand-ch-card" href="../space-vector/index.html" style="--sc:#0f6e56">
-  <span class="num">高二下册 · 第 1 章</span>
+  <span class="num">高二上册 · 第 1 章</span>
   <h3>空间向量与立体几何</h3>
   <p>几何证明靠「看图找辅助线」，向量计算靠「建系代公式」——把证明题变成算数题。</p>
   <div class="meta"><span class="badge blue">5 知识点</span><span class="badge">先学：平面向量及其应用、立体几何初步</span></div>
 </a>
 <a class="card strand-ch-card" href="../line-circle/index.html" style="--sc:#0f6e56">
-  <span class="num">高二下册 · 第 2 章</span>
+  <span class="num">高二上册 · 第 2 章</span>
   <h3>直线和圆的方程</h3>
   <p>把「图」翻译成「式」：直线是二元一次方程，圆是二元二次方程。</p>
   <div class="meta"><span class="badge blue">5 知识点</span><span class="badge">先学：一次函数、勾股定理</span></div>
 </a>
 <a class="card strand-ch-card" href="../conic/index.html" style="--sc:#0f6e56">
-  <span class="num">高二下册 · 第 3 章</span>
+  <span class="num">高二上册 · 第 3 章</span>
   <h3>圆锥曲线的方程</h3>
   <p>一个平面斜着切圆锥，切出的边缘就是椭圆、抛物线、双曲线——三种曲线，同一个祖宗。</p>
   <div class="meta"><span class="badge blue">5 知识点</span><span class="badge">先学：直线和圆的方程、二次函数</span></div>
@@ -1265,19 +1275,19 @@ a:hover .tg-node { stroke-width: 2.4; }
   <div class="meta"><span class="badge blue">5 知识点</span><span class="badge">先学：概率初步、统计</span></div>
 </a>
 <a class="card strand-ch-card" href="../counting/index.html" style="--sc:#8a5a00">
-  <span class="num">高三下册 · 第 1 章</span>
+  <span class="num">高三上册 · 第 1 章</span>
   <h3>计数原理</h3>
   <p>数数也是一门手艺：分类「或」相加、分步「且」相乘，排列管排队、组合管组队。</p>
   <div class="meta"><span class="badge blue">5 知识点</span><span class="badge">先学：概率</span></div>
 </a>
 <a class="card strand-ch-card" href="../randvar/index.html" style="--sc:#8a5a00">
-  <span class="num">高三下册 · 第 2 章</span>
+  <span class="num">高三上册 · 第 2 章</span>
   <h3>随机变量及其分布</h3>
   <p>给随机结果编上号，一张分布列管住所有可能性——期望是重心，方差是散度。</p>
   <div class="meta"><span class="badge blue">5 知识点</span><span class="badge">先学：计数原理、概率</span></div>
 </a>
 <a class="card strand-ch-card" href="../pairstat/index.html" style="--sc:#8a5a00">
-  <span class="num">高三下册 · 第 3 章</span>
+  <span class="num">高三上册 · 第 3 章</span>
   <h3>成对数据的统计分析</h3>
   <p>两个变量之间有没有关系？散点图看形状，回归方程定数量，列联表做检验。</p>
   <div class="meta"><span class="badge blue">5 知识点</span><span class="badge">先学：统计</span></div>
@@ -1296,7 +1306,7 @@ a:hover .tg-node { stroke-width: 2.4; }
 </div>
 </div></main>
 <footer class="site"><div class="container">
-  图知学堂 · 初中数学可视化学习 · 知识点图谱 + 题型层 + 交互组件
+  图知学堂 · 初中·高中数学可视化学习 · 知识点图谱 + 题型层 + 交互组件
 </div></footer>
 <script>
 (function () {
