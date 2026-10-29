@@ -294,6 +294,14 @@
       else if (cfg.type === 'p5b-fadd') VIZ.p5bFaddLab(el, cfg);
       else if (cfg.type === 'p5b-line') VIZ.p5bLineLab(el, cfg);
       else if (cfg.type === 'p5b-find') VIZ.p5bFindLab(el, cfg);
+      else if (cfg.type === 'p6a-fmul') VIZ.p6aFmulLab(el, cfg);
+      else if (cfg.type === 'p6a-pos2') VIZ.p6aPos2Lab(el, cfg);
+      else if (cfg.type === 'p6a-fdiv') VIZ.p6aFdivLab(el, cfg);
+      else if (cfg.type === 'p6a-ratio') VIZ.p6aRatioLab(el, cfg);
+      else if (cfg.type === 'p6a-circle') VIZ.p6aCircleLab(el, cfg);
+      else if (cfg.type === 'p6a-pct') VIZ.p6aPctLab(el, cfg);
+      else if (cfg.type === 'p6a-pie') VIZ.p6aPieLab(el, cfg);
+      else if (cfg.type === 'p6a-numshape') VIZ.p6aNumshapeLab(el, cfg);
     });
   });
 })();
