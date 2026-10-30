@@ -797,33 +797,38 @@ a:hover .tg-node { stroke-width: 2.4; }
 </div>
 
 <script>
-window.__LOCATE_DATA__ = {"asks":[{"k":"合理安排","desc":"列流程、找并行、算主线总时间"},{"k":"烙饼时间","desc":"面数÷2=次数，次数×每面时间"},{"k":"对策策略","desc":"田忌赛马：牺牲一场换 2:1"},{"k":"方案比较","desc":"画出流程图，比较哪种安排更省时"}],"features":["第一动作：把每件事和用时**列成清单**","找「机器跑、人空着」的空档塞任务","烙饼题先算总面数，再看能否不空锅","答完必须加一句「为什么这样最快」"],"patterns":[{"id":"p4a-opt-t-tea","no":"基础 1","title":"沏茶问题求最短时间","kind":"统筹","asks":["合理安排"],"signals":["最少","合理安排"],"route":["/p4a-opt/p4a-opt-tea"]},{"id":"p4a-opt-t-even","no":"基础 2","title":"双数张烙饼","kind":"统筹","asks":["烙饼时间"],"signals":["每次烙 2 张","两面"],"route":["/p4a-opt/p4a-opt-pan"]},{"id":"p4a-opt-t-odd","no":"中档 1","title":"奇数张轮流烙","kind":"统筹","asks":["烙饼时间"],"signals":["3 张","5 张"],"route":["/p4a-opt/p4a-opt-pan"]},{"id":"p4a-opt-t-cook","no":"中档 2","title":"做饭统筹","kind":"统筹","asks":["合理安排"],"signals":["做饭","同时"],"route":["/p4a-opt/p4a-opt-tea"]},{"id":"p4a-opt-t-horse","no":"提升 1","title":"对策策略说理","kind":"说理","asks":["对策策略"],"signals":["怎样出場","获胜"],"route":["/p4a-opt/p4a-opt-horse"]}],"patternsUrl":"patterns.html","prefix":""};
+window.__LOCATE_DATA__ = {"asks":[{"k":"合理安排","desc":"列流程、找并行、算主线总时间"},{"k":"烙饼时间","desc":"面数÷2=次数，次数×每面时间"},{"k":"对策策略","desc":"田忌赛马：牺牲一场换 2:1"},{"k":"方案比较","desc":"画出流程图，比较哪种安排更省时"}],"features":["第一动作：把每件事和用时**列成清单**","找「机器跑、人空着」的空档塞任务","烙饼题先算总面数，再看能否不空锅","答完必须加一句「为什么这样最快」"],"patterns":[{"id":"p4a-opt-t-tea","no":"基础 1","title":"沏茶问题求最短时间","kind":"统筹","asks":["合理安排"],"signals":["最少","合理安排"],"route":["/p4a-opt/p4a-opt-tea"],"chain":[{"point":"p4a-opt-tea","role":"主线 + 并行支线","title":"沏茶问题：排顺序"}]},{"id":"p4a-opt-t-even","no":"基础 2","title":"双数张烙饼","kind":"统筹","asks":["烙饼时间"],"signals":["每次烙 2 张","两面"],"route":["/p4a-opt/p4a-opt-pan"],"chain":[{"point":"p4a-opt-pan","role":"双数张正常烙","title":"烙饼问题：不空锅"}]},{"id":"p4a-opt-t-odd","no":"中档 1","title":"奇数张轮流烙","kind":"统筹","asks":["烙饼时间"],"signals":["3 张","5 张"],"route":["/p4a-opt/p4a-opt-pan"],"chain":[{"point":"p4a-opt-pan","role":"奇数张先 3 张轮流再分组","title":"烙饼问题：不空锅"}]},{"id":"p4a-opt-t-cook","no":"中档 2","title":"做饭统筹","kind":"统筹","asks":["合理安排"],"signals":["做饭","同时"],"route":["/p4a-opt/p4a-opt-tea"],"chain":[{"point":"p4a-opt-tea","role":"找最长主线","title":"沏茶问题：排顺序"}]},{"id":"p4a-opt-t-horse","no":"提升 1","title":"对策策略说理","kind":"说理","asks":["对策策略"],"signals":["怎样出場","获胜"],"route":["/p4a-opt/p4a-opt-horse"],"chain":[{"point":"p4a-opt-horse","role":"牺牲一场保两胜","title":"对策问题：田忌赛马"}]}],"patternsUrl":"patterns.html","prefix":""};
 </script>
 <script>
 /*
  * 题目定位器：三问 → 匹配经典题型 → 告诉你第一步做什么
  * 数据由构建脚本通过 window.__LOCATE_DATA__ 注入。
+ * 数据约定（见 build.js renderLocate）：
+ *   asks     : [{k, desc}]                          —— 问题 1 的选项（k = 要什么）
+ *   patterns : [{id,no,title,kind,asks,signals,route,chain}]
+ *              chain : [{point, role, title}]        —— route[i] 是 /章/点 路径时，第 i 步的动作与去向页
+ * 问题 2 的选项直接取自各题型的 signals（题面信号词），选中即给对应题型加分。
  */
 (function () {
   var DATA = window.__LOCATE_DATA__;
   if (!DATA) return;
   var patterns = DATA.patterns;
-  var features = DATA.features;
   var asks = DATA.asks;
   var byId = {};
   patterns.forEach(function (p) { byId[p.id] = p; });
 
-  var state = { ask: null, feats: {} };
+  var state = { ask: null, sigs: {} };
 
   var root = document.getElementById('locator');
   if (!root) return;
 
-  /* ---------- 构建选项 ---------- */
+  /* ---------- 问题 1：求什么 ---------- */
   var askBox = document.getElementById('loc-asks');
   asks.forEach(function (a) {
     var b = document.createElement('button');
     b.className = 'loc-opt';
-    b.textContent = a.label;
+    b.textContent = a.k;
+    if (a.desc) b.title = a.desc;
     b.setAttribute('data-ask', a.k);
     b.addEventListener('click', function () {
       state.ask = (state.ask === a.k) ? null : a.k;
@@ -833,19 +838,25 @@ window.__LOCATE_DATA__ = {"asks":[{"k":"合理安排","desc":"列流程、找并
     askBox.appendChild(b);
   });
 
+  /* ---------- 问题 2：题面信号（来自各题型的 signals，去重） ---------- */
   var featBox = document.getElementById('loc-feats');
-  features.forEach(function (f) {
-    var b = document.createElement('button');
-    b.className = 'loc-opt small';
-    b.textContent = f.label;
-    b.setAttribute('data-feat', f.k);
-    b.addEventListener('click', function () {
-      if (state.feats[f.k]) delete state.feats[f.k];
-      else state.feats[f.k] = true;
-      syncOptions();
-      render();
+  var seen = {};
+  patterns.forEach(function (p) {
+    (p.signals || []).forEach(function (s) {
+      if (seen[s]) return;
+      seen[s] = true;
+      var b = document.createElement('button');
+      b.className = 'loc-opt small';
+      b.textContent = s;
+      b.setAttribute('data-sig', s);
+      b.addEventListener('click', function () {
+        if (state.sigs[s]) delete state.sigs[s];
+        else state.sigs[s] = true;
+        syncOptions();
+        render();
+      });
+      featBox.appendChild(b);
     });
-    featBox.appendChild(b);
   });
 
   function syncOptions() {
@@ -853,39 +864,43 @@ window.__LOCATE_DATA__ = {"asks":[{"k":"合理安排","desc":"列流程、找并
       b.classList.toggle('on', state.ask === b.getAttribute('data-ask'));
     });
     [].forEach.call(featBox.children, function (b) {
-      b.classList.toggle('on', !!state.feats[b.getAttribute('data-feat')]);
+      b.classList.toggle('on', !!state.sigs[b.getAttribute('data-sig')]);
     });
   }
 
   /* ---------- 匹配打分 ---------- */
-  function signalText(p) { return p.signals.join(' '); }
-
   function scorePattern(p) {
     var score = 0;
     var reasons = [];
-    if (state.ask) {
-      if (p.asks.indexOf(state.ask) >= 0) {
-        score += 10;
-        var askLabel = (asks.filter(function (a) { return a.k === state.ask; })[0] || {}).label || '';
-        reasons.push('你要找的是「' + askLabel + '」，这类题型正是干这个的');
-      }
+    if (state.ask && p.asks.indexOf(state.ask) >= 0) {
+      score += 10;
+      var askLabel = (asks.filter(function (a) { return a.k === state.ask; })[0] || {}).k || state.ask;
+      reasons.push('你要找的是「' + askLabel + '」，这类题型正是干这个的');
     }
-    var txt = signalText(p);
-    features.forEach(function (f) {
-      if (!state.feats[f.k]) return;
-      var hit = f.words.some(function (w) { return txt.indexOf(w) >= 0; });
-      if (hit) {
+    (p.signals || []).forEach(function (s) {
+      if (state.sigs[s]) {
         score += 3;
-        reasons.push('题面出现「' + f.k + '」类字眼，是它的典型特征');
+        reasons.push('题面出现「' + s + '」，是它的典型信号');
       }
     });
     return { score: score, reasons: reasons };
   }
 
+  /* 第一步：role 是动作，point 页是去向 */
+  function firstStep(p) {
+    var c = (p.chain && p.chain[0]) || null;
+    if (c && c.role) {
+      return '<a href="' + c.point + '.html"><b>' + esc(c.role) + '</b></a>'
+        + (c.title ? ' —— 去「' + esc(c.title) + '」页' : '');
+    }
+    if (c) return '<a href="' + c.point + '.html">' + esc(c.title || c.point) + '</a>';
+    return esc((p.route && p.route[0]) || '');
+  }
+
   /* ---------- 渲染结果 ---------- */
   function render() {
     var box = document.getElementById('loc-result');
-    var anyCond = !!state.ask || Object.keys(state.feats).length > 0;
+    var anyCond = !!state.ask || Object.keys(state.sigs).length > 0;
     if (!anyCond) {
       box.innerHTML = '<div class="loc-empty">先在上面的问题里点一两下，下面就会出现与之匹配的题型。<br>不用全部回答，选你有把握的就行。</div>';
       return;
@@ -906,19 +921,21 @@ window.__LOCATE_DATA__ = {"asks":[{"k":"合理安排","desc":"列流程、找并
     }
 
     var top = results[0].p;
+    var topNo = /^\d+$/.test(String(top.no)) ? ('第 ' + top.no + ' 类 · ') : (top.no + ' · ');
     var html = '<div class="loc-empty" style="text-align:left;border-style:solid;background:#e6f1fb;color:#123d63;padding:14px 18px">'
-      + '最像 <b>第 ' + top.no + ' 类 · ' + esc(top.title) + '</b>。它的第一步是：<b>' + esc(top.route[0]) + '</b>。'
+      + '最像 <b>' + topNo + esc(top.title) + '</b>。它的第一步是：' + firstStep(top) + '。'
       + '</div>';
 
     results.slice(0, 6).forEach(function (r) {
       var p = r.p;
+      var noTxt = /^\d+$/.test(String(p.no)) ? String(p.no).padStart(2, '0') : '';
       html += '<div class="loc-card">'
-        + '<div class="lc-top"><span class="type-no">' + String(p.no).padStart(2, '0') + '</span>'
-        + '<span class="lc-title"><a href="pattern/' + p.id + '.html">' + esc(p.title) + '</a></span>'
+        + '<div class="lc-top"><span class="type-no">' + noTxt + '</span>'
+        + '<span class="lc-title"><a href="pattern/' + p.id + '.html">' + (noTxt ? '' : esc(p.no) + ' · ') + esc(p.title) + '</a></span>'
         + '<span class="kind ' + kindClass(p.kind) + '">' + esc(p.kind) + '</span>'
         + '<span class="score">匹配度 ' + r.score + '</span></div>'
         + '<div class="lc-why">' + r.reasons.map(esc).join('；') + '</div>'
-        + '<div class="lc-first"><b>第一步：</b>' + esc(p.route[0]) + '</div>'
+        + '<div class="lc-first"><b>第一步：</b>' + firstStep(p) + '</div>'
         + '</div>';
     });
 
@@ -937,7 +954,7 @@ window.__LOCATE_DATA__ = {"asks":[{"k":"合理安排","desc":"列流程、找并
 
   var reset = document.getElementById('loc-reset');
   if (reset) reset.addEventListener('click', function () {
-    state.ask = null; state.feats = {};
+    state.ask = null; state.sigs = {};
     syncOptions(); render();
   });
 

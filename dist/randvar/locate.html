@@ -797,33 +797,38 @@ a:hover .tg-node { stroke-width: 2.4; }
 </div>
 
 <script>
-window.__LOCATE_DATA__ = {"asks":[{"k":"分布列","desc":"取值 + 概率表，Σp = 1"},{"k":"期望方差","desc":"E = Σxp；D = E(X²) − E²"},{"k":"二项分布","desc":"独立重复 → B(n,p)"},{"k":"超几何分布","desc":"不放回 → 组合比"},{"k":"正态分布","desc":"对称性 + 3σ"},{"k":"决策比较","desc":"同期望比方差"}],"features":["题面出现「独立」「每次概率相同」「有放回」→ 二项分布","出现「不放回」「一批产品中抽取」→ 超几何分布","求分布列最后必须验证概率和为 1（检查 + 得分点）","正态题先把区间端点改写成 μ ± aσ 的形式再动手"],"patterns":[{"id":"rv-t-dist","no":"基础 1","title":"求分布列","kind":"分布列","asks":["分布列"],"signals":["分布列","所有可能的取值"],"route":["/randvar/rv-dist","/randvar/rv-binom"]},{"id":"rv-t-mean","no":"基础 2","title":"期望方差计算","kind":"期望方差","asks":["期望方差"],"signals":["数学期望","方差","标准差"],"route":["/randvar/rv-mean","/randvar/rv-dist"]},{"id":"rv-t-decide","no":"中档 3","title":"期望决策","kind":"决策","asks":["决策比较","期望方差"],"signals":["方案","哪种更合算","应选择"],"route":["/randvar/rv-mean","/randvar/rv-dist"]},{"id":"rv-t-binom","no":"中档 4","title":"二项分布大题","kind":"二项分布","asks":["二项分布","分布列"],"signals":["独立重复","命中率","每次成功的概率"],"route":["/randvar/rv-binom","/randvar/rv-mean"]},{"id":"rv-t-atleast","no":"中档 5","title":"「至少」型概率","kind":"二项分布","asks":["二项分布"],"signals":["至少一次","至少命中","不少于"],"route":["/randvar/rv-binom"]},{"id":"rv-t-hyper","no":"中档 6","title":"超几何分布大题","kind":"超几何","asks":["超几何分布","分布列"],"signals":["不放回","从中抽取","次品"],"route":["/randvar/rv-hyper","/randvar/rv-dist"]},{"id":"rv-t-normal","no":"中档 7","title":"正态对称求概率","kind":"正态分布","asks":["正态分布"],"signals":["正态","N(μ,σ²)","Φ("],"route":["/randvar/rv-normal"]},{"id":"rv-t-mix","no":"综合 8","title":"分布列 + 期望综合大题","kind":"综合","asks":["分布列","期望方差"],"signals":["求分布列和数学期望","并求"],"route":["/randvar/rv-dist","/randvar/rv-mean","/randvar/rv-binom"]}],"patternsUrl":"patterns.html","prefix":""};
+window.__LOCATE_DATA__ = {"asks":[{"k":"分布列","desc":"取值 + 概率表，Σp = 1"},{"k":"期望方差","desc":"E = Σxp；D = E(X²) − E²"},{"k":"二项分布","desc":"独立重复 → B(n,p)"},{"k":"超几何分布","desc":"不放回 → 组合比"},{"k":"正态分布","desc":"对称性 + 3σ"},{"k":"决策比较","desc":"同期望比方差"}],"features":["题面出现「独立」「每次概率相同」「有放回」→ 二项分布","出现「不放回」「一批产品中抽取」→ 超几何分布","求分布列最后必须验证概率和为 1（检查 + 得分点）","正态题先把区间端点改写成 μ ± aσ 的形式再动手"],"patterns":[{"id":"rv-t-dist","no":"基础 1","title":"求分布列","kind":"分布列","asks":["分布列"],"signals":["分布列","所有可能的取值"],"route":["/randvar/rv-dist","/randvar/rv-binom"],"chain":[{"point":"rv-dist","role":"分布列三步","title":"离散型随机变量与分布列"},{"point":"rv-binom","role":"逐项概率","title":"二项分布"}]},{"id":"rv-t-mean","no":"基础 2","title":"期望方差计算","kind":"期望方差","asks":["期望方差"],"signals":["数学期望","方差","标准差"],"route":["/randvar/rv-mean","/randvar/rv-dist"],"chain":[{"point":"rv-mean","role":"公式","title":"期望与方差"},{"point":"rv-dist","role":"分布列","title":"离散型随机变量与分布列"}]},{"id":"rv-t-decide","no":"中档 3","title":"期望决策","kind":"决策","asks":["决策比较","期望方差"],"signals":["方案","哪种更合算","应选择"],"route":["/randvar/rv-mean","/randvar/rv-dist"],"chain":[{"point":"rv-mean","role":"期望比较","title":"期望与方差"},{"point":"rv-dist","role":"分布列","title":"离散型随机变量与分布列"}]},{"id":"rv-t-binom","no":"中档 4","title":"二项分布大题","kind":"二项分布","asks":["二项分布","分布列"],"signals":["独立重复","命中率","每次成功的概率"],"route":["/randvar/rv-binom","/randvar/rv-mean"],"chain":[{"point":"rv-binom","role":"B(n,p)","title":"二项分布"},{"point":"rv-mean","role":"期望方差","title":"期望与方差"}]},{"id":"rv-t-atleast","no":"中档 5","title":"「至少」型概率","kind":"二项分布","asks":["二项分布"],"signals":["至少一次","至少命中","不少于"],"route":["/randvar/rv-binom"],"chain":[{"point":"rv-binom","role":"补集思想","title":"二项分布"}]},{"id":"rv-t-hyper","no":"中档 6","title":"超几何分布大题","kind":"超几何","asks":["超几何分布","分布列"],"signals":["不放回","从中抽取","次品"],"route":["/randvar/rv-hyper","/randvar/rv-dist"],"chain":[{"point":"rv-hyper","role":"组合比公式","title":"超几何分布"},{"point":"rv-dist","role":"分布列框架","title":"离散型随机变量与分布列"}]},{"id":"rv-t-normal","no":"中档 7","title":"正态对称求概率","kind":"正态分布","asks":["正态分布"],"signals":["正态","N(μ,σ²)","Φ("],"route":["/randvar/rv-normal"],"chain":[{"point":"rv-normal","role":"对称性与 3σ","title":"正态分布"}]},{"id":"rv-t-mix","no":"综合 8","title":"分布列 + 期望综合大题","kind":"综合","asks":["分布列","期望方差"],"signals":["求分布列和数学期望","并求"],"route":["/randvar/rv-dist","/randvar/rv-mean","/randvar/rv-binom"],"chain":[{"point":"rv-dist","role":"分布列","title":"离散型随机变量与分布列"},{"point":"rv-mean","role":"期望","title":"期望与方差"},{"point":"rv-binom","role":"识别模型","title":"二项分布"}]}],"patternsUrl":"patterns.html","prefix":""};
 </script>
 <script>
 /*
  * 题目定位器：三问 → 匹配经典题型 → 告诉你第一步做什么
  * 数据由构建脚本通过 window.__LOCATE_DATA__ 注入。
+ * 数据约定（见 build.js renderLocate）：
+ *   asks     : [{k, desc}]                          —— 问题 1 的选项（k = 要什么）
+ *   patterns : [{id,no,title,kind,asks,signals,route,chain}]
+ *              chain : [{point, role, title}]        —— route[i] 是 /章/点 路径时，第 i 步的动作与去向页
+ * 问题 2 的选项直接取自各题型的 signals（题面信号词），选中即给对应题型加分。
  */
 (function () {
   var DATA = window.__LOCATE_DATA__;
   if (!DATA) return;
   var patterns = DATA.patterns;
-  var features = DATA.features;
   var asks = DATA.asks;
   var byId = {};
   patterns.forEach(function (p) { byId[p.id] = p; });
 
-  var state = { ask: null, feats: {} };
+  var state = { ask: null, sigs: {} };
 
   var root = document.getElementById('locator');
   if (!root) return;
 
-  /* ---------- 构建选项 ---------- */
+  /* ---------- 问题 1：求什么 ---------- */
   var askBox = document.getElementById('loc-asks');
   asks.forEach(function (a) {
     var b = document.createElement('button');
     b.className = 'loc-opt';
-    b.textContent = a.label;
+    b.textContent = a.k;
+    if (a.desc) b.title = a.desc;
     b.setAttribute('data-ask', a.k);
     b.addEventListener('click', function () {
       state.ask = (state.ask === a.k) ? null : a.k;
@@ -833,19 +838,25 @@ window.__LOCATE_DATA__ = {"asks":[{"k":"分布列","desc":"取值 + 概率表，
     askBox.appendChild(b);
   });
 
+  /* ---------- 问题 2：题面信号（来自各题型的 signals，去重） ---------- */
   var featBox = document.getElementById('loc-feats');
-  features.forEach(function (f) {
-    var b = document.createElement('button');
-    b.className = 'loc-opt small';
-    b.textContent = f.label;
-    b.setAttribute('data-feat', f.k);
-    b.addEventListener('click', function () {
-      if (state.feats[f.k]) delete state.feats[f.k];
-      else state.feats[f.k] = true;
-      syncOptions();
-      render();
+  var seen = {};
+  patterns.forEach(function (p) {
+    (p.signals || []).forEach(function (s) {
+      if (seen[s]) return;
+      seen[s] = true;
+      var b = document.createElement('button');
+      b.className = 'loc-opt small';
+      b.textContent = s;
+      b.setAttribute('data-sig', s);
+      b.addEventListener('click', function () {
+        if (state.sigs[s]) delete state.sigs[s];
+        else state.sigs[s] = true;
+        syncOptions();
+        render();
+      });
+      featBox.appendChild(b);
     });
-    featBox.appendChild(b);
   });
 
   function syncOptions() {
@@ -853,39 +864,43 @@ window.__LOCATE_DATA__ = {"asks":[{"k":"分布列","desc":"取值 + 概率表，
       b.classList.toggle('on', state.ask === b.getAttribute('data-ask'));
     });
     [].forEach.call(featBox.children, function (b) {
-      b.classList.toggle('on', !!state.feats[b.getAttribute('data-feat')]);
+      b.classList.toggle('on', !!state.sigs[b.getAttribute('data-sig')]);
     });
   }
 
   /* ---------- 匹配打分 ---------- */
-  function signalText(p) { return p.signals.join(' '); }
-
   function scorePattern(p) {
     var score = 0;
     var reasons = [];
-    if (state.ask) {
-      if (p.asks.indexOf(state.ask) >= 0) {
-        score += 10;
-        var askLabel = (asks.filter(function (a) { return a.k === state.ask; })[0] || {}).label || '';
-        reasons.push('你要找的是「' + askLabel + '」，这类题型正是干这个的');
-      }
+    if (state.ask && p.asks.indexOf(state.ask) >= 0) {
+      score += 10;
+      var askLabel = (asks.filter(function (a) { return a.k === state.ask; })[0] || {}).k || state.ask;
+      reasons.push('你要找的是「' + askLabel + '」，这类题型正是干这个的');
     }
-    var txt = signalText(p);
-    features.forEach(function (f) {
-      if (!state.feats[f.k]) return;
-      var hit = f.words.some(function (w) { return txt.indexOf(w) >= 0; });
-      if (hit) {
+    (p.signals || []).forEach(function (s) {
+      if (state.sigs[s]) {
         score += 3;
-        reasons.push('题面出现「' + f.k + '」类字眼，是它的典型特征');
+        reasons.push('题面出现「' + s + '」，是它的典型信号');
       }
     });
     return { score: score, reasons: reasons };
   }
 
+  /* 第一步：role 是动作，point 页是去向 */
+  function firstStep(p) {
+    var c = (p.chain && p.chain[0]) || null;
+    if (c && c.role) {
+      return '<a href="' + c.point + '.html"><b>' + esc(c.role) + '</b></a>'
+        + (c.title ? ' —— 去「' + esc(c.title) + '」页' : '');
+    }
+    if (c) return '<a href="' + c.point + '.html">' + esc(c.title || c.point) + '</a>';
+    return esc((p.route && p.route[0]) || '');
+  }
+
   /* ---------- 渲染结果 ---------- */
   function render() {
     var box = document.getElementById('loc-result');
-    var anyCond = !!state.ask || Object.keys(state.feats).length > 0;
+    var anyCond = !!state.ask || Object.keys(state.sigs).length > 0;
     if (!anyCond) {
       box.innerHTML = '<div class="loc-empty">先在上面的问题里点一两下，下面就会出现与之匹配的题型。<br>不用全部回答，选你有把握的就行。</div>';
       return;
@@ -906,19 +921,21 @@ window.__LOCATE_DATA__ = {"asks":[{"k":"分布列","desc":"取值 + 概率表，
     }
 
     var top = results[0].p;
+    var topNo = /^\d+$/.test(String(top.no)) ? ('第 ' + top.no + ' 类 · ') : (top.no + ' · ');
     var html = '<div class="loc-empty" style="text-align:left;border-style:solid;background:#e6f1fb;color:#123d63;padding:14px 18px">'
-      + '最像 <b>第 ' + top.no + ' 类 · ' + esc(top.title) + '</b>。它的第一步是：<b>' + esc(top.route[0]) + '</b>。'
+      + '最像 <b>' + topNo + esc(top.title) + '</b>。它的第一步是：' + firstStep(top) + '。'
       + '</div>';
 
     results.slice(0, 6).forEach(function (r) {
       var p = r.p;
+      var noTxt = /^\d+$/.test(String(p.no)) ? String(p.no).padStart(2, '0') : '';
       html += '<div class="loc-card">'
-        + '<div class="lc-top"><span class="type-no">' + String(p.no).padStart(2, '0') + '</span>'
-        + '<span class="lc-title"><a href="pattern/' + p.id + '.html">' + esc(p.title) + '</a></span>'
+        + '<div class="lc-top"><span class="type-no">' + noTxt + '</span>'
+        + '<span class="lc-title"><a href="pattern/' + p.id + '.html">' + (noTxt ? '' : esc(p.no) + ' · ') + esc(p.title) + '</a></span>'
         + '<span class="kind ' + kindClass(p.kind) + '">' + esc(p.kind) + '</span>'
         + '<span class="score">匹配度 ' + r.score + '</span></div>'
         + '<div class="lc-why">' + r.reasons.map(esc).join('；') + '</div>'
-        + '<div class="lc-first"><b>第一步：</b>' + esc(p.route[0]) + '</div>'
+        + '<div class="lc-first"><b>第一步：</b>' + firstStep(p) + '</div>'
         + '</div>';
     });
 
@@ -937,7 +954,7 @@ window.__LOCATE_DATA__ = {"asks":[{"k":"分布列","desc":"取值 + 概率表，
 
   var reset = document.getElementById('loc-reset');
   if (reset) reset.addEventListener('click', function () {
-    state.ask = null; state.feats = {};
+    state.ask = null; state.sigs = {};
     syncOptions(); render();
   });
 

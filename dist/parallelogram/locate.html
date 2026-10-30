@@ -797,33 +797,38 @@ a:hover .tg-node { stroke-width: 2.4; }
 </div>
 
 <script>
-window.__LOCATE_DATA__ = {"asks":[{"k":"求边求角","label":"用性质求边长、角度、周长"},{"k":"证线段相等","label":"用性质证线段或角相等（连对角线）"},{"k":"证平行四边形","label":"判定：证一个四边形是平行四边形"},{"k":"对角线","label":"对角线互相平分、过交点直线平分面积"},{"k":"中位线","label":"中位线求长度、证平行"},{"k":"中点四边形","label":"多个中点连成的四边形形状"},{"k":"斜边中线","label":"直角三角形斜边中线等于斜边一半"},{"k":"矩形折叠","label":"折叠 + 勾股方程求线段"},{"k":"菱形面积","label":"菱形对角线求面积、周长"},{"k":"正方形旋转","label":"正方形中的旋转、半角模型"},{"k":"面积","label":"底 × 高、等积变形、面积的一半关系"}],"features":{"k":"四边形","words":["平行四边形","矩形","菱形","正方形","对角线","对边","对角","邻边","中位线","中点","互相平分","互相垂直","折叠","面积","底乘高","half","d1d2","abcd"]},"patterns":[{"id":"pg-prop-calc","no":1,"title":"用性质求边、角、周长","kind":"计算","asks":["求边求角"],"signals":["▱ABCD","周长","∠A = …°","求 BC","∠A : ∠B"],"route":["/parallelogram/pg-prop"]},{"id":"pg-prop-equ","no":2,"title":"连对角线证线段（或角）相等","kind":"证明","asks":["证线段相等"],"signals":["求证 AB = CD","求证 ∠… = ∠…","平行四边形中的线段","E、F 在边上"],"route":["/parallelogram/pg-prop","/parallelogram/pg-diag"]},{"id":"pg-diag-calc","no":3,"title":"对角线互相平分求线段","kind":"计算","asks":["对角线"],"signals":["对角线交于点 O","AC = …，BD = …","求 △AOB 的周长","OA = OC"],"route":["/parallelogram/pg-diag"]},{"id":"pg-diag-bisect","no":4,"title":"过交点 O 的直线：平分线段与面积","kind":"组合型","asks":["对角线","面积"],"signals":["过 O 的直线交 AD 于 E","交 BC 于 F","求证 OE = OF","面积相等 / 平分","中心对称"],"route":["/parallelogram/pg-diag","/parallelogram/pg-prop"]},{"id":"pg-judge-one","no":5,"title":"一组对边平行且相等证平行四边形","kind":"证明","asks":["证平行四边形"],"signals":["求证四边形 … 是平行四边形","E、F 分别在 BC、AD 上","BE = DF","平移得到的线段"],"route":["/parallelogram/pg-judge","/parallelogram/pg-prop"]},{"id":"pg-judge-diag","no":6,"title":"对角线互相平分证平行四边形","kind":"组合型","asks":["证平行四边形","对角线"],"signals":["对角线交于点 O","OA = OC","OB = OD","O 是两线段的中点","中点 + 中点"],"route":["/parallelogram/pg-judge","/parallelogram/pg-diag"]},{"id":"pg-midline-calc","no":7,"title":"中位线求长度、算周长","kind":"计算","asks":["中位线"],"signals":["D、E 分别是 AB、AC 的中点","DE","求 BC","中点三角形","周长"],"route":["/parallelogram/pg-midline"]},{"id":"pg-midquad","no":8,"title":"中点四边形：形状由对角线决定","kind":"组合型","asks":["中点四边形","中位线","证平行四边形"],"signals":["E、F、G、H 分别是各边中点","四边形 EFGH","AC = BD","AC ⊥ BD","判断形状"],"route":["/parallelogram/pg-midline","/parallelogram/pg-judge"]},{"id":"pg-rect-slant","no":9,"title":"斜边中线：见直角 + 斜边中点就连","kind":"组合型","asks":["斜边中线","求边求角"],"signals":["矩形","∠ACB = 90°","D 是 AB 的中点","求 CD","对角线交点 O"],"route":["/parallelogram/pg-rect","/parallelogram/pg-prop"]},{"id":"pg-rect-fold","no":10,"title":"矩形折叠：设未知数 + 勾股方程","kind":"综合型","asks":["矩形折叠"],"signals":["沿 AE 折叠","点 D 落在 BC 上的 F 处","求 CE","折痕","矩形 ABCD"],"route":["/parallelogram/pg-rect","/parallelogram/pg-prop"]},{"id":"pg-rhombus-calc","no":11,"title":"菱形：对角线 + 勾股，两套公式互验","kind":"组合型","asks":["菱形面积","求边求角"],"signals":["菱形","对角线 AC = …，BD = …","周长","面积","高"],"route":["/parallelogram/pg-rhombus","/parallelogram/pg-prop"]},{"id":"pg-square-rot","no":12,"title":"正方形中的旋转与半角模型","kind":"综合型","asks":["正方形旋转","证线段相等"],"signals":["正方形 ABCD","∠EAF = 45°","E 在 BC 上，F 在 CD 上","求证 EF = BE + DF","旋转 90°"],"route":["/parallelogram/pg-square","/parallelogram/pg-judge"]},{"id":"pg-area-eq","no":13,"title":"面积：底 × 高与等积变形","kind":"计算","asks":["面积"],"signals":["面积","高","底","点 E 在 AD 上","两平行线之间","阴影部分面积"],"route":["/parallelogram/pg-area"]}],"patternsUrl":"patterns.html","prefix":""};
+window.__LOCATE_DATA__ = {"asks":[{"k":"求边求角","label":"用性质求边长、角度、周长"},{"k":"证线段相等","label":"用性质证线段或角相等（连对角线）"},{"k":"证平行四边形","label":"判定：证一个四边形是平行四边形"},{"k":"对角线","label":"对角线互相平分、过交点直线平分面积"},{"k":"中位线","label":"中位线求长度、证平行"},{"k":"中点四边形","label":"多个中点连成的四边形形状"},{"k":"斜边中线","label":"直角三角形斜边中线等于斜边一半"},{"k":"矩形折叠","label":"折叠 + 勾股方程求线段"},{"k":"菱形面积","label":"菱形对角线求面积、周长"},{"k":"正方形旋转","label":"正方形中的旋转、半角模型"},{"k":"面积","label":"底 × 高、等积变形、面积的一半关系"}],"features":{"k":"四边形","words":["平行四边形","矩形","菱形","正方形","对角线","对边","对角","邻边","中位线","中点","互相平分","互相垂直","折叠","面积","底乘高","half","d1d2","abcd"]},"patterns":[{"id":"pg-prop-calc","no":1,"title":"用性质求边、角、周长","kind":"计算","asks":["求边求角"],"signals":["▱ABCD","周长","∠A = …°","求 BC","∠A : ∠B"],"route":["/parallelogram/pg-prop"],"chain":[{"point":"pg-prop","role":"对边相等、对角相等、邻角互补","title":"平行四边形的性质：对边相等、对角相等"}]},{"id":"pg-prop-equ","no":2,"title":"连对角线证线段（或角）相等","kind":"证明","asks":["证线段相等"],"signals":["求证 AB = CD","求证 ∠… = ∠…","平行四边形中的线段","E、F 在边上"],"route":["/parallelogram/pg-prop","/parallelogram/pg-diag"],"chain":[{"point":"pg-prop","role":"对边平行 → 内错角","title":"平行四边形的性质：对边相等、对角相等"},{"point":"pg-diag","role":"对角线被平分 → 再凑一组全等","title":"对角线互相平分"}]},{"id":"pg-diag-calc","no":3,"title":"对角线互相平分求线段","kind":"计算","asks":["对角线"],"signals":["对角线交于点 O","AC = …，BD = …","求 △AOB 的周长","OA = OC"],"route":["/parallelogram/pg-diag"],"chain":[{"point":"pg-diag","role":"对角线互相平分","title":"对角线互相平分"}]},{"id":"pg-diag-bisect","no":4,"title":"过交点 O 的直线：平分线段与面积","kind":"组合型","asks":["对角线","面积"],"signals":["过 O 的直线交 AD 于 E","交 BC 于 F","求证 OE = OF","面积相等 / 平分","中心对称"],"route":["/parallelogram/pg-diag","/parallelogram/pg-prop"],"chain":[{"point":"pg-diag","role":"过 O 的直线被平分","title":"对角线互相平分"},{"point":"pg-prop","role":"内错角 + 对边平行造全等","title":"平行四边形的性质：对边相等、对角相等"}]},{"id":"pg-judge-one","no":5,"title":"一组对边平行且相等证平行四边形","kind":"证明","asks":["证平行四边形"],"signals":["求证四边形 … 是平行四边形","E、F 分别在 BC、AD 上","BE = DF","平移得到的线段"],"route":["/parallelogram/pg-judge","/parallelogram/pg-prop"],"chain":[{"point":"pg-judge","role":"判定③：一组对边平行且相等","title":"判定的五条路"},{"point":"pg-prop","role":"对边相等用于等量代换","title":"平行四边形的性质：对边相等、对角相等"}]},{"id":"pg-judge-diag","no":6,"title":"对角线互相平分证平行四边形","kind":"组合型","asks":["证平行四边形","对角线"],"signals":["对角线交于点 O","OA = OC","OB = OD","O 是两线段的中点","中点 + 中点"],"route":["/parallelogram/pg-judge","/parallelogram/pg-diag"],"chain":[{"point":"pg-judge","role":"判定⑤：对角线互相平分","title":"判定的五条路"},{"point":"pg-diag","role":"中点即被平分","title":"对角线互相平分"}]},{"id":"pg-midline-calc","no":7,"title":"中位线求长度、算周长","kind":"计算","asks":["中位线"],"signals":["D、E 分别是 AB、AC 的中点","DE","求 BC","中点三角形","周长"],"route":["/parallelogram/pg-midline"],"chain":[{"point":"pg-midline","role":"DE = ½BC 且 DE ∥ BC","title":"三角形中位线"}]},{"id":"pg-midquad","no":8,"title":"中点四边形：形状由对角线决定","kind":"组合型","asks":["中点四边形","中位线","证平行四边形"],"signals":["E、F、G、H 分别是各边中点","四边形 EFGH","AC = BD","AC ⊥ BD","判断形状"],"route":["/parallelogram/pg-midline","/parallelogram/pg-judge"],"chain":[{"point":"pg-midline","role":"两次中位线 → 平行且相等","title":"三角形中位线"},{"point":"pg-judge","role":"一组对边平行且相等 → 平行四边形","title":"判定的五条路"}]},{"id":"pg-rect-slant","no":9,"title":"斜边中线：见直角 + 斜边中点就连","kind":"组合型","asks":["斜边中线","求边求角"],"signals":["矩形","∠ACB = 90°","D 是 AB 的中点","求 CD","对角线交点 O"],"route":["/parallelogram/pg-rect","/parallelogram/pg-prop"],"chain":[{"point":"pg-rect","role":"对角线相等 → 中线 = ½ 斜边","title":"矩形：四个直角与斜边中线"},{"point":"pg-prop","role":"对边相等、直角条件","title":"平行四边形的性质：对边相等、对角相等"}]},{"id":"pg-rect-fold","no":10,"title":"矩形折叠：设未知数 + 勾股方程","kind":"综合型","asks":["矩形折叠"],"signals":["沿 AE 折叠","点 D 落在 BC 上的 F 处","求 CE","折痕","矩形 ABCD"],"route":["/parallelogram/pg-rect","/parallelogram/pg-prop"],"chain":[{"point":"pg-rect","role":"四个直角 → 两处可用勾股","title":"矩形：四个直角与斜边中线"},{"point":"pg-prop","role":"对边相等把已知长度搬到对边","title":"平行四边形的性质：对边相等、对角相等"}]},{"id":"pg-rhombus-calc","no":11,"title":"菱形：对角线 + 勾股，两套公式互验","kind":"组合型","asks":["菱形面积","求边求角"],"signals":["菱形","对角线 AC = …，BD = …","周长","面积","高"],"route":["/parallelogram/pg-rhombus","/parallelogram/pg-prop"],"chain":[{"point":"pg-rhombus","role":"对角线垂直平分 + ½d₁d₂","title":"菱形：四边相等与 ½d₁d₂"},{"point":"pg-prop","role":"平行四边形面积 = 底 × 高","title":"平行四边形的性质：对边相等、对角相等"}]},{"id":"pg-square-rot","no":12,"title":"正方形中的旋转与半角模型","kind":"综合型","asks":["正方形旋转","证线段相等"],"signals":["正方形 ABCD","∠EAF = 45°","E 在 BC 上，F 在 CD 上","求证 EF = BE + DF","旋转 90°"],"route":["/parallelogram/pg-square","/parallelogram/pg-judge"],"chain":[{"point":"pg-square","role":"四边相等 + 四个直角，可绕顶点旋转 90°","title":"正方形：两条来路的汇合"},{"point":"pg-judge","role":"构造出平行四边形/全等后收尾","title":"判定的五条路"}]},{"id":"pg-area-eq","no":13,"title":"面积：底 × 高与等积变形","kind":"计算","asks":["面积"],"signals":["面积","高","底","点 E 在 AD 上","两平行线之间","阴影部分面积"],"route":["/parallelogram/pg-area"],"chain":[{"point":"pg-area","role":"底 × 高、同底等高、一半关系","title":"面积与等积变形"}]}],"patternsUrl":"patterns.html","prefix":""};
 </script>
 <script>
 /*
  * 题目定位器：三问 → 匹配经典题型 → 告诉你第一步做什么
  * 数据由构建脚本通过 window.__LOCATE_DATA__ 注入。
+ * 数据约定（见 build.js renderLocate）：
+ *   asks     : [{k, desc}]                          —— 问题 1 的选项（k = 要什么）
+ *   patterns : [{id,no,title,kind,asks,signals,route,chain}]
+ *              chain : [{point, role, title}]        —— route[i] 是 /章/点 路径时，第 i 步的动作与去向页
+ * 问题 2 的选项直接取自各题型的 signals（题面信号词），选中即给对应题型加分。
  */
 (function () {
   var DATA = window.__LOCATE_DATA__;
   if (!DATA) return;
   var patterns = DATA.patterns;
-  var features = DATA.features;
   var asks = DATA.asks;
   var byId = {};
   patterns.forEach(function (p) { byId[p.id] = p; });
 
-  var state = { ask: null, feats: {} };
+  var state = { ask: null, sigs: {} };
 
   var root = document.getElementById('locator');
   if (!root) return;
 
-  /* ---------- 构建选项 ---------- */
+  /* ---------- 问题 1：求什么 ---------- */
   var askBox = document.getElementById('loc-asks');
   asks.forEach(function (a) {
     var b = document.createElement('button');
     b.className = 'loc-opt';
-    b.textContent = a.label;
+    b.textContent = a.k;
+    if (a.desc) b.title = a.desc;
     b.setAttribute('data-ask', a.k);
     b.addEventListener('click', function () {
       state.ask = (state.ask === a.k) ? null : a.k;
@@ -833,19 +838,25 @@ window.__LOCATE_DATA__ = {"asks":[{"k":"求边求角","label":"用性质求边�
     askBox.appendChild(b);
   });
 
+  /* ---------- 问题 2：题面信号（来自各题型的 signals，去重） ---------- */
   var featBox = document.getElementById('loc-feats');
-  features.forEach(function (f) {
-    var b = document.createElement('button');
-    b.className = 'loc-opt small';
-    b.textContent = f.label;
-    b.setAttribute('data-feat', f.k);
-    b.addEventListener('click', function () {
-      if (state.feats[f.k]) delete state.feats[f.k];
-      else state.feats[f.k] = true;
-      syncOptions();
-      render();
+  var seen = {};
+  patterns.forEach(function (p) {
+    (p.signals || []).forEach(function (s) {
+      if (seen[s]) return;
+      seen[s] = true;
+      var b = document.createElement('button');
+      b.className = 'loc-opt small';
+      b.textContent = s;
+      b.setAttribute('data-sig', s);
+      b.addEventListener('click', function () {
+        if (state.sigs[s]) delete state.sigs[s];
+        else state.sigs[s] = true;
+        syncOptions();
+        render();
+      });
+      featBox.appendChild(b);
     });
-    featBox.appendChild(b);
   });
 
   function syncOptions() {
@@ -853,39 +864,43 @@ window.__LOCATE_DATA__ = {"asks":[{"k":"求边求角","label":"用性质求边�
       b.classList.toggle('on', state.ask === b.getAttribute('data-ask'));
     });
     [].forEach.call(featBox.children, function (b) {
-      b.classList.toggle('on', !!state.feats[b.getAttribute('data-feat')]);
+      b.classList.toggle('on', !!state.sigs[b.getAttribute('data-sig')]);
     });
   }
 
   /* ---------- 匹配打分 ---------- */
-  function signalText(p) { return p.signals.join(' '); }
-
   function scorePattern(p) {
     var score = 0;
     var reasons = [];
-    if (state.ask) {
-      if (p.asks.indexOf(state.ask) >= 0) {
-        score += 10;
-        var askLabel = (asks.filter(function (a) { return a.k === state.ask; })[0] || {}).label || '';
-        reasons.push('你要找的是「' + askLabel + '」，这类题型正是干这个的');
-      }
+    if (state.ask && p.asks.indexOf(state.ask) >= 0) {
+      score += 10;
+      var askLabel = (asks.filter(function (a) { return a.k === state.ask; })[0] || {}).k || state.ask;
+      reasons.push('你要找的是「' + askLabel + '」，这类题型正是干这个的');
     }
-    var txt = signalText(p);
-    features.forEach(function (f) {
-      if (!state.feats[f.k]) return;
-      var hit = f.words.some(function (w) { return txt.indexOf(w) >= 0; });
-      if (hit) {
+    (p.signals || []).forEach(function (s) {
+      if (state.sigs[s]) {
         score += 3;
-        reasons.push('题面出现「' + f.k + '」类字眼，是它的典型特征');
+        reasons.push('题面出现「' + s + '」，是它的典型信号');
       }
     });
     return { score: score, reasons: reasons };
   }
 
+  /* 第一步：role 是动作，point 页是去向 */
+  function firstStep(p) {
+    var c = (p.chain && p.chain[0]) || null;
+    if (c && c.role) {
+      return '<a href="' + c.point + '.html"><b>' + esc(c.role) + '</b></a>'
+        + (c.title ? ' —— 去「' + esc(c.title) + '」页' : '');
+    }
+    if (c) return '<a href="' + c.point + '.html">' + esc(c.title || c.point) + '</a>';
+    return esc((p.route && p.route[0]) || '');
+  }
+
   /* ---------- 渲染结果 ---------- */
   function render() {
     var box = document.getElementById('loc-result');
-    var anyCond = !!state.ask || Object.keys(state.feats).length > 0;
+    var anyCond = !!state.ask || Object.keys(state.sigs).length > 0;
     if (!anyCond) {
       box.innerHTML = '<div class="loc-empty">先在上面的问题里点一两下，下面就会出现与之匹配的题型。<br>不用全部回答，选你有把握的就行。</div>';
       return;
@@ -906,19 +921,21 @@ window.__LOCATE_DATA__ = {"asks":[{"k":"求边求角","label":"用性质求边�
     }
 
     var top = results[0].p;
+    var topNo = /^\d+$/.test(String(top.no)) ? ('第 ' + top.no + ' 类 · ') : (top.no + ' · ');
     var html = '<div class="loc-empty" style="text-align:left;border-style:solid;background:#e6f1fb;color:#123d63;padding:14px 18px">'
-      + '最像 <b>第 ' + top.no + ' 类 · ' + esc(top.title) + '</b>。它的第一步是：<b>' + esc(top.route[0]) + '</b>。'
+      + '最像 <b>' + topNo + esc(top.title) + '</b>。它的第一步是：' + firstStep(top) + '。'
       + '</div>';
 
     results.slice(0, 6).forEach(function (r) {
       var p = r.p;
+      var noTxt = /^\d+$/.test(String(p.no)) ? String(p.no).padStart(2, '0') : '';
       html += '<div class="loc-card">'
-        + '<div class="lc-top"><span class="type-no">' + String(p.no).padStart(2, '0') + '</span>'
-        + '<span class="lc-title"><a href="pattern/' + p.id + '.html">' + esc(p.title) + '</a></span>'
+        + '<div class="lc-top"><span class="type-no">' + noTxt + '</span>'
+        + '<span class="lc-title"><a href="pattern/' + p.id + '.html">' + (noTxt ? '' : esc(p.no) + ' · ') + esc(p.title) + '</a></span>'
         + '<span class="kind ' + kindClass(p.kind) + '">' + esc(p.kind) + '</span>'
         + '<span class="score">匹配度 ' + r.score + '</span></div>'
         + '<div class="lc-why">' + r.reasons.map(esc).join('；') + '</div>'
-        + '<div class="lc-first"><b>第一步：</b>' + esc(p.route[0]) + '</div>'
+        + '<div class="lc-first"><b>第一步：</b>' + firstStep(p) + '</div>'
         + '</div>';
     });
 
@@ -937,7 +954,7 @@ window.__LOCATE_DATA__ = {"asks":[{"k":"求边求角","label":"用性质求边�
 
   var reset = document.getElementById('loc-reset');
   if (reset) reset.addEventListener('click', function () {
-    state.ask = null; state.feats = {};
+    state.ask = null; state.sigs = {};
     syncOptions(); render();
   });
 

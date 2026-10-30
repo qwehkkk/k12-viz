@@ -797,33 +797,38 @@ a:hover .tg-node { stroke-width: 2.4; }
 </div>
 
 <script>
-window.__LOCATE_DATA__ = {"asks":[{"k":"大月小月","desc":"各月天数判断"},{"k":"平年闰年","desc":"年份判断与二月天数"},{"k":"时间换算","desc":"两种计时法互化"},{"k":"经过时间","desc":"时刻相减求时长"},{"k":"天数计算","desc":"跨月跨年的天数"}],"features":["大月 7 个、小月 4 个，二月看闰年","闰年判断：普通年份 ÷4，整百年份 ÷400","下午时刻加 12 变 24 时计时法","跨月算天数要「分月算，别整段减」"],"patterns":[{"id":"p3b-cal-t-leap","no":"基础 1","title":"判断平年闰年","kind":"判断","asks":["平年闰年"],"signals":["闰年","平年","二月"],"route":["/p3b-cal/p3b-cal-feb"]},{"id":"p3b-cal-t-convert","no":"基础 2","title":"换成 24 时计时法","kind":"换算","asks":["时间换算"],"signals":["下午","晚上","24 时"],"route":["/p3b-cal/p3b-cal-24h"]},{"id":"p3b-cal-t-duration","no":"提升 1","title":"求经过时间","kind":"应用","asks":["经过时间"],"signals":["从……到……","经过","多长时间"],"route":["/p3b-cal/p3b-cal-24h"]},{"id":"p3b-cal-t-days","no":"提升 2","title":"跨月算天数","kind":"应用","asks":["天数计算"],"signals":["从……到……","多少天","共"],"route":["/p3b-cal/p3b-cal-month","/p3b-cal/p3b-cal-year"]},{"id":"p3b-cal-t-half","no":"拓展","title":"上半年天数","kind":"推理","asks":["天数计算"],"signals":["上半年","下半年","多少天"],"route":["/p3b-cal/p3b-cal-year"]}],"patternsUrl":"patterns.html","prefix":""};
+window.__LOCATE_DATA__ = {"asks":[{"k":"大月小月","desc":"各月天数判断"},{"k":"平年闰年","desc":"年份判断与二月天数"},{"k":"时间换算","desc":"两种计时法互化"},{"k":"经过时间","desc":"时刻相减求时长"},{"k":"天数计算","desc":"跨月跨年的天数"}],"features":["大月 7 个、小月 4 个，二月看闰年","闰年判断：普通年份 ÷4，整百年份 ÷400","下午时刻加 12 变 24 时计时法","跨月算天数要「分月算，别整段减」"],"patterns":[{"id":"p3b-cal-t-leap","no":"基础 1","title":"判断平年闰年","kind":"判断","asks":["平年闰年"],"signals":["闰年","平年","二月"],"route":["/p3b-cal/p3b-cal-feb"],"chain":[{"point":"p3b-cal-feb","role":"÷4 或 ÷400","title":"二月与闰年"}]},{"id":"p3b-cal-t-convert","no":"基础 2","title":"换成 24 时计时法","kind":"换算","asks":["时间换算"],"signals":["下午","晚上","24 时"],"route":["/p3b-cal/p3b-cal-24h"],"chain":[{"point":"p3b-cal-24h","role":"加 12","title":"24 时计时法"}]},{"id":"p3b-cal-t-duration","no":"提升 1","title":"求经过时间","kind":"应用","asks":["经过时间"],"signals":["从……到……","经过","多长时间"],"route":["/p3b-cal/p3b-cal-24h"],"chain":[{"point":"p3b-cal-24h","role":"时刻相减","title":"24 时计时法"}]},{"id":"p3b-cal-t-days","no":"提升 2","title":"跨月算天数","kind":"应用","asks":["天数计算"],"signals":["从……到……","多少天","共"],"route":["/p3b-cal/p3b-cal-month","/p3b-cal/p3b-cal-year"],"chain":[{"point":"p3b-cal-month","role":"各月天数","title":"大月与小月"},{"point":"p3b-cal-year","role":"平闰年","title":"全年天数与季度"}]},{"id":"p3b-cal-t-half","no":"拓展","title":"上半年天数","kind":"推理","asks":["天数计算"],"signals":["上半年","下半年","多少天"],"route":["/p3b-cal/p3b-cal-year"],"chain":[{"point":"p3b-cal-year","role":"平闰年上半年天数","title":"全年天数与季度"}]}],"patternsUrl":"patterns.html","prefix":""};
 </script>
 <script>
 /*
  * 题目定位器：三问 → 匹配经典题型 → 告诉你第一步做什么
  * 数据由构建脚本通过 window.__LOCATE_DATA__ 注入。
+ * 数据约定（见 build.js renderLocate）：
+ *   asks     : [{k, desc}]                          —— 问题 1 的选项（k = 要什么）
+ *   patterns : [{id,no,title,kind,asks,signals,route,chain}]
+ *              chain : [{point, role, title}]        —— route[i] 是 /章/点 路径时，第 i 步的动作与去向页
+ * 问题 2 的选项直接取自各题型的 signals（题面信号词），选中即给对应题型加分。
  */
 (function () {
   var DATA = window.__LOCATE_DATA__;
   if (!DATA) return;
   var patterns = DATA.patterns;
-  var features = DATA.features;
   var asks = DATA.asks;
   var byId = {};
   patterns.forEach(function (p) { byId[p.id] = p; });
 
-  var state = { ask: null, feats: {} };
+  var state = { ask: null, sigs: {} };
 
   var root = document.getElementById('locator');
   if (!root) return;
 
-  /* ---------- 构建选项 ---------- */
+  /* ---------- 问题 1：求什么 ---------- */
   var askBox = document.getElementById('loc-asks');
   asks.forEach(function (a) {
     var b = document.createElement('button');
     b.className = 'loc-opt';
-    b.textContent = a.label;
+    b.textContent = a.k;
+    if (a.desc) b.title = a.desc;
     b.setAttribute('data-ask', a.k);
     b.addEventListener('click', function () {
       state.ask = (state.ask === a.k) ? null : a.k;
@@ -833,19 +838,25 @@ window.__LOCATE_DATA__ = {"asks":[{"k":"大月小月","desc":"各月天数判断
     askBox.appendChild(b);
   });
 
+  /* ---------- 问题 2：题面信号（来自各题型的 signals，去重） ---------- */
   var featBox = document.getElementById('loc-feats');
-  features.forEach(function (f) {
-    var b = document.createElement('button');
-    b.className = 'loc-opt small';
-    b.textContent = f.label;
-    b.setAttribute('data-feat', f.k);
-    b.addEventListener('click', function () {
-      if (state.feats[f.k]) delete state.feats[f.k];
-      else state.feats[f.k] = true;
-      syncOptions();
-      render();
+  var seen = {};
+  patterns.forEach(function (p) {
+    (p.signals || []).forEach(function (s) {
+      if (seen[s]) return;
+      seen[s] = true;
+      var b = document.createElement('button');
+      b.className = 'loc-opt small';
+      b.textContent = s;
+      b.setAttribute('data-sig', s);
+      b.addEventListener('click', function () {
+        if (state.sigs[s]) delete state.sigs[s];
+        else state.sigs[s] = true;
+        syncOptions();
+        render();
+      });
+      featBox.appendChild(b);
     });
-    featBox.appendChild(b);
   });
 
   function syncOptions() {
@@ -853,39 +864,43 @@ window.__LOCATE_DATA__ = {"asks":[{"k":"大月小月","desc":"各月天数判断
       b.classList.toggle('on', state.ask === b.getAttribute('data-ask'));
     });
     [].forEach.call(featBox.children, function (b) {
-      b.classList.toggle('on', !!state.feats[b.getAttribute('data-feat')]);
+      b.classList.toggle('on', !!state.sigs[b.getAttribute('data-sig')]);
     });
   }
 
   /* ---------- 匹配打分 ---------- */
-  function signalText(p) { return p.signals.join(' '); }
-
   function scorePattern(p) {
     var score = 0;
     var reasons = [];
-    if (state.ask) {
-      if (p.asks.indexOf(state.ask) >= 0) {
-        score += 10;
-        var askLabel = (asks.filter(function (a) { return a.k === state.ask; })[0] || {}).label || '';
-        reasons.push('你要找的是「' + askLabel + '」，这类题型正是干这个的');
-      }
+    if (state.ask && p.asks.indexOf(state.ask) >= 0) {
+      score += 10;
+      var askLabel = (asks.filter(function (a) { return a.k === state.ask; })[0] || {}).k || state.ask;
+      reasons.push('你要找的是「' + askLabel + '」，这类题型正是干这个的');
     }
-    var txt = signalText(p);
-    features.forEach(function (f) {
-      if (!state.feats[f.k]) return;
-      var hit = f.words.some(function (w) { return txt.indexOf(w) >= 0; });
-      if (hit) {
+    (p.signals || []).forEach(function (s) {
+      if (state.sigs[s]) {
         score += 3;
-        reasons.push('题面出现「' + f.k + '」类字眼，是它的典型特征');
+        reasons.push('题面出现「' + s + '」，是它的典型信号');
       }
     });
     return { score: score, reasons: reasons };
   }
 
+  /* 第一步：role 是动作，point 页是去向 */
+  function firstStep(p) {
+    var c = (p.chain && p.chain[0]) || null;
+    if (c && c.role) {
+      return '<a href="' + c.point + '.html"><b>' + esc(c.role) + '</b></a>'
+        + (c.title ? ' —— 去「' + esc(c.title) + '」页' : '');
+    }
+    if (c) return '<a href="' + c.point + '.html">' + esc(c.title || c.point) + '</a>';
+    return esc((p.route && p.route[0]) || '');
+  }
+
   /* ---------- 渲染结果 ---------- */
   function render() {
     var box = document.getElementById('loc-result');
-    var anyCond = !!state.ask || Object.keys(state.feats).length > 0;
+    var anyCond = !!state.ask || Object.keys(state.sigs).length > 0;
     if (!anyCond) {
       box.innerHTML = '<div class="loc-empty">先在上面的问题里点一两下，下面就会出现与之匹配的题型。<br>不用全部回答，选你有把握的就行。</div>';
       return;
@@ -906,19 +921,21 @@ window.__LOCATE_DATA__ = {"asks":[{"k":"大月小月","desc":"各月天数判断
     }
 
     var top = results[0].p;
+    var topNo = /^\d+$/.test(String(top.no)) ? ('第 ' + top.no + ' 类 · ') : (top.no + ' · ');
     var html = '<div class="loc-empty" style="text-align:left;border-style:solid;background:#e6f1fb;color:#123d63;padding:14px 18px">'
-      + '最像 <b>第 ' + top.no + ' 类 · ' + esc(top.title) + '</b>。它的第一步是：<b>' + esc(top.route[0]) + '</b>。'
+      + '最像 <b>' + topNo + esc(top.title) + '</b>。它的第一步是：' + firstStep(top) + '。'
       + '</div>';
 
     results.slice(0, 6).forEach(function (r) {
       var p = r.p;
+      var noTxt = /^\d+$/.test(String(p.no)) ? String(p.no).padStart(2, '0') : '';
       html += '<div class="loc-card">'
-        + '<div class="lc-top"><span class="type-no">' + String(p.no).padStart(2, '0') + '</span>'
-        + '<span class="lc-title"><a href="pattern/' + p.id + '.html">' + esc(p.title) + '</a></span>'
+        + '<div class="lc-top"><span class="type-no">' + noTxt + '</span>'
+        + '<span class="lc-title"><a href="pattern/' + p.id + '.html">' + (noTxt ? '' : esc(p.no) + ' · ') + esc(p.title) + '</a></span>'
         + '<span class="kind ' + kindClass(p.kind) + '">' + esc(p.kind) + '</span>'
         + '<span class="score">匹配度 ' + r.score + '</span></div>'
         + '<div class="lc-why">' + r.reasons.map(esc).join('；') + '</div>'
-        + '<div class="lc-first"><b>第一步：</b>' + esc(p.route[0]) + '</div>'
+        + '<div class="lc-first"><b>第一步：</b>' + firstStep(p) + '</div>'
         + '</div>';
     });
 
@@ -937,7 +954,7 @@ window.__LOCATE_DATA__ = {"asks":[{"k":"大月小月","desc":"各月天数判断
 
   var reset = document.getElementById('loc-reset');
   if (reset) reset.addEventListener('click', function () {
-    state.ask = null; state.feats = {};
+    state.ask = null; state.sigs = {};
     syncOptions(); render();
   });
 

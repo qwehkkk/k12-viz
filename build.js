@@ -137,6 +137,9 @@ function plain(s) {
 }
 function attrJson(obj) { return esc(JSON.stringify(obj)); }
 function kindClass(k) { return kindGroup(k) === '组合型' ? 'combo' : (kindGroup(k) === '综合型' ? 'full' : ''); }
+// 题型编号两种形态：数字（初中/高中，补零成 01）或「基础 1」这类文字（小学，直接用，不塞进 22px 的编号格）
+function padNo(no) { return /^\d+$/.test(String(no)) ? String(no).padStart(2, '0') : ''; }
+function noPrefix(no) { return padNo(no) ? '' : esc(no) + ' · '; }
 /* 题型归类：数据里的 kind 写法很杂（计算/证明/应用型/综合…），
    统一归到三档，避免有题型因为 kind 写法不在白名单里而从列表消失 */
 function kindGroup(k) {
@@ -482,8 +485,8 @@ function renderPoint(ch, p, idx) {
   <h2>这个知识点出现在哪些题型里</h2>
   <div class="type-links">
     ${types.map(t => `<a class="type-link" href="pattern/${t.id}.html">
-  <span class="type-no" style="display:inline">${String(t.no).padStart(2, '0')}</span>
-  ${esc(t.title)}${t.isStart ? ' <span class="kind" style="background:#e1f5ee;color:#0f6e56">通常是起点</span>' : ''}
+  <span class="type-no" style="display:inline">${padNo(t.no)}</span>
+  ${noPrefix(t.no)}${esc(t.title)}${t.isStart ? ' <span class="kind" style="background:#e1f5ee;color:#0f6e56">通常是起点</span>' : ''}
   <span class="tx-role">${esc(t.role)}</span>
 </a>`).join('\n    ')}
   </div>
@@ -539,8 +542,8 @@ function renderPatterns(ch) {
     }).join('<span class="pt-arrow">›</span>');
     return `<a class="type-card" href="pattern/${t.id}.html">
   <div class="tc-top">
-    <span class="type-no">${String(t.no).padStart(2, '0')}</span>
-    <span class="type-title">${esc(t.title)}</span>
+    <span class="type-no">${padNo(t.no)}</span>
+    <span class="type-title">${noPrefix(t.no)}${esc(t.title)}</span>
     <span class="kind ${kindClass(t.kind)}">${esc(t.kind)}</span>
   </div>
   <div class="tc-points">${pills}</div>
@@ -650,7 +653,18 @@ function renderPattern(ch, t, idx) {
     return i < t.chain.length - 1 ? node + '\n<div class="chain-arrow">→</div>' : node;
   }).join('\n');
 
-  const routeHtml = t.route.map(r => `<li>${esc(r)}</li>`).join('\n    ');
+  // route 有两种形态：小学/初中是「/章/点」路径（与 chain 一一对应），高中是文字步骤。
+  // URL 形态直接展示路径没有意义，换算成「知识点链接 + 该步动作」。
+  const routeHtml = t.route.map((r, i) => {
+    if (typeof r === 'string' && r.indexOf('/') === 0) {
+      const c = t.chain[i] || {};
+      const q = ch.byId[c.point];
+      const name = q ? q.title : (c.point || r);
+      const role = c.role ? ` —— ${esc(c.role)}` : '';
+      return `<li><a href="../${c.point}.html">${esc(name)}</a>${role}</li>`;
+    }
+    return `<li>${esc(r)}</li>`;
+  }).join('\n    ');
 
   const stepsHtml = steps.length ? `<details class="ex" open>
   <summary><span class="ex-tag">完整解答</span><span>${esc(t.stem.slice(0, 40))}${t.stem.length > 40 ? '…' : ''}</span></summary>
@@ -664,12 +678,12 @@ function renderPattern(ch, t, idx) {
 </details>` : '';
 
   return `${head(`${t.title} - 经典题型 - ${ch.meta.title} - ${SITE.name}`, t.locate.slice(0, 120), '../../', ch, 'patterns')}
-<p class="crumb"><a href="../../index.html">课程目录</a> / <a href="../index.html">${esc(ch.meta.title)}</a> / <a href="../patterns.html">经典题型库</a> / 第 ${t.no} 类</p>
+<p class="crumb"><a href="../../index.html">课程目录</a> / <a href="../index.html">${esc(ch.meta.title)}</a> / <a href="../patterns.html">经典题型库</a> / ${/^\d+$/.test(String(t.no)) ? `第 ${t.no} 类` : esc(t.no)}</p>
 <article class="point">
   <h1>${esc(t.title)}</h1>
   <p class="point-meta">
     <span class="kind ${kindClass(t.kind)}">${esc(t.kind)}</span>
-    　题型 ${String(t.no).padStart(2, '0')} / ${ch.patterns.length}
+    　题型 ${esc(t.no)} / ${ch.patterns.length}
     　调用 ${t.chain.length} 个知识点
   </p>
 
@@ -729,7 +743,11 @@ function renderLocate(ch) {
     features: ch.patternsMeta.features,
     patterns: ch.patterns.map(t => ({
       id: t.id, no: t.no, title: t.title, kind: t.kind,
-      asks: t.asks, signals: t.signals, route: t.route
+      asks: t.asks, signals: t.signals, route: t.route,
+      chain: (t.chain || []).map(c => ({
+        point: c.point, role: c.role || '',
+        title: (ch.byId[c.point] || {}).title || c.point
+      }))
     })),
     patternsUrl: 'patterns.html',
     prefix: ''

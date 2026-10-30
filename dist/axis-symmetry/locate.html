@@ -797,33 +797,38 @@ a:hover .tg-node { stroke-width: 2.4; }
 </div>
 
 <script>
-window.__LOCATE_DATA__ = {"asks":[{"k":"轴对称概念","label":"判断轴对称图形、用对称性质求角求边"},{"k":"垂直平分线","label":"等距转化、周长问题、尺规作图"},{"k":"坐标对称","label":"写对称点坐标、由对称求参数"},{"k":"等腰三角形","label":"等边对等角、三线合一、分类讨论"},{"k":"等边三角形","label":"等边判定、30° 直角三角形"},{"k":"最短路径","label":"将军饮马、折线求和最小"}],"features":{"k":"轴对称","words":["轴对称","对称轴","对折","折叠","翻折","垂直平分线","中垂线","对应点","等腰","等边","等角对等边","等边对等角","三线合一","30°","最短","最小","距离相等","镜子","对称点"]},"patterns":[{"id":"ax-sym-judge","no":1,"title":"轴对称图形的识别","kind":"判断","asks":["轴对称概念"],"signals":["是否是轴对称图形","对称轴条数","以下图形中","对折能重合"],"route":["/axis-symmetry/ax-concept"]},{"id":"ax-sym-prop","no":2,"title":"用轴对称性质求线段与角","kind":"计算","asks":["轴对称概念"],"signals":["关于直线对称","对应点","对应边","求角度","求长度","折叠后重合"],"route":["/axis-symmetry/ax-concept","/axis-symmetry/ax-bisector"]},{"id":"ax-bisector-perim","no":3,"title":"垂直平分线 + 周长转化","kind":"计算","asks":["垂直平分线"],"signals":["垂直平分线","中垂线","周长","交于","到两端距离相等"],"route":["/axis-symmetry/ax-bisector"]},{"id":"ax-bisector-draw","no":4,"title":"尺规作垂直平分线与到两点等距","kind":"作图","asks":["垂直平分线"],"signals":["尺规作图","求作一点","到两点距离相等","交于","保留作图痕迹"],"route":["/axis-symmetry/ax-bisector"]},{"id":"ax-coord-sym","no":5,"title":"求关于坐标轴对称的点","kind":"计算","asks":["坐标对称"],"signals":["关于 x 轴对称","关于 y 轴对称","关于原点对称","写出坐标"],"route":["/axis-symmetry/ax-coord"]},{"id":"ax-coord-param","no":6,"title":"由对称关系求字母参数","kind":"计算","asks":["坐标对称"],"signals":["关于 x 轴对称","关于 y 轴对称","求 a","求 b","互为相反数"],"route":["/axis-symmetry/ax-coord"]},{"id":"ax-grid-draw","no":7,"title":"网格中作对称图形并求面积","kind":"作图","asks":["坐标对称","轴对称概念"],"signals":["在平面直角坐标系中","作出关于……对称的图形","求面积","网格"],"route":["/axis-symmetry/ax-draw","/axis-symmetry/ax-coord"]},{"id":"ax-fold-angle","no":8,"title":"折叠问题中的轴对称","kind":"组合型","asks":["轴对称概念","等腰三角形"],"signals":["折叠","翻折","沿某条线折","重合","求角度"],"route":["/axis-symmetry/ax-concept","/axis-symmetry/ax-isosceles"]},{"id":"ax-iso-angle","no":9,"title":"等边对等角求角","kind":"计算","asks":["等腰三角形"],"signals":["AB = AC","等腰三角形","求底角","求顶角","外角"],"route":["/axis-symmetry/ax-isosceles"]},{"id":"ax-iso-three","no":10,"title":"三线合一的证明与应用","kind":"证明","asks":["等腰三角形"],"signals":["AB = AC","中点","平分","垂直","求证"],"route":["/axis-symmetry/ax-isosceles","/axis-symmetry/ax-bisector"]},{"id":"ax-iso-classify","no":11,"title":"等腰三角形的分类讨论","kind":"组合型","asks":["等腰三角形"],"signals":["两边长","求周长","周长","等腰三角形","其中一个角"],"route":["/axis-symmetry/ax-isosceles","/axis-symmetry/ax-concept"]},{"id":"ax-iso-judge","no":12,"title":"等角对等边判等腰","kind":"证明","asks":["等腰三角形"],"signals":["求证两边相等","两个角相等","求证等腰","等角"],"route":["/axis-symmetry/ax-iso-judge","/axis-symmetry/ax-isosceles"]},{"id":"ax-iso-parallel","no":13,"title":"平行线 + 角平分线 → 等腰","kind":"证明","asks":["等腰三角形","轴对称概念"],"signals":["平行","角平分线","求证相等","内错角","等腰"],"route":["/axis-symmetry/ax-iso-judge","/axis-symmetry/ax-concept"]},{"id":"ax-equi-proof","no":14,"title":"等边三角形的判定与性质","kind":"证明","asks":["等边三角形"],"signals":["等边三角形","60°","三边相等","求证等边","全等"],"route":["/axis-symmetry/ax-equilateral","/axis-symmetry/ax-isosceles"]},{"id":"ax-equi-30","no":15,"title":"30° 直角三角形","kind":"计算","asks":["等边三角形"],"signals":["30°","∠A = 30°","直角三角形","斜边","一半"],"route":["/axis-symmetry/ax-equilateral"]},{"id":"ax-path-min","no":16,"title":"将军饮马：折线求和最小","kind":"综合","asks":["最短路径","垂直平分线"],"signals":["最短","最小","距离之和","河岸","在直线上找一点","周长最小"],"route":["/axis-symmetry/ax-path","/axis-symmetry/ax-concept"]},{"id":"ax-path-coord","no":17,"title":"坐标系中的最短路径","kind":"综合","asks":["最短路径","坐标对称"],"signals":["x 轴上","y 轴上","使 PA + PB 最小","求点 P 坐标","坐标系"],"route":["/axis-symmetry/ax-path","/axis-symmetry/ax-coord"]}],"patternsUrl":"patterns.html","prefix":""};
+window.__LOCATE_DATA__ = {"asks":[{"k":"轴对称概念","label":"判断轴对称图形、用对称性质求角求边"},{"k":"垂直平分线","label":"等距转化、周长问题、尺规作图"},{"k":"坐标对称","label":"写对称点坐标、由对称求参数"},{"k":"等腰三角形","label":"等边对等角、三线合一、分类讨论"},{"k":"等边三角形","label":"等边判定、30° 直角三角形"},{"k":"最短路径","label":"将军饮马、折线求和最小"}],"features":{"k":"轴对称","words":["轴对称","对称轴","对折","折叠","翻折","垂直平分线","中垂线","对应点","等腰","等边","等角对等边","等边对等角","三线合一","30°","最短","最小","距离相等","镜子","对称点"]},"patterns":[{"id":"ax-sym-judge","no":1,"title":"轴对称图形的识别","kind":"判断","asks":["轴对称概念"],"signals":["是否是轴对称图形","对称轴条数","以下图形中","对折能重合"],"route":["/axis-symmetry/ax-concept"],"chain":[{"point":"ax-concept","role":"沿直线对折能否重合","title":"轴对称与轴对称图形"}]},{"id":"ax-sym-prop","no":2,"title":"用轴对称性质求线段与角","kind":"计算","asks":["轴对称概念"],"signals":["关于直线对称","对应点","对应边","求角度","求长度","折叠后重合"],"route":["/axis-symmetry/ax-concept","/axis-symmetry/ax-bisector"],"chain":[{"point":"ax-concept","role":"成轴对称的两个图形全等","title":"轴对称与轴对称图形"},{"point":"ax-bisector","role":"对称轴垂直平分对应点连线","title":"线段的垂直平分线"}]},{"id":"ax-bisector-perim","no":3,"title":"垂直平分线 + 周长转化","kind":"计算","asks":["垂直平分线"],"signals":["垂直平分线","中垂线","周长","交于","到两端距离相等"],"route":["/axis-symmetry/ax-bisector"],"chain":[{"point":"ax-bisector","role":"PA = PB 做等量替换","title":"线段的垂直平分线"}]},{"id":"ax-bisector-draw","no":4,"title":"尺规作垂直平分线与到两点等距","kind":"作图","asks":["垂直平分线"],"signals":["尺规作图","求作一点","到两点距离相等","交于","保留作图痕迹"],"route":["/axis-symmetry/ax-bisector"],"chain":[{"point":"ax-bisector","role":"等距点的轨迹是中垂线","title":"线段的垂直平分线"}]},{"id":"ax-coord-sym","no":5,"title":"求关于坐标轴对称的点","kind":"计算","asks":["坐标对称"],"signals":["关于 x 轴对称","关于 y 轴对称","关于原点对称","写出坐标"],"route":["/axis-symmetry/ax-coord"],"chain":[{"point":"ax-coord","role":"谁变号的口诀","title":"用坐标表示轴对称"}]},{"id":"ax-coord-param","no":6,"title":"由对称关系求字母参数","kind":"计算","asks":["坐标对称"],"signals":["关于 x 轴对称","关于 y 轴对称","求 a","求 b","互为相反数"],"route":["/axis-symmetry/ax-coord"],"chain":[{"point":"ax-coord","role":"列方程","title":"用坐标表示轴对称"}]},{"id":"ax-grid-draw","no":7,"title":"网格中作对称图形并求面积","kind":"作图","asks":["坐标对称","轴对称概念"],"signals":["在平面直角坐标系中","作出关于……对称的图形","求面积","网格"],"route":["/axis-symmetry/ax-draw","/axis-symmetry/ax-coord"],"chain":[{"point":"ax-draw","role":"找点作垂截等连线","title":"画轴对称图形"},{"point":"ax-coord","role":"用坐标规律快速定位","title":"用坐标表示轴对称"}]},{"id":"ax-fold-angle","no":8,"title":"折叠问题中的轴对称","kind":"组合型","asks":["轴对称概念","等腰三角形"],"signals":["折叠","翻折","沿某条线折","重合","求角度"],"route":["/axis-symmetry/ax-concept","/axis-symmetry/ax-isosceles"],"chain":[{"point":"ax-concept","role":"折痕就是对称轴","title":"轴对称与轴对称图形"},{"point":"ax-isosceles","role":"折出的等边或等角","title":"等腰三角形的性质"}]},{"id":"ax-iso-angle","no":9,"title":"等边对等角求角","kind":"计算","asks":["等腰三角形"],"signals":["AB = AC","等腰三角形","求底角","求顶角","外角"],"route":["/axis-symmetry/ax-isosceles"],"chain":[{"point":"ax-isosceles","role":"两底角相等 + 内角和 180°","title":"等腰三角形的性质"}]},{"id":"ax-iso-three","no":10,"title":"三线合一的证明与应用","kind":"证明","asks":["等腰三角形"],"signals":["AB = AC","中点","平分","垂直","求证"],"route":["/axis-symmetry/ax-isosceles","/axis-symmetry/ax-bisector"],"chain":[{"point":"ax-isosceles","role":"三线合一","title":"等腰三角形的性质"},{"point":"ax-bisector","role":"垂直与平分互相转化","title":"线段的垂直平分线"}]},{"id":"ax-iso-classify","no":11,"title":"等腰三角形的分类讨论","kind":"组合型","asks":["等腰三角形"],"signals":["两边长","求周长","周长","等腰三角形","其中一个角"],"route":["/axis-symmetry/ax-isosceles","/axis-symmetry/ax-concept"],"chain":[{"point":"ax-isosceles","role":"腰与底的区分","title":"等腰三角形的性质"},{"point":"ax-concept","role":"图形能否成立","title":"轴对称与轴对称图形"}]},{"id":"ax-iso-judge","no":12,"title":"等角对等边判等腰","kind":"证明","asks":["等腰三角形"],"signals":["求证两边相等","两个角相等","求证等腰","等角"],"route":["/axis-symmetry/ax-iso-judge","/axis-symmetry/ax-isosceles"],"chain":[{"point":"ax-iso-judge","role":"等角对等边","title":"等腰三角形的判定"},{"point":"ax-isosceles","role":"证完等腰后用三线合一","title":"等腰三角形的性质"}]},{"id":"ax-iso-parallel","no":13,"title":"平行线 + 角平分线 → 等腰","kind":"证明","asks":["等腰三角形","轴对称概念"],"signals":["平行","角平分线","求证相等","内错角","等腰"],"route":["/axis-symmetry/ax-iso-judge","/axis-symmetry/ax-concept"],"chain":[{"point":"ax-iso-judge","role":"等角对等边","title":"等腰三角形的判定"},{"point":"ax-concept","role":"角相等的来源","title":"轴对称与轴对称图形"}]},{"id":"ax-equi-proof","no":14,"title":"等边三角形的判定与性质","kind":"证明","asks":["等边三角形"],"signals":["等边三角形","60°","三边相等","求证等边","全等"],"route":["/axis-symmetry/ax-equilateral","/axis-symmetry/ax-isosceles"],"chain":[{"point":"ax-equilateral","role":"三条判定","title":"等边三角形与 30° 直角三角形"},{"point":"ax-isosceles","role":"等腰作前提","title":"等腰三角形的性质"}]},{"id":"ax-equi-30","no":15,"title":"30° 直角三角形","kind":"计算","asks":["等边三角形"],"signals":["30°","∠A = 30°","直角三角形","斜边","一半"],"route":["/axis-symmetry/ax-equilateral"],"chain":[{"point":"ax-equilateral","role":"30° 对边 = ½ 斜边","title":"等边三角形与 30° 直角三角形"}]},{"id":"ax-path-min","no":16,"title":"将军饮马：折线求和最小","kind":"综合","asks":["最短路径","垂直平分线"],"signals":["最短","最小","距离之和","河岸","在直线上找一点","周长最小"],"route":["/axis-symmetry/ax-path","/axis-symmetry/ax-concept"],"chain":[{"point":"ax-path","role":"作对称点把折线拉直","title":"最短路径问题（将军饮马）"},{"point":"ax-concept","role":"对称后线段相等","title":"轴对称与轴对称图形"}]},{"id":"ax-path-coord","no":17,"title":"坐标系中的最短路径","kind":"综合","asks":["最短路径","坐标对称"],"signals":["x 轴上","y 轴上","使 PA + PB 最小","求点 P 坐标","坐标系"],"route":["/axis-symmetry/ax-path","/axis-symmetry/ax-coord"],"chain":[{"point":"ax-path","role":"作对称点连线段","title":"最短路径问题（将军饮马）"},{"point":"ax-coord","role":"写出对称点坐标","title":"用坐标表示轴对称"}]}],"patternsUrl":"patterns.html","prefix":""};
 </script>
 <script>
 /*
  * 题目定位器：三问 → 匹配经典题型 → 告诉你第一步做什么
  * 数据由构建脚本通过 window.__LOCATE_DATA__ 注入。
+ * 数据约定（见 build.js renderLocate）：
+ *   asks     : [{k, desc}]                          —— 问题 1 的选项（k = 要什么）
+ *   patterns : [{id,no,title,kind,asks,signals,route,chain}]
+ *              chain : [{point, role, title}]        —— route[i] 是 /章/点 路径时，第 i 步的动作与去向页
+ * 问题 2 的选项直接取自各题型的 signals（题面信号词），选中即给对应题型加分。
  */
 (function () {
   var DATA = window.__LOCATE_DATA__;
   if (!DATA) return;
   var patterns = DATA.patterns;
-  var features = DATA.features;
   var asks = DATA.asks;
   var byId = {};
   patterns.forEach(function (p) { byId[p.id] = p; });
 
-  var state = { ask: null, feats: {} };
+  var state = { ask: null, sigs: {} };
 
   var root = document.getElementById('locator');
   if (!root) return;
 
-  /* ---------- 构建选项 ---------- */
+  /* ---------- 问题 1：求什么 ---------- */
   var askBox = document.getElementById('loc-asks');
   asks.forEach(function (a) {
     var b = document.createElement('button');
     b.className = 'loc-opt';
-    b.textContent = a.label;
+    b.textContent = a.k;
+    if (a.desc) b.title = a.desc;
     b.setAttribute('data-ask', a.k);
     b.addEventListener('click', function () {
       state.ask = (state.ask === a.k) ? null : a.k;
@@ -833,19 +838,25 @@ window.__LOCATE_DATA__ = {"asks":[{"k":"轴对称概念","label":"判断轴对�
     askBox.appendChild(b);
   });
 
+  /* ---------- 问题 2：题面信号（来自各题型的 signals，去重） ---------- */
   var featBox = document.getElementById('loc-feats');
-  features.forEach(function (f) {
-    var b = document.createElement('button');
-    b.className = 'loc-opt small';
-    b.textContent = f.label;
-    b.setAttribute('data-feat', f.k);
-    b.addEventListener('click', function () {
-      if (state.feats[f.k]) delete state.feats[f.k];
-      else state.feats[f.k] = true;
-      syncOptions();
-      render();
+  var seen = {};
+  patterns.forEach(function (p) {
+    (p.signals || []).forEach(function (s) {
+      if (seen[s]) return;
+      seen[s] = true;
+      var b = document.createElement('button');
+      b.className = 'loc-opt small';
+      b.textContent = s;
+      b.setAttribute('data-sig', s);
+      b.addEventListener('click', function () {
+        if (state.sigs[s]) delete state.sigs[s];
+        else state.sigs[s] = true;
+        syncOptions();
+        render();
+      });
+      featBox.appendChild(b);
     });
-    featBox.appendChild(b);
   });
 
   function syncOptions() {
@@ -853,39 +864,43 @@ window.__LOCATE_DATA__ = {"asks":[{"k":"轴对称概念","label":"判断轴对�
       b.classList.toggle('on', state.ask === b.getAttribute('data-ask'));
     });
     [].forEach.call(featBox.children, function (b) {
-      b.classList.toggle('on', !!state.feats[b.getAttribute('data-feat')]);
+      b.classList.toggle('on', !!state.sigs[b.getAttribute('data-sig')]);
     });
   }
 
   /* ---------- 匹配打分 ---------- */
-  function signalText(p) { return p.signals.join(' '); }
-
   function scorePattern(p) {
     var score = 0;
     var reasons = [];
-    if (state.ask) {
-      if (p.asks.indexOf(state.ask) >= 0) {
-        score += 10;
-        var askLabel = (asks.filter(function (a) { return a.k === state.ask; })[0] || {}).label || '';
-        reasons.push('你要找的是「' + askLabel + '」，这类题型正是干这个的');
-      }
+    if (state.ask && p.asks.indexOf(state.ask) >= 0) {
+      score += 10;
+      var askLabel = (asks.filter(function (a) { return a.k === state.ask; })[0] || {}).k || state.ask;
+      reasons.push('你要找的是「' + askLabel + '」，这类题型正是干这个的');
     }
-    var txt = signalText(p);
-    features.forEach(function (f) {
-      if (!state.feats[f.k]) return;
-      var hit = f.words.some(function (w) { return txt.indexOf(w) >= 0; });
-      if (hit) {
+    (p.signals || []).forEach(function (s) {
+      if (state.sigs[s]) {
         score += 3;
-        reasons.push('题面出现「' + f.k + '」类字眼，是它的典型特征');
+        reasons.push('题面出现「' + s + '」，是它的典型信号');
       }
     });
     return { score: score, reasons: reasons };
   }
 
+  /* 第一步：role 是动作，point 页是去向 */
+  function firstStep(p) {
+    var c = (p.chain && p.chain[0]) || null;
+    if (c && c.role) {
+      return '<a href="' + c.point + '.html"><b>' + esc(c.role) + '</b></a>'
+        + (c.title ? ' —— 去「' + esc(c.title) + '」页' : '');
+    }
+    if (c) return '<a href="' + c.point + '.html">' + esc(c.title || c.point) + '</a>';
+    return esc((p.route && p.route[0]) || '');
+  }
+
   /* ---------- 渲染结果 ---------- */
   function render() {
     var box = document.getElementById('loc-result');
-    var anyCond = !!state.ask || Object.keys(state.feats).length > 0;
+    var anyCond = !!state.ask || Object.keys(state.sigs).length > 0;
     if (!anyCond) {
       box.innerHTML = '<div class="loc-empty">先在上面的问题里点一两下，下面就会出现与之匹配的题型。<br>不用全部回答，选你有把握的就行。</div>';
       return;
@@ -906,19 +921,21 @@ window.__LOCATE_DATA__ = {"asks":[{"k":"轴对称概念","label":"判断轴对�
     }
 
     var top = results[0].p;
+    var topNo = /^\d+$/.test(String(top.no)) ? ('第 ' + top.no + ' 类 · ') : (top.no + ' · ');
     var html = '<div class="loc-empty" style="text-align:left;border-style:solid;background:#e6f1fb;color:#123d63;padding:14px 18px">'
-      + '最像 <b>第 ' + top.no + ' 类 · ' + esc(top.title) + '</b>。它的第一步是：<b>' + esc(top.route[0]) + '</b>。'
+      + '最像 <b>' + topNo + esc(top.title) + '</b>。它的第一步是：' + firstStep(top) + '。'
       + '</div>';
 
     results.slice(0, 6).forEach(function (r) {
       var p = r.p;
+      var noTxt = /^\d+$/.test(String(p.no)) ? String(p.no).padStart(2, '0') : '';
       html += '<div class="loc-card">'
-        + '<div class="lc-top"><span class="type-no">' + String(p.no).padStart(2, '0') + '</span>'
-        + '<span class="lc-title"><a href="pattern/' + p.id + '.html">' + esc(p.title) + '</a></span>'
+        + '<div class="lc-top"><span class="type-no">' + noTxt + '</span>'
+        + '<span class="lc-title"><a href="pattern/' + p.id + '.html">' + (noTxt ? '' : esc(p.no) + ' · ') + esc(p.title) + '</a></span>'
         + '<span class="kind ' + kindClass(p.kind) + '">' + esc(p.kind) + '</span>'
         + '<span class="score">匹配度 ' + r.score + '</span></div>'
         + '<div class="lc-why">' + r.reasons.map(esc).join('；') + '</div>'
-        + '<div class="lc-first"><b>第一步：</b>' + esc(p.route[0]) + '</div>'
+        + '<div class="lc-first"><b>第一步：</b>' + firstStep(p) + '</div>'
         + '</div>';
     });
 
@@ -937,7 +954,7 @@ window.__LOCATE_DATA__ = {"asks":[{"k":"轴对称概念","label":"判断轴对�
 
   var reset = document.getElementById('loc-reset');
   if (reset) reset.addEventListener('click', function () {
-    state.ask = null; state.feats = {};
+    state.ask = null; state.sigs = {};
     syncOptions(); render();
   });
 

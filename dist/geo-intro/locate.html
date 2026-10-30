@@ -797,33 +797,38 @@ a:hover .tg-node { stroke-width: 2.4; }
 </div>
 
 <script>
-window.__LOCATE_DATA__ = {"asks":[{"k":"识别立体图形","label":"数面棱顶点、识别立体与平面图形"},{"k":"点线面体","label":"用点线面体的运动关系解释图形形成"},{"k":"三视图直觉","label":"判断从某方向看到的图形"},{"k":"直线射线线段","label":"三种线的表示、区别与基本事实"},{"k":"线段计算","label":"中点与线段的和差倍分"},{"k":"角的度量","label":"度分秒换算与角的表示"},{"k":"角平分线","label":"用角平分线做角的和差倍分"},{"k":"余角补角","label":"互余互补的计算与性质说理"}],"features":{"k":"几何图形初步","words":["立体图形","平面图形","棱","顶点","曲面","点动成线","线动成面","面动成体","旋转","圆柱","圆锥","三视图","从正面看","从上面看","直线","射线","线段","两点确定一条直线","两点之间线段最短","中点","叠合","延长线","角","度分秒","角平分线","余角","补角","互余","互补"]},"patterns":[{"id":"geo-solid-count","no":1,"title":"数立体图形的面、棱、顶点","kind":"概念","asks":["识别立体图形"],"signals":["有几个面","几条棱","几个顶点","n 棱柱","n 棱锥"],"route":["/geo-intro/geo-shapes"]},{"id":"geo-motion-idea","no":2,"title":"点线面体的运动关系判断","kind":"概念","asks":["点线面体"],"signals":["点动成线","线动成面","面动成体","旋转一周","雨刷","笔尖"],"route":["/geo-intro/geo-motion"]},{"id":"geo-view-pick","no":3,"title":"判断从某个方向看到的图形","kind":"应用","asks":["三视图直觉"],"signals":["从正面看","从左面看","从上面看","看到的图形","主视图","俯视图"],"route":["/geo-intro/geo-view"]},{"id":"geo-line-fact","no":4,"title":"直线、射线、线段的表示与基本事实","kind":"概念","asks":["直线射线线段"],"signals":["射线 AB","直线 AB","端点","两点确定","钉子","墨线"],"route":["/geo-intro/geo-lines"]},{"id":"geo-seg-mid","no":5,"title":"用中点求线段长","kind":"计算","asks":["线段计算"],"signals":["中点","平分","AM = MB","½AB"],"route":["/geo-intro/geo-seg-cmp"]},{"id":"geo-seg-case","no":6,"title":"线段计算中的分类讨论","kind":"计算","asks":["线段计算"],"signals":["直线 AB 上","延长线","或在","两种情况"],"route":["/geo-intro/geo-seg-cmp"]},{"id":"geo-degree-change","no":7,"title":"度分秒的换算","kind":"计算","asks":["角的度量"],"signals":["化成度分秒","多少度多少分","60 进制","°′″"],"route":["/geo-intro/geo-angle"]},{"id":"geo-bisect-calc","no":8,"title":"用角平分线做角的计算","kind":"计算","asks":["角平分线"],"signals":["平分","∠AOC = ∠BOC","OD 平分","½∠"],"route":["/geo-intro/geo-angle"]},{"id":"geo-comp-calc","no":9,"title":"余角补角的计算与性质","kind":"计算","asks":["余角补角"],"signals":["余角","补角","互余","互补","90° − ","180° − "],"route":["/geo-intro/geo-complement"]}],"patternsUrl":"patterns.html","prefix":""};
+window.__LOCATE_DATA__ = {"asks":[{"k":"识别立体图形","label":"数面棱顶点、识别立体与平面图形"},{"k":"点线面体","label":"用点线面体的运动关系解释图形形成"},{"k":"三视图直觉","label":"判断从某方向看到的图形"},{"k":"直线射线线段","label":"三种线的表示、区别与基本事实"},{"k":"线段计算","label":"中点与线段的和差倍分"},{"k":"角的度量","label":"度分秒换算与角的表示"},{"k":"角平分线","label":"用角平分线做角的和差倍分"},{"k":"余角补角","label":"互余互补的计算与性质说理"}],"features":{"k":"几何图形初步","words":["立体图形","平面图形","棱","顶点","曲面","点动成线","线动成面","面动成体","旋转","圆柱","圆锥","三视图","从正面看","从上面看","直线","射线","线段","两点确定一条直线","两点之间线段最短","中点","叠合","延长线","角","度分秒","角平分线","余角","补角","互余","互补"]},"patterns":[{"id":"geo-solid-count","no":1,"title":"数立体图形的面、棱、顶点","kind":"概念","asks":["识别立体图形"],"signals":["有几个面","几条棱","几个顶点","n 棱柱","n 棱锥"],"route":["/geo-intro/geo-shapes"],"chain":[{"point":"geo-shapes","role":"体由面围成，面面交成线，线线交成点","title":"立体图形与平面图形"}]},{"id":"geo-motion-idea","no":2,"title":"点线面体的运动关系判断","kind":"概念","asks":["点线面体"],"signals":["点动成线","线动成面","面动成体","旋转一周","雨刷","笔尖"],"route":["/geo-intro/geo-motion"],"chain":[{"point":"geo-motion","role":"点→线→面→体的四级运动","title":"点、线、面、体"}]},{"id":"geo-view-pick","no":3,"title":"判断从某个方向看到的图形","kind":"应用","asks":["三视图直觉"],"signals":["从正面看","从左面看","从上面看","看到的图形","主视图","俯视图"],"route":["/geo-intro/geo-view"],"chain":[{"point":"geo-view","role":"换方向观察，被挡的也算层数","title":"从不同方向看立体图形"}]},{"id":"geo-line-fact","no":4,"title":"直线、射线、线段的表示与基本事实","kind":"概念","asks":["直线射线线段"],"signals":["射线 AB","直线 AB","端点","两点确定","钉子","墨线"],"route":["/geo-intro/geo-lines"],"chain":[{"point":"geo-lines","role":"三种线的区别 + 两点确定一条直线","title":"直线、射线、线段"}]},{"id":"geo-seg-mid","no":5,"title":"用中点求线段长","kind":"计算","asks":["线段计算"],"signals":["中点","平分","AM = MB","½AB"],"route":["/geo-intro/geo-seg-cmp"],"chain":[{"point":"geo-seg-cmp","role":"中点定义 AM = MB = ½AB","title":"线段的比较与运算"}]},{"id":"geo-seg-case","no":6,"title":"线段计算中的分类讨论","kind":"计算","asks":["线段计算"],"signals":["直线 AB 上","延长线","或在","两种情况"],"route":["/geo-intro/geo-seg-cmp"],"chain":[{"point":"geo-seg-cmp","role":"和差关系 + 位置不确定要分类","title":"线段的比较与运算"}]},{"id":"geo-degree-change","no":7,"title":"度分秒的换算","kind":"计算","asks":["角的度量"],"signals":["化成度分秒","多少度多少分","60 进制","°′″"],"route":["/geo-intro/geo-angle"],"chain":[{"point":"geo-angle","role":"1° = 60′，1′ = 60″","title":"角与角的平分线"}]},{"id":"geo-bisect-calc","no":8,"title":"用角平分线做角的计算","kind":"计算","asks":["角平分线"],"signals":["平分","∠AOC = ∠BOC","OD 平分","½∠"],"route":["/geo-intro/geo-angle"],"chain":[{"point":"geo-angle","role":"角平分线 ⟺ ½∠","title":"角与角的平分线"}]},{"id":"geo-comp-calc","no":9,"title":"余角补角的计算与性质","kind":"计算","asks":["余角补角"],"signals":["余角","补角","互余","互补","90° − ","180° − "],"route":["/geo-intro/geo-complement"],"chain":[{"point":"geo-complement","role":"余角 = 90° − ∠α，补角 = 180° − ∠α","title":"余角和补角"}]}],"patternsUrl":"patterns.html","prefix":""};
 </script>
 <script>
 /*
  * 题目定位器：三问 → 匹配经典题型 → 告诉你第一步做什么
  * 数据由构建脚本通过 window.__LOCATE_DATA__ 注入。
+ * 数据约定（见 build.js renderLocate）：
+ *   asks     : [{k, desc}]                          —— 问题 1 的选项（k = 要什么）
+ *   patterns : [{id,no,title,kind,asks,signals,route,chain}]
+ *              chain : [{point, role, title}]        —— route[i] 是 /章/点 路径时，第 i 步的动作与去向页
+ * 问题 2 的选项直接取自各题型的 signals（题面信号词），选中即给对应题型加分。
  */
 (function () {
   var DATA = window.__LOCATE_DATA__;
   if (!DATA) return;
   var patterns = DATA.patterns;
-  var features = DATA.features;
   var asks = DATA.asks;
   var byId = {};
   patterns.forEach(function (p) { byId[p.id] = p; });
 
-  var state = { ask: null, feats: {} };
+  var state = { ask: null, sigs: {} };
 
   var root = document.getElementById('locator');
   if (!root) return;
 
-  /* ---------- 构建选项 ---------- */
+  /* ---------- 问题 1：求什么 ---------- */
   var askBox = document.getElementById('loc-asks');
   asks.forEach(function (a) {
     var b = document.createElement('button');
     b.className = 'loc-opt';
-    b.textContent = a.label;
+    b.textContent = a.k;
+    if (a.desc) b.title = a.desc;
     b.setAttribute('data-ask', a.k);
     b.addEventListener('click', function () {
       state.ask = (state.ask === a.k) ? null : a.k;
@@ -833,19 +838,25 @@ window.__LOCATE_DATA__ = {"asks":[{"k":"识别立体图形","label":"数面棱�
     askBox.appendChild(b);
   });
 
+  /* ---------- 问题 2：题面信号（来自各题型的 signals，去重） ---------- */
   var featBox = document.getElementById('loc-feats');
-  features.forEach(function (f) {
-    var b = document.createElement('button');
-    b.className = 'loc-opt small';
-    b.textContent = f.label;
-    b.setAttribute('data-feat', f.k);
-    b.addEventListener('click', function () {
-      if (state.feats[f.k]) delete state.feats[f.k];
-      else state.feats[f.k] = true;
-      syncOptions();
-      render();
+  var seen = {};
+  patterns.forEach(function (p) {
+    (p.signals || []).forEach(function (s) {
+      if (seen[s]) return;
+      seen[s] = true;
+      var b = document.createElement('button');
+      b.className = 'loc-opt small';
+      b.textContent = s;
+      b.setAttribute('data-sig', s);
+      b.addEventListener('click', function () {
+        if (state.sigs[s]) delete state.sigs[s];
+        else state.sigs[s] = true;
+        syncOptions();
+        render();
+      });
+      featBox.appendChild(b);
     });
-    featBox.appendChild(b);
   });
 
   function syncOptions() {
@@ -853,39 +864,43 @@ window.__LOCATE_DATA__ = {"asks":[{"k":"识别立体图形","label":"数面棱�
       b.classList.toggle('on', state.ask === b.getAttribute('data-ask'));
     });
     [].forEach.call(featBox.children, function (b) {
-      b.classList.toggle('on', !!state.feats[b.getAttribute('data-feat')]);
+      b.classList.toggle('on', !!state.sigs[b.getAttribute('data-sig')]);
     });
   }
 
   /* ---------- 匹配打分 ---------- */
-  function signalText(p) { return p.signals.join(' '); }
-
   function scorePattern(p) {
     var score = 0;
     var reasons = [];
-    if (state.ask) {
-      if (p.asks.indexOf(state.ask) >= 0) {
-        score += 10;
-        var askLabel = (asks.filter(function (a) { return a.k === state.ask; })[0] || {}).label || '';
-        reasons.push('你要找的是「' + askLabel + '」，这类题型正是干这个的');
-      }
+    if (state.ask && p.asks.indexOf(state.ask) >= 0) {
+      score += 10;
+      var askLabel = (asks.filter(function (a) { return a.k === state.ask; })[0] || {}).k || state.ask;
+      reasons.push('你要找的是「' + askLabel + '」，这类题型正是干这个的');
     }
-    var txt = signalText(p);
-    features.forEach(function (f) {
-      if (!state.feats[f.k]) return;
-      var hit = f.words.some(function (w) { return txt.indexOf(w) >= 0; });
-      if (hit) {
+    (p.signals || []).forEach(function (s) {
+      if (state.sigs[s]) {
         score += 3;
-        reasons.push('题面出现「' + f.k + '」类字眼，是它的典型特征');
+        reasons.push('题面出现「' + s + '」，是它的典型信号');
       }
     });
     return { score: score, reasons: reasons };
   }
 
+  /* 第一步：role 是动作，point 页是去向 */
+  function firstStep(p) {
+    var c = (p.chain && p.chain[0]) || null;
+    if (c && c.role) {
+      return '<a href="' + c.point + '.html"><b>' + esc(c.role) + '</b></a>'
+        + (c.title ? ' —— 去「' + esc(c.title) + '」页' : '');
+    }
+    if (c) return '<a href="' + c.point + '.html">' + esc(c.title || c.point) + '</a>';
+    return esc((p.route && p.route[0]) || '');
+  }
+
   /* ---------- 渲染结果 ---------- */
   function render() {
     var box = document.getElementById('loc-result');
-    var anyCond = !!state.ask || Object.keys(state.feats).length > 0;
+    var anyCond = !!state.ask || Object.keys(state.sigs).length > 0;
     if (!anyCond) {
       box.innerHTML = '<div class="loc-empty">先在上面的问题里点一两下，下面就会出现与之匹配的题型。<br>不用全部回答，选你有把握的就行。</div>';
       return;
@@ -906,19 +921,21 @@ window.__LOCATE_DATA__ = {"asks":[{"k":"识别立体图形","label":"数面棱�
     }
 
     var top = results[0].p;
+    var topNo = /^\d+$/.test(String(top.no)) ? ('第 ' + top.no + ' 类 · ') : (top.no + ' · ');
     var html = '<div class="loc-empty" style="text-align:left;border-style:solid;background:#e6f1fb;color:#123d63;padding:14px 18px">'
-      + '最像 <b>第 ' + top.no + ' 类 · ' + esc(top.title) + '</b>。它的第一步是：<b>' + esc(top.route[0]) + '</b>。'
+      + '最像 <b>' + topNo + esc(top.title) + '</b>。它的第一步是：' + firstStep(top) + '。'
       + '</div>';
 
     results.slice(0, 6).forEach(function (r) {
       var p = r.p;
+      var noTxt = /^\d+$/.test(String(p.no)) ? String(p.no).padStart(2, '0') : '';
       html += '<div class="loc-card">'
-        + '<div class="lc-top"><span class="type-no">' + String(p.no).padStart(2, '0') + '</span>'
-        + '<span class="lc-title"><a href="pattern/' + p.id + '.html">' + esc(p.title) + '</a></span>'
+        + '<div class="lc-top"><span class="type-no">' + noTxt + '</span>'
+        + '<span class="lc-title"><a href="pattern/' + p.id + '.html">' + (noTxt ? '' : esc(p.no) + ' · ') + esc(p.title) + '</a></span>'
         + '<span class="kind ' + kindClass(p.kind) + '">' + esc(p.kind) + '</span>'
         + '<span class="score">匹配度 ' + r.score + '</span></div>'
         + '<div class="lc-why">' + r.reasons.map(esc).join('；') + '</div>'
-        + '<div class="lc-first"><b>第一步：</b>' + esc(p.route[0]) + '</div>'
+        + '<div class="lc-first"><b>第一步：</b>' + firstStep(p) + '</div>'
         + '</div>';
     });
 
@@ -937,7 +954,7 @@ window.__LOCATE_DATA__ = {"asks":[{"k":"识别立体图形","label":"数面棱�
 
   var reset = document.getElementById('loc-reset');
   if (reset) reset.addEventListener('click', function () {
-    state.ask = null; state.feats = {};
+    state.ask = null; state.sigs = {};
     syncOptions(); render();
   });
 

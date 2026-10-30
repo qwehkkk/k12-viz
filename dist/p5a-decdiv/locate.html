@@ -797,33 +797,38 @@ a:hover .tg-node { stroke-width: 2.4; }
 </div>
 
 <script>
-window.__LOCATE_DATA__ = {"asks":[{"k":"小数除法竖式","desc":"商的小数点对齐被除数；不够商 1 先商 0"},{"k":"添 0 继续除","desc":"末尾添 0 大小不变，除尽为止"},{"k":"循环小数","desc":"循环节点圆点表示"},{"k":"除数转整数","desc":"看除数移几位，被除数同步移（不够补 0）"}],"features":["竖式每落一位商一位，小数点始终上下对齐","余数重复出现 = 商开始循环，可以收笔了","转化先盯除数：它有几位小数决定移几位","应用题除不尽时，按情境选进一法或去尾法"],"patterns":[{"id":"p5a-decdiv-t-basic","no":"基础 1","title":"小数除整数竖式","kind":"计算","asks":["小数除法竖式"],"signals":["计算","竖式"],"route":["/p5a-decdiv/p5a-decdiv-int"]},{"id":"p5a-decdiv-t-add0","no":"基础 2","title":"添 0 除尽","kind":"计算","asks":["添 0 继续除"],"signals":["除不尽","继续除"],"route":["/p5a-decdiv/p5a-decdiv-zero"]},{"id":"p5a-decdiv-t-cycle","no":"中档 1","title":"循环小数表示","kind":"表示","asks":["循环小数"],"signals":["循环节","简写"],"route":["/p5a-decdiv/p5a-decdiv-repeat"]},{"id":"p5a-decdiv-t-move","no":"中档 2","title":"除数搬家","kind":"计算","asks":["除数转整数"],"signals":["除数是小数","转化"],"route":["/p5a-decdiv/p5a-decdiv-convert"]},{"id":"p5a-decdiv-t-pkg","no":"提升 1","title":"装瓶与进一法","kind":"应用","asks":["小数除法竖式","除数转整数"],"signals":["能装满几瓶","需要几个"],"route":["/p5a-decdiv/p5a-decdiv-convert","/p5a-decdiv/p5a-decdiv-zero"]}],"patternsUrl":"patterns.html","prefix":""};
+window.__LOCATE_DATA__ = {"asks":[{"k":"小数除法竖式","desc":"商的小数点对齐被除数；不够商 1 先商 0"},{"k":"添 0 继续除","desc":"末尾添 0 大小不变，除尽为止"},{"k":"循环小数","desc":"循环节点圆点表示"},{"k":"除数转整数","desc":"看除数移几位，被除数同步移（不够补 0）"}],"features":["竖式每落一位商一位，小数点始终上下对齐","余数重复出现 = 商开始循环，可以收笔了","转化先盯除数：它有几位小数决定移几位","应用题除不尽时，按情境选进一法或去尾法"],"patterns":[{"id":"p5a-decdiv-t-basic","no":"基础 1","title":"小数除整数竖式","kind":"计算","asks":["小数除法竖式"],"signals":["计算","竖式"],"route":["/p5a-decdiv/p5a-decdiv-int"],"chain":[{"point":"p5a-decdiv-int","role":"商点对齐被除数","title":"小数除以整数"}]},{"id":"p5a-decdiv-t-add0","no":"基础 2","title":"添 0 除尽","kind":"计算","asks":["添 0 继续除"],"signals":["除不尽","继续除"],"route":["/p5a-decdiv/p5a-decdiv-zero"],"chain":[{"point":"p5a-decdiv-zero","role":"末尾添 0 继续除","title":"添 0 继续除"}]},{"id":"p5a-decdiv-t-cycle","no":"中档 1","title":"循环小数表示","kind":"表示","asks":["循环小数"],"signals":["循环节","简写"],"route":["/p5a-decdiv/p5a-decdiv-repeat"],"chain":[{"point":"p5a-decdiv-repeat","role":"循环节与点圆点","title":"循环小数"}]},{"id":"p5a-decdiv-t-move","no":"中档 2","title":"除数搬家","kind":"计算","asks":["除数转整数"],"signals":["除数是小数","转化"],"route":["/p5a-decdiv/p5a-decdiv-convert"],"chain":[{"point":"p5a-decdiv-convert","role":"商不变，同步移位","title":"除数是小数：搬家转化"}]},{"id":"p5a-decdiv-t-pkg","no":"提升 1","title":"装瓶与进一法","kind":"应用","asks":["小数除法竖式","除数转整数"],"signals":["能装满几瓶","需要几个"],"route":["/p5a-decdiv/p5a-decdiv-convert","/p5a-decdiv/p5a-decdiv-zero"],"chain":[{"point":"p5a-decdiv-convert","role":"转化成整数除法","title":"除数是小数：搬家转化"},{"point":"p5a-decdiv-zero","role":"除不尽看余数","title":"添 0 继续除"}]}],"patternsUrl":"patterns.html","prefix":""};
 </script>
 <script>
 /*
  * 题目定位器：三问 → 匹配经典题型 → 告诉你第一步做什么
  * 数据由构建脚本通过 window.__LOCATE_DATA__ 注入。
+ * 数据约定（见 build.js renderLocate）：
+ *   asks     : [{k, desc}]                          —— 问题 1 的选项（k = 要什么）
+ *   patterns : [{id,no,title,kind,asks,signals,route,chain}]
+ *              chain : [{point, role, title}]        —— route[i] 是 /章/点 路径时，第 i 步的动作与去向页
+ * 问题 2 的选项直接取自各题型的 signals（题面信号词），选中即给对应题型加分。
  */
 (function () {
   var DATA = window.__LOCATE_DATA__;
   if (!DATA) return;
   var patterns = DATA.patterns;
-  var features = DATA.features;
   var asks = DATA.asks;
   var byId = {};
   patterns.forEach(function (p) { byId[p.id] = p; });
 
-  var state = { ask: null, feats: {} };
+  var state = { ask: null, sigs: {} };
 
   var root = document.getElementById('locator');
   if (!root) return;
 
-  /* ---------- 构建选项 ---------- */
+  /* ---------- 问题 1：求什么 ---------- */
   var askBox = document.getElementById('loc-asks');
   asks.forEach(function (a) {
     var b = document.createElement('button');
     b.className = 'loc-opt';
-    b.textContent = a.label;
+    b.textContent = a.k;
+    if (a.desc) b.title = a.desc;
     b.setAttribute('data-ask', a.k);
     b.addEventListener('click', function () {
       state.ask = (state.ask === a.k) ? null : a.k;
@@ -833,19 +838,25 @@ window.__LOCATE_DATA__ = {"asks":[{"k":"小数除法竖式","desc":"商的小数
     askBox.appendChild(b);
   });
 
+  /* ---------- 问题 2：题面信号（来自各题型的 signals，去重） ---------- */
   var featBox = document.getElementById('loc-feats');
-  features.forEach(function (f) {
-    var b = document.createElement('button');
-    b.className = 'loc-opt small';
-    b.textContent = f.label;
-    b.setAttribute('data-feat', f.k);
-    b.addEventListener('click', function () {
-      if (state.feats[f.k]) delete state.feats[f.k];
-      else state.feats[f.k] = true;
-      syncOptions();
-      render();
+  var seen = {};
+  patterns.forEach(function (p) {
+    (p.signals || []).forEach(function (s) {
+      if (seen[s]) return;
+      seen[s] = true;
+      var b = document.createElement('button');
+      b.className = 'loc-opt small';
+      b.textContent = s;
+      b.setAttribute('data-sig', s);
+      b.addEventListener('click', function () {
+        if (state.sigs[s]) delete state.sigs[s];
+        else state.sigs[s] = true;
+        syncOptions();
+        render();
+      });
+      featBox.appendChild(b);
     });
-    featBox.appendChild(b);
   });
 
   function syncOptions() {
@@ -853,39 +864,43 @@ window.__LOCATE_DATA__ = {"asks":[{"k":"小数除法竖式","desc":"商的小数
       b.classList.toggle('on', state.ask === b.getAttribute('data-ask'));
     });
     [].forEach.call(featBox.children, function (b) {
-      b.classList.toggle('on', !!state.feats[b.getAttribute('data-feat')]);
+      b.classList.toggle('on', !!state.sigs[b.getAttribute('data-sig')]);
     });
   }
 
   /* ---------- 匹配打分 ---------- */
-  function signalText(p) { return p.signals.join(' '); }
-
   function scorePattern(p) {
     var score = 0;
     var reasons = [];
-    if (state.ask) {
-      if (p.asks.indexOf(state.ask) >= 0) {
-        score += 10;
-        var askLabel = (asks.filter(function (a) { return a.k === state.ask; })[0] || {}).label || '';
-        reasons.push('你要找的是「' + askLabel + '」，这类题型正是干这个的');
-      }
+    if (state.ask && p.asks.indexOf(state.ask) >= 0) {
+      score += 10;
+      var askLabel = (asks.filter(function (a) { return a.k === state.ask; })[0] || {}).k || state.ask;
+      reasons.push('你要找的是「' + askLabel + '」，这类题型正是干这个的');
     }
-    var txt = signalText(p);
-    features.forEach(function (f) {
-      if (!state.feats[f.k]) return;
-      var hit = f.words.some(function (w) { return txt.indexOf(w) >= 0; });
-      if (hit) {
+    (p.signals || []).forEach(function (s) {
+      if (state.sigs[s]) {
         score += 3;
-        reasons.push('题面出现「' + f.k + '」类字眼，是它的典型特征');
+        reasons.push('题面出现「' + s + '」，是它的典型信号');
       }
     });
     return { score: score, reasons: reasons };
   }
 
+  /* 第一步：role 是动作，point 页是去向 */
+  function firstStep(p) {
+    var c = (p.chain && p.chain[0]) || null;
+    if (c && c.role) {
+      return '<a href="' + c.point + '.html"><b>' + esc(c.role) + '</b></a>'
+        + (c.title ? ' —— 去「' + esc(c.title) + '」页' : '');
+    }
+    if (c) return '<a href="' + c.point + '.html">' + esc(c.title || c.point) + '</a>';
+    return esc((p.route && p.route[0]) || '');
+  }
+
   /* ---------- 渲染结果 ---------- */
   function render() {
     var box = document.getElementById('loc-result');
-    var anyCond = !!state.ask || Object.keys(state.feats).length > 0;
+    var anyCond = !!state.ask || Object.keys(state.sigs).length > 0;
     if (!anyCond) {
       box.innerHTML = '<div class="loc-empty">先在上面的问题里点一两下，下面就会出现与之匹配的题型。<br>不用全部回答，选你有把握的就行。</div>';
       return;
@@ -906,19 +921,21 @@ window.__LOCATE_DATA__ = {"asks":[{"k":"小数除法竖式","desc":"商的小数
     }
 
     var top = results[0].p;
+    var topNo = /^\d+$/.test(String(top.no)) ? ('第 ' + top.no + ' 类 · ') : (top.no + ' · ');
     var html = '<div class="loc-empty" style="text-align:left;border-style:solid;background:#e6f1fb;color:#123d63;padding:14px 18px">'
-      + '最像 <b>第 ' + top.no + ' 类 · ' + esc(top.title) + '</b>。它的第一步是：<b>' + esc(top.route[0]) + '</b>。'
+      + '最像 <b>' + topNo + esc(top.title) + '</b>。它的第一步是：' + firstStep(top) + '。'
       + '</div>';
 
     results.slice(0, 6).forEach(function (r) {
       var p = r.p;
+      var noTxt = /^\d+$/.test(String(p.no)) ? String(p.no).padStart(2, '0') : '';
       html += '<div class="loc-card">'
-        + '<div class="lc-top"><span class="type-no">' + String(p.no).padStart(2, '0') + '</span>'
-        + '<span class="lc-title"><a href="pattern/' + p.id + '.html">' + esc(p.title) + '</a></span>'
+        + '<div class="lc-top"><span class="type-no">' + noTxt + '</span>'
+        + '<span class="lc-title"><a href="pattern/' + p.id + '.html">' + (noTxt ? '' : esc(p.no) + ' · ') + esc(p.title) + '</a></span>'
         + '<span class="kind ' + kindClass(p.kind) + '">' + esc(p.kind) + '</span>'
         + '<span class="score">匹配度 ' + r.score + '</span></div>'
         + '<div class="lc-why">' + r.reasons.map(esc).join('；') + '</div>'
-        + '<div class="lc-first"><b>第一步：</b>' + esc(p.route[0]) + '</div>'
+        + '<div class="lc-first"><b>第一步：</b>' + firstStep(p) + '</div>'
         + '</div>';
     });
 
@@ -937,7 +954,7 @@ window.__LOCATE_DATA__ = {"asks":[{"k":"小数除法竖式","desc":"商的小数
 
   var reset = document.getElementById('loc-reset');
   if (reset) reset.addEventListener('click', function () {
-    state.ask = null; state.feats = {};
+    state.ask = null; state.sigs = {};
     syncOptions(); render();
   });
 

@@ -797,33 +797,38 @@ a:hover .tg-node { stroke-width: 2.4; }
 </div>
 
 <script>
-window.__LOCATE_DATA__ = {"asks":[{"k":"抽样方法","label":"简单随机、分层、系统抽样与名额分配"},{"k":"直方图","label":"读频率、求样本容量、估众数中位数"},{"k":"集中趋势","label":"平均数、加权平均、中位数、众数"},{"k":"离散程度","label":"方差、标准差、极差、百分位数"},{"k":"相关回归","label":"散点图、相关系数、回归方程预测"}],"features":[{"k":"分层/比例","desc":"出现「按比例抽取」→ 抽样比 = n/N"},{"k":"频率/组距","desc":"直方图纵轴是密度，频率要乘组距"},{"k":"平均/中位","desc":"有极端值就问该用哪个指标"},{"k":"方差/稳定","desc":"「谁更稳定」「波动」→ 比方差或标准差"},{"k":"预测","desc":"给回归方程求 ŷ，或反求参数"}],"patterns":[{"id":"sh-b-sample","no":"基础 1","title":"分层抽样名额","kind":"计算","asks":["抽样方法"],"signals":["分层","按比例","各抽多少"],"route":["/stat-hs/sh-sample"]},{"id":"sh-b-hist","no":"基础 2","title":"直方图读频率","kind":"计算","asks":["直方图"],"signals":["频率/组距","直方图","组距"],"route":["/stat-hs/sh-hist"]},{"id":"sh-b-mean","no":"基础 3","title":"平均数与加权平均","kind":"计算","asks":["集中趋势"],"signals":["平均数","平均分","加权"],"route":["/stat-hs/sh-central"]},{"id":"sh-i-var","no":"提升 1","title":"方差计算与比较","kind":"计算","asks":["离散程度"],"signals":["方差","稳定","波动"],"route":["/stat-hs/sh-spread"]},{"id":"sh-i-pct","no":"提升 2","title":"百分位数与排名","kind":"计算","asks":["离散程度"],"signals":["百分位数","排名","超过"],"route":["/stat-hs/sh-spread"]},{"id":"sh-i-reg","no":"提升 3","title":"回归方程求参数与预测","kind":"计算","asks":["相关回归"],"signals":["回归方程","预测","ŷ"],"route":["/stat-hs/sh-corr"]},{"id":"sh-a-hist","no":"综合 1","title":"直方图综合估计","kind":"综合","asks":["直方图","集中趋势"],"signals":["直方图","估计平均数","求中位数"],"route":["/stat-hs/sh-hist","/stat-hs/sh-central"]},{"id":"sh-a-decide","no":"综合 2","title":"用统计量作决策","kind":"应用","asks":["集中趋势","离散程度"],"signals":["选谁","更稳定","比较"],"route":["/stat-hs/sh-spread","/stat-hs/sh-central"]}],"patternsUrl":"patterns.html","prefix":""};
+window.__LOCATE_DATA__ = {"asks":[{"k":"抽样方法","label":"简单随机、分层、系统抽样与名额分配"},{"k":"直方图","label":"读频率、求样本容量、估众数中位数"},{"k":"集中趋势","label":"平均数、加权平均、中位数、众数"},{"k":"离散程度","label":"方差、标准差、极差、百分位数"},{"k":"相关回归","label":"散点图、相关系数、回归方程预测"}],"features":[{"k":"分层/比例","desc":"出现「按比例抽取」→ 抽样比 = n/N"},{"k":"频率/组距","desc":"直方图纵轴是密度，频率要乘组距"},{"k":"平均/中位","desc":"有极端值就问该用哪个指标"},{"k":"方差/稳定","desc":"「谁更稳定」「波动」→ 比方差或标准差"},{"k":"预测","desc":"给回归方程求 ŷ，或反求参数"}],"patterns":[{"id":"sh-b-sample","no":"基础 1","title":"分层抽样名额","kind":"计算","asks":["抽样方法"],"signals":["分层","按比例","各抽多少"],"route":["/stat-hs/sh-sample"],"chain":[{"point":"sh-sample","role":"抽样比相同","title":"随机抽样：简单随机与分层"}]},{"id":"sh-b-hist","no":"基础 2","title":"直方图读频率","kind":"计算","asks":["直方图"],"signals":["频率/组距","直方图","组距"],"route":["/stat-hs/sh-hist"],"chain":[{"point":"sh-hist","role":"面积 = 频率","title":"频率分布直方图"}]},{"id":"sh-b-mean","no":"基础 3","title":"平均数与加权平均","kind":"计算","asks":["集中趋势"],"signals":["平均数","平均分","加权"],"route":["/stat-hs/sh-central"],"chain":[{"point":"sh-central","role":"加权平均按人数加权","title":"集中趋势：平均数、中位数、众数"}]},{"id":"sh-i-var","no":"提升 1","title":"方差计算与比较","kind":"计算","asks":["离散程度"],"signals":["方差","稳定","波动"],"route":["/stat-hs/sh-spread"],"chain":[{"point":"sh-spread","role":"偏差平方的平均","title":"离散程度：方差、标准差与百分位数"}]},{"id":"sh-i-pct","no":"提升 2","title":"百分位数与排名","kind":"计算","asks":["离散程度"],"signals":["百分位数","排名","超过"],"route":["/stat-hs/sh-spread"],"chain":[{"point":"sh-spread","role":"百分位数定义","title":"离散程度：方差、标准差与百分位数"}]},{"id":"sh-i-reg","no":"提升 3","title":"回归方程求参数与预测","kind":"计算","asks":["相关回归"],"signals":["回归方程","预测","ŷ"],"route":["/stat-hs/sh-corr"],"chain":[{"point":"sh-corr","role":"回归线过样本中心点","title":"相关关系与回归直线"}]},{"id":"sh-a-hist","no":"综合 1","title":"直方图综合估计","kind":"综合","asks":["直方图","集中趋势"],"signals":["直方图","估计平均数","求中位数"],"route":["/stat-hs/sh-hist","/stat-hs/sh-central"],"chain":[{"point":"sh-hist","role":"面积即频率","title":"频率分布直方图"},{"point":"sh-central","role":"组中值加权","title":"集中趋势：平均数、中位数、众数"}]},{"id":"sh-a-decide","no":"综合 2","title":"用统计量作决策","kind":"应用","asks":["集中趋势","离散程度"],"signals":["选谁","更稳定","比较"],"route":["/stat-hs/sh-spread","/stat-hs/sh-central"],"chain":[{"point":"sh-spread","role":"方差衡量稳定性","title":"离散程度：方差、标准差与百分位数"},{"point":"sh-central","role":"均值衡量水平","title":"集中趋势：平均数、中位数、众数"}]}],"patternsUrl":"patterns.html","prefix":""};
 </script>
 <script>
 /*
  * 题目定位器：三问 → 匹配经典题型 → 告诉你第一步做什么
  * 数据由构建脚本通过 window.__LOCATE_DATA__ 注入。
+ * 数据约定（见 build.js renderLocate）：
+ *   asks     : [{k, desc}]                          —— 问题 1 的选项（k = 要什么）
+ *   patterns : [{id,no,title,kind,asks,signals,route,chain}]
+ *              chain : [{point, role, title}]        —— route[i] 是 /章/点 路径时，第 i 步的动作与去向页
+ * 问题 2 的选项直接取自各题型的 signals（题面信号词），选中即给对应题型加分。
  */
 (function () {
   var DATA = window.__LOCATE_DATA__;
   if (!DATA) return;
   var patterns = DATA.patterns;
-  var features = DATA.features;
   var asks = DATA.asks;
   var byId = {};
   patterns.forEach(function (p) { byId[p.id] = p; });
 
-  var state = { ask: null, feats: {} };
+  var state = { ask: null, sigs: {} };
 
   var root = document.getElementById('locator');
   if (!root) return;
 
-  /* ---------- 构建选项 ---------- */
+  /* ---------- 问题 1：求什么 ---------- */
   var askBox = document.getElementById('loc-asks');
   asks.forEach(function (a) {
     var b = document.createElement('button');
     b.className = 'loc-opt';
-    b.textContent = a.label;
+    b.textContent = a.k;
+    if (a.desc) b.title = a.desc;
     b.setAttribute('data-ask', a.k);
     b.addEventListener('click', function () {
       state.ask = (state.ask === a.k) ? null : a.k;
@@ -833,19 +838,25 @@ window.__LOCATE_DATA__ = {"asks":[{"k":"抽样方法","label":"简单随机、�
     askBox.appendChild(b);
   });
 
+  /* ---------- 问题 2：题面信号（来自各题型的 signals，去重） ---------- */
   var featBox = document.getElementById('loc-feats');
-  features.forEach(function (f) {
-    var b = document.createElement('button');
-    b.className = 'loc-opt small';
-    b.textContent = f.label;
-    b.setAttribute('data-feat', f.k);
-    b.addEventListener('click', function () {
-      if (state.feats[f.k]) delete state.feats[f.k];
-      else state.feats[f.k] = true;
-      syncOptions();
-      render();
+  var seen = {};
+  patterns.forEach(function (p) {
+    (p.signals || []).forEach(function (s) {
+      if (seen[s]) return;
+      seen[s] = true;
+      var b = document.createElement('button');
+      b.className = 'loc-opt small';
+      b.textContent = s;
+      b.setAttribute('data-sig', s);
+      b.addEventListener('click', function () {
+        if (state.sigs[s]) delete state.sigs[s];
+        else state.sigs[s] = true;
+        syncOptions();
+        render();
+      });
+      featBox.appendChild(b);
     });
-    featBox.appendChild(b);
   });
 
   function syncOptions() {
@@ -853,39 +864,43 @@ window.__LOCATE_DATA__ = {"asks":[{"k":"抽样方法","label":"简单随机、�
       b.classList.toggle('on', state.ask === b.getAttribute('data-ask'));
     });
     [].forEach.call(featBox.children, function (b) {
-      b.classList.toggle('on', !!state.feats[b.getAttribute('data-feat')]);
+      b.classList.toggle('on', !!state.sigs[b.getAttribute('data-sig')]);
     });
   }
 
   /* ---------- 匹配打分 ---------- */
-  function signalText(p) { return p.signals.join(' '); }
-
   function scorePattern(p) {
     var score = 0;
     var reasons = [];
-    if (state.ask) {
-      if (p.asks.indexOf(state.ask) >= 0) {
-        score += 10;
-        var askLabel = (asks.filter(function (a) { return a.k === state.ask; })[0] || {}).label || '';
-        reasons.push('你要找的是「' + askLabel + '」，这类题型正是干这个的');
-      }
+    if (state.ask && p.asks.indexOf(state.ask) >= 0) {
+      score += 10;
+      var askLabel = (asks.filter(function (a) { return a.k === state.ask; })[0] || {}).k || state.ask;
+      reasons.push('你要找的是「' + askLabel + '」，这类题型正是干这个的');
     }
-    var txt = signalText(p);
-    features.forEach(function (f) {
-      if (!state.feats[f.k]) return;
-      var hit = f.words.some(function (w) { return txt.indexOf(w) >= 0; });
-      if (hit) {
+    (p.signals || []).forEach(function (s) {
+      if (state.sigs[s]) {
         score += 3;
-        reasons.push('题面出现「' + f.k + '」类字眼，是它的典型特征');
+        reasons.push('题面出现「' + s + '」，是它的典型信号');
       }
     });
     return { score: score, reasons: reasons };
   }
 
+  /* 第一步：role 是动作，point 页是去向 */
+  function firstStep(p) {
+    var c = (p.chain && p.chain[0]) || null;
+    if (c && c.role) {
+      return '<a href="' + c.point + '.html"><b>' + esc(c.role) + '</b></a>'
+        + (c.title ? ' —— 去「' + esc(c.title) + '」页' : '');
+    }
+    if (c) return '<a href="' + c.point + '.html">' + esc(c.title || c.point) + '</a>';
+    return esc((p.route && p.route[0]) || '');
+  }
+
   /* ---------- 渲染结果 ---------- */
   function render() {
     var box = document.getElementById('loc-result');
-    var anyCond = !!state.ask || Object.keys(state.feats).length > 0;
+    var anyCond = !!state.ask || Object.keys(state.sigs).length > 0;
     if (!anyCond) {
       box.innerHTML = '<div class="loc-empty">先在上面的问题里点一两下，下面就会出现与之匹配的题型。<br>不用全部回答，选你有把握的就行。</div>';
       return;
@@ -906,19 +921,21 @@ window.__LOCATE_DATA__ = {"asks":[{"k":"抽样方法","label":"简单随机、�
     }
 
     var top = results[0].p;
+    var topNo = /^\d+$/.test(String(top.no)) ? ('第 ' + top.no + ' 类 · ') : (top.no + ' · ');
     var html = '<div class="loc-empty" style="text-align:left;border-style:solid;background:#e6f1fb;color:#123d63;padding:14px 18px">'
-      + '最像 <b>第 ' + top.no + ' 类 · ' + esc(top.title) + '</b>。它的第一步是：<b>' + esc(top.route[0]) + '</b>。'
+      + '最像 <b>' + topNo + esc(top.title) + '</b>。它的第一步是：' + firstStep(top) + '。'
       + '</div>';
 
     results.slice(0, 6).forEach(function (r) {
       var p = r.p;
+      var noTxt = /^\d+$/.test(String(p.no)) ? String(p.no).padStart(2, '0') : '';
       html += '<div class="loc-card">'
-        + '<div class="lc-top"><span class="type-no">' + String(p.no).padStart(2, '0') + '</span>'
-        + '<span class="lc-title"><a href="pattern/' + p.id + '.html">' + esc(p.title) + '</a></span>'
+        + '<div class="lc-top"><span class="type-no">' + noTxt + '</span>'
+        + '<span class="lc-title"><a href="pattern/' + p.id + '.html">' + (noTxt ? '' : esc(p.no) + ' · ') + esc(p.title) + '</a></span>'
         + '<span class="kind ' + kindClass(p.kind) + '">' + esc(p.kind) + '</span>'
         + '<span class="score">匹配度 ' + r.score + '</span></div>'
         + '<div class="lc-why">' + r.reasons.map(esc).join('；') + '</div>'
-        + '<div class="lc-first"><b>第一步：</b>' + esc(p.route[0]) + '</div>'
+        + '<div class="lc-first"><b>第一步：</b>' + firstStep(p) + '</div>'
         + '</div>';
     });
 
@@ -937,7 +954,7 @@ window.__LOCATE_DATA__ = {"asks":[{"k":"抽样方法","label":"简单随机、�
 
   var reset = document.getElementById('loc-reset');
   if (reset) reset.addEventListener('click', function () {
-    state.ask = null; state.feats = {};
+    state.ask = null; state.sigs = {};
     syncOptions(); render();
   });
 

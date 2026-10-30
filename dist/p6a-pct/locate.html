@@ -797,33 +797,38 @@ a:hover .tg-node { stroke-width: 2.4; }
 </div>
 
 <script>
-window.__LOCATE_DATA__ = {"asks":[{"k":"意义读写","desc":"表示一个数是另一个数的百分之几"},{"k":"互化","desc":"小数点搬家两位"},{"k":"求百分率","desc":"部分 ÷ 总数"},{"k":"多百分之几","desc":"差 ÷ 基准"},{"k":"单位1","desc":"「比」字后面是基准"}],"features":["百分数不带单位，是关系不是量","互化只动小数点，不改大小","所有「率」都是部分除以总数","多（少）百分之几的分母是「比」字后的量"],"patterns":[{"id":"p6a-pct-t-conv","no":"基础 1","title":"互化","kind":"计算","asks":["互化"],"signals":["化成百分数","化成小数"],"route":["/p6a-pct/p6a-pct-conv"]},{"id":"p6a-pct-t-rate","no":"基础 2","title":"求百分率","kind":"计算","asks":["求百分率"],"signals":["率","占"],"route":["/p6a-pct/p6a-pct-rate"]},{"id":"p6a-pct-t-more","no":"中档 1","title":"多百分之几","kind":"应用","asks":["多百分之几"],"signals":["比","多","增加了"],"route":["/p6a-pct/p6a-pct-change"]},{"id":"p6a-pct-t-less","no":"中档 2","title":"少百分之几","kind":"应用","asks":["多百分之几","单位1"],"signals":["降低","节约","减少了"],"route":["/p6a-pct/p6a-pct-change"]},{"id":"p6a-pct-t-both","no":"提升 1","title":"来回两个百分比","kind":"综合","asks":["多百分之几","单位1"],"signals":["多","少","分别是"],"route":["/p6a-pct/p6a-pct-change","/p6a-pct/p6a-pct-mean"]}],"patternsUrl":"patterns.html","prefix":""};
+window.__LOCATE_DATA__ = {"asks":[{"k":"意义读写","desc":"表示一个数是另一个数的百分之几"},{"k":"互化","desc":"小数点搬家两位"},{"k":"求百分率","desc":"部分 ÷ 总数"},{"k":"多百分之几","desc":"差 ÷ 基准"},{"k":"单位1","desc":"「比」字后面是基准"}],"features":["百分数不带单位，是关系不是量","互化只动小数点，不改大小","所有「率」都是部分除以总数","多（少）百分之几的分母是「比」字后的量"],"patterns":[{"id":"p6a-pct-t-conv","no":"基础 1","title":"互化","kind":"计算","asks":["互化"],"signals":["化成百分数","化成小数"],"route":["/p6a-pct/p6a-pct-conv"],"chain":[{"point":"p6a-pct-conv","role":"小数点右移左移两位","title":"百分数与分数、小数互化"}]},{"id":"p6a-pct-t-rate","no":"基础 2","title":"求百分率","kind":"计算","asks":["求百分率"],"signals":["率","占"],"route":["/p6a-pct/p6a-pct-rate"],"chain":[{"point":"p6a-pct-rate","role":"部分 ÷ 总数","title":"求百分率"}]},{"id":"p6a-pct-t-more","no":"中档 1","title":"多百分之几","kind":"应用","asks":["多百分之几"],"signals":["比","多","增加了"],"route":["/p6a-pct/p6a-pct-change"],"chain":[{"point":"p6a-pct-change","role":"差 ÷ 基准","title":"多（少）百分之几"}]},{"id":"p6a-pct-t-less","no":"中档 2","title":"少百分之几","kind":"应用","asks":["多百分之几","单位1"],"signals":["降低","节约","减少了"],"route":["/p6a-pct/p6a-pct-change"],"chain":[{"point":"p6a-pct-change","role":"降低率 = 差 ÷ 原量","title":"多（少）百分之几"}]},{"id":"p6a-pct-t-both","no":"提升 1","title":"来回两个百分比","kind":"综合","asks":["多百分之几","单位1"],"signals":["多","少","分别是"],"route":["/p6a-pct/p6a-pct-change","/p6a-pct/p6a-pct-mean"],"chain":[{"point":"p6a-pct-change","role":"两次分母不同","title":"多（少）百分之几"},{"point":"p6a-pct-mean","role":"百分数表示关系","title":"百分数的意义"}]}],"patternsUrl":"patterns.html","prefix":""};
 </script>
 <script>
 /*
  * 题目定位器：三问 → 匹配经典题型 → 告诉你第一步做什么
  * 数据由构建脚本通过 window.__LOCATE_DATA__ 注入。
+ * 数据约定（见 build.js renderLocate）：
+ *   asks     : [{k, desc}]                          —— 问题 1 的选项（k = 要什么）
+ *   patterns : [{id,no,title,kind,asks,signals,route,chain}]
+ *              chain : [{point, role, title}]        —— route[i] 是 /章/点 路径时，第 i 步的动作与去向页
+ * 问题 2 的选项直接取自各题型的 signals（题面信号词），选中即给对应题型加分。
  */
 (function () {
   var DATA = window.__LOCATE_DATA__;
   if (!DATA) return;
   var patterns = DATA.patterns;
-  var features = DATA.features;
   var asks = DATA.asks;
   var byId = {};
   patterns.forEach(function (p) { byId[p.id] = p; });
 
-  var state = { ask: null, feats: {} };
+  var state = { ask: null, sigs: {} };
 
   var root = document.getElementById('locator');
   if (!root) return;
 
-  /* ---------- 构建选项 ---------- */
+  /* ---------- 问题 1：求什么 ---------- */
   var askBox = document.getElementById('loc-asks');
   asks.forEach(function (a) {
     var b = document.createElement('button');
     b.className = 'loc-opt';
-    b.textContent = a.label;
+    b.textContent = a.k;
+    if (a.desc) b.title = a.desc;
     b.setAttribute('data-ask', a.k);
     b.addEventListener('click', function () {
       state.ask = (state.ask === a.k) ? null : a.k;
@@ -833,19 +838,25 @@ window.__LOCATE_DATA__ = {"asks":[{"k":"意义读写","desc":"表示一个数是
     askBox.appendChild(b);
   });
 
+  /* ---------- 问题 2：题面信号（来自各题型的 signals，去重） ---------- */
   var featBox = document.getElementById('loc-feats');
-  features.forEach(function (f) {
-    var b = document.createElement('button');
-    b.className = 'loc-opt small';
-    b.textContent = f.label;
-    b.setAttribute('data-feat', f.k);
-    b.addEventListener('click', function () {
-      if (state.feats[f.k]) delete state.feats[f.k];
-      else state.feats[f.k] = true;
-      syncOptions();
-      render();
+  var seen = {};
+  patterns.forEach(function (p) {
+    (p.signals || []).forEach(function (s) {
+      if (seen[s]) return;
+      seen[s] = true;
+      var b = document.createElement('button');
+      b.className = 'loc-opt small';
+      b.textContent = s;
+      b.setAttribute('data-sig', s);
+      b.addEventListener('click', function () {
+        if (state.sigs[s]) delete state.sigs[s];
+        else state.sigs[s] = true;
+        syncOptions();
+        render();
+      });
+      featBox.appendChild(b);
     });
-    featBox.appendChild(b);
   });
 
   function syncOptions() {
@@ -853,39 +864,43 @@ window.__LOCATE_DATA__ = {"asks":[{"k":"意义读写","desc":"表示一个数是
       b.classList.toggle('on', state.ask === b.getAttribute('data-ask'));
     });
     [].forEach.call(featBox.children, function (b) {
-      b.classList.toggle('on', !!state.feats[b.getAttribute('data-feat')]);
+      b.classList.toggle('on', !!state.sigs[b.getAttribute('data-sig')]);
     });
   }
 
   /* ---------- 匹配打分 ---------- */
-  function signalText(p) { return p.signals.join(' '); }
-
   function scorePattern(p) {
     var score = 0;
     var reasons = [];
-    if (state.ask) {
-      if (p.asks.indexOf(state.ask) >= 0) {
-        score += 10;
-        var askLabel = (asks.filter(function (a) { return a.k === state.ask; })[0] || {}).label || '';
-        reasons.push('你要找的是「' + askLabel + '」，这类题型正是干这个的');
-      }
+    if (state.ask && p.asks.indexOf(state.ask) >= 0) {
+      score += 10;
+      var askLabel = (asks.filter(function (a) { return a.k === state.ask; })[0] || {}).k || state.ask;
+      reasons.push('你要找的是「' + askLabel + '」，这类题型正是干这个的');
     }
-    var txt = signalText(p);
-    features.forEach(function (f) {
-      if (!state.feats[f.k]) return;
-      var hit = f.words.some(function (w) { return txt.indexOf(w) >= 0; });
-      if (hit) {
+    (p.signals || []).forEach(function (s) {
+      if (state.sigs[s]) {
         score += 3;
-        reasons.push('题面出现「' + f.k + '」类字眼，是它的典型特征');
+        reasons.push('题面出现「' + s + '」，是它的典型信号');
       }
     });
     return { score: score, reasons: reasons };
   }
 
+  /* 第一步：role 是动作，point 页是去向 */
+  function firstStep(p) {
+    var c = (p.chain && p.chain[0]) || null;
+    if (c && c.role) {
+      return '<a href="' + c.point + '.html"><b>' + esc(c.role) + '</b></a>'
+        + (c.title ? ' —— 去「' + esc(c.title) + '」页' : '');
+    }
+    if (c) return '<a href="' + c.point + '.html">' + esc(c.title || c.point) + '</a>';
+    return esc((p.route && p.route[0]) || '');
+  }
+
   /* ---------- 渲染结果 ---------- */
   function render() {
     var box = document.getElementById('loc-result');
-    var anyCond = !!state.ask || Object.keys(state.feats).length > 0;
+    var anyCond = !!state.ask || Object.keys(state.sigs).length > 0;
     if (!anyCond) {
       box.innerHTML = '<div class="loc-empty">先在上面的问题里点一两下，下面就会出现与之匹配的题型。<br>不用全部回答，选你有把握的就行。</div>';
       return;
@@ -906,19 +921,21 @@ window.__LOCATE_DATA__ = {"asks":[{"k":"意义读写","desc":"表示一个数是
     }
 
     var top = results[0].p;
+    var topNo = /^\d+$/.test(String(top.no)) ? ('第 ' + top.no + ' 类 · ') : (top.no + ' · ');
     var html = '<div class="loc-empty" style="text-align:left;border-style:solid;background:#e6f1fb;color:#123d63;padding:14px 18px">'
-      + '最像 <b>第 ' + top.no + ' 类 · ' + esc(top.title) + '</b>。它的第一步是：<b>' + esc(top.route[0]) + '</b>。'
+      + '最像 <b>' + topNo + esc(top.title) + '</b>。它的第一步是：' + firstStep(top) + '。'
       + '</div>';
 
     results.slice(0, 6).forEach(function (r) {
       var p = r.p;
+      var noTxt = /^\d+$/.test(String(p.no)) ? String(p.no).padStart(2, '0') : '';
       html += '<div class="loc-card">'
-        + '<div class="lc-top"><span class="type-no">' + String(p.no).padStart(2, '0') + '</span>'
-        + '<span class="lc-title"><a href="pattern/' + p.id + '.html">' + esc(p.title) + '</a></span>'
+        + '<div class="lc-top"><span class="type-no">' + noTxt + '</span>'
+        + '<span class="lc-title"><a href="pattern/' + p.id + '.html">' + (noTxt ? '' : esc(p.no) + ' · ') + esc(p.title) + '</a></span>'
         + '<span class="kind ' + kindClass(p.kind) + '">' + esc(p.kind) + '</span>'
         + '<span class="score">匹配度 ' + r.score + '</span></div>'
         + '<div class="lc-why">' + r.reasons.map(esc).join('；') + '</div>'
-        + '<div class="lc-first"><b>第一步：</b>' + esc(p.route[0]) + '</div>'
+        + '<div class="lc-first"><b>第一步：</b>' + firstStep(p) + '</div>'
         + '</div>';
     });
 
@@ -937,7 +954,7 @@ window.__LOCATE_DATA__ = {"asks":[{"k":"意义读写","desc":"表示一个数是
 
   var reset = document.getElementById('loc-reset');
   if (reset) reset.addEventListener('click', function () {
-    state.ask = null; state.feats = {};
+    state.ask = null; state.sigs = {};
     syncOptions(); render();
   });
 

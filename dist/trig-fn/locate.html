@@ -797,33 +797,38 @@ a:hover .tg-node { stroke-width: 2.4; }
 </div>
 
 <script>
-window.__LOCATE_DATA__ = {"asks":[{"k":"弧度扇形","label":"度弧互化、弧长面积"},{"k":"定义求值","label":"终边上点求 sin/cos/tan"},{"k":"同角关系","label":"知一求二、齐次式"},{"k":"诱导公式","label":"化简求值、奇变偶不变"},{"k":"图象变换","label":"平移伸缩、由图象求解析式"},{"k":"性质应用","label":"单调区间、对称轴中心、最值"},{"k":"建模应用","label":"简谐运动、摩天轮、气温"},{"k":"综合化简","label":"含参、恒等变形"}],"features":[{"k":"三角函数","words":["sin","cos","tan","正弦","余弦","正切","弧度","扇形","周期","振幅","初相","诱导","终边","单位圆"]}],"patterns":[{"id":"tf-b-radian","no":"基础 1","title":"弧度制与扇形计算","kind":"弧度","asks":["弧度扇形"],"signals":["弧度","弧长","扇形","面积","圆心角"],"route":["/trig-fn/tf-radian"]},{"id":"tf-b-def","no":"基础 2","title":"由终边点求三角函数值","kind":"定义","asks":["定义求值"],"signals":["终边","经过点","sin","cos","tan"],"route":["/trig-fn/tf-def"]},{"id":"tf-b-sign","no":"基础 3","title":"三角函数值符号","kind":"符号","asks":["定义求值"],"signals":["符号","正负","象限","sin","cos"],"route":["/trig-fn/tf-def"]},{"id":"tf-b-induce","no":"基础 4","title":"诱导公式求值","kind":"诱导公式","asks":["诱导公式"],"signals":["sin(","cos(","tan(","化简","求值","°"],"route":["/trig-fn/tf-sign"]},{"id":"tf-m-homog","no":"中档 1","title":"同角关系与齐次式","kind":"同角关系","asks":["同角关系"],"signals":["tan","sin²","cos²","求值","齐次"],"route":["/trig-fn/tf-sign","/trig-fn/tf-def"]},{"id":"tf-m-graph","no":"中档 2","title":"图象变换与解析式","kind":"图象","asks":["图象变换"],"signals":["平移","伸缩","解析式","图象","变换"],"route":["/trig-fn/tf-graph"]},{"id":"tf-m-prop","no":"中档 3","title":"单调区间与对称性","kind":"性质","asks":["性质应用"],"signals":["单调区间","对称轴","对称中心","最值","周期"],"route":["/trig-fn/tf-prop"]},{"id":"tf-m-model","no":"中档 4","title":"三角函数建模","kind":"建模","asks":["建模应用"],"signals":["最高","最低","温度","高度","周期","模型"],"route":["/trig-fn/tf-apply","/trig-fn/tf-graph"]},{"id":"tf-h-range","no":"拔高 1","title":"闭区间上的最值","kind":"最值","asks":["性质应用"],"signals":["最大值","最小值","值域","闭区间","x∈"],"route":["/trig-fn/tf-prop","/trig-fn/tf-graph"]}],"patternsUrl":"patterns.html","prefix":""};
+window.__LOCATE_DATA__ = {"asks":[{"k":"弧度扇形","label":"度弧互化、弧长面积"},{"k":"定义求值","label":"终边上点求 sin/cos/tan"},{"k":"同角关系","label":"知一求二、齐次式"},{"k":"诱导公式","label":"化简求值、奇变偶不变"},{"k":"图象变换","label":"平移伸缩、由图象求解析式"},{"k":"性质应用","label":"单调区间、对称轴中心、最值"},{"k":"建模应用","label":"简谐运动、摩天轮、气温"},{"k":"综合化简","label":"含参、恒等变形"}],"features":[{"k":"三角函数","words":["sin","cos","tan","正弦","余弦","正切","弧度","扇形","周期","振幅","初相","诱导","终边","单位圆"]}],"patterns":[{"id":"tf-b-radian","no":"基础 1","title":"弧度制与扇形计算","kind":"弧度","asks":["弧度扇形"],"signals":["弧度","弧长","扇形","面积","圆心角"],"route":["/trig-fn/tf-radian"],"chain":[{"point":"tf-radian","role":"l = αr、S = ½lr","title":"弧度制与扇形"}]},{"id":"tf-b-def","no":"基础 2","title":"由终边点求三角函数值","kind":"定义","asks":["定义求值"],"signals":["终边","经过点","sin","cos","tan"],"route":["/trig-fn/tf-def"],"chain":[{"point":"tf-def","role":"r = √(a²+b²)，sin = b/r","title":"单位圆与任意角的三角函数"}]},{"id":"tf-b-sign","no":"基础 3","title":"三角函数值符号","kind":"符号","asks":["定义求值"],"signals":["符号","正负","象限","sin","cos"],"route":["/trig-fn/tf-def"],"chain":[{"point":"tf-def","role":"一全正二正弦三正切四余弦","title":"单位圆与任意角的三角函数"}]},{"id":"tf-b-induce","no":"基础 4","title":"诱导公式求值","kind":"诱导公式","asks":["诱导公式"],"signals":["sin(","cos(","tan(","化简","求值","°"],"route":["/trig-fn/tf-sign"],"chain":[{"point":"tf-sign","role":"奇变偶不变，符号看象限","title":"同角关系与诱导公式"}]},{"id":"tf-m-homog","no":"中档 1","title":"同角关系与齐次式","kind":"同角关系","asks":["同角关系"],"signals":["tan","sin²","cos²","求值","齐次"],"route":["/trig-fn/tf-sign","/trig-fn/tf-def"],"chain":[{"point":"tf-sign","role":"tan = sin/cos、平方关系","title":"同角关系与诱导公式"},{"point":"tf-def","role":"象限决定符号","title":"单位圆与任意角的三角函数"}]},{"id":"tf-m-graph","no":"中档 2","title":"图象变换与解析式","kind":"图象","asks":["图象变换"],"signals":["平移","伸缩","解析式","图象","变换"],"route":["/trig-fn/tf-graph"],"chain":[{"point":"tf-graph","role":"A、ω、φ 各管一件事","title":"三角函数的图象与五点法"}]},{"id":"tf-m-prop","no":"中档 3","title":"单调区间与对称性","kind":"性质","asks":["性质应用"],"signals":["单调区间","对称轴","对称中心","最值","周期"],"route":["/trig-fn/tf-prop"],"chain":[{"point":"tf-prop","role":"整体代换 u = ωx + φ","title":"三角函数的性质"}]},{"id":"tf-m-model","no":"中档 4","title":"三角函数建模","kind":"建模","asks":["建模应用"],"signals":["最高","最低","温度","高度","周期","模型"],"route":["/trig-fn/tf-apply","/trig-fn/tf-graph"],"chain":[{"point":"tf-apply","role":"四步建模法定 A、ω、φ、h₀","title":"三角函数的应用"},{"point":"tf-graph","role":"周期与 ω 的关系","title":"三角函数的图象与五点法"}]},{"id":"tf-h-range","no":"拔高 1","title":"闭区间上的最值","kind":"最值","asks":["性质应用"],"signals":["最大值","最小值","值域","闭区间","x∈"],"route":["/trig-fn/tf-prop","/trig-fn/tf-graph"],"chain":[{"point":"tf-prop","role":"整体代换求相位范围","title":"三角函数的性质"},{"point":"tf-graph","role":"正弦曲线在指定区间上的走势","title":"三角函数的图象与五点法"}]}],"patternsUrl":"patterns.html","prefix":""};
 </script>
 <script>
 /*
  * 题目定位器：三问 → 匹配经典题型 → 告诉你第一步做什么
  * 数据由构建脚本通过 window.__LOCATE_DATA__ 注入。
+ * 数据约定（见 build.js renderLocate）：
+ *   asks     : [{k, desc}]                          —— 问题 1 的选项（k = 要什么）
+ *   patterns : [{id,no,title,kind,asks,signals,route,chain}]
+ *              chain : [{point, role, title}]        —— route[i] 是 /章/点 路径时，第 i 步的动作与去向页
+ * 问题 2 的选项直接取自各题型的 signals（题面信号词），选中即给对应题型加分。
  */
 (function () {
   var DATA = window.__LOCATE_DATA__;
   if (!DATA) return;
   var patterns = DATA.patterns;
-  var features = DATA.features;
   var asks = DATA.asks;
   var byId = {};
   patterns.forEach(function (p) { byId[p.id] = p; });
 
-  var state = { ask: null, feats: {} };
+  var state = { ask: null, sigs: {} };
 
   var root = document.getElementById('locator');
   if (!root) return;
 
-  /* ---------- 构建选项 ---------- */
+  /* ---------- 问题 1：求什么 ---------- */
   var askBox = document.getElementById('loc-asks');
   asks.forEach(function (a) {
     var b = document.createElement('button');
     b.className = 'loc-opt';
-    b.textContent = a.label;
+    b.textContent = a.k;
+    if (a.desc) b.title = a.desc;
     b.setAttribute('data-ask', a.k);
     b.addEventListener('click', function () {
       state.ask = (state.ask === a.k) ? null : a.k;
@@ -833,19 +838,25 @@ window.__LOCATE_DATA__ = {"asks":[{"k":"弧度扇形","label":"度弧互化、�
     askBox.appendChild(b);
   });
 
+  /* ---------- 问题 2：题面信号（来自各题型的 signals，去重） ---------- */
   var featBox = document.getElementById('loc-feats');
-  features.forEach(function (f) {
-    var b = document.createElement('button');
-    b.className = 'loc-opt small';
-    b.textContent = f.label;
-    b.setAttribute('data-feat', f.k);
-    b.addEventListener('click', function () {
-      if (state.feats[f.k]) delete state.feats[f.k];
-      else state.feats[f.k] = true;
-      syncOptions();
-      render();
+  var seen = {};
+  patterns.forEach(function (p) {
+    (p.signals || []).forEach(function (s) {
+      if (seen[s]) return;
+      seen[s] = true;
+      var b = document.createElement('button');
+      b.className = 'loc-opt small';
+      b.textContent = s;
+      b.setAttribute('data-sig', s);
+      b.addEventListener('click', function () {
+        if (state.sigs[s]) delete state.sigs[s];
+        else state.sigs[s] = true;
+        syncOptions();
+        render();
+      });
+      featBox.appendChild(b);
     });
-    featBox.appendChild(b);
   });
 
   function syncOptions() {
@@ -853,39 +864,43 @@ window.__LOCATE_DATA__ = {"asks":[{"k":"弧度扇形","label":"度弧互化、�
       b.classList.toggle('on', state.ask === b.getAttribute('data-ask'));
     });
     [].forEach.call(featBox.children, function (b) {
-      b.classList.toggle('on', !!state.feats[b.getAttribute('data-feat')]);
+      b.classList.toggle('on', !!state.sigs[b.getAttribute('data-sig')]);
     });
   }
 
   /* ---------- 匹配打分 ---------- */
-  function signalText(p) { return p.signals.join(' '); }
-
   function scorePattern(p) {
     var score = 0;
     var reasons = [];
-    if (state.ask) {
-      if (p.asks.indexOf(state.ask) >= 0) {
-        score += 10;
-        var askLabel = (asks.filter(function (a) { return a.k === state.ask; })[0] || {}).label || '';
-        reasons.push('你要找的是「' + askLabel + '」，这类题型正是干这个的');
-      }
+    if (state.ask && p.asks.indexOf(state.ask) >= 0) {
+      score += 10;
+      var askLabel = (asks.filter(function (a) { return a.k === state.ask; })[0] || {}).k || state.ask;
+      reasons.push('你要找的是「' + askLabel + '」，这类题型正是干这个的');
     }
-    var txt = signalText(p);
-    features.forEach(function (f) {
-      if (!state.feats[f.k]) return;
-      var hit = f.words.some(function (w) { return txt.indexOf(w) >= 0; });
-      if (hit) {
+    (p.signals || []).forEach(function (s) {
+      if (state.sigs[s]) {
         score += 3;
-        reasons.push('题面出现「' + f.k + '」类字眼，是它的典型特征');
+        reasons.push('题面出现「' + s + '」，是它的典型信号');
       }
     });
     return { score: score, reasons: reasons };
   }
 
+  /* 第一步：role 是动作，point 页是去向 */
+  function firstStep(p) {
+    var c = (p.chain && p.chain[0]) || null;
+    if (c && c.role) {
+      return '<a href="' + c.point + '.html"><b>' + esc(c.role) + '</b></a>'
+        + (c.title ? ' —— 去「' + esc(c.title) + '」页' : '');
+    }
+    if (c) return '<a href="' + c.point + '.html">' + esc(c.title || c.point) + '</a>';
+    return esc((p.route && p.route[0]) || '');
+  }
+
   /* ---------- 渲染结果 ---------- */
   function render() {
     var box = document.getElementById('loc-result');
-    var anyCond = !!state.ask || Object.keys(state.feats).length > 0;
+    var anyCond = !!state.ask || Object.keys(state.sigs).length > 0;
     if (!anyCond) {
       box.innerHTML = '<div class="loc-empty">先在上面的问题里点一两下，下面就会出现与之匹配的题型。<br>不用全部回答，选你有把握的就行。</div>';
       return;
@@ -906,19 +921,21 @@ window.__LOCATE_DATA__ = {"asks":[{"k":"弧度扇形","label":"度弧互化、�
     }
 
     var top = results[0].p;
+    var topNo = /^\d+$/.test(String(top.no)) ? ('第 ' + top.no + ' 类 · ') : (top.no + ' · ');
     var html = '<div class="loc-empty" style="text-align:left;border-style:solid;background:#e6f1fb;color:#123d63;padding:14px 18px">'
-      + '最像 <b>第 ' + top.no + ' 类 · ' + esc(top.title) + '</b>。它的第一步是：<b>' + esc(top.route[0]) + '</b>。'
+      + '最像 <b>' + topNo + esc(top.title) + '</b>。它的第一步是：' + firstStep(top) + '。'
       + '</div>';
 
     results.slice(0, 6).forEach(function (r) {
       var p = r.p;
+      var noTxt = /^\d+$/.test(String(p.no)) ? String(p.no).padStart(2, '0') : '';
       html += '<div class="loc-card">'
-        + '<div class="lc-top"><span class="type-no">' + String(p.no).padStart(2, '0') + '</span>'
-        + '<span class="lc-title"><a href="pattern/' + p.id + '.html">' + esc(p.title) + '</a></span>'
+        + '<div class="lc-top"><span class="type-no">' + noTxt + '</span>'
+        + '<span class="lc-title"><a href="pattern/' + p.id + '.html">' + (noTxt ? '' : esc(p.no) + ' · ') + esc(p.title) + '</a></span>'
         + '<span class="kind ' + kindClass(p.kind) + '">' + esc(p.kind) + '</span>'
         + '<span class="score">匹配度 ' + r.score + '</span></div>'
         + '<div class="lc-why">' + r.reasons.map(esc).join('；') + '</div>'
-        + '<div class="lc-first"><b>第一步：</b>' + esc(p.route[0]) + '</div>'
+        + '<div class="lc-first"><b>第一步：</b>' + firstStep(p) + '</div>'
         + '</div>';
     });
 
@@ -937,7 +954,7 @@ window.__LOCATE_DATA__ = {"asks":[{"k":"弧度扇形","label":"度弧互化、�
 
   var reset = document.getElementById('loc-reset');
   if (reset) reset.addEventListener('click', function () {
-    state.ask = null; state.feats = {};
+    state.ask = null; state.sigs = {};
     syncOptions(); render();
   });
 

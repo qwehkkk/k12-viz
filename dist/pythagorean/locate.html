@@ -797,33 +797,38 @@ a:hover .tg-node { stroke-width: 2.4; }
 </div>
 
 <script>
-window.__LOCATE_DATA__ = {"asks":[{"k":"求第三边","label":"已知两边求第三边（加法/减法选式）"},{"k":"折叠方程","label":"折叠/图形中的未知线段，设未知数勾股方程"},{"k":"验直角","label":"逆定理判断直角/锐角/钝角"},{"k":"实际测量","label":"梯子、旗杆、拉线、坡面等实际模型计算"},{"k":"最短路径","label":"展开侧面/表面，勾股算两点最短距离"},{"k":"综合计算","label":"与等腰/面积/坐标系结合的勾股计算"}],"features":{"k":"勾股","words":["勾股定理","勾股","直角边","斜边","梯子","旗杆","折断","最短","爬行","蚂蚁","ab2c2","a2b2c2","345","勾股数"]},"patterns":[{"id":"pythag-direct-calc","no":1,"title":"知二求一：勾股定理直接计算","kind":"计算","asks":["求第三边"],"signals":["Rt△","∠C = 90°","直角边","斜边","求第三边"],"route":["/pythagorean/pythag-theorem","/pythagorean/pythag-calc"]},{"id":"pythag-fold-equation","no":2,"title":"折叠问题：勾股定理 + 一元一次方程","kind":"综合","asks":["折叠方程"],"signals":["折叠","翻折","落在","重合","折痕"],"route":["/pythagorean/pythag-calc"]},{"id":"pythag-inverse-judge","no":3,"title":"逆定理：验直角与形状判定","kind":"判定","asks":["验直角"],"signals":["判断形状","是不是直角三角形","勾股数","三边长分别为"],"route":["/pythagorean/pythag-inverse"]},{"id":"pythag-ladder-flag","no":4,"title":"实际测量：梯子 / 旗杆 / 拉线","kind":"应用","asks":["实际测量"],"signals":["梯子","靠在墙上","旗杆","折断","拉线","风筝","缆绳"],"route":["/pythagorean/pythag-application","/pythagorean/pythag-calc"]},{"id":"pythag-shortest-path","no":5,"title":"最短路径：展开 + 勾股","kind":"应用","asks":["最短路径"],"signals":["最短","爬行","蚂蚁","蜘蛛","绕","侧面展开","表面"],"route":["/pythagorean/pythag-application","/pythagorean/pythag-calc"]},{"id":"pythag-isosceles-height","no":6,"title":"等腰三角形 + 勾股：作高计算","kind":"计算","asks":["综合计算"],"signals":["等腰","腰长","底边","求高","求面积"],"route":["/pythagorean/pythag-calc"]},{"id":"pythag-coordinate","no":7,"title":"坐标系中的勾股：两点间距离","kind":"综合","asks":["综合计算","求第三边"],"signals":["平面直角坐标系","点 A(…)","距离","AB 的长"],"route":["/pythagorean/pythag-calc"]},{"id":"pythag-composite-figure","no":8,"title":"复杂图形中找直角三角形","kind":"综合","asks":["综合计算","求第三边"],"signals":["如图","组合图形","求 CD","连接","延长"],"route":["/pythagorean/pythag-calc","/pythagorean/pythag-theorem"]},{"id":"pythag-string-figure","no":9,"title":"弦图型计算题","kind":"综合","asks":["综合计算"],"signals":["弦图","四个全等","大正方形","小正方形","2002 年会标"],"route":["/pythagorean/pythag-theorem"]}],"patternsUrl":"patterns.html","prefix":""};
+window.__LOCATE_DATA__ = {"asks":[{"k":"求第三边","label":"已知两边求第三边（加法/减法选式）"},{"k":"折叠方程","label":"折叠/图形中的未知线段，设未知数勾股方程"},{"k":"验直角","label":"逆定理判断直角/锐角/钝角"},{"k":"实际测量","label":"梯子、旗杆、拉线、坡面等实际模型计算"},{"k":"最短路径","label":"展开侧面/表面，勾股算两点最短距离"},{"k":"综合计算","label":"与等腰/面积/坐标系结合的勾股计算"}],"features":{"k":"勾股","words":["勾股定理","勾股","直角边","斜边","梯子","旗杆","折断","最短","爬行","蚂蚁","ab2c2","a2b2c2","345","勾股数"]},"patterns":[{"id":"pythag-direct-calc","no":1,"title":"知二求一：勾股定理直接计算","kind":"计算","asks":["求第三边"],"signals":["Rt△","∠C = 90°","直角边","斜边","求第三边"],"route":["/pythagorean/pythag-theorem","/pythagorean/pythag-calc"],"chain":[{"point":"pythag-theorem","role":"定理内容与斜边识别","title":"勾股定理：a² + b² = c²"},{"point":"pythag-calc","role":"加法/减法选式与精确值","title":"用勾股定理计算：知二求一"}]},{"id":"pythag-fold-equation","no":2,"title":"折叠问题：勾股定理 + 一元一次方程","kind":"综合","asks":["折叠方程"],"signals":["折叠","翻折","落在","重合","折痕"],"route":["/pythagorean/pythag-calc"],"chain":[{"point":"pythag-calc","role":"在含 x 的直角三角形里勾股列方程","title":"用勾股定理计算：知二求一"},{"point":"pythag-theorem","role":"折叠全等给等长线段、认斜边","title":"勾股定理：a² + b² = c²"}]},{"id":"pythag-inverse-judge","no":3,"title":"逆定理：验直角与形状判定","kind":"判定","asks":["验直角"],"signals":["判断形状","是不是直角三角形","勾股数","三边长分别为"],"route":["/pythagorean/pythag-inverse"],"chain":[{"point":"pythag-inverse","role":"逆定理与锐钝角区分","title":"勾股定理的逆定理"}]},{"id":"pythag-ladder-flag","no":4,"title":"实际测量：梯子 / 旗杆 / 拉线","kind":"应用","asks":["实际测量"],"signals":["梯子","靠在墙上","旗杆","折断","拉线","风筝","缆绳"],"route":["/pythagorean/pythag-application","/pythagorean/pythag-calc"],"chain":[{"point":"pythag-application","role":"梯子/旗杆模型","title":"勾股定理的应用"},{"point":"pythag-calc","role":"两问之间不变量是桥","title":"用勾股定理计算：知二求一"}]},{"id":"pythag-shortest-path","no":5,"title":"最短路径：展开 + 勾股","kind":"应用","asks":["最短路径"],"signals":["最短","爬行","蚂蚁","蜘蛛","绕","侧面展开","表面"],"route":["/pythagorean/pythag-application","/pythagorean/pythag-calc"],"chain":[{"point":"pythag-application","role":"圆柱/长方体展开","title":"勾股定理的应用"},{"point":"pythag-calc","role":"勾股算对角线","title":"用勾股定理计算：知二求一"}]},{"id":"pythag-isosceles-height","no":6,"title":"等腰三角形 + 勾股：作高计算","kind":"计算","asks":["综合计算"],"signals":["等腰","腰长","底边","求高","求面积"],"route":["/pythagorean/pythag-calc"],"chain":[{"point":"pythag-calc","role":"半底 + 高 + 腰的直角三角形","title":"用勾股定理计算：知二求一"},{"point":"pythag-theorem","role":"三线合一构造直角与斜边识别","title":"勾股定理：a² + b² = c²"}]},{"id":"pythag-coordinate","no":7,"title":"坐标系中的勾股：两点间距离","kind":"综合","asks":["综合计算","求第三边"],"signals":["平面直角坐标系","点 A(…)","距离","AB 的长"],"route":["/pythagorean/pythag-calc"],"chain":[{"point":"pythag-calc","role":"水平差与竖直差是两直角边","title":"用勾股定理计算：知二求一"}]},{"id":"pythag-composite-figure","no":8,"title":"复杂图形中找直角三角形","kind":"综合","asks":["综合计算","求第三边"],"signals":["如图","组合图形","求 CD","连接","延长"],"route":["/pythagorean/pythag-calc","/pythagorean/pythag-theorem"],"chain":[{"point":"pythag-calc","role":"多次勾股接力","title":"用勾股定理计算：知二求一"},{"point":"pythag-theorem","role":"斜边识别","title":"勾股定理：a² + b² = c²"}]},{"id":"pythag-string-figure","no":9,"title":"弦图型计算题","kind":"综合","asks":["综合计算"],"signals":["弦图","四个全等","大正方形","小正方形","2002 年会标"],"route":["/pythagorean/pythag-theorem"],"chain":[{"point":"pythag-theorem","role":"弦图的面积恒等式","title":"勾股定理：a² + b² = c²"}]}],"patternsUrl":"patterns.html","prefix":""};
 </script>
 <script>
 /*
  * 题目定位器：三问 → 匹配经典题型 → 告诉你第一步做什么
  * 数据由构建脚本通过 window.__LOCATE_DATA__ 注入。
+ * 数据约定（见 build.js renderLocate）：
+ *   asks     : [{k, desc}]                          —— 问题 1 的选项（k = 要什么）
+ *   patterns : [{id,no,title,kind,asks,signals,route,chain}]
+ *              chain : [{point, role, title}]        —— route[i] 是 /章/点 路径时，第 i 步的动作与去向页
+ * 问题 2 的选项直接取自各题型的 signals（题面信号词），选中即给对应题型加分。
  */
 (function () {
   var DATA = window.__LOCATE_DATA__;
   if (!DATA) return;
   var patterns = DATA.patterns;
-  var features = DATA.features;
   var asks = DATA.asks;
   var byId = {};
   patterns.forEach(function (p) { byId[p.id] = p; });
 
-  var state = { ask: null, feats: {} };
+  var state = { ask: null, sigs: {} };
 
   var root = document.getElementById('locator');
   if (!root) return;
 
-  /* ---------- 构建选项 ---------- */
+  /* ---------- 问题 1：求什么 ---------- */
   var askBox = document.getElementById('loc-asks');
   asks.forEach(function (a) {
     var b = document.createElement('button');
     b.className = 'loc-opt';
-    b.textContent = a.label;
+    b.textContent = a.k;
+    if (a.desc) b.title = a.desc;
     b.setAttribute('data-ask', a.k);
     b.addEventListener('click', function () {
       state.ask = (state.ask === a.k) ? null : a.k;
@@ -833,19 +838,25 @@ window.__LOCATE_DATA__ = {"asks":[{"k":"求第三边","label":"已知两边求�
     askBox.appendChild(b);
   });
 
+  /* ---------- 问题 2：题面信号（来自各题型的 signals，去重） ---------- */
   var featBox = document.getElementById('loc-feats');
-  features.forEach(function (f) {
-    var b = document.createElement('button');
-    b.className = 'loc-opt small';
-    b.textContent = f.label;
-    b.setAttribute('data-feat', f.k);
-    b.addEventListener('click', function () {
-      if (state.feats[f.k]) delete state.feats[f.k];
-      else state.feats[f.k] = true;
-      syncOptions();
-      render();
+  var seen = {};
+  patterns.forEach(function (p) {
+    (p.signals || []).forEach(function (s) {
+      if (seen[s]) return;
+      seen[s] = true;
+      var b = document.createElement('button');
+      b.className = 'loc-opt small';
+      b.textContent = s;
+      b.setAttribute('data-sig', s);
+      b.addEventListener('click', function () {
+        if (state.sigs[s]) delete state.sigs[s];
+        else state.sigs[s] = true;
+        syncOptions();
+        render();
+      });
+      featBox.appendChild(b);
     });
-    featBox.appendChild(b);
   });
 
   function syncOptions() {
@@ -853,39 +864,43 @@ window.__LOCATE_DATA__ = {"asks":[{"k":"求第三边","label":"已知两边求�
       b.classList.toggle('on', state.ask === b.getAttribute('data-ask'));
     });
     [].forEach.call(featBox.children, function (b) {
-      b.classList.toggle('on', !!state.feats[b.getAttribute('data-feat')]);
+      b.classList.toggle('on', !!state.sigs[b.getAttribute('data-sig')]);
     });
   }
 
   /* ---------- 匹配打分 ---------- */
-  function signalText(p) { return p.signals.join(' '); }
-
   function scorePattern(p) {
     var score = 0;
     var reasons = [];
-    if (state.ask) {
-      if (p.asks.indexOf(state.ask) >= 0) {
-        score += 10;
-        var askLabel = (asks.filter(function (a) { return a.k === state.ask; })[0] || {}).label || '';
-        reasons.push('你要找的是「' + askLabel + '」，这类题型正是干这个的');
-      }
+    if (state.ask && p.asks.indexOf(state.ask) >= 0) {
+      score += 10;
+      var askLabel = (asks.filter(function (a) { return a.k === state.ask; })[0] || {}).k || state.ask;
+      reasons.push('你要找的是「' + askLabel + '」，这类题型正是干这个的');
     }
-    var txt = signalText(p);
-    features.forEach(function (f) {
-      if (!state.feats[f.k]) return;
-      var hit = f.words.some(function (w) { return txt.indexOf(w) >= 0; });
-      if (hit) {
+    (p.signals || []).forEach(function (s) {
+      if (state.sigs[s]) {
         score += 3;
-        reasons.push('题面出现「' + f.k + '」类字眼，是它的典型特征');
+        reasons.push('题面出现「' + s + '」，是它的典型信号');
       }
     });
     return { score: score, reasons: reasons };
   }
 
+  /* 第一步：role 是动作，point 页是去向 */
+  function firstStep(p) {
+    var c = (p.chain && p.chain[0]) || null;
+    if (c && c.role) {
+      return '<a href="' + c.point + '.html"><b>' + esc(c.role) + '</b></a>'
+        + (c.title ? ' —— 去「' + esc(c.title) + '」页' : '');
+    }
+    if (c) return '<a href="' + c.point + '.html">' + esc(c.title || c.point) + '</a>';
+    return esc((p.route && p.route[0]) || '');
+  }
+
   /* ---------- 渲染结果 ---------- */
   function render() {
     var box = document.getElementById('loc-result');
-    var anyCond = !!state.ask || Object.keys(state.feats).length > 0;
+    var anyCond = !!state.ask || Object.keys(state.sigs).length > 0;
     if (!anyCond) {
       box.innerHTML = '<div class="loc-empty">先在上面的问题里点一两下，下面就会出现与之匹配的题型。<br>不用全部回答，选你有把握的就行。</div>';
       return;
@@ -906,19 +921,21 @@ window.__LOCATE_DATA__ = {"asks":[{"k":"求第三边","label":"已知两边求�
     }
 
     var top = results[0].p;
+    var topNo = /^\d+$/.test(String(top.no)) ? ('第 ' + top.no + ' 类 · ') : (top.no + ' · ');
     var html = '<div class="loc-empty" style="text-align:left;border-style:solid;background:#e6f1fb;color:#123d63;padding:14px 18px">'
-      + '最像 <b>第 ' + top.no + ' 类 · ' + esc(top.title) + '</b>。它的第一步是：<b>' + esc(top.route[0]) + '</b>。'
+      + '最像 <b>' + topNo + esc(top.title) + '</b>。它的第一步是：' + firstStep(top) + '。'
       + '</div>';
 
     results.slice(0, 6).forEach(function (r) {
       var p = r.p;
+      var noTxt = /^\d+$/.test(String(p.no)) ? String(p.no).padStart(2, '0') : '';
       html += '<div class="loc-card">'
-        + '<div class="lc-top"><span class="type-no">' + String(p.no).padStart(2, '0') + '</span>'
-        + '<span class="lc-title"><a href="pattern/' + p.id + '.html">' + esc(p.title) + '</a></span>'
+        + '<div class="lc-top"><span class="type-no">' + noTxt + '</span>'
+        + '<span class="lc-title"><a href="pattern/' + p.id + '.html">' + (noTxt ? '' : esc(p.no) + ' · ') + esc(p.title) + '</a></span>'
         + '<span class="kind ' + kindClass(p.kind) + '">' + esc(p.kind) + '</span>'
         + '<span class="score">匹配度 ' + r.score + '</span></div>'
         + '<div class="lc-why">' + r.reasons.map(esc).join('；') + '</div>'
-        + '<div class="lc-first"><b>第一步：</b>' + esc(p.route[0]) + '</div>'
+        + '<div class="lc-first"><b>第一步：</b>' + firstStep(p) + '</div>'
         + '</div>';
     });
 
@@ -937,7 +954,7 @@ window.__LOCATE_DATA__ = {"asks":[{"k":"求第三边","label":"已知两边求�
 
   var reset = document.getElementById('loc-reset');
   if (reset) reset.addEventListener('click', function () {
-    state.ask = null; state.feats = {};
+    state.ask = null; state.sigs = {};
     syncOptions(); render();
   });
 

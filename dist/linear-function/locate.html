@@ -797,33 +797,38 @@ a:hover .tg-node { stroke-width: 2.4; }
 </div>
 
 <script>
-window.__LOCATE_DATA__ = {"asks":[{"k":"概念辨析","label":"判断是否一次函数、含参求 m 的范围"},{"k":"图象性质","label":"象限判断、增减性比较、交点与面积"},{"k":"平移变换","label":"平移求新解析式（左加右减、上加下减）"},{"k":"待定系数","label":"两点（或一点一条件）求解析式"},{"k":"方程不等式","label":"图象法解方程/方程组/不等式"},{"k":"实际建模","label":"分段计费、行程、方案比较"},{"k":"含参综合","label":"含参数的一次函数综合题"}],"features":{"k":"一次函数","words":["一次函数","正比例函数","y=kx+b","kxb","斜率","截距","象限","平移","待定系数","方案","起步价","话费","行程","追及"]},"patterns":[{"id":"linear-concept-judge","no":1,"title":"概念辨析与含参取值范围","kind":"单一型","asks":["概念辨析"],"signals":["下列函数","是一次函数","是正比例函数","m 为何值"],"route":["/linear-function/linear-concept"]},{"id":"linear-quadrant-judge","no":2,"title":"由 k、b 判断象限 / 由象限反推符号","kind":"单一型","asks":["图象性质"],"signals":["经过第几象限","不经过","图象经过第一、三、四象限"],"route":["/linear-function/linear-graph"]},{"id":"linear-prop-calc","no":3,"title":"交点、面积与增减性计算","kind":"单一型","asks":["图象性质"],"signals":["与 x 轴交点","与 y 轴交点","面积","y 随 x 增大而","比较 y₁ 与 y₂"],"route":["/linear-function/linear-property"]},{"id":"linear-translate-rule","no":4,"title":"平移变换求解析式","kind":"单一型","asks":["平移变换"],"signals":["平移","向左/右","向上/下","个单位","得到的直线"],"route":["/linear-function/linear-translate"]},{"id":"linear-fit-coeff","no":5,"title":"待定系数法求解析式","kind":"组合型","asks":["待定系数"],"signals":["经过点","两点","求解析式","图象过"],"route":["/linear-function/linear-application","/linear-function/linear-graph"]},{"id":"linear-eq-ineq","no":6,"title":"图象法解方程与不等式","kind":"组合型","asks":["方程不等式"],"signals":["交点","解集","不等式","方程组的解","图象如图"],"route":["/linear-function/linear-relation","/linear-function/linear-property"]},{"id":"linear-model-fee","no":7,"title":"分段计费与方案比较","kind":"综合型","asks":["实际建模"],"signals":["起步价","超过部分","月租","两种方案","哪种更合算","每公里"],"route":["/linear-function/linear-application","/linear-function/linear-relation"]},{"id":"linear-model-motion","no":8,"title":"行程与匀速运动建模","kind":"综合型","asks":["实际建模"],"signals":["相向而行","同向","追上","相距","速度","小时后"],"route":["/linear-function/linear-application","/linear-function/linear-relation"]},{"id":"linear-param-comprehensive","no":9,"title":"含参一次函数综合","kind":"综合型","asks":["含参综合","概念辨析"],"signals":["含参数","无论 m 取何值","恒过定点","图象与","m 的取值范围"],"route":["/linear-function/linear-concept","/linear-function/linear-graph","/linear-function/linear-relation"]}],"patternsUrl":"patterns.html","prefix":""};
+window.__LOCATE_DATA__ = {"asks":[{"k":"概念辨析","label":"判断是否一次函数、含参求 m 的范围"},{"k":"图象性质","label":"象限判断、增减性比较、交点与面积"},{"k":"平移变换","label":"平移求新解析式（左加右减、上加下减）"},{"k":"待定系数","label":"两点（或一点一条件）求解析式"},{"k":"方程不等式","label":"图象法解方程/方程组/不等式"},{"k":"实际建模","label":"分段计费、行程、方案比较"},{"k":"含参综合","label":"含参数的一次函数综合题"}],"features":{"k":"一次函数","words":["一次函数","正比例函数","y=kx+b","kxb","斜率","截距","象限","平移","待定系数","方案","起步价","话费","行程","追及"]},"patterns":[{"id":"linear-concept-judge","no":1,"title":"概念辨析与含参取值范围","kind":"单一型","asks":["概念辨析"],"signals":["下列函数","是一次函数","是正比例函数","m 为何值"],"route":["/linear-function/linear-concept"],"chain":[{"point":"linear-concept","role":"定义与 k≠0 条件","title":"一次函数的概念"}]},{"id":"linear-quadrant-judge","no":2,"title":"由 k、b 判断象限 / 由象限反推符号","kind":"单一型","asks":["图象性质"],"signals":["经过第几象限","不经过","图象经过第一、三、四象限"],"route":["/linear-function/linear-graph"],"chain":[{"point":"linear-graph","role":"k 定对角、b 定加减","title":"图象：一条直线，k 管方向 b 管位置"}]},{"id":"linear-prop-calc","no":3,"title":"交点、面积与增减性计算","kind":"单一型","asks":["图象性质"],"signals":["与 x 轴交点","与 y 轴交点","面积","y 随 x 增大而","比较 y₁ 与 y₂"],"route":["/linear-function/linear-property"],"chain":[{"point":"linear-property","role":"增减性、交点公式、面积公式","title":"性质：增减性、交点、平行"}]},{"id":"linear-translate-rule","no":4,"title":"平移变换求解析式","kind":"单一型","asks":["平移变换"],"signals":["平移","向左/右","向上/下","个单位","得到的直线"],"route":["/linear-function/linear-translate"],"chain":[{"point":"linear-translate","role":"左加右减、上加下减","title":"平移：上加下减、左加右减"}]},{"id":"linear-fit-coeff","no":5,"title":"待定系数法求解析式","kind":"组合型","asks":["待定系数"],"signals":["经过点","两点","求解析式","图象过"],"route":["/linear-function/linear-application","/linear-function/linear-graph"],"chain":[{"point":"linear-application","role":"设式、代点、解方程组","title":"待定系数法与实际建模"},{"point":"linear-graph","role":"用图象位置检验结果","title":"图象：一条直线，k 管方向 b 管位置"}]},{"id":"linear-eq-ineq","no":6,"title":"图象法解方程与不等式","kind":"组合型","asks":["方程不等式"],"signals":["交点","解集","不等式","方程组的解","图象如图"],"route":["/linear-function/linear-relation","/linear-function/linear-property"],"chain":[{"point":"linear-relation","role":"交点↔方程解、上下↔不等式","title":"与方程、不等式的关系"},{"point":"linear-property","role":"求交点坐标","title":"性质：增减性、交点、平行"}]},{"id":"linear-model-fee","no":7,"title":"分段计费与方案比较","kind":"综合型","asks":["实际建模"],"signals":["起步价","超过部分","月租","两种方案","哪种更合算","每公里"],"route":["/linear-function/linear-application","/linear-function/linear-relation"],"chain":[{"point":"linear-application","role":"分段解析式与建模步骤","title":"待定系数法与实际建模"},{"point":"linear-relation","role":"交点即分水岭、比较大小","title":"与方程、不等式的关系"}]},{"id":"linear-model-motion","no":8,"title":"行程与匀速运动建模","kind":"综合型","asks":["实际建模"],"signals":["相向而行","同向","追上","相距","速度","小时后"],"route":["/linear-function/linear-application","/linear-function/linear-relation"],"chain":[{"point":"linear-application","role":"路程=速度×时间，列两个解析式","title":"待定系数法与实际建模"},{"point":"linear-relation","role":"相遇/追及即两图象交点","title":"与方程、不等式的关系"}]},{"id":"linear-param-comprehensive","no":9,"title":"含参一次函数综合","kind":"综合型","asks":["含参综合","概念辨析"],"signals":["含参数","无论 m 取何值","恒过定点","图象与","m 的取值范围"],"route":["/linear-function/linear-concept","/linear-function/linear-graph","/linear-function/linear-relation"],"chain":[{"point":"linear-concept","role":"k ≠ 0 分类讨论","title":"一次函数的概念"},{"point":"linear-graph","role":"含参直线的位置随 m 变化","title":"图象：一条直线，k 管方向 b 管位置"},{"point":"linear-relation","role":"交点个数与解集讨论","title":"与方程、不等式的关系"}]}],"patternsUrl":"patterns.html","prefix":""};
 </script>
 <script>
 /*
  * 题目定位器：三问 → 匹配经典题型 → 告诉你第一步做什么
  * 数据由构建脚本通过 window.__LOCATE_DATA__ 注入。
+ * 数据约定（见 build.js renderLocate）：
+ *   asks     : [{k, desc}]                          —— 问题 1 的选项（k = 要什么）
+ *   patterns : [{id,no,title,kind,asks,signals,route,chain}]
+ *              chain : [{point, role, title}]        —— route[i] 是 /章/点 路径时，第 i 步的动作与去向页
+ * 问题 2 的选项直接取自各题型的 signals（题面信号词），选中即给对应题型加分。
  */
 (function () {
   var DATA = window.__LOCATE_DATA__;
   if (!DATA) return;
   var patterns = DATA.patterns;
-  var features = DATA.features;
   var asks = DATA.asks;
   var byId = {};
   patterns.forEach(function (p) { byId[p.id] = p; });
 
-  var state = { ask: null, feats: {} };
+  var state = { ask: null, sigs: {} };
 
   var root = document.getElementById('locator');
   if (!root) return;
 
-  /* ---------- 构建选项 ---------- */
+  /* ---------- 问题 1：求什么 ---------- */
   var askBox = document.getElementById('loc-asks');
   asks.forEach(function (a) {
     var b = document.createElement('button');
     b.className = 'loc-opt';
-    b.textContent = a.label;
+    b.textContent = a.k;
+    if (a.desc) b.title = a.desc;
     b.setAttribute('data-ask', a.k);
     b.addEventListener('click', function () {
       state.ask = (state.ask === a.k) ? null : a.k;
@@ -833,19 +838,25 @@ window.__LOCATE_DATA__ = {"asks":[{"k":"概念辨析","label":"判断是否一�
     askBox.appendChild(b);
   });
 
+  /* ---------- 问题 2：题面信号（来自各题型的 signals，去重） ---------- */
   var featBox = document.getElementById('loc-feats');
-  features.forEach(function (f) {
-    var b = document.createElement('button');
-    b.className = 'loc-opt small';
-    b.textContent = f.label;
-    b.setAttribute('data-feat', f.k);
-    b.addEventListener('click', function () {
-      if (state.feats[f.k]) delete state.feats[f.k];
-      else state.feats[f.k] = true;
-      syncOptions();
-      render();
+  var seen = {};
+  patterns.forEach(function (p) {
+    (p.signals || []).forEach(function (s) {
+      if (seen[s]) return;
+      seen[s] = true;
+      var b = document.createElement('button');
+      b.className = 'loc-opt small';
+      b.textContent = s;
+      b.setAttribute('data-sig', s);
+      b.addEventListener('click', function () {
+        if (state.sigs[s]) delete state.sigs[s];
+        else state.sigs[s] = true;
+        syncOptions();
+        render();
+      });
+      featBox.appendChild(b);
     });
-    featBox.appendChild(b);
   });
 
   function syncOptions() {
@@ -853,39 +864,43 @@ window.__LOCATE_DATA__ = {"asks":[{"k":"概念辨析","label":"判断是否一�
       b.classList.toggle('on', state.ask === b.getAttribute('data-ask'));
     });
     [].forEach.call(featBox.children, function (b) {
-      b.classList.toggle('on', !!state.feats[b.getAttribute('data-feat')]);
+      b.classList.toggle('on', !!state.sigs[b.getAttribute('data-sig')]);
     });
   }
 
   /* ---------- 匹配打分 ---------- */
-  function signalText(p) { return p.signals.join(' '); }
-
   function scorePattern(p) {
     var score = 0;
     var reasons = [];
-    if (state.ask) {
-      if (p.asks.indexOf(state.ask) >= 0) {
-        score += 10;
-        var askLabel = (asks.filter(function (a) { return a.k === state.ask; })[0] || {}).label || '';
-        reasons.push('你要找的是「' + askLabel + '」，这类题型正是干这个的');
-      }
+    if (state.ask && p.asks.indexOf(state.ask) >= 0) {
+      score += 10;
+      var askLabel = (asks.filter(function (a) { return a.k === state.ask; })[0] || {}).k || state.ask;
+      reasons.push('你要找的是「' + askLabel + '」，这类题型正是干这个的');
     }
-    var txt = signalText(p);
-    features.forEach(function (f) {
-      if (!state.feats[f.k]) return;
-      var hit = f.words.some(function (w) { return txt.indexOf(w) >= 0; });
-      if (hit) {
+    (p.signals || []).forEach(function (s) {
+      if (state.sigs[s]) {
         score += 3;
-        reasons.push('题面出现「' + f.k + '」类字眼，是它的典型特征');
+        reasons.push('题面出现「' + s + '」，是它的典型信号');
       }
     });
     return { score: score, reasons: reasons };
   }
 
+  /* 第一步：role 是动作，point 页是去向 */
+  function firstStep(p) {
+    var c = (p.chain && p.chain[0]) || null;
+    if (c && c.role) {
+      return '<a href="' + c.point + '.html"><b>' + esc(c.role) + '</b></a>'
+        + (c.title ? ' —— 去「' + esc(c.title) + '」页' : '');
+    }
+    if (c) return '<a href="' + c.point + '.html">' + esc(c.title || c.point) + '</a>';
+    return esc((p.route && p.route[0]) || '');
+  }
+
   /* ---------- 渲染结果 ---------- */
   function render() {
     var box = document.getElementById('loc-result');
-    var anyCond = !!state.ask || Object.keys(state.feats).length > 0;
+    var anyCond = !!state.ask || Object.keys(state.sigs).length > 0;
     if (!anyCond) {
       box.innerHTML = '<div class="loc-empty">先在上面的问题里点一两下，下面就会出现与之匹配的题型。<br>不用全部回答，选你有把握的就行。</div>';
       return;
@@ -906,19 +921,21 @@ window.__LOCATE_DATA__ = {"asks":[{"k":"概念辨析","label":"判断是否一�
     }
 
     var top = results[0].p;
+    var topNo = /^\d+$/.test(String(top.no)) ? ('第 ' + top.no + ' 类 · ') : (top.no + ' · ');
     var html = '<div class="loc-empty" style="text-align:left;border-style:solid;background:#e6f1fb;color:#123d63;padding:14px 18px">'
-      + '最像 <b>第 ' + top.no + ' 类 · ' + esc(top.title) + '</b>。它的第一步是：<b>' + esc(top.route[0]) + '</b>。'
+      + '最像 <b>' + topNo + esc(top.title) + '</b>。它的第一步是：' + firstStep(top) + '。'
       + '</div>';
 
     results.slice(0, 6).forEach(function (r) {
       var p = r.p;
+      var noTxt = /^\d+$/.test(String(p.no)) ? String(p.no).padStart(2, '0') : '';
       html += '<div class="loc-card">'
-        + '<div class="lc-top"><span class="type-no">' + String(p.no).padStart(2, '0') + '</span>'
-        + '<span class="lc-title"><a href="pattern/' + p.id + '.html">' + esc(p.title) + '</a></span>'
+        + '<div class="lc-top"><span class="type-no">' + noTxt + '</span>'
+        + '<span class="lc-title"><a href="pattern/' + p.id + '.html">' + (noTxt ? '' : esc(p.no) + ' · ') + esc(p.title) + '</a></span>'
         + '<span class="kind ' + kindClass(p.kind) + '">' + esc(p.kind) + '</span>'
         + '<span class="score">匹配度 ' + r.score + '</span></div>'
         + '<div class="lc-why">' + r.reasons.map(esc).join('；') + '</div>'
-        + '<div class="lc-first"><b>第一步：</b>' + esc(p.route[0]) + '</div>'
+        + '<div class="lc-first"><b>第一步：</b>' + firstStep(p) + '</div>'
         + '</div>';
     });
 
@@ -937,7 +954,7 @@ window.__LOCATE_DATA__ = {"asks":[{"k":"概念辨析","label":"判断是否一�
 
   var reset = document.getElementById('loc-reset');
   if (reset) reset.addEventListener('click', function () {
-    state.ask = null; state.feats = {};
+    state.ask = null; state.sigs = {};
     syncOptions(); render();
   });
 

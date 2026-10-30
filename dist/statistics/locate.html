@@ -797,33 +797,38 @@ a:hover .tg-node { stroke-width: 2.4; }
 </div>
 
 <script>
-window.__LOCATE_DATA__ = {"asks":[{"k":"平均数","label":"求平均数、加权平均数"},{"k":"中位数","label":"排序求中位数"},{"k":"众数","label":"频数与出现次数"},{"k":"方差","label":"方差、标准差、稳定性"},{"k":"统计量选择","label":"哪个量更能代表一般水平"}],"features":{"k":"数据分析","words":["平均数","平均分","加权","中位数","众数","方差","标准差","波动","稳定","稳定性","出现次数最多","最中间","正中间","排序","频数","权重","百分比","代表","一般水平","人均"]},"patterns":[{"id":"stat-calc-mean","no":1,"title":"平均数与加权平均数的计算","kind":"计算","asks":["平均数"],"signals":["平均数","平均成绩","占百分之","权重","加权","人数不同"],"route":["/statistics/stat-mean"]},{"id":"stat-calc-median","no":2,"title":"求中位数","kind":"计算","asks":["中位数"],"signals":["中位数","正中间","从小到大","奇数","偶数"],"route":["/statistics/stat-median"]},{"id":"stat-calc-mode","no":3,"title":"求众数","kind":"计算","asks":["众数"],"signals":["众数","出现次数最多","频数","最常见的"],"route":["/statistics/stat-mode"]},{"id":"stat-reverse-mean","no":4,"title":"由统计量反求数据","kind":"组合型","asks":["平均数","中位数","众数"],"signals":["平均数是","求 x","已知平均数","若加入一个数据"],"route":["/statistics/stat-mean","/statistics/stat-median"]},{"id":"stat-calc-var","no":5,"title":"方差与标准差的计算","kind":"计算","asks":["方差"],"signals":["方差","标准差","s²","求波动"],"route":["/statistics/stat-var"]},{"id":"stat-compare-var","no":6,"title":"用方差比较稳定性","kind":"组合型","asks":["方差"],"signals":["谁更稳定","方差小的","波动","选谁","成绩更稳定"],"route":["/statistics/stat-var","/statistics/stat-mean"]},{"id":"stat-choose-metric","no":7,"title":"统计量的选择与说理","kind":"应用型","asks":["统计量选择"],"signals":["更能代表","哪个更合理","一般水平","极端值","拉高","拉低","工资","房价"],"route":["/statistics/stat-choice","/statistics/stat-median","/statistics/stat-mean"]},{"id":"stat-robust-var","no":8,"title":"数据变化对方差的影响","kind":"综合","asks":["方差","平均数"],"signals":["每个数据都加","都乘","平均数和方差","变化后","平移"],"route":["/statistics/stat-var","/statistics/stat-mean"]}],"patternsUrl":"patterns.html","prefix":""};
+window.__LOCATE_DATA__ = {"asks":[{"k":"平均数","label":"求平均数、加权平均数"},{"k":"中位数","label":"排序求中位数"},{"k":"众数","label":"频数与出现次数"},{"k":"方差","label":"方差、标准差、稳定性"},{"k":"统计量选择","label":"哪个量更能代表一般水平"}],"features":{"k":"数据分析","words":["平均数","平均分","加权","中位数","众数","方差","标准差","波动","稳定","稳定性","出现次数最多","最中间","正中间","排序","频数","权重","百分比","代表","一般水平","人均"]},"patterns":[{"id":"stat-calc-mean","no":1,"title":"平均数与加权平均数的计算","kind":"计算","asks":["平均数"],"signals":["平均数","平均成绩","占百分之","权重","加权","人数不同"],"route":["/statistics/stat-mean"],"chain":[{"point":"stat-mean","role":"总和 ÷ 个数 / 加权","title":"平均数与加权平均数"}]},{"id":"stat-calc-median","no":2,"title":"求中位数","kind":"计算","asks":["中位数"],"signals":["中位数","正中间","从小到大","奇数","偶数"],"route":["/statistics/stat-median"],"chain":[{"point":"stat-median","role":"先排序再取中间","title":"中位数"}]},{"id":"stat-calc-mode","no":3,"title":"求众数","kind":"计算","asks":["众数"],"signals":["众数","出现次数最多","频数","最常见的"],"route":["/statistics/stat-mode"],"chain":[{"point":"stat-mode","role":"只看出现频率","title":"众数"}]},{"id":"stat-reverse-mean","no":4,"title":"由统计量反求数据","kind":"组合型","asks":["平均数","中位数","众数"],"signals":["平均数是","求 x","已知平均数","若加入一个数据"],"route":["/statistics/stat-mean","/statistics/stat-median"],"chain":[{"point":"stat-mean","role":"总和 = 平均数 × 个数","title":"平均数与加权平均数"},{"point":"stat-median","role":"位置关系反推","title":"中位数"}]},{"id":"stat-calc-var","no":5,"title":"方差与标准差的计算","kind":"计算","asks":["方差"],"signals":["方差","标准差","s²","求波动"],"route":["/statistics/stat-var"],"chain":[{"point":"stat-var","role":"偏差平方取平均","title":"方差与标准差"}]},{"id":"stat-compare-var","no":6,"title":"用方差比较稳定性","kind":"组合型","asks":["方差"],"signals":["谁更稳定","方差小的","波动","选谁","成绩更稳定"],"route":["/statistics/stat-var","/statistics/stat-mean"],"chain":[{"point":"stat-var","role":"方差小的波动小","title":"方差与标准差"},{"point":"stat-mean","role":"先确认平均数相同","title":"平均数与加权平均数"}]},{"id":"stat-choose-metric","no":7,"title":"统计量的选择与说理","kind":"应用型","asks":["统计量选择"],"signals":["更能代表","哪个更合理","一般水平","极端值","拉高","拉低","工资","房价"],"route":["/statistics/stat-choice","/statistics/stat-median","/statistics/stat-mean"],"chain":[{"point":"stat-choice","role":"三个量的分工","title":"三个统计量怎么选"},{"point":"stat-median","role":"对极端值免疫","title":"中位数"},{"point":"stat-mean","role":"受极端值影响","title":"平均数与加权平均数"}]},{"id":"stat-robust-var","no":8,"title":"数据变化对方差的影响","kind":"综合","asks":["方差","平均数"],"signals":["每个数据都加","都乘","平均数和方差","变化后","平移"],"route":["/statistics/stat-var","/statistics/stat-mean"],"chain":[{"point":"stat-var","role":"偏差不变则方差不变","title":"方差与标准差"},{"point":"stat-mean","role":"平均数跟着动","title":"平均数与加权平均数"}]}],"patternsUrl":"patterns.html","prefix":""};
 </script>
 <script>
 /*
  * 题目定位器：三问 → 匹配经典题型 → 告诉你第一步做什么
  * 数据由构建脚本通过 window.__LOCATE_DATA__ 注入。
+ * 数据约定（见 build.js renderLocate）：
+ *   asks     : [{k, desc}]                          —— 问题 1 的选项（k = 要什么）
+ *   patterns : [{id,no,title,kind,asks,signals,route,chain}]
+ *              chain : [{point, role, title}]        —— route[i] 是 /章/点 路径时，第 i 步的动作与去向页
+ * 问题 2 的选项直接取自各题型的 signals（题面信号词），选中即给对应题型加分。
  */
 (function () {
   var DATA = window.__LOCATE_DATA__;
   if (!DATA) return;
   var patterns = DATA.patterns;
-  var features = DATA.features;
   var asks = DATA.asks;
   var byId = {};
   patterns.forEach(function (p) { byId[p.id] = p; });
 
-  var state = { ask: null, feats: {} };
+  var state = { ask: null, sigs: {} };
 
   var root = document.getElementById('locator');
   if (!root) return;
 
-  /* ---------- 构建选项 ---------- */
+  /* ---------- 问题 1：求什么 ---------- */
   var askBox = document.getElementById('loc-asks');
   asks.forEach(function (a) {
     var b = document.createElement('button');
     b.className = 'loc-opt';
-    b.textContent = a.label;
+    b.textContent = a.k;
+    if (a.desc) b.title = a.desc;
     b.setAttribute('data-ask', a.k);
     b.addEventListener('click', function () {
       state.ask = (state.ask === a.k) ? null : a.k;
@@ -833,19 +838,25 @@ window.__LOCATE_DATA__ = {"asks":[{"k":"平均数","label":"求平均数、加�
     askBox.appendChild(b);
   });
 
+  /* ---------- 问题 2：题面信号（来自各题型的 signals，去重） ---------- */
   var featBox = document.getElementById('loc-feats');
-  features.forEach(function (f) {
-    var b = document.createElement('button');
-    b.className = 'loc-opt small';
-    b.textContent = f.label;
-    b.setAttribute('data-feat', f.k);
-    b.addEventListener('click', function () {
-      if (state.feats[f.k]) delete state.feats[f.k];
-      else state.feats[f.k] = true;
-      syncOptions();
-      render();
+  var seen = {};
+  patterns.forEach(function (p) {
+    (p.signals || []).forEach(function (s) {
+      if (seen[s]) return;
+      seen[s] = true;
+      var b = document.createElement('button');
+      b.className = 'loc-opt small';
+      b.textContent = s;
+      b.setAttribute('data-sig', s);
+      b.addEventListener('click', function () {
+        if (state.sigs[s]) delete state.sigs[s];
+        else state.sigs[s] = true;
+        syncOptions();
+        render();
+      });
+      featBox.appendChild(b);
     });
-    featBox.appendChild(b);
   });
 
   function syncOptions() {
@@ -853,39 +864,43 @@ window.__LOCATE_DATA__ = {"asks":[{"k":"平均数","label":"求平均数、加�
       b.classList.toggle('on', state.ask === b.getAttribute('data-ask'));
     });
     [].forEach.call(featBox.children, function (b) {
-      b.classList.toggle('on', !!state.feats[b.getAttribute('data-feat')]);
+      b.classList.toggle('on', !!state.sigs[b.getAttribute('data-sig')]);
     });
   }
 
   /* ---------- 匹配打分 ---------- */
-  function signalText(p) { return p.signals.join(' '); }
-
   function scorePattern(p) {
     var score = 0;
     var reasons = [];
-    if (state.ask) {
-      if (p.asks.indexOf(state.ask) >= 0) {
-        score += 10;
-        var askLabel = (asks.filter(function (a) { return a.k === state.ask; })[0] || {}).label || '';
-        reasons.push('你要找的是「' + askLabel + '」，这类题型正是干这个的');
-      }
+    if (state.ask && p.asks.indexOf(state.ask) >= 0) {
+      score += 10;
+      var askLabel = (asks.filter(function (a) { return a.k === state.ask; })[0] || {}).k || state.ask;
+      reasons.push('你要找的是「' + askLabel + '」，这类题型正是干这个的');
     }
-    var txt = signalText(p);
-    features.forEach(function (f) {
-      if (!state.feats[f.k]) return;
-      var hit = f.words.some(function (w) { return txt.indexOf(w) >= 0; });
-      if (hit) {
+    (p.signals || []).forEach(function (s) {
+      if (state.sigs[s]) {
         score += 3;
-        reasons.push('题面出现「' + f.k + '」类字眼，是它的典型特征');
+        reasons.push('题面出现「' + s + '」，是它的典型信号');
       }
     });
     return { score: score, reasons: reasons };
   }
 
+  /* 第一步：role 是动作，point 页是去向 */
+  function firstStep(p) {
+    var c = (p.chain && p.chain[0]) || null;
+    if (c && c.role) {
+      return '<a href="' + c.point + '.html"><b>' + esc(c.role) + '</b></a>'
+        + (c.title ? ' —— 去「' + esc(c.title) + '」页' : '');
+    }
+    if (c) return '<a href="' + c.point + '.html">' + esc(c.title || c.point) + '</a>';
+    return esc((p.route && p.route[0]) || '');
+  }
+
   /* ---------- 渲染结果 ---------- */
   function render() {
     var box = document.getElementById('loc-result');
-    var anyCond = !!state.ask || Object.keys(state.feats).length > 0;
+    var anyCond = !!state.ask || Object.keys(state.sigs).length > 0;
     if (!anyCond) {
       box.innerHTML = '<div class="loc-empty">先在上面的问题里点一两下，下面就会出现与之匹配的题型。<br>不用全部回答，选你有把握的就行。</div>';
       return;
@@ -906,19 +921,21 @@ window.__LOCATE_DATA__ = {"asks":[{"k":"平均数","label":"求平均数、加�
     }
 
     var top = results[0].p;
+    var topNo = /^\d+$/.test(String(top.no)) ? ('第 ' + top.no + ' 类 · ') : (top.no + ' · ');
     var html = '<div class="loc-empty" style="text-align:left;border-style:solid;background:#e6f1fb;color:#123d63;padding:14px 18px">'
-      + '最像 <b>第 ' + top.no + ' 类 · ' + esc(top.title) + '</b>。它的第一步是：<b>' + esc(top.route[0]) + '</b>。'
+      + '最像 <b>' + topNo + esc(top.title) + '</b>。它的第一步是：' + firstStep(top) + '。'
       + '</div>';
 
     results.slice(0, 6).forEach(function (r) {
       var p = r.p;
+      var noTxt = /^\d+$/.test(String(p.no)) ? String(p.no).padStart(2, '0') : '';
       html += '<div class="loc-card">'
-        + '<div class="lc-top"><span class="type-no">' + String(p.no).padStart(2, '0') + '</span>'
-        + '<span class="lc-title"><a href="pattern/' + p.id + '.html">' + esc(p.title) + '</a></span>'
+        + '<div class="lc-top"><span class="type-no">' + noTxt + '</span>'
+        + '<span class="lc-title"><a href="pattern/' + p.id + '.html">' + (noTxt ? '' : esc(p.no) + ' · ') + esc(p.title) + '</a></span>'
         + '<span class="kind ' + kindClass(p.kind) + '">' + esc(p.kind) + '</span>'
         + '<span class="score">匹配度 ' + r.score + '</span></div>'
         + '<div class="lc-why">' + r.reasons.map(esc).join('；') + '</div>'
-        + '<div class="lc-first"><b>第一步：</b>' + esc(p.route[0]) + '</div>'
+        + '<div class="lc-first"><b>第一步：</b>' + firstStep(p) + '</div>'
         + '</div>';
     });
 
@@ -937,7 +954,7 @@ window.__LOCATE_DATA__ = {"asks":[{"k":"平均数","label":"求平均数、加�
 
   var reset = document.getElementById('loc-reset');
   if (reset) reset.addEventListener('click', function () {
-    state.ask = null; state.feats = {};
+    state.ask = null; state.sigs = {};
     syncOptions(); render();
   });
 

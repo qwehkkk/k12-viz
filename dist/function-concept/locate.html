@@ -797,33 +797,38 @@ a:hover .tg-node { stroke-width: 2.4; }
 </div>
 
 <script>
-window.__LOCATE_DATA__ = {"asks":[{"k":"函数概念","label":"同一函数判断、f(x±a) 求值"},{"k":"定义域","label":"分式、根式、对数叠加"},{"k":"值域","label":"闭区间二次函数、分段函数"},{"k":"分段函数","label":"分段求值、嵌套求值"},{"k":"单调性","label":"定义法证明、求参数范围"},{"k":"奇偶性","label":"判断、求解析式、求参数"},{"k":"幂函数","label":"由点求解析式、比较大小"},{"k":"图象识别","label":"给图象选解析式、给解析式选图象"}],"features":[{"k":"函数","words":["函数","定义域","值域","单调","奇函数","偶函数","奇偶","幂函数","分段","f(x)","递增","递减","对称轴"]}],"patterns":[{"id":"fc-b-domain","no":"基础 1","title":"求定义域","kind":"定义域","asks":["定义域"],"signals":["定义域","有意义","取值范围"],"route":["/function-concept/fc-domain"]},{"id":"fc-b-value","no":"基础 2","title":"二次函数在闭区间上的值域","kind":"值域","asks":["值域"],"signals":["值域","最大值","最小值","闭区间"],"route":["/function-concept/fc-value"]},{"id":"fc-b-parity","no":"基础 3","title":"判断奇偶性","kind":"奇偶性","asks":["奇偶性"],"signals":["奇函数","偶函数","奇偶性","f(−x)"],"route":["/function-concept/fc-parity"]},{"id":"fc-b-piece","no":"基础 4","title":"分段函数求值","kind":"分段函数","asks":["分段函数"],"signals":["分段","f(f(","x ≥ 0","x < 0"],"route":["/function-concept/fc-value"]},{"id":"fc-m-proof","no":"中档 1","title":"定义法证明单调性","kind":"单调性","asks":["单调性"],"signals":["证明","单调递增","单调递减","任取"],"route":["/function-concept/fc-mono"]},{"id":"fc-m-param","no":"中档 2","title":"由单调性求参数","kind":"单调性","asks":["单调性"],"signals":["单调","求取值范围","参数"],"route":["/function-concept/fc-mono","/function-concept/fc-value"]},{"id":"fc-m-oddparse","no":"中档 3","title":"奇偶性求解析式","kind":"奇偶性","asks":["奇偶性"],"signals":["奇函数","x < 0 时","解析式","偶函数"],"route":["/function-concept/fc-parity","/function-concept/fc-def"]},{"id":"fc-m-compare","no":"中档 4","title":"利用单调性比较大小","kind":"单调性","asks":["单调性","幂函数"],"signals":["比较大小","递增","递减","f(","幂"],"route":["/function-concept/fc-mono","/function-concept/fc-power"]},{"id":"fc-h-abstract","no":"拔高 1","title":"抽象函数单调性","kind":"单调性","asks":["单调性","函数概念"],"signals":["对任意","f(x+y)","f(x)+f(y)","抽象函数"],"route":["/function-concept/fc-mono","/function-concept/fc-def","/function-concept/fc-parity"]}],"patternsUrl":"patterns.html","prefix":""};
+window.__LOCATE_DATA__ = {"asks":[{"k":"函数概念","label":"同一函数判断、f(x±a) 求值"},{"k":"定义域","label":"分式、根式、对数叠加"},{"k":"值域","label":"闭区间二次函数、分段函数"},{"k":"分段函数","label":"分段求值、嵌套求值"},{"k":"单调性","label":"定义法证明、求参数范围"},{"k":"奇偶性","label":"判断、求解析式、求参数"},{"k":"幂函数","label":"由点求解析式、比较大小"},{"k":"图象识别","label":"给图象选解析式、给解析式选图象"}],"features":[{"k":"函数","words":["函数","定义域","值域","单调","奇函数","偶函数","奇偶","幂函数","分段","f(x)","递增","递减","对称轴"]}],"patterns":[{"id":"fc-b-domain","no":"基础 1","title":"求定义域","kind":"定义域","asks":["定义域"],"signals":["定义域","有意义","取值范围"],"route":["/function-concept/fc-domain"],"chain":[{"point":"fc-domain","role":"四条禁令取交集","title":"定义域：谁能进这个函数"}]},{"id":"fc-b-value","no":"基础 2","title":"二次函数在闭区间上的值域","kind":"值域","asks":["值域"],"signals":["值域","最大值","最小值","闭区间"],"route":["/function-concept/fc-value"],"chain":[{"point":"fc-value","role":"对称轴定位法","title":"值域与分段函数"}]},{"id":"fc-b-parity","no":"基础 3","title":"判断奇偶性","kind":"奇偶性","asks":["奇偶性"],"signals":["奇函数","偶函数","奇偶性","f(−x)"],"route":["/function-concept/fc-parity"],"chain":[{"point":"fc-parity","role":"先看定义域再看 f(−x)","title":"奇偶性：关于谁对称"}]},{"id":"fc-b-piece","no":"基础 4","title":"分段函数求值","kind":"分段函数","asks":["分段函数"],"signals":["分段","f(f(","x ≥ 0","x < 0"],"route":["/function-concept/fc-value"],"chain":[{"point":"fc-value","role":"先定段再代入","title":"值域与分段函数"}]},{"id":"fc-m-proof","no":"中档 1","title":"定义法证明单调性","kind":"单调性","asks":["单调性"],"signals":["证明","单调递增","单调递减","任取"],"route":["/function-concept/fc-mono"],"chain":[{"point":"fc-mono","role":"取值—作差—定号","title":"单调性：往上走还是往下走"}]},{"id":"fc-m-param","no":"中档 2","title":"由单调性求参数","kind":"单调性","asks":["单调性"],"signals":["单调","求取值范围","参数"],"route":["/function-concept/fc-mono","/function-concept/fc-value"],"chain":[{"point":"fc-mono","role":"单调区间与对称轴的关系","title":"单调性：往上走还是往下走"},{"point":"fc-value","role":"对称轴的位置决定单调分段","title":"值域与分段函数"}]},{"id":"fc-m-oddparse","no":"中档 3","title":"奇偶性求解析式","kind":"奇偶性","asks":["奇偶性"],"signals":["奇函数","x < 0 时","解析式","偶函数"],"route":["/function-concept/fc-parity","/function-concept/fc-def"],"chain":[{"point":"fc-parity","role":"f(x) = −f(−x) 转换","title":"奇偶性：关于谁对称"},{"point":"fc-def","role":"变量替换的合法性","title":"函数的概念与三要素"}]},{"id":"fc-m-compare","no":"中档 4","title":"利用单调性比较大小","kind":"单调性","asks":["单调性","幂函数"],"signals":["比较大小","递增","递减","f(","幂"],"route":["/function-concept/fc-mono","/function-concept/fc-power"],"chain":[{"point":"fc-mono","role":"单调性把函数值大小转成自变量大小","title":"单调性：往上走还是往下走"},{"point":"fc-power","role":"幂函数走势","title":"幂函数：五个基本图形"}]},{"id":"fc-h-abstract","no":"拔高 1","title":"抽象函数单调性","kind":"单调性","asks":["单调性","函数概念"],"signals":["对任意","f(x+y)","f(x)+f(y)","抽象函数"],"route":["/function-concept/fc-mono","/function-concept/fc-def","/function-concept/fc-parity"],"chain":[{"point":"fc-mono","role":"赋值法构造差","title":"单调性：往上走还是往下走"},{"point":"fc-def","role":"f(0) 与 f(−x) 的赋值技巧","title":"函数的概念与三要素"},{"point":"fc-parity","role":"由 f(−x) 关系判奇偶","title":"奇偶性：关于谁对称"}]}],"patternsUrl":"patterns.html","prefix":""};
 </script>
 <script>
 /*
  * 题目定位器：三问 → 匹配经典题型 → 告诉你第一步做什么
  * 数据由构建脚本通过 window.__LOCATE_DATA__ 注入。
+ * 数据约定（见 build.js renderLocate）：
+ *   asks     : [{k, desc}]                          —— 问题 1 的选项（k = 要什么）
+ *   patterns : [{id,no,title,kind,asks,signals,route,chain}]
+ *              chain : [{point, role, title}]        —— route[i] 是 /章/点 路径时，第 i 步的动作与去向页
+ * 问题 2 的选项直接取自各题型的 signals（题面信号词），选中即给对应题型加分。
  */
 (function () {
   var DATA = window.__LOCATE_DATA__;
   if (!DATA) return;
   var patterns = DATA.patterns;
-  var features = DATA.features;
   var asks = DATA.asks;
   var byId = {};
   patterns.forEach(function (p) { byId[p.id] = p; });
 
-  var state = { ask: null, feats: {} };
+  var state = { ask: null, sigs: {} };
 
   var root = document.getElementById('locator');
   if (!root) return;
 
-  /* ---------- 构建选项 ---------- */
+  /* ---------- 问题 1：求什么 ---------- */
   var askBox = document.getElementById('loc-asks');
   asks.forEach(function (a) {
     var b = document.createElement('button');
     b.className = 'loc-opt';
-    b.textContent = a.label;
+    b.textContent = a.k;
+    if (a.desc) b.title = a.desc;
     b.setAttribute('data-ask', a.k);
     b.addEventListener('click', function () {
       state.ask = (state.ask === a.k) ? null : a.k;
@@ -833,19 +838,25 @@ window.__LOCATE_DATA__ = {"asks":[{"k":"函数概念","label":"同一函数判�
     askBox.appendChild(b);
   });
 
+  /* ---------- 问题 2：题面信号（来自各题型的 signals，去重） ---------- */
   var featBox = document.getElementById('loc-feats');
-  features.forEach(function (f) {
-    var b = document.createElement('button');
-    b.className = 'loc-opt small';
-    b.textContent = f.label;
-    b.setAttribute('data-feat', f.k);
-    b.addEventListener('click', function () {
-      if (state.feats[f.k]) delete state.feats[f.k];
-      else state.feats[f.k] = true;
-      syncOptions();
-      render();
+  var seen = {};
+  patterns.forEach(function (p) {
+    (p.signals || []).forEach(function (s) {
+      if (seen[s]) return;
+      seen[s] = true;
+      var b = document.createElement('button');
+      b.className = 'loc-opt small';
+      b.textContent = s;
+      b.setAttribute('data-sig', s);
+      b.addEventListener('click', function () {
+        if (state.sigs[s]) delete state.sigs[s];
+        else state.sigs[s] = true;
+        syncOptions();
+        render();
+      });
+      featBox.appendChild(b);
     });
-    featBox.appendChild(b);
   });
 
   function syncOptions() {
@@ -853,39 +864,43 @@ window.__LOCATE_DATA__ = {"asks":[{"k":"函数概念","label":"同一函数判�
       b.classList.toggle('on', state.ask === b.getAttribute('data-ask'));
     });
     [].forEach.call(featBox.children, function (b) {
-      b.classList.toggle('on', !!state.feats[b.getAttribute('data-feat')]);
+      b.classList.toggle('on', !!state.sigs[b.getAttribute('data-sig')]);
     });
   }
 
   /* ---------- 匹配打分 ---------- */
-  function signalText(p) { return p.signals.join(' '); }
-
   function scorePattern(p) {
     var score = 0;
     var reasons = [];
-    if (state.ask) {
-      if (p.asks.indexOf(state.ask) >= 0) {
-        score += 10;
-        var askLabel = (asks.filter(function (a) { return a.k === state.ask; })[0] || {}).label || '';
-        reasons.push('你要找的是「' + askLabel + '」，这类题型正是干这个的');
-      }
+    if (state.ask && p.asks.indexOf(state.ask) >= 0) {
+      score += 10;
+      var askLabel = (asks.filter(function (a) { return a.k === state.ask; })[0] || {}).k || state.ask;
+      reasons.push('你要找的是「' + askLabel + '」，这类题型正是干这个的');
     }
-    var txt = signalText(p);
-    features.forEach(function (f) {
-      if (!state.feats[f.k]) return;
-      var hit = f.words.some(function (w) { return txt.indexOf(w) >= 0; });
-      if (hit) {
+    (p.signals || []).forEach(function (s) {
+      if (state.sigs[s]) {
         score += 3;
-        reasons.push('题面出现「' + f.k + '」类字眼，是它的典型特征');
+        reasons.push('题面出现「' + s + '」，是它的典型信号');
       }
     });
     return { score: score, reasons: reasons };
   }
 
+  /* 第一步：role 是动作，point 页是去向 */
+  function firstStep(p) {
+    var c = (p.chain && p.chain[0]) || null;
+    if (c && c.role) {
+      return '<a href="' + c.point + '.html"><b>' + esc(c.role) + '</b></a>'
+        + (c.title ? ' —— 去「' + esc(c.title) + '」页' : '');
+    }
+    if (c) return '<a href="' + c.point + '.html">' + esc(c.title || c.point) + '</a>';
+    return esc((p.route && p.route[0]) || '');
+  }
+
   /* ---------- 渲染结果 ---------- */
   function render() {
     var box = document.getElementById('loc-result');
-    var anyCond = !!state.ask || Object.keys(state.feats).length > 0;
+    var anyCond = !!state.ask || Object.keys(state.sigs).length > 0;
     if (!anyCond) {
       box.innerHTML = '<div class="loc-empty">先在上面的问题里点一两下，下面就会出现与之匹配的题型。<br>不用全部回答，选你有把握的就行。</div>';
       return;
@@ -906,19 +921,21 @@ window.__LOCATE_DATA__ = {"asks":[{"k":"函数概念","label":"同一函数判�
     }
 
     var top = results[0].p;
+    var topNo = /^\d+$/.test(String(top.no)) ? ('第 ' + top.no + ' 类 · ') : (top.no + ' · ');
     var html = '<div class="loc-empty" style="text-align:left;border-style:solid;background:#e6f1fb;color:#123d63;padding:14px 18px">'
-      + '最像 <b>第 ' + top.no + ' 类 · ' + esc(top.title) + '</b>。它的第一步是：<b>' + esc(top.route[0]) + '</b>。'
+      + '最像 <b>' + topNo + esc(top.title) + '</b>。它的第一步是：' + firstStep(top) + '。'
       + '</div>';
 
     results.slice(0, 6).forEach(function (r) {
       var p = r.p;
+      var noTxt = /^\d+$/.test(String(p.no)) ? String(p.no).padStart(2, '0') : '';
       html += '<div class="loc-card">'
-        + '<div class="lc-top"><span class="type-no">' + String(p.no).padStart(2, '0') + '</span>'
-        + '<span class="lc-title"><a href="pattern/' + p.id + '.html">' + esc(p.title) + '</a></span>'
+        + '<div class="lc-top"><span class="type-no">' + noTxt + '</span>'
+        + '<span class="lc-title"><a href="pattern/' + p.id + '.html">' + (noTxt ? '' : esc(p.no) + ' · ') + esc(p.title) + '</a></span>'
         + '<span class="kind ' + kindClass(p.kind) + '">' + esc(p.kind) + '</span>'
         + '<span class="score">匹配度 ' + r.score + '</span></div>'
         + '<div class="lc-why">' + r.reasons.map(esc).join('；') + '</div>'
-        + '<div class="lc-first"><b>第一步：</b>' + esc(p.route[0]) + '</div>'
+        + '<div class="lc-first"><b>第一步：</b>' + firstStep(p) + '</div>'
         + '</div>';
     });
 
@@ -937,7 +954,7 @@ window.__LOCATE_DATA__ = {"asks":[{"k":"函数概念","label":"同一函数判�
 
   var reset = document.getElementById('loc-reset');
   if (reset) reset.addEventListener('click', function () {
-    state.ask = null; state.feats = {};
+    state.ask = null; state.sigs = {};
     syncOptions(); render();
   });
 

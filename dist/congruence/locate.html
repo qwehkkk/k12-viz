@@ -797,33 +797,38 @@ a:hover .tg-node { stroke-width: 2.4; }
 </div>
 
 <script>
-window.__LOCATE_DATA__ = {"asks":[{"k":"找对应关系","label":"由全等求边、求角"},{"k":"证全等","label":"用 SSS/SAS/ASA/AAS/HL 证两个三角形全等"},{"k":"证角相等","label":"两次全等、综合证明"},{"k":"判定辨析","label":"判断某个条件组合能否判定全等"},{"k":"角平分线","label":"角平分线的性质、逆定理与作图"}],"features":{"k":"全等","words":["全等","≌","对应边","对应角","sss","sas","asa","aas","hl","边边边","边角边","角边角","斜边","直角边","角平分线","求证","证明"]},"patterns":[{"id":"cong-find","no":1,"title":"由全等求边与角（读对应关系）","kind":"计算","asks":["找对应关系"],"signals":["△ABC ≌ △DEF","求 ∠F","求 DE","全等三角形的周长","对应边"],"route":["/congruence/cong-concept"]},{"id":"cong-sss-proof","no":2,"title":"SSS 证全等（含公共边）","kind":"证明","asks":["证全等","证角相等"],"signals":["AB = AC，BD = CD","公共边","中点","求证 ∠B = ∠C","三条边"],"route":["/congruence/cong-sss","/congruence/cong-concept"]},{"id":"cong-sas-proof","no":3,"title":"SAS 证全等（对角、公共角、平分线）","kind":"证明","asks":["证全等","证角相等"],"signals":["两边 + 夹角","对顶角","角平分线","中点","求证 AB = DE"],"route":["/congruence/cong-sas","/congruence/cong-concept"]},{"id":"cong-asa-proof","no":4,"title":"ASA / AAS 证全等（平行线造角）","kind":"证明","asks":["证全等","证角相等"],"signals":["两角 + 一边","平行线","内错角","∠B = ∠E","公共角"],"route":["/congruence/cong-asa","/congruence/cong-concept"]},{"id":"cong-hl-proof","no":5,"title":"HL 证全等（直角三角形专用）","kind":"证明","asks":["证全等","证角相等"],"signals":["Rt△","垂直","高","斜边","直角边","∠C = 90°"],"route":["/congruence/cong-hl","/congruence/cong-concept"]},{"id":"cong-chain","no":6,"title":"两次全等：先证一对，再证另一对","kind":"组合型","asks":["证角相等","证全等"],"signals":["求证 ∠… = ∠…","线段相等","两个结论","中点","正方形/平行四边形背景"],"route":["/congruence/cong-concept","/congruence/cong-sas"]},{"id":"cong-ssa-trap","no":7,"title":"判定辨析：为什么「边边角」不行","kind":"判断","asks":["判定辨析"],"signals":["下列条件不能判定全等的是","两边及其中一边的对角","选择题","说法正确的是","SSA"],"route":["/congruence/cong-sas","/congruence/cong-hl"]},{"id":"bisector-proof","no":8,"title":"角平分线：性质定理与逆定理的应用","kind":"组合型","asks":["角平分线","证角相等","证全等"],"signals":["角平分线","到两边的距离","PM ⊥ OA","内心","到三边距离相等"],"route":["/congruence/bisector","/congruence/cong-hl"]},{"id":"bisector-apply","no":9,"title":"角平分线的尺规作图与实际选址","kind":"应用","asks":["角平分线"],"signals":["尺规作图","作角平分线","到两条路距离相等","选址","保留作图痕迹"],"route":["/congruence/bisector"]}],"patternsUrl":"patterns.html","prefix":""};
+window.__LOCATE_DATA__ = {"asks":[{"k":"找对应关系","label":"由全等求边、求角"},{"k":"证全等","label":"用 SSS/SAS/ASA/AAS/HL 证两个三角形全等"},{"k":"证角相等","label":"两次全等、综合证明"},{"k":"判定辨析","label":"判断某个条件组合能否判定全等"},{"k":"角平分线","label":"角平分线的性质、逆定理与作图"}],"features":{"k":"全等","words":["全等","≌","对应边","对应角","sss","sas","asa","aas","hl","边边边","边角边","角边角","斜边","直角边","角平分线","求证","证明"]},"patterns":[{"id":"cong-find","no":1,"title":"由全等求边与角（读对应关系）","kind":"计算","asks":["找对应关系"],"signals":["△ABC ≌ △DEF","求 ∠F","求 DE","全等三角形的周长","对应边"],"route":["/congruence/cong-concept"],"chain":[{"point":"cong-concept","role":"对应边相等、对应角相等","title":"全等三角形的性质：对应边、对应角"}]},{"id":"cong-sss-proof","no":2,"title":"SSS 证全等（含公共边）","kind":"证明","asks":["证全等","证角相等"],"signals":["AB = AC，BD = CD","公共边","中点","求证 ∠B = ∠C","三条边"],"route":["/congruence/cong-sss","/congruence/cong-concept"],"chain":[{"point":"cong-sss","role":"三边分别相等","title":"边边边（SSS）"},{"point":"cong-concept","role":"全等后取对应角","title":"全等三角形的性质：对应边、对应角"}]},{"id":"cong-sas-proof","no":3,"title":"SAS 证全等（对角、公共角、平分线）","kind":"证明","asks":["证全等","证角相等"],"signals":["两边 + 夹角","对顶角","角平分线","中点","求证 AB = DE"],"route":["/congruence/cong-sas","/congruence/cong-concept"],"chain":[{"point":"cong-sas","role":"两边及其夹角相等","title":"边角边（SAS）与「边边角」陷阱"},{"point":"cong-concept","role":"对应边相等","title":"全等三角形的性质：对应边、对应角"}]},{"id":"cong-asa-proof","no":4,"title":"ASA / AAS 证全等（平行线造角）","kind":"证明","asks":["证全等","证角相等"],"signals":["两角 + 一边","平行线","内错角","∠B = ∠E","公共角"],"route":["/congruence/cong-asa","/congruence/cong-concept"],"chain":[{"point":"cong-asa","role":"两角及夹边（或对边）相等","title":"角边角（ASA）与角角边（AAS）"},{"point":"cong-concept","role":"对应边相等","title":"全等三角形的性质：对应边、对应角"}]},{"id":"cong-hl-proof","no":5,"title":"HL 证全等（直角三角形专用）","kind":"证明","asks":["证全等","证角相等"],"signals":["Rt△","垂直","高","斜边","直角边","∠C = 90°"],"route":["/congruence/cong-hl","/congruence/cong-concept"],"chain":[{"point":"cong-hl","role":"斜边 + 一条直角边","title":"斜边、直角边（HL）"},{"point":"cong-concept","role":"对应角相等","title":"全等三角形的性质：对应边、对应角"}]},{"id":"cong-chain","no":6,"title":"两次全等：先证一对，再证另一对","kind":"组合型","asks":["证角相等","证全等"],"signals":["求证 ∠… = ∠…","线段相等","两个结论","中点","正方形/平行四边形背景"],"route":["/congruence/cong-concept","/congruence/cong-sas"],"chain":[{"point":"cong-concept","role":"第一次全等提供新条件","title":"全等三角形的性质：对应边、对应角"},{"point":"cong-sas","role":"第二次全等完成目标","title":"边角边（SAS）与「边边角」陷阱"}]},{"id":"cong-ssa-trap","no":7,"title":"判定辨析：为什么「边边角」不行","kind":"判断","asks":["判定辨析"],"signals":["下列条件不能判定全等的是","两边及其中一边的对角","选择题","说法正确的是","SSA"],"route":["/congruence/cong-sas","/congruence/cong-hl"],"chain":[{"point":"cong-sas","role":"必须是夹角，SSA 反例","title":"边角边（SAS）与「边边角」陷阱"},{"point":"cong-hl","role":"HL 是 SSA 的唯一例外","title":"斜边、直角边（HL）"}]},{"id":"bisector-proof","no":8,"title":"角平分线：性质定理与逆定理的应用","kind":"组合型","asks":["角平分线","证角相等","证全等"],"signals":["角平分线","到两边的距离","PM ⊥ OA","内心","到三边距离相等"],"route":["/congruence/bisector","/congruence/cong-hl"],"chain":[{"point":"bisector","role":"距离相等 ⟺ 在平分线上","title":"角的平分线：距离相等"},{"point":"cong-hl","role":"用 HL 证两个直角三角形全等","title":"斜边、直角边（HL）"}]},{"id":"bisector-apply","no":9,"title":"角平分线的尺规作图与实际选址","kind":"应用","asks":["角平分线"],"signals":["尺规作图","作角平分线","到两条路距离相等","选址","保留作图痕迹"],"route":["/congruence/bisector"],"chain":[{"point":"bisector","role":"作图步骤与「距离相等」的实际含义","title":"角的平分线：距离相等"}]}],"patternsUrl":"patterns.html","prefix":""};
 </script>
 <script>
 /*
  * 题目定位器：三问 → 匹配经典题型 → 告诉你第一步做什么
  * 数据由构建脚本通过 window.__LOCATE_DATA__ 注入。
+ * 数据约定（见 build.js renderLocate）：
+ *   asks     : [{k, desc}]                          —— 问题 1 的选项（k = 要什么）
+ *   patterns : [{id,no,title,kind,asks,signals,route,chain}]
+ *              chain : [{point, role, title}]        —— route[i] 是 /章/点 路径时，第 i 步的动作与去向页
+ * 问题 2 的选项直接取自各题型的 signals（题面信号词），选中即给对应题型加分。
  */
 (function () {
   var DATA = window.__LOCATE_DATA__;
   if (!DATA) return;
   var patterns = DATA.patterns;
-  var features = DATA.features;
   var asks = DATA.asks;
   var byId = {};
   patterns.forEach(function (p) { byId[p.id] = p; });
 
-  var state = { ask: null, feats: {} };
+  var state = { ask: null, sigs: {} };
 
   var root = document.getElementById('locator');
   if (!root) return;
 
-  /* ---------- 构建选项 ---------- */
+  /* ---------- 问题 1：求什么 ---------- */
   var askBox = document.getElementById('loc-asks');
   asks.forEach(function (a) {
     var b = document.createElement('button');
     b.className = 'loc-opt';
-    b.textContent = a.label;
+    b.textContent = a.k;
+    if (a.desc) b.title = a.desc;
     b.setAttribute('data-ask', a.k);
     b.addEventListener('click', function () {
       state.ask = (state.ask === a.k) ? null : a.k;
@@ -833,19 +838,25 @@ window.__LOCATE_DATA__ = {"asks":[{"k":"找对应关系","label":"由全等求�
     askBox.appendChild(b);
   });
 
+  /* ---------- 问题 2：题面信号（来自各题型的 signals，去重） ---------- */
   var featBox = document.getElementById('loc-feats');
-  features.forEach(function (f) {
-    var b = document.createElement('button');
-    b.className = 'loc-opt small';
-    b.textContent = f.label;
-    b.setAttribute('data-feat', f.k);
-    b.addEventListener('click', function () {
-      if (state.feats[f.k]) delete state.feats[f.k];
-      else state.feats[f.k] = true;
-      syncOptions();
-      render();
+  var seen = {};
+  patterns.forEach(function (p) {
+    (p.signals || []).forEach(function (s) {
+      if (seen[s]) return;
+      seen[s] = true;
+      var b = document.createElement('button');
+      b.className = 'loc-opt small';
+      b.textContent = s;
+      b.setAttribute('data-sig', s);
+      b.addEventListener('click', function () {
+        if (state.sigs[s]) delete state.sigs[s];
+        else state.sigs[s] = true;
+        syncOptions();
+        render();
+      });
+      featBox.appendChild(b);
     });
-    featBox.appendChild(b);
   });
 
   function syncOptions() {
@@ -853,39 +864,43 @@ window.__LOCATE_DATA__ = {"asks":[{"k":"找对应关系","label":"由全等求�
       b.classList.toggle('on', state.ask === b.getAttribute('data-ask'));
     });
     [].forEach.call(featBox.children, function (b) {
-      b.classList.toggle('on', !!state.feats[b.getAttribute('data-feat')]);
+      b.classList.toggle('on', !!state.sigs[b.getAttribute('data-sig')]);
     });
   }
 
   /* ---------- 匹配打分 ---------- */
-  function signalText(p) { return p.signals.join(' '); }
-
   function scorePattern(p) {
     var score = 0;
     var reasons = [];
-    if (state.ask) {
-      if (p.asks.indexOf(state.ask) >= 0) {
-        score += 10;
-        var askLabel = (asks.filter(function (a) { return a.k === state.ask; })[0] || {}).label || '';
-        reasons.push('你要找的是「' + askLabel + '」，这类题型正是干这个的');
-      }
+    if (state.ask && p.asks.indexOf(state.ask) >= 0) {
+      score += 10;
+      var askLabel = (asks.filter(function (a) { return a.k === state.ask; })[0] || {}).k || state.ask;
+      reasons.push('你要找的是「' + askLabel + '」，这类题型正是干这个的');
     }
-    var txt = signalText(p);
-    features.forEach(function (f) {
-      if (!state.feats[f.k]) return;
-      var hit = f.words.some(function (w) { return txt.indexOf(w) >= 0; });
-      if (hit) {
+    (p.signals || []).forEach(function (s) {
+      if (state.sigs[s]) {
         score += 3;
-        reasons.push('题面出现「' + f.k + '」类字眼，是它的典型特征');
+        reasons.push('题面出现「' + s + '」，是它的典型信号');
       }
     });
     return { score: score, reasons: reasons };
   }
 
+  /* 第一步：role 是动作，point 页是去向 */
+  function firstStep(p) {
+    var c = (p.chain && p.chain[0]) || null;
+    if (c && c.role) {
+      return '<a href="' + c.point + '.html"><b>' + esc(c.role) + '</b></a>'
+        + (c.title ? ' —— 去「' + esc(c.title) + '」页' : '');
+    }
+    if (c) return '<a href="' + c.point + '.html">' + esc(c.title || c.point) + '</a>';
+    return esc((p.route && p.route[0]) || '');
+  }
+
   /* ---------- 渲染结果 ---------- */
   function render() {
     var box = document.getElementById('loc-result');
-    var anyCond = !!state.ask || Object.keys(state.feats).length > 0;
+    var anyCond = !!state.ask || Object.keys(state.sigs).length > 0;
     if (!anyCond) {
       box.innerHTML = '<div class="loc-empty">先在上面的问题里点一两下，下面就会出现与之匹配的题型。<br>不用全部回答，选你有把握的就行。</div>';
       return;
@@ -906,19 +921,21 @@ window.__LOCATE_DATA__ = {"asks":[{"k":"找对应关系","label":"由全等求�
     }
 
     var top = results[0].p;
+    var topNo = /^\d+$/.test(String(top.no)) ? ('第 ' + top.no + ' 类 · ') : (top.no + ' · ');
     var html = '<div class="loc-empty" style="text-align:left;border-style:solid;background:#e6f1fb;color:#123d63;padding:14px 18px">'
-      + '最像 <b>第 ' + top.no + ' 类 · ' + esc(top.title) + '</b>。它的第一步是：<b>' + esc(top.route[0]) + '</b>。'
+      + '最像 <b>' + topNo + esc(top.title) + '</b>。它的第一步是：' + firstStep(top) + '。'
       + '</div>';
 
     results.slice(0, 6).forEach(function (r) {
       var p = r.p;
+      var noTxt = /^\d+$/.test(String(p.no)) ? String(p.no).padStart(2, '0') : '';
       html += '<div class="loc-card">'
-        + '<div class="lc-top"><span class="type-no">' + String(p.no).padStart(2, '0') + '</span>'
-        + '<span class="lc-title"><a href="pattern/' + p.id + '.html">' + esc(p.title) + '</a></span>'
+        + '<div class="lc-top"><span class="type-no">' + noTxt + '</span>'
+        + '<span class="lc-title"><a href="pattern/' + p.id + '.html">' + (noTxt ? '' : esc(p.no) + ' · ') + esc(p.title) + '</a></span>'
         + '<span class="kind ' + kindClass(p.kind) + '">' + esc(p.kind) + '</span>'
         + '<span class="score">匹配度 ' + r.score + '</span></div>'
         + '<div class="lc-why">' + r.reasons.map(esc).join('；') + '</div>'
-        + '<div class="lc-first"><b>第一步：</b>' + esc(p.route[0]) + '</div>'
+        + '<div class="lc-first"><b>第一步：</b>' + firstStep(p) + '</div>'
         + '</div>';
     });
 
@@ -937,7 +954,7 @@ window.__LOCATE_DATA__ = {"asks":[{"k":"找对应关系","label":"由全等求�
 
   var reset = document.getElementById('loc-reset');
   if (reset) reset.addEventListener('click', function () {
-    state.ask = null; state.feats = {};
+    state.ask = null; state.sigs = {};
     syncOptions(); render();
   });
 

@@ -797,33 +797,38 @@ a:hover .tg-node { stroke-width: 2.4; }
 </div>
 
 <script>
-window.__LOCATE_DATA__ = {"asks":[{"k":"求解析式","label":"求函数解析式或 k 的值"},{"k":"判性质","label":"判断图象位置、增减性或比较大小"},{"k":"求面积","label":"求 k 或阴影面积（k 的几何意义）"},{"k":"解不等式","label":"由图象解不等式或求取值范围"},{"k":"实际应用","label":"反比例建模解决实际问题"},{"k":"综合","label":"压轴：含参、交点个数、面积综合"}],"features":[{"k":"双曲线","words":["双曲线","两支","象限","图象"]},{"k":"面积","words":["矩形","三角形","面积","阴影","垂线"]},{"k":"一次函数","words":["直线","一次函数","交点","正比例"]},{"k":"不等式","words":["不等式","解集","大于","取值范围","上方"]},{"k":"实际模型","words":["压强","电流","杠杆","工程","速度","面积固定","气压"]},{"k":"含参","words":["m","k 的取值","两个交点","只有一个交点","没有交点"]}],"patterns":[{"id":"concept-judge","no":1,"title":"概念辨析：是不是反比例函数","kind":"单一型","asks":["求解析式"],"signals":["下列函数","是反比例函数","求 m 的值","y = k/x"],"route":["把式子化成 y = k/x 的标准形（或判断能否化）","检查分母：只能是单个 x，不能是 x + 1、x²","检查分子：必须是常数","含参题：指数 = −1 且系数 ≠ 0，解出后回代检验"]},{"id":"find-k","no":2,"title":"待定系数：一组对应值定 k","kind":"单一型","asks":["求解析式"],"signals":["y 与 x 成反比例","当 x = … 时 y = …","求解析式","求 k"],"route":["设 y = k/x（k ≠ 0）","把已知点坐标相乘得 k = xy","写出解析式，注明 x ≠ 0","若还要求某点的值，直接代入"]},{"id":"graph-props","no":3,"title":"图象性质：象限、增减、比大小","kind":"单一型","asks":["判性质"],"signals":["图象位于","y 随 x 的增大","比较大小","在同一象限"],"route":["读出 k 的符号","k > 0 → 一、三象限，每支递减；k < 0 → 二、四象限，每支递增","比较大小：先代入算值（最保险），再用性质核对","跨支比较直接比正负，不要套增减性"]},{"id":"k-area-calc","no":4,"title":"k 的几何意义：面积一步出答案","kind":"单一型","asks":["求面积"],"signals":["矩形","三角形","垂线","面积为","求 k","阴影部分"],"route":["认出图形：矩形（两边贴轴）还是三角形（一边在轴上、一个顶点在原点）","矩形 → |k|；三角形 → |k|/2","已知面积反求 k：先算 |k|，再由象限定符号","多个图形拼合时，逐块算再加减"]},{"id":"k-reverse","no":5,"title":"由面积 / 对称点反求解析式","kind":"组合型","asks":["求解析式","求面积"],"signals":["面积为","求这个函数的解析式","关于原点对称","另一个交点"],"route":["由面积算出 |k|","由图象所在象限（或已知点的坐标符号）确定 k 的正负","写出 y = k/x","若问另一交点：坐标取相反数，不必重新联立"]},{"id":"cross-line","no":6,"title":"与一次函数：交点 + 不等式解集","kind":"组合型","asks":["解不等式","求解析式"],"signals":["直线与双曲线交于","不等式","解集","图象","两个交点"],"route":["求交点：联立 → ax² + bx − k = 0 → 解出 x → 代回求 y","求解析式：把一个交点坐标代进 y = k/x 得 k","解不等式：画图，找双曲线在直线上方（或下方）的 x 段","分段：以交点和 x = 0 分界，逐段验证一个测试点"]},{"id":"real-model","no":7,"title":"实际建模：乘积不变就成反比例","kind":"单一型","asks":["实际应用"],"signals":["压强","电流","杠杆","工作效率","速度","面积一定","函数关系"],"route":["找出题目里固定不变的量（路程、压力、总量、力矩）","写出乘积关系式，变形为 y = k/x","代入一组对应值求 k","代值求解，注明自变量范围与实际单位","检验结果是否符合常识"]},{"id":"symmetry-use","no":8,"title":"对称性：一半算完，另一半抄","kind":"组合型","asks":["求解析式","求面积"],"signals":["关于原点对称","两个交点","正比例函数","中心对称"],"route":["确认对称关系：关于原点对称 ⇔ 坐标同时变号","由已知交点写出另一交点","求面积时左右两块相等，算一块乘 2","若要解析式，代任一点求 k"]},{"id":"param-final","no":9,"title":"压轴：含参交点个数与面积综合","kind":"综合型","asks":["综合","解不等式"],"signals":["有两个交点","只有一个交点","求 k 的取值范围","面积最大","含参数"],"route":["联立两函数，整理成 ax² + bx − k = 0","按题意用 Δ 列不等式（>0 两个交点，=0 相切，<0 无交点）","注意隐含条件：k ≠ 0、二次项系数 ≠ 0","涉及面积时，用交点坐标表示底和高，或直接用 |k|","最后检验端点（Δ = 0 是否算「两个交点」）"]}],"patternsUrl":"patterns.html","prefix":""};
+window.__LOCATE_DATA__ = {"asks":[{"k":"求解析式","label":"求函数解析式或 k 的值"},{"k":"判性质","label":"判断图象位置、增减性或比较大小"},{"k":"求面积","label":"求 k 或阴影面积（k 的几何意义）"},{"k":"解不等式","label":"由图象解不等式或求取值范围"},{"k":"实际应用","label":"反比例建模解决实际问题"},{"k":"综合","label":"压轴：含参、交点个数、面积综合"}],"features":[{"k":"双曲线","words":["双曲线","两支","象限","图象"]},{"k":"面积","words":["矩形","三角形","面积","阴影","垂线"]},{"k":"一次函数","words":["直线","一次函数","交点","正比例"]},{"k":"不等式","words":["不等式","解集","大于","取值范围","上方"]},{"k":"实际模型","words":["压强","电流","杠杆","工程","速度","面积固定","气压"]},{"k":"含参","words":["m","k 的取值","两个交点","只有一个交点","没有交点"]}],"patterns":[{"id":"concept-judge","no":1,"title":"概念辨析：是不是反比例函数","kind":"单一型","asks":["求解析式"],"signals":["下列函数","是反比例函数","求 m 的值","y = k/x"],"route":["把式子化成 y = k/x 的标准形（或判断能否化）","检查分母：只能是单个 x，不能是 x + 1、x²","检查分子：必须是常数","含参题：指数 = −1 且系数 ≠ 0，解出后回代检验"],"chain":[{"point":"inverse-concept","role":"用三条硬标准逐一比对，含参题联立两个条件","title":"反比例函数的概念"}]},{"id":"find-k","no":2,"title":"待定系数：一组对应值定 k","kind":"单一型","asks":["求解析式"],"signals":["y 与 x 成反比例","当 x = … 时 y = …","求解析式","求 k"],"route":["设 y = k/x（k ≠ 0）","把已知点坐标相乘得 k = xy","写出解析式，注明 x ≠ 0","若还要求某点的值，直接代入"],"chain":[{"point":"inverse-concept","role":"设 y = k/x，代入求 k；或用 xy = k 直接乘","title":"反比例函数的概念"}]},{"id":"graph-props","no":3,"title":"图象性质：象限、增减、比大小","kind":"单一型","asks":["判性质"],"signals":["图象位于","y 随 x 的增大","比较大小","在同一象限"],"route":["读出 k 的符号","k > 0 → 一、三象限，每支递减；k < 0 → 二、四象限，每支递增","比较大小：先代入算值（最保险），再用性质核对","跨支比较直接比正负，不要套增减性"],"chain":[{"point":"inverse-graph","role":"k 的符号 → 象限 + 增减；同支才可用增减性","title":"图象与性质：双曲线的两支"}]},{"id":"k-area-calc","no":4,"title":"k 的几何意义：面积一步出答案","kind":"单一型","asks":["求面积"],"signals":["矩形","三角形","垂线","面积为","求 k","阴影部分"],"route":["认出图形：矩形（两边贴轴）还是三角形（一边在轴上、一个顶点在原点）","矩形 → |k|；三角形 → |k|/2","已知面积反求 k：先算 |k|，再由象限定符号","多个图形拼合时，逐块算再加减"],"chain":[{"point":"k-meaning","role":"矩形面积 = |k|，三角形 = |k|/2，反解 k 时符号看象限","title":"k 的几何意义：一块面积"}]},{"id":"k-reverse","no":5,"title":"由面积 / 对称点反求解析式","kind":"组合型","asks":["求解析式","求面积"],"signals":["面积为","求这个函数的解析式","关于原点对称","另一个交点"],"route":["由面积算出 |k|","由图象所在象限（或已知点的坐标符号）确定 k 的正负","写出 y = k/x","若问另一交点：坐标取相反数，不必重新联立"],"chain":[{"point":"k-meaning","role":"面积反推 |k|","title":"k 的几何意义：一块面积"},{"point":"inverse-symmetry","role":"用关于原点对称定符号或求另一交点","title":"对称性：关于原点中心对称"}]},{"id":"cross-line","no":6,"title":"与一次函数：交点 + 不等式解集","kind":"组合型","asks":["解不等式","求解析式"],"signals":["直线与双曲线交于","不等式","解集","图象","两个交点"],"route":["求交点：联立 → ax² + bx − k = 0 → 解出 x → 代回求 y","求解析式：把一个交点坐标代进 y = k/x 得 k","解不等式：画图，找双曲线在直线上方（或下方）的 x 段","分段：以交点和 x = 0 分界，逐段验证一个测试点"],"chain":[{"point":"inverse-cross","role":"联立得一元二次，Δ 定个数，图象定解集","title":"与一次函数的综合：交点与不等式"},{"point":"inverse-graph","role":"确认两支位置，别漏掉负半轴那一段","title":"图象与性质：双曲线的两支"}]},{"id":"real-model","no":7,"title":"实际建模：乘积不变就成反比例","kind":"单一型","asks":["实际应用"],"signals":["压强","电流","杠杆","工作效率","速度","面积一定","函数关系"],"route":["找出题目里固定不变的量（路程、压力、总量、力矩）","写出乘积关系式，变形为 y = k/x","代入一组对应值求 k","代值求解，注明自变量范围与实际单位","检验结果是否符合常识"],"chain":[{"point":"inverse-use","role":"识别恒定乘积 → 设式求 k → 代值 + 取值范围","title":"实际问题：反比例建模"}]},{"id":"symmetry-use","no":8,"title":"对称性：一半算完，另一半抄","kind":"组合型","asks":["求解析式","求面积"],"signals":["关于原点对称","两个交点","正比例函数","中心对称"],"route":["确认对称关系：关于原点对称 ⇔ 坐标同时变号","由已知交点写出另一交点","求面积时左右两块相等，算一块乘 2","若要解析式，代任一点求 k"],"chain":[{"point":"inverse-symmetry","role":"中心对称把交点、图形翻倍搬运","title":"对称性：关于原点中心对称"},{"point":"k-meaning","role":"需要面积时用 |k| 或 |k|/2 逐块算","title":"k 的几何意义：一块面积"}]},{"id":"param-final","no":9,"title":"压轴：含参交点个数与面积综合","kind":"综合型","asks":["综合","解不等式"],"signals":["有两个交点","只有一个交点","求 k 的取值范围","面积最大","含参数"],"route":["联立两函数，整理成 ax² + bx − k = 0","按题意用 Δ 列不等式（>0 两个交点，=0 相切，<0 无交点）","注意隐含条件：k ≠ 0、二次项系数 ≠ 0","涉及面积时，用交点坐标表示底和高，或直接用 |k|","最后检验端点（Δ = 0 是否算「两个交点」）"],"chain":[{"point":"inverse-cross","role":"联立 + Δ 定交点个数，韦达定坐标关系","title":"与一次函数的综合：交点与不等式"},{"point":"k-meaning","role":"面积用 |k| 或三角形面积公式算","title":"k 的几何意义：一块面积"}]}],"patternsUrl":"patterns.html","prefix":""};
 </script>
 <script>
 /*
  * 题目定位器：三问 → 匹配经典题型 → 告诉你第一步做什么
  * 数据由构建脚本通过 window.__LOCATE_DATA__ 注入。
+ * 数据约定（见 build.js renderLocate）：
+ *   asks     : [{k, desc}]                          —— 问题 1 的选项（k = 要什么）
+ *   patterns : [{id,no,title,kind,asks,signals,route,chain}]
+ *              chain : [{point, role, title}]        —— route[i] 是 /章/点 路径时，第 i 步的动作与去向页
+ * 问题 2 的选项直接取自各题型的 signals（题面信号词），选中即给对应题型加分。
  */
 (function () {
   var DATA = window.__LOCATE_DATA__;
   if (!DATA) return;
   var patterns = DATA.patterns;
-  var features = DATA.features;
   var asks = DATA.asks;
   var byId = {};
   patterns.forEach(function (p) { byId[p.id] = p; });
 
-  var state = { ask: null, feats: {} };
+  var state = { ask: null, sigs: {} };
 
   var root = document.getElementById('locator');
   if (!root) return;
 
-  /* ---------- 构建选项 ---------- */
+  /* ---------- 问题 1：求什么 ---------- */
   var askBox = document.getElementById('loc-asks');
   asks.forEach(function (a) {
     var b = document.createElement('button');
     b.className = 'loc-opt';
-    b.textContent = a.label;
+    b.textContent = a.k;
+    if (a.desc) b.title = a.desc;
     b.setAttribute('data-ask', a.k);
     b.addEventListener('click', function () {
       state.ask = (state.ask === a.k) ? null : a.k;
@@ -833,19 +838,25 @@ window.__LOCATE_DATA__ = {"asks":[{"k":"求解析式","label":"求函数解析�
     askBox.appendChild(b);
   });
 
+  /* ---------- 问题 2：题面信号（来自各题型的 signals，去重） ---------- */
   var featBox = document.getElementById('loc-feats');
-  features.forEach(function (f) {
-    var b = document.createElement('button');
-    b.className = 'loc-opt small';
-    b.textContent = f.label;
-    b.setAttribute('data-feat', f.k);
-    b.addEventListener('click', function () {
-      if (state.feats[f.k]) delete state.feats[f.k];
-      else state.feats[f.k] = true;
-      syncOptions();
-      render();
+  var seen = {};
+  patterns.forEach(function (p) {
+    (p.signals || []).forEach(function (s) {
+      if (seen[s]) return;
+      seen[s] = true;
+      var b = document.createElement('button');
+      b.className = 'loc-opt small';
+      b.textContent = s;
+      b.setAttribute('data-sig', s);
+      b.addEventListener('click', function () {
+        if (state.sigs[s]) delete state.sigs[s];
+        else state.sigs[s] = true;
+        syncOptions();
+        render();
+      });
+      featBox.appendChild(b);
     });
-    featBox.appendChild(b);
   });
 
   function syncOptions() {
@@ -853,39 +864,43 @@ window.__LOCATE_DATA__ = {"asks":[{"k":"求解析式","label":"求函数解析�
       b.classList.toggle('on', state.ask === b.getAttribute('data-ask'));
     });
     [].forEach.call(featBox.children, function (b) {
-      b.classList.toggle('on', !!state.feats[b.getAttribute('data-feat')]);
+      b.classList.toggle('on', !!state.sigs[b.getAttribute('data-sig')]);
     });
   }
 
   /* ---------- 匹配打分 ---------- */
-  function signalText(p) { return p.signals.join(' '); }
-
   function scorePattern(p) {
     var score = 0;
     var reasons = [];
-    if (state.ask) {
-      if (p.asks.indexOf(state.ask) >= 0) {
-        score += 10;
-        var askLabel = (asks.filter(function (a) { return a.k === state.ask; })[0] || {}).label || '';
-        reasons.push('你要找的是「' + askLabel + '」，这类题型正是干这个的');
-      }
+    if (state.ask && p.asks.indexOf(state.ask) >= 0) {
+      score += 10;
+      var askLabel = (asks.filter(function (a) { return a.k === state.ask; })[0] || {}).k || state.ask;
+      reasons.push('你要找的是「' + askLabel + '」，这类题型正是干这个的');
     }
-    var txt = signalText(p);
-    features.forEach(function (f) {
-      if (!state.feats[f.k]) return;
-      var hit = f.words.some(function (w) { return txt.indexOf(w) >= 0; });
-      if (hit) {
+    (p.signals || []).forEach(function (s) {
+      if (state.sigs[s]) {
         score += 3;
-        reasons.push('题面出现「' + f.k + '」类字眼，是它的典型特征');
+        reasons.push('题面出现「' + s + '」，是它的典型信号');
       }
     });
     return { score: score, reasons: reasons };
   }
 
+  /* 第一步：role 是动作，point 页是去向 */
+  function firstStep(p) {
+    var c = (p.chain && p.chain[0]) || null;
+    if (c && c.role) {
+      return '<a href="' + c.point + '.html"><b>' + esc(c.role) + '</b></a>'
+        + (c.title ? ' —— 去「' + esc(c.title) + '」页' : '');
+    }
+    if (c) return '<a href="' + c.point + '.html">' + esc(c.title || c.point) + '</a>';
+    return esc((p.route && p.route[0]) || '');
+  }
+
   /* ---------- 渲染结果 ---------- */
   function render() {
     var box = document.getElementById('loc-result');
-    var anyCond = !!state.ask || Object.keys(state.feats).length > 0;
+    var anyCond = !!state.ask || Object.keys(state.sigs).length > 0;
     if (!anyCond) {
       box.innerHTML = '<div class="loc-empty">先在上面的问题里点一两下，下面就会出现与之匹配的题型。<br>不用全部回答，选你有把握的就行。</div>';
       return;
@@ -906,19 +921,21 @@ window.__LOCATE_DATA__ = {"asks":[{"k":"求解析式","label":"求函数解析�
     }
 
     var top = results[0].p;
+    var topNo = /^\d+$/.test(String(top.no)) ? ('第 ' + top.no + ' 类 · ') : (top.no + ' · ');
     var html = '<div class="loc-empty" style="text-align:left;border-style:solid;background:#e6f1fb;color:#123d63;padding:14px 18px">'
-      + '最像 <b>第 ' + top.no + ' 类 · ' + esc(top.title) + '</b>。它的第一步是：<b>' + esc(top.route[0]) + '</b>。'
+      + '最像 <b>' + topNo + esc(top.title) + '</b>。它的第一步是：' + firstStep(top) + '。'
       + '</div>';
 
     results.slice(0, 6).forEach(function (r) {
       var p = r.p;
+      var noTxt = /^\d+$/.test(String(p.no)) ? String(p.no).padStart(2, '0') : '';
       html += '<div class="loc-card">'
-        + '<div class="lc-top"><span class="type-no">' + String(p.no).padStart(2, '0') + '</span>'
-        + '<span class="lc-title"><a href="pattern/' + p.id + '.html">' + esc(p.title) + '</a></span>'
+        + '<div class="lc-top"><span class="type-no">' + noTxt + '</span>'
+        + '<span class="lc-title"><a href="pattern/' + p.id + '.html">' + (noTxt ? '' : esc(p.no) + ' · ') + esc(p.title) + '</a></span>'
         + '<span class="kind ' + kindClass(p.kind) + '">' + esc(p.kind) + '</span>'
         + '<span class="score">匹配度 ' + r.score + '</span></div>'
         + '<div class="lc-why">' + r.reasons.map(esc).join('；') + '</div>'
-        + '<div class="lc-first"><b>第一步：</b>' + esc(p.route[0]) + '</div>'
+        + '<div class="lc-first"><b>第一步：</b>' + firstStep(p) + '</div>'
         + '</div>';
     });
 
@@ -937,7 +954,7 @@ window.__LOCATE_DATA__ = {"asks":[{"k":"求解析式","label":"求函数解析�
 
   var reset = document.getElementById('loc-reset');
   if (reset) reset.addEventListener('click', function () {
-    state.ask = null; state.feats = {};
+    state.ask = null; state.sigs = {};
     syncOptions(); render();
   });
 

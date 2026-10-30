@@ -797,33 +797,38 @@ a:hover .tg-node { stroke-width: 2.4; }
 </div>
 
 <script>
-window.__LOCATE_DATA__ = {"asks":[{"k":"求标准方程","desc":"待定系数或定义"},{"k":"基本量","desc":"a、b、c、e、焦点、准线"},{"k":"求离心率","desc":"找 a 与 c 的齐次关系"},{"k":"定义转化","desc":"距离和/差/相等"},{"k":"弦长","desc":"韦达 + √(1+k²)"},{"k":"中点弦","desc":"点差法"}],"features":["题目给「焦点在 x 轴上」时可以直接设标准式，否则要分两种情况","出现「到焦点距离」时优先想定义，往往能跳过解方程","问弦长、中点、定点，基本都要联立 + 韦达","离心率题常给几何条件（垂直、等腰、中点），先翻译成 a、b、c 的方程"],"patterns":[{"id":"cn-t-eq","no":"基础 1","title":"求椭圆方程","kind":"求方程","asks":["求标准方程"],"signals":["椭圆","焦点","过点"],"route":["/conic/cn-ellipse","/conic/cn-eprop"]},{"id":"cn-t-basic","no":"基础 2","title":"基本量换算","kind":"基本量","asks":["基本量"],"signals":["方程","焦点","离心率","准线"],"route":["/conic/cn-ellipse","/conic/cn-eprop"]},{"id":"cn-t-def","no":"基础 3","title":"定义转化","kind":"定义","asks":["定义转化"],"signals":["到焦点距离","和","差"],"route":["/conic/cn-ellipse","/conic/cn-hyperbola"]},{"id":"cn-t-e","no":"中档 4","title":"求离心率","kind":"离心率","asks":["求离心率"],"signals":["离心率","垂直","中点","等边"],"route":["/conic/cn-eprop","/conic/cn-ellipse"]},{"id":"cn-t-chord","no":"中档 5","title":"弦长","kind":"弦长","asks":["弦长"],"signals":["弦长","相交","交于"],"route":["/conic/cn-line","/conic/cn-parabola"]},{"id":"cn-t-mid","no":"中档 6","title":"中点弦","kind":"中点弦","asks":["中点弦"],"signals":["中点","弦","斜率"],"route":["/conic/cn-line"]},{"id":"cn-t-area","no":"综合 7","title":"焦点三角形面积","kind":"面积","asks":["定义转化","基本量"],"signals":["面积","焦点三角形","夹角"],"route":["/conic/cn-ellipse","/conic/cn-eprop"]},{"id":"cn-t-fixed","no":"综合 8","title":"定点问题","kind":"定点","asks":["弦长","中点弦"],"signals":["恒过","定点","求证"],"route":["/conic/cn-line","/conic/cn-parabola"]}],"patternsUrl":"patterns.html","prefix":""};
+window.__LOCATE_DATA__ = {"asks":[{"k":"求标准方程","desc":"待定系数或定义"},{"k":"基本量","desc":"a、b、c、e、焦点、准线"},{"k":"求离心率","desc":"找 a 与 c 的齐次关系"},{"k":"定义转化","desc":"距离和/差/相等"},{"k":"弦长","desc":"韦达 + √(1+k²)"},{"k":"中点弦","desc":"点差法"}],"features":["题目给「焦点在 x 轴上」时可以直接设标准式，否则要分两种情况","出现「到焦点距离」时优先想定义，往往能跳过解方程","问弦长、中点、定点，基本都要联立 + 韦达","离心率题常给几何条件（垂直、等腰、中点），先翻译成 a、b、c 的方程"],"patterns":[{"id":"cn-t-eq","no":"基础 1","title":"求椭圆方程","kind":"求方程","asks":["求标准方程"],"signals":["椭圆","焦点","过点"],"route":["/conic/cn-ellipse","/conic/cn-eprop"],"chain":[{"point":"cn-ellipse","role":"标准式待定","title":"椭圆的定义与标准方程"},{"point":"cn-eprop","role":"a、b、c 关系","title":"椭圆的几何性质"}]},{"id":"cn-t-basic","no":"基础 2","title":"基本量换算","kind":"基本量","asks":["基本量"],"signals":["方程","焦点","离心率","准线"],"route":["/conic/cn-ellipse","/conic/cn-eprop"],"chain":[{"point":"cn-ellipse","role":"读分母","title":"椭圆的定义与标准方程"},{"point":"cn-eprop","role":"e 与 c","title":"椭圆的几何性质"}]},{"id":"cn-t-def","no":"基础 3","title":"定义转化","kind":"定义","asks":["定义转化"],"signals":["到焦点距离","和","差"],"route":["/conic/cn-ellipse","/conic/cn-hyperbola"],"chain":[{"point":"cn-ellipse","role":"和为 2a","title":"椭圆的定义与标准方程"},{"point":"cn-hyperbola","role":"差为 2a","title":"双曲线"}]},{"id":"cn-t-e","no":"中档 4","title":"求离心率","kind":"离心率","asks":["求离心率"],"signals":["离心率","垂直","中点","等边"],"route":["/conic/cn-eprop","/conic/cn-ellipse"],"chain":[{"point":"cn-eprop","role":"e = c/a","title":"椭圆的几何性质"},{"point":"cn-ellipse","role":"a、b、c 关系","title":"椭圆的定义与标准方程"}]},{"id":"cn-t-chord","no":"中档 5","title":"弦长","kind":"弦长","asks":["弦长"],"signals":["弦长","相交","交于"],"route":["/conic/cn-line","/conic/cn-parabola"],"chain":[{"point":"cn-line","role":"联立 + 韦达","title":"直线与圆锥曲线"},{"point":"cn-parabola","role":"曲线方程","title":"抛物线"}]},{"id":"cn-t-mid","no":"中档 6","title":"中点弦","kind":"中点弦","asks":["中点弦"],"signals":["中点","弦","斜率"],"route":["/conic/cn-line"],"chain":[{"point":"cn-line","role":"点差法","title":"直线与圆锥曲线"}]},{"id":"cn-t-area","no":"综合 7","title":"焦点三角形面积","kind":"面积","asks":["定义转化","基本量"],"signals":["面积","焦点三角形","夹角"],"route":["/conic/cn-ellipse","/conic/cn-eprop"],"chain":[{"point":"cn-ellipse","role":"定义 + 余弦定理","title":"椭圆的定义与标准方程"},{"point":"cn-eprop","role":"b²·tan(θ/2)","title":"椭圆的几何性质"}]},{"id":"cn-t-fixed","no":"综合 8","title":"定点问题","kind":"定点","asks":["弦长","中点弦"],"signals":["恒过","定点","求证"],"route":["/conic/cn-line","/conic/cn-parabola"],"chain":[{"point":"cn-line","role":"联立 + 韦达","title":"直线与圆锥曲线"},{"point":"cn-parabola","role":"抛物线方程","title":"抛物线"}]}],"patternsUrl":"patterns.html","prefix":""};
 </script>
 <script>
 /*
  * 题目定位器：三问 → 匹配经典题型 → 告诉你第一步做什么
  * 数据由构建脚本通过 window.__LOCATE_DATA__ 注入。
+ * 数据约定（见 build.js renderLocate）：
+ *   asks     : [{k, desc}]                          —— 问题 1 的选项（k = 要什么）
+ *   patterns : [{id,no,title,kind,asks,signals,route,chain}]
+ *              chain : [{point, role, title}]        —— route[i] 是 /章/点 路径时，第 i 步的动作与去向页
+ * 问题 2 的选项直接取自各题型的 signals（题面信号词），选中即给对应题型加分。
  */
 (function () {
   var DATA = window.__LOCATE_DATA__;
   if (!DATA) return;
   var patterns = DATA.patterns;
-  var features = DATA.features;
   var asks = DATA.asks;
   var byId = {};
   patterns.forEach(function (p) { byId[p.id] = p; });
 
-  var state = { ask: null, feats: {} };
+  var state = { ask: null, sigs: {} };
 
   var root = document.getElementById('locator');
   if (!root) return;
 
-  /* ---------- 构建选项 ---------- */
+  /* ---------- 问题 1：求什么 ---------- */
   var askBox = document.getElementById('loc-asks');
   asks.forEach(function (a) {
     var b = document.createElement('button');
     b.className = 'loc-opt';
-    b.textContent = a.label;
+    b.textContent = a.k;
+    if (a.desc) b.title = a.desc;
     b.setAttribute('data-ask', a.k);
     b.addEventListener('click', function () {
       state.ask = (state.ask === a.k) ? null : a.k;
@@ -833,19 +838,25 @@ window.__LOCATE_DATA__ = {"asks":[{"k":"求标准方程","desc":"待定系数或
     askBox.appendChild(b);
   });
 
+  /* ---------- 问题 2：题面信号（来自各题型的 signals，去重） ---------- */
   var featBox = document.getElementById('loc-feats');
-  features.forEach(function (f) {
-    var b = document.createElement('button');
-    b.className = 'loc-opt small';
-    b.textContent = f.label;
-    b.setAttribute('data-feat', f.k);
-    b.addEventListener('click', function () {
-      if (state.feats[f.k]) delete state.feats[f.k];
-      else state.feats[f.k] = true;
-      syncOptions();
-      render();
+  var seen = {};
+  patterns.forEach(function (p) {
+    (p.signals || []).forEach(function (s) {
+      if (seen[s]) return;
+      seen[s] = true;
+      var b = document.createElement('button');
+      b.className = 'loc-opt small';
+      b.textContent = s;
+      b.setAttribute('data-sig', s);
+      b.addEventListener('click', function () {
+        if (state.sigs[s]) delete state.sigs[s];
+        else state.sigs[s] = true;
+        syncOptions();
+        render();
+      });
+      featBox.appendChild(b);
     });
-    featBox.appendChild(b);
   });
 
   function syncOptions() {
@@ -853,39 +864,43 @@ window.__LOCATE_DATA__ = {"asks":[{"k":"求标准方程","desc":"待定系数或
       b.classList.toggle('on', state.ask === b.getAttribute('data-ask'));
     });
     [].forEach.call(featBox.children, function (b) {
-      b.classList.toggle('on', !!state.feats[b.getAttribute('data-feat')]);
+      b.classList.toggle('on', !!state.sigs[b.getAttribute('data-sig')]);
     });
   }
 
   /* ---------- 匹配打分 ---------- */
-  function signalText(p) { return p.signals.join(' '); }
-
   function scorePattern(p) {
     var score = 0;
     var reasons = [];
-    if (state.ask) {
-      if (p.asks.indexOf(state.ask) >= 0) {
-        score += 10;
-        var askLabel = (asks.filter(function (a) { return a.k === state.ask; })[0] || {}).label || '';
-        reasons.push('你要找的是「' + askLabel + '」，这类题型正是干这个的');
-      }
+    if (state.ask && p.asks.indexOf(state.ask) >= 0) {
+      score += 10;
+      var askLabel = (asks.filter(function (a) { return a.k === state.ask; })[0] || {}).k || state.ask;
+      reasons.push('你要找的是「' + askLabel + '」，这类题型正是干这个的');
     }
-    var txt = signalText(p);
-    features.forEach(function (f) {
-      if (!state.feats[f.k]) return;
-      var hit = f.words.some(function (w) { return txt.indexOf(w) >= 0; });
-      if (hit) {
+    (p.signals || []).forEach(function (s) {
+      if (state.sigs[s]) {
         score += 3;
-        reasons.push('题面出现「' + f.k + '」类字眼，是它的典型特征');
+        reasons.push('题面出现「' + s + '」，是它的典型信号');
       }
     });
     return { score: score, reasons: reasons };
   }
 
+  /* 第一步：role 是动作，point 页是去向 */
+  function firstStep(p) {
+    var c = (p.chain && p.chain[0]) || null;
+    if (c && c.role) {
+      return '<a href="' + c.point + '.html"><b>' + esc(c.role) + '</b></a>'
+        + (c.title ? ' —— 去「' + esc(c.title) + '」页' : '');
+    }
+    if (c) return '<a href="' + c.point + '.html">' + esc(c.title || c.point) + '</a>';
+    return esc((p.route && p.route[0]) || '');
+  }
+
   /* ---------- 渲染结果 ---------- */
   function render() {
     var box = document.getElementById('loc-result');
-    var anyCond = !!state.ask || Object.keys(state.feats).length > 0;
+    var anyCond = !!state.ask || Object.keys(state.sigs).length > 0;
     if (!anyCond) {
       box.innerHTML = '<div class="loc-empty">先在上面的问题里点一两下，下面就会出现与之匹配的题型。<br>不用全部回答，选你有把握的就行。</div>';
       return;
@@ -906,19 +921,21 @@ window.__LOCATE_DATA__ = {"asks":[{"k":"求标准方程","desc":"待定系数或
     }
 
     var top = results[0].p;
+    var topNo = /^\d+$/.test(String(top.no)) ? ('第 ' + top.no + ' 类 · ') : (top.no + ' · ');
     var html = '<div class="loc-empty" style="text-align:left;border-style:solid;background:#e6f1fb;color:#123d63;padding:14px 18px">'
-      + '最像 <b>第 ' + top.no + ' 类 · ' + esc(top.title) + '</b>。它的第一步是：<b>' + esc(top.route[0]) + '</b>。'
+      + '最像 <b>' + topNo + esc(top.title) + '</b>。它的第一步是：' + firstStep(top) + '。'
       + '</div>';
 
     results.slice(0, 6).forEach(function (r) {
       var p = r.p;
+      var noTxt = /^\d+$/.test(String(p.no)) ? String(p.no).padStart(2, '0') : '';
       html += '<div class="loc-card">'
-        + '<div class="lc-top"><span class="type-no">' + String(p.no).padStart(2, '0') + '</span>'
-        + '<span class="lc-title"><a href="pattern/' + p.id + '.html">' + esc(p.title) + '</a></span>'
+        + '<div class="lc-top"><span class="type-no">' + noTxt + '</span>'
+        + '<span class="lc-title"><a href="pattern/' + p.id + '.html">' + (noTxt ? '' : esc(p.no) + ' · ') + esc(p.title) + '</a></span>'
         + '<span class="kind ' + kindClass(p.kind) + '">' + esc(p.kind) + '</span>'
         + '<span class="score">匹配度 ' + r.score + '</span></div>'
         + '<div class="lc-why">' + r.reasons.map(esc).join('；') + '</div>'
-        + '<div class="lc-first"><b>第一步：</b>' + esc(p.route[0]) + '</div>'
+        + '<div class="lc-first"><b>第一步：</b>' + firstStep(p) + '</div>'
         + '</div>';
     });
 
@@ -937,7 +954,7 @@ window.__LOCATE_DATA__ = {"asks":[{"k":"求标准方程","desc":"待定系数或
 
   var reset = document.getElementById('loc-reset');
   if (reset) reset.addEventListener('click', function () {
-    state.ask = null; state.feats = {};
+    state.ask = null; state.sigs = {};
     syncOptions(); render();
   });
 

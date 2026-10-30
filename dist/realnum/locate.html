@@ -797,33 +797,38 @@ a:hover .tg-node { stroke-width: 2.4; }
 </div>
 
 <script>
-window.__LOCATE_DATA__ = {"asks":[{"k":"开方计算","label":"平方根、算术平方根、立方根的计算与辨析"},{"k":"概念分类","label":"实数分类、无理数识别"},{"k":"估算比较","label":"夹逼估算与大小比较"},{"k":"非负性","label":"被开方数非负、非负数和为零"},{"k":"字母求值","label":"由平方根/立方根反求字母"},{"k":"混合运算","label":"实数的混合运算"}],"features":[{"k":"实数","words":["平方根","算术平方根","立方根","开方","无理数","实数","√","根号","估算","无限不循环","被开方数","夹在","整数部分"]}],"patterns":[{"id":"rn-basic-sqrt","no":"基础 1","title":"平方根与算术平方根辨析","kind":"计算","asks":["开方计算"],"signals":["平方根","算术平方根","√"],"route":["/realnum/rn-sqrt"]},{"id":"rn-basic-cube","no":"基础 2","title":"立方根计算与性质","kind":"计算","asks":["开方计算"],"signals":["立方根","∛","开立方"],"route":["/realnum/rn-cube"]},{"id":"rn-basic-class","no":"基础 3","title":"实数分类判断","kind":"概念","asks":["概念分类"],"signals":["无理数","有理数","实数","下列各数中"],"route":["/realnum/rn-irr"]},{"id":"rn-adv-est","no":"进阶 1","title":"估算与夹逼","kind":"计算","asks":["估算比较"],"signals":["估算","整数部分","在哪两个整数之间","比较大小"],"route":["/realnum/rn-est"]},{"id":"rn-adv-nonneg","no":"进阶 2","title":"非负性综合","kind":"计算","asks":["非负性"],"signals":["有意义","非负","之和为 0","√(x−a) + √(a−x)"],"route":["/realnum/rn-ops","/realnum/rn-sqrt"]},{"id":"rn-adv-letter","no":"进阶 3","title":"由根反求字母","kind":"计算","asks":["字母求值"],"signals":["的平方根是","的立方根是","算术平方根是","求 a、b"],"route":["/realnum/rn-sqrt","/realnum/rn-cube"]},{"id":"rn-app-geom","no":"应用 1","title":"面积体积逆问题","kind":"应用","asks":["混合运算"],"signals":["正方形面积","边长","体积","棱长","对角线"],"route":["/realnum/rn-sqrt","/realnum/rn-cube","/realnum/rn-est"]},{"id":"rn-app-shift","no":"应用 2","title":"开方规律与近似迁移","kind":"综合","asks":["混合运算","估算比较"],"signals":["已知 √a ≈ b","估算","小数点","滚动","数轴上表示"],"route":["/realnum/rn-est","/realnum/rn-irr"]}],"patternsUrl":"patterns.html","prefix":""};
+window.__LOCATE_DATA__ = {"asks":[{"k":"开方计算","label":"平方根、算术平方根、立方根的计算与辨析"},{"k":"概念分类","label":"实数分类、无理数识别"},{"k":"估算比较","label":"夹逼估算与大小比较"},{"k":"非负性","label":"被开方数非负、非负数和为零"},{"k":"字母求值","label":"由平方根/立方根反求字母"},{"k":"混合运算","label":"实数的混合运算"}],"features":[{"k":"实数","words":["平方根","算术平方根","立方根","开方","无理数","实数","√","根号","估算","无限不循环","被开方数","夹在","整数部分"]}],"patterns":[{"id":"rn-basic-sqrt","no":"基础 1","title":"平方根与算术平方根辨析","kind":"计算","asks":["开方计算"],"signals":["平方根","算术平方根","√"],"route":["/realnum/rn-sqrt"],"chain":[{"point":"rn-sqrt","role":"定义与 ± 区别","title":"平方根与算术平方根"}]},{"id":"rn-basic-cube","no":"基础 2","title":"立方根计算与性质","kind":"计算","asks":["开方计算"],"signals":["立方根","∛","开立方"],"route":["/realnum/rn-cube"],"chain":[{"point":"rn-cube","role":"立方根唯一性与负数开立方","title":"立方根"}]},{"id":"rn-basic-class","no":"基础 3","title":"实数分类判断","kind":"概念","asks":["概念分类"],"signals":["无理数","有理数","实数","下列各数中"],"route":["/realnum/rn-irr"],"chain":[{"point":"rn-irr","role":"实数分类树","title":"无理数与实数"}]},{"id":"rn-adv-est","no":"进阶 1","title":"估算与夹逼","kind":"计算","asks":["估算比较"],"signals":["估算","整数部分","在哪两个整数之间","比较大小"],"route":["/realnum/rn-est"],"chain":[{"point":"rn-est","role":"夹逼与大小比较","title":"估算与比较大小"}]},{"id":"rn-adv-nonneg","no":"进阶 2","title":"非负性综合","kind":"计算","asks":["非负性"],"signals":["有意义","非负","之和为 0","√(x−a) + √(a−x)"],"route":["/realnum/rn-ops","/realnum/rn-sqrt"],"chain":[{"point":"rn-ops","role":"双重非负性","title":"实数的运算与性质"},{"point":"rn-sqrt","role":"被开方数条件","title":"平方根与算术平方根"}]},{"id":"rn-adv-letter","no":"进阶 3","title":"由根反求字母","kind":"计算","asks":["字母求值"],"signals":["的平方根是","的立方根是","算术平方根是","求 a、b"],"route":["/realnum/rn-sqrt","/realnum/rn-cube"],"chain":[{"point":"rn-sqrt","role":"平方根成对 → 升平方","title":"平方根与算术平方根"},{"point":"rn-cube","role":"立方根唯一 → 升立方","title":"立方根"}]},{"id":"rn-app-geom","no":"应用 1","title":"面积体积逆问题","kind":"应用","asks":["混合运算"],"signals":["正方形面积","边长","体积","棱长","对角线"],"route":["/realnum/rn-sqrt","/realnum/rn-cube","/realnum/rn-est"],"chain":[{"point":"rn-sqrt","role":"面积开平方","title":"平方根与算术平方根"},{"point":"rn-cube","role":"体积开立方","title":"立方根"},{"point":"rn-est","role":"结果估算取舍","title":"估算与比较大小"}]},{"id":"rn-app-shift","no":"应用 2","title":"开方规律与近似迁移","kind":"综合","asks":["混合运算","估算比较"],"signals":["已知 √a ≈ b","估算","小数点","滚动","数轴上表示"],"route":["/realnum/rn-est","/realnum/rn-irr"],"chain":[{"point":"rn-est","role":"移位规律","title":"估算与比较大小"},{"point":"rn-irr","role":"数轴上表示无理数","title":"无理数与实数"}]}],"patternsUrl":"patterns.html","prefix":""};
 </script>
 <script>
 /*
  * 题目定位器：三问 → 匹配经典题型 → 告诉你第一步做什么
  * 数据由构建脚本通过 window.__LOCATE_DATA__ 注入。
+ * 数据约定（见 build.js renderLocate）：
+ *   asks     : [{k, desc}]                          —— 问题 1 的选项（k = 要什么）
+ *   patterns : [{id,no,title,kind,asks,signals,route,chain}]
+ *              chain : [{point, role, title}]        —— route[i] 是 /章/点 路径时，第 i 步的动作与去向页
+ * 问题 2 的选项直接取自各题型的 signals（题面信号词），选中即给对应题型加分。
  */
 (function () {
   var DATA = window.__LOCATE_DATA__;
   if (!DATA) return;
   var patterns = DATA.patterns;
-  var features = DATA.features;
   var asks = DATA.asks;
   var byId = {};
   patterns.forEach(function (p) { byId[p.id] = p; });
 
-  var state = { ask: null, feats: {} };
+  var state = { ask: null, sigs: {} };
 
   var root = document.getElementById('locator');
   if (!root) return;
 
-  /* ---------- 构建选项 ---------- */
+  /* ---------- 问题 1：求什么 ---------- */
   var askBox = document.getElementById('loc-asks');
   asks.forEach(function (a) {
     var b = document.createElement('button');
     b.className = 'loc-opt';
-    b.textContent = a.label;
+    b.textContent = a.k;
+    if (a.desc) b.title = a.desc;
     b.setAttribute('data-ask', a.k);
     b.addEventListener('click', function () {
       state.ask = (state.ask === a.k) ? null : a.k;
@@ -833,19 +838,25 @@ window.__LOCATE_DATA__ = {"asks":[{"k":"开方计算","label":"平方根、算�
     askBox.appendChild(b);
   });
 
+  /* ---------- 问题 2：题面信号（来自各题型的 signals，去重） ---------- */
   var featBox = document.getElementById('loc-feats');
-  features.forEach(function (f) {
-    var b = document.createElement('button');
-    b.className = 'loc-opt small';
-    b.textContent = f.label;
-    b.setAttribute('data-feat', f.k);
-    b.addEventListener('click', function () {
-      if (state.feats[f.k]) delete state.feats[f.k];
-      else state.feats[f.k] = true;
-      syncOptions();
-      render();
+  var seen = {};
+  patterns.forEach(function (p) {
+    (p.signals || []).forEach(function (s) {
+      if (seen[s]) return;
+      seen[s] = true;
+      var b = document.createElement('button');
+      b.className = 'loc-opt small';
+      b.textContent = s;
+      b.setAttribute('data-sig', s);
+      b.addEventListener('click', function () {
+        if (state.sigs[s]) delete state.sigs[s];
+        else state.sigs[s] = true;
+        syncOptions();
+        render();
+      });
+      featBox.appendChild(b);
     });
-    featBox.appendChild(b);
   });
 
   function syncOptions() {
@@ -853,39 +864,43 @@ window.__LOCATE_DATA__ = {"asks":[{"k":"开方计算","label":"平方根、算�
       b.classList.toggle('on', state.ask === b.getAttribute('data-ask'));
     });
     [].forEach.call(featBox.children, function (b) {
-      b.classList.toggle('on', !!state.feats[b.getAttribute('data-feat')]);
+      b.classList.toggle('on', !!state.sigs[b.getAttribute('data-sig')]);
     });
   }
 
   /* ---------- 匹配打分 ---------- */
-  function signalText(p) { return p.signals.join(' '); }
-
   function scorePattern(p) {
     var score = 0;
     var reasons = [];
-    if (state.ask) {
-      if (p.asks.indexOf(state.ask) >= 0) {
-        score += 10;
-        var askLabel = (asks.filter(function (a) { return a.k === state.ask; })[0] || {}).label || '';
-        reasons.push('你要找的是「' + askLabel + '」，这类题型正是干这个的');
-      }
+    if (state.ask && p.asks.indexOf(state.ask) >= 0) {
+      score += 10;
+      var askLabel = (asks.filter(function (a) { return a.k === state.ask; })[0] || {}).k || state.ask;
+      reasons.push('你要找的是「' + askLabel + '」，这类题型正是干这个的');
     }
-    var txt = signalText(p);
-    features.forEach(function (f) {
-      if (!state.feats[f.k]) return;
-      var hit = f.words.some(function (w) { return txt.indexOf(w) >= 0; });
-      if (hit) {
+    (p.signals || []).forEach(function (s) {
+      if (state.sigs[s]) {
         score += 3;
-        reasons.push('题面出现「' + f.k + '」类字眼，是它的典型特征');
+        reasons.push('题面出现「' + s + '」，是它的典型信号');
       }
     });
     return { score: score, reasons: reasons };
   }
 
+  /* 第一步：role 是动作，point 页是去向 */
+  function firstStep(p) {
+    var c = (p.chain && p.chain[0]) || null;
+    if (c && c.role) {
+      return '<a href="' + c.point + '.html"><b>' + esc(c.role) + '</b></a>'
+        + (c.title ? ' —— 去「' + esc(c.title) + '」页' : '');
+    }
+    if (c) return '<a href="' + c.point + '.html">' + esc(c.title || c.point) + '</a>';
+    return esc((p.route && p.route[0]) || '');
+  }
+
   /* ---------- 渲染结果 ---------- */
   function render() {
     var box = document.getElementById('loc-result');
-    var anyCond = !!state.ask || Object.keys(state.feats).length > 0;
+    var anyCond = !!state.ask || Object.keys(state.sigs).length > 0;
     if (!anyCond) {
       box.innerHTML = '<div class="loc-empty">先在上面的问题里点一两下，下面就会出现与之匹配的题型。<br>不用全部回答，选你有把握的就行。</div>';
       return;
@@ -906,19 +921,21 @@ window.__LOCATE_DATA__ = {"asks":[{"k":"开方计算","label":"平方根、算�
     }
 
     var top = results[0].p;
+    var topNo = /^\d+$/.test(String(top.no)) ? ('第 ' + top.no + ' 类 · ') : (top.no + ' · ');
     var html = '<div class="loc-empty" style="text-align:left;border-style:solid;background:#e6f1fb;color:#123d63;padding:14px 18px">'
-      + '最像 <b>第 ' + top.no + ' 类 · ' + esc(top.title) + '</b>。它的第一步是：<b>' + esc(top.route[0]) + '</b>。'
+      + '最像 <b>' + topNo + esc(top.title) + '</b>。它的第一步是：' + firstStep(top) + '。'
       + '</div>';
 
     results.slice(0, 6).forEach(function (r) {
       var p = r.p;
+      var noTxt = /^\d+$/.test(String(p.no)) ? String(p.no).padStart(2, '0') : '';
       html += '<div class="loc-card">'
-        + '<div class="lc-top"><span class="type-no">' + String(p.no).padStart(2, '0') + '</span>'
-        + '<span class="lc-title"><a href="pattern/' + p.id + '.html">' + esc(p.title) + '</a></span>'
+        + '<div class="lc-top"><span class="type-no">' + noTxt + '</span>'
+        + '<span class="lc-title"><a href="pattern/' + p.id + '.html">' + (noTxt ? '' : esc(p.no) + ' · ') + esc(p.title) + '</a></span>'
         + '<span class="kind ' + kindClass(p.kind) + '">' + esc(p.kind) + '</span>'
         + '<span class="score">匹配度 ' + r.score + '</span></div>'
         + '<div class="lc-why">' + r.reasons.map(esc).join('；') + '</div>'
-        + '<div class="lc-first"><b>第一步：</b>' + esc(p.route[0]) + '</div>'
+        + '<div class="lc-first"><b>第一步：</b>' + firstStep(p) + '</div>'
         + '</div>';
     });
 
@@ -937,7 +954,7 @@ window.__LOCATE_DATA__ = {"asks":[{"k":"开方计算","label":"平方根、算�
 
   var reset = document.getElementById('loc-reset');
   if (reset) reset.addEventListener('click', function () {
-    state.ask = null; state.feats = {};
+    state.ask = null; state.sigs = {};
     syncOptions(); render();
   });
 

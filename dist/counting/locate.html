@@ -797,33 +797,38 @@ a:hover .tg-node { stroke-width: 2.4; }
 </div>
 
 <script>
-window.__LOCATE_DATA__ = {"asks":[{"k":"计数原理","desc":"分类相加、分步相乘"},{"k":"排列","desc":"A(n,r)，讲顺序"},{"k":"组合","desc":"C(n,r)，不讲顺序"},{"k":"限制条件","desc":"相邻/不相邻/特殊优先"},{"k":"二项式通项","desc":"T(k+1) = C(n,k)aⁿ⁻ᵏbᵏ"},{"k":"系数问题","desc":"赋值法 + 系数最值"}],"features":["先判断「换两个元素算不算新方案」：算 → 排列；不算 → 组合","「至少…」问题优先想反面（总数减去都不满足）","二项式求系数一律先写通项，令次数对上号解 k","看到「系数和」「奇数项和」立即想到赋值法"],"patterns":[{"id":"cp-t-two","no":"基础 1","title":"两个原理的直接应用","kind":"计数","asks":["计数原理"],"signals":["多少种","走法","选法"],"route":["/counting/cp-principle"]},{"id":"cp-t-perm","no":"基础 2","title":"排列数计算","kind":"排列","asks":["排列"],"signals":["排成一排","排队","名次"],"route":["/counting/cp-perm"]},{"id":"cp-t-adjacent","no":"中档 3","title":"相邻与不相邻","kind":"限制条件","asks":["限制条件","排列"],"signals":["相邻","不相邻","必须挨着","间隔"],"route":["/counting/cp-perm","/counting/cp-principle"]},{"id":"cp-t-atleast","no":"中档 4","title":"「至少」型组合","kind":"组合","asks":["组合","限制条件"],"signals":["至少","选人","代表队"],"route":["/counting/cp-comb","/counting/cp-principle"]},{"id":"cp-t-pc","no":"中档 5","title":"先组合后排列","kind":"综合","asks":["排列","组合"],"signals":["选…去…","安排","岗位","分配"],"route":["/counting/cp-comb","/counting/cp-perm"]},{"id":"cp-t-term","no":"基础 6","title":"二项式通项求系数","kind":"二项式","asks":["二项式通项"],"signals":["展开式中","系数","x 的几次方"],"route":["/counting/cp-binomial"]},{"id":"cp-t-max","no":"中档 7","title":"系数最值与行中间","kind":"二项式","asks":["系数问题","二项式通项"],"signals":["最大","系数最大的项","第几项"],"route":["/counting/cp-pascal","/counting/cp-binomial"]},{"id":"cp-t-assign","no":"综合 8","title":"赋值法与分组分配","kind":"综合","asks":["系数问题","组合"],"signals":["系数和","平均分组","分配"],"route":["/counting/cp-binomial","/counting/cp-comb"]}],"patternsUrl":"patterns.html","prefix":""};
+window.__LOCATE_DATA__ = {"asks":[{"k":"计数原理","desc":"分类相加、分步相乘"},{"k":"排列","desc":"A(n,r)，讲顺序"},{"k":"组合","desc":"C(n,r)，不讲顺序"},{"k":"限制条件","desc":"相邻/不相邻/特殊优先"},{"k":"二项式通项","desc":"T(k+1) = C(n,k)aⁿ⁻ᵏbᵏ"},{"k":"系数问题","desc":"赋值法 + 系数最值"}],"features":["先判断「换两个元素算不算新方案」：算 → 排列；不算 → 组合","「至少…」问题优先想反面（总数减去都不满足）","二项式求系数一律先写通项，令次数对上号解 k","看到「系数和」「奇数项和」立即想到赋值法"],"patterns":[{"id":"cp-t-two","no":"基础 1","title":"两个原理的直接应用","kind":"计数","asks":["计数原理"],"signals":["多少种","走法","选法"],"route":["/counting/cp-principle"],"chain":[{"point":"cp-principle","role":"分类相加分步相乘","title":"分类加法与分步乘法计数原理"}]},{"id":"cp-t-perm","no":"基础 2","title":"排列数计算","kind":"排列","asks":["排列"],"signals":["排成一排","排队","名次"],"route":["/counting/cp-perm"],"chain":[{"point":"cp-perm","role":"排列数公式","title":"排列与排列数"}]},{"id":"cp-t-adjacent","no":"中档 3","title":"相邻与不相邻","kind":"限制条件","asks":["限制条件","排列"],"signals":["相邻","不相邻","必须挨着","间隔"],"route":["/counting/cp-perm","/counting/cp-principle"],"chain":[{"point":"cp-perm","role":"捆绑/插空","title":"排列与排列数"},{"point":"cp-principle","role":"乘法收尾","title":"分类加法与分步乘法计数原理"}]},{"id":"cp-t-atleast","no":"中档 4","title":"「至少」型组合","kind":"组合","asks":["组合","限制条件"],"signals":["至少","选人","代表队"],"route":["/counting/cp-comb","/counting/cp-principle"],"chain":[{"point":"cp-comb","role":"组合数","title":"组合与组合数"},{"point":"cp-principle","role":"分类相加","title":"分类加法与分步乘法计数原理"}]},{"id":"cp-t-pc","no":"中档 5","title":"先组合后排列","kind":"综合","asks":["排列","组合"],"signals":["选…去…","安排","岗位","分配"],"route":["/counting/cp-comb","/counting/cp-perm"],"chain":[{"point":"cp-comb","role":"选人","title":"组合与组合数"},{"point":"cp-perm","role":"派岗","title":"排列与排列数"}]},{"id":"cp-t-term","no":"基础 6","title":"二项式通项求系数","kind":"二项式","asks":["二项式通项"],"signals":["展开式中","系数","x 的几次方"],"route":["/counting/cp-binomial"],"chain":[{"point":"cp-binomial","role":"通项公式","title":"二项式定理"}]},{"id":"cp-t-max","no":"中档 7","title":"系数最值与行中间","kind":"二项式","asks":["系数问题","二项式通项"],"signals":["最大","系数最大的项","第几项"],"route":["/counting/cp-pascal","/counting/cp-binomial"],"chain":[{"point":"cp-pascal","role":"行中间最大","title":"杨辉三角与组合数性质"},{"point":"cp-binomial","role":"项数对应","title":"二项式定理"}]},{"id":"cp-t-assign","no":"综合 8","title":"赋值法与分组分配","kind":"综合","asks":["系数问题","组合"],"signals":["系数和","平均分组","分配"],"route":["/counting/cp-binomial","/counting/cp-comb"],"chain":[{"point":"cp-binomial","role":"赋值法","title":"二项式定理"},{"point":"cp-comb","role":"分组组合","title":"组合与组合数"}]}],"patternsUrl":"patterns.html","prefix":""};
 </script>
 <script>
 /*
  * 题目定位器：三问 → 匹配经典题型 → 告诉你第一步做什么
  * 数据由构建脚本通过 window.__LOCATE_DATA__ 注入。
+ * 数据约定（见 build.js renderLocate）：
+ *   asks     : [{k, desc}]                          —— 问题 1 的选项（k = 要什么）
+ *   patterns : [{id,no,title,kind,asks,signals,route,chain}]
+ *              chain : [{point, role, title}]        —— route[i] 是 /章/点 路径时，第 i 步的动作与去向页
+ * 问题 2 的选项直接取自各题型的 signals（题面信号词），选中即给对应题型加分。
  */
 (function () {
   var DATA = window.__LOCATE_DATA__;
   if (!DATA) return;
   var patterns = DATA.patterns;
-  var features = DATA.features;
   var asks = DATA.asks;
   var byId = {};
   patterns.forEach(function (p) { byId[p.id] = p; });
 
-  var state = { ask: null, feats: {} };
+  var state = { ask: null, sigs: {} };
 
   var root = document.getElementById('locator');
   if (!root) return;
 
-  /* ---------- 构建选项 ---------- */
+  /* ---------- 问题 1：求什么 ---------- */
   var askBox = document.getElementById('loc-asks');
   asks.forEach(function (a) {
     var b = document.createElement('button');
     b.className = 'loc-opt';
-    b.textContent = a.label;
+    b.textContent = a.k;
+    if (a.desc) b.title = a.desc;
     b.setAttribute('data-ask', a.k);
     b.addEventListener('click', function () {
       state.ask = (state.ask === a.k) ? null : a.k;
@@ -833,19 +838,25 @@ window.__LOCATE_DATA__ = {"asks":[{"k":"计数原理","desc":"分类相加、分
     askBox.appendChild(b);
   });
 
+  /* ---------- 问题 2：题面信号（来自各题型的 signals，去重） ---------- */
   var featBox = document.getElementById('loc-feats');
-  features.forEach(function (f) {
-    var b = document.createElement('button');
-    b.className = 'loc-opt small';
-    b.textContent = f.label;
-    b.setAttribute('data-feat', f.k);
-    b.addEventListener('click', function () {
-      if (state.feats[f.k]) delete state.feats[f.k];
-      else state.feats[f.k] = true;
-      syncOptions();
-      render();
+  var seen = {};
+  patterns.forEach(function (p) {
+    (p.signals || []).forEach(function (s) {
+      if (seen[s]) return;
+      seen[s] = true;
+      var b = document.createElement('button');
+      b.className = 'loc-opt small';
+      b.textContent = s;
+      b.setAttribute('data-sig', s);
+      b.addEventListener('click', function () {
+        if (state.sigs[s]) delete state.sigs[s];
+        else state.sigs[s] = true;
+        syncOptions();
+        render();
+      });
+      featBox.appendChild(b);
     });
-    featBox.appendChild(b);
   });
 
   function syncOptions() {
@@ -853,39 +864,43 @@ window.__LOCATE_DATA__ = {"asks":[{"k":"计数原理","desc":"分类相加、分
       b.classList.toggle('on', state.ask === b.getAttribute('data-ask'));
     });
     [].forEach.call(featBox.children, function (b) {
-      b.classList.toggle('on', !!state.feats[b.getAttribute('data-feat')]);
+      b.classList.toggle('on', !!state.sigs[b.getAttribute('data-sig')]);
     });
   }
 
   /* ---------- 匹配打分 ---------- */
-  function signalText(p) { return p.signals.join(' '); }
-
   function scorePattern(p) {
     var score = 0;
     var reasons = [];
-    if (state.ask) {
-      if (p.asks.indexOf(state.ask) >= 0) {
-        score += 10;
-        var askLabel = (asks.filter(function (a) { return a.k === state.ask; })[0] || {}).label || '';
-        reasons.push('你要找的是「' + askLabel + '」，这类题型正是干这个的');
-      }
+    if (state.ask && p.asks.indexOf(state.ask) >= 0) {
+      score += 10;
+      var askLabel = (asks.filter(function (a) { return a.k === state.ask; })[0] || {}).k || state.ask;
+      reasons.push('你要找的是「' + askLabel + '」，这类题型正是干这个的');
     }
-    var txt = signalText(p);
-    features.forEach(function (f) {
-      if (!state.feats[f.k]) return;
-      var hit = f.words.some(function (w) { return txt.indexOf(w) >= 0; });
-      if (hit) {
+    (p.signals || []).forEach(function (s) {
+      if (state.sigs[s]) {
         score += 3;
-        reasons.push('题面出现「' + f.k + '」类字眼，是它的典型特征');
+        reasons.push('题面出现「' + s + '」，是它的典型信号');
       }
     });
     return { score: score, reasons: reasons };
   }
 
+  /* 第一步：role 是动作，point 页是去向 */
+  function firstStep(p) {
+    var c = (p.chain && p.chain[0]) || null;
+    if (c && c.role) {
+      return '<a href="' + c.point + '.html"><b>' + esc(c.role) + '</b></a>'
+        + (c.title ? ' —— 去「' + esc(c.title) + '」页' : '');
+    }
+    if (c) return '<a href="' + c.point + '.html">' + esc(c.title || c.point) + '</a>';
+    return esc((p.route && p.route[0]) || '');
+  }
+
   /* ---------- 渲染结果 ---------- */
   function render() {
     var box = document.getElementById('loc-result');
-    var anyCond = !!state.ask || Object.keys(state.feats).length > 0;
+    var anyCond = !!state.ask || Object.keys(state.sigs).length > 0;
     if (!anyCond) {
       box.innerHTML = '<div class="loc-empty">先在上面的问题里点一两下，下面就会出现与之匹配的题型。<br>不用全部回答，选你有把握的就行。</div>';
       return;
@@ -906,19 +921,21 @@ window.__LOCATE_DATA__ = {"asks":[{"k":"计数原理","desc":"分类相加、分
     }
 
     var top = results[0].p;
+    var topNo = /^\d+$/.test(String(top.no)) ? ('第 ' + top.no + ' 类 · ') : (top.no + ' · ');
     var html = '<div class="loc-empty" style="text-align:left;border-style:solid;background:#e6f1fb;color:#123d63;padding:14px 18px">'
-      + '最像 <b>第 ' + top.no + ' 类 · ' + esc(top.title) + '</b>。它的第一步是：<b>' + esc(top.route[0]) + '</b>。'
+      + '最像 <b>' + topNo + esc(top.title) + '</b>。它的第一步是：' + firstStep(top) + '。'
       + '</div>';
 
     results.slice(0, 6).forEach(function (r) {
       var p = r.p;
+      var noTxt = /^\d+$/.test(String(p.no)) ? String(p.no).padStart(2, '0') : '';
       html += '<div class="loc-card">'
-        + '<div class="lc-top"><span class="type-no">' + String(p.no).padStart(2, '0') + '</span>'
-        + '<span class="lc-title"><a href="pattern/' + p.id + '.html">' + esc(p.title) + '</a></span>'
+        + '<div class="lc-top"><span class="type-no">' + noTxt + '</span>'
+        + '<span class="lc-title"><a href="pattern/' + p.id + '.html">' + (noTxt ? '' : esc(p.no) + ' · ') + esc(p.title) + '</a></span>'
         + '<span class="kind ' + kindClass(p.kind) + '">' + esc(p.kind) + '</span>'
         + '<span class="score">匹配度 ' + r.score + '</span></div>'
         + '<div class="lc-why">' + r.reasons.map(esc).join('；') + '</div>'
-        + '<div class="lc-first"><b>第一步：</b>' + esc(p.route[0]) + '</div>'
+        + '<div class="lc-first"><b>第一步：</b>' + firstStep(p) + '</div>'
         + '</div>';
     });
 
@@ -937,7 +954,7 @@ window.__LOCATE_DATA__ = {"asks":[{"k":"计数原理","desc":"分类相加、分
 
   var reset = document.getElementById('loc-reset');
   if (reset) reset.addEventListener('click', function () {
-    state.ask = null; state.feats = {};
+    state.ask = null; state.sigs = {};
     syncOptions(); render();
   });
 
