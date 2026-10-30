@@ -165,13 +165,17 @@ const VIZJS = fs.readFileSync(path.join(ROOT, 'assets/viz.js'), 'utf8');
 const APPJS = fs.readFileSync(path.join(ROOT, 'assets/app.js'), 'utf8');
 const LOCATEJS = fs.readFileSync(path.join(ROOT, 'assets/locate.js'), 'utf8');
 const COMMENTSJS = fs.readFileSync(path.join(ROOT, 'assets/comments.js'), 'utf8');
+const EXTRASJS = fs.readFileSync(path.join(ROOT, 'assets/extras.js'), 'utf8');
 
 /*
  * root：到站点根的相对前缀（'' / '../' / '../../'）
  * ch：当前章节（首页为 null）
  * cur：当前页类型 points|patterns|locate|home
  */
-function head(title, desc, root, ch, cur) {
+let PAGE_CTX = null;
+function head(title, desc, root, ch, cur, ctx) {
+  // 页面身份，交给 assets/extras.js（收藏星标 / 自测 / 章目录定位）用
+  PAGE_CTX = Object.assign({ type: cur || 'home', ch: ch ? ch.meta.id : '', chTitle: ch ? ch.meta.title : '' }, ctx || {});
   // 记录「上次学到哪」：任何章内页面都把学段 + 章写进 localStorage，
   // 课程目录页据此自动切到对应学段页签并高亮该章。
   let store = '';
@@ -200,6 +204,7 @@ function head(title, desc, root, ch, cur) {
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
+<script>try{var __t=localStorage.getItem('k12v-theme');if(__t){document.documentElement.setAttribute('data-theme',__t)}else if(window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches){document.documentElement.setAttribute('data-theme','dark')}}catch(e){}</script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>${esc(title)}</title>
 <meta name="description" content="${esc(desc)}">
@@ -214,6 +219,9 @@ ${CSS}
   <span class="site-tag">${SITE.tagline}</span>
   <nav class="site-nav">
     ${nav.map(n => `<a href="${n.href}"${n.k === cur ? ' class="on"' : ''}>${n.label}</a>`).join('\n    ')}
+    <a href="${root}favorites.html"${cur === 'fav' ? ' class="on"' : ''}>收藏</a>
+    <button type="button" class="nav-ico" id="nav-search" title="搜索知识点 / 题型（快捷键 /）">🔍</button>
+    <button type="button" class="nav-ico" id="nav-theme" title="切换深浅色">🌙</button>
   </nav>
 </div></header>
 <main><div class="container">`;
@@ -233,6 +241,10 @@ ${APPJS}
 <script>
 window.SITE_COMMENT_API = ${JSON.stringify(SITE.commentApi || '')};
 ${COMMENTSJS}
+</script>
+<script>
+window.__PAGE_CTX__ = ${JSON.stringify(PAGE_CTX)};
+${EXTRASJS}
 </script>
 </body>
 </html>`;
@@ -277,9 +289,12 @@ function renderHome() {
     const list = chapters.filter(c => c.meta.grade === g);
     const trackHref = GRADE_TERMS.indexOf(g) < 12 ? 'tracks/primary/' : 'tracks/';
     if (!list.length) {
+      const finished = g === '高三下册';
       return `<div class="grade-block">
-  <div class="grade-head"><h3>${g}</h3><span class="grade-soon">即将上线</span></div>
-  <p class="grade-empty">这一册的章节正在路上。可以先在 <a href="${trackHref}">专项图谱</a> 里看它属于哪条知识线。</p>
+  <div class="grade-head"><h3>${g}</h3><span class="grade-soon">${finished ? '新课已完结' : '即将上线'}</span></div>
+  <p class="grade-empty">${finished
+    ? '人教 A 版必修与选择性必修到这里全部结束，高三下学期进入高考总复习。可以用 <a href="tracks/">专项图谱</a> 按五条主线把高中内容串起来过一遍。'
+    : `这一册的章节正在路上。可以先在 <a href="${trackHref}">专项图谱</a> 里看它属于哪条知识线。`}</p>
 </div>`;
     }
     return `<div class="grade-block">
@@ -538,7 +553,7 @@ function renderPoint(ch, p, idx) {
   </div>
 </section>` : '';
 
-  return `${head(`${p.title} - ${ch.meta.title} - ${SITE.name}`, plain(p.summary).slice(0, 120), '../', ch, 'points')}
+  return `${head(`${p.title} - ${ch.meta.title} - ${SITE.name}`, plain(p.summary).slice(0, 120), '../', ch, 'points', { point: p.id })}
 <p class="crumb"><a href="../index.html">课程目录</a> / <a href="index.html">${esc(ch.meta.title)}</a> / ${esc(p.title)}</p>
 <article class="point">
   <h1>${esc(p.title)}</h1>
@@ -1159,8 +1174,40 @@ chapters.forEach(ch => {
 
 fs.writeFileSync(path.join(DIST, 'sitemap.xml'), renderSitemap());
 
+/* ---------- 站内搜索索引（懒加载的静态 JSON） ---------- */
+const searchIndex = [];
+chapters.forEach(ch => {
+  searchIndex.push({
+    u: `/${ch.meta.id}/index.html`, k: '章节', t: ch.meta.title,
+    d: `${ch.meta.grade} · ${ch.points.length} 个知识点`, g: ch.meta.grade
+  });
+  ch.points.forEach(p => {
+    searchIndex.push({
+      u: `/${ch.meta.id}/${p.id}.html`, k: '知识点', t: p.title,
+      d: plain(p.summary).slice(0, 60), g: ch.meta.grade, c: ch.meta.title
+    });
+  });
+  ch.patterns.forEach(t => {
+    searchIndex.push({
+      u: `/${ch.meta.id}/pattern/${t.id}.html`, k: '题型', t: t.title,
+      d: plain(t.locate).slice(0, 60), g: ch.meta.grade, c: ch.meta.title
+    });
+  });
+});
+fs.writeFileSync(path.join(DIST, 'search-index.json'), JSON.stringify(searchIndex));
+
+/* ---------- 收藏 / 错题本页面（数据在访客浏览器本地） ---------- */
+fs.writeFileSync(path.join(DIST, 'favorites.html'), `${head('我的收藏与错题 - 图知学堂', '你在本站收藏的知识点、题型和自测答错的例题，都存在你自己的浏览器里，随时回来复习。', '', null, 'fav')}
+<div class="section-head" style="margin-top:0">
+  <h2>我的收藏与错题</h2>
+  <p>数据只存在<b>你自己的浏览器</b>（localStorage）里，不上传、不跨设备。换浏览器或清除缓存后会清空。</p>
+</div>
+<div id="fav-root"></div>
+${foot()}`);
+
 console.log(`构建完成：
   课程目录 1
   ${chapters.length} 章：${chapters.map(c => `${c.meta.title}(${c.points.length}点/${c.examples.length}题/${c.patterns.length}型)`).join('、')}
   知识点页 ${totalPoints}　题型页 ${totalPatterns}　定位器 ${chapters.length}
+  搜索索引 ${searchIndex.length} 条　收藏页 1
   sitemap.xml`);

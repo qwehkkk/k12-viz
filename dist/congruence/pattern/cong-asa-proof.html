@@ -2,6 +2,7 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
+<script>try{var __t=localStorage.getItem('k12v-theme');if(__t){document.documentElement.setAttribute('data-theme',__t)}else if(window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches){document.documentElement.setAttribute('data-theme','dark')}}catch(e){}</script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>ASA / AAS 证全等（平行线造角） - 经典题型 - 全等三角形 - 图知学堂</title>
 <meta name="description" content="congruence/locate.html">
@@ -606,14 +607,14 @@ ul.lesson-list li::before {
 }
 .tab-btn .tb-name { font-size: 18px; font-weight: 700; color: var(--text); line-height: 1.2; }
 .tab-btn .tb-meta { font-size: 12px; color: var(--muted); }
-.tab-btn:hover { background: #fbfcfd; }
+.tab-btn:hover { background: var(--surface); }
 .tab-btn.stage-primary { border-left-color: #b26b00; }
 .tab-btn.stage-junior { border-left-color: var(--accent); }
 .tab-btn.stage-senior { border-left-color: var(--green); }
 #tab-primary:checked ~ .tab-bar .stage-primary,
 #tab-junior:checked ~ .tab-bar .stage-junior,
 #tab-senior:checked ~ .tab-bar .stage-senior {
-  background: #fff; box-shadow: 0 2px 12px rgba(16, 42, 67, .11); transform: translateY(-1px);
+  background: var(--surface); box-shadow: 0 2px 12px rgba(16, 42, 67, .11); transform: translateY(-1px);
 }
 #tab-primary:checked ~ .tab-bar .stage-primary { border-color: #b26b00; }
 #tab-junior:checked ~ .tab-bar .stage-junior { border-color: var(--accent); }
@@ -703,7 +704,7 @@ body.pz-lock { overflow: hidden; }
 }
 .tg-tools button[data-pz-act="fit"],
 .tg-tools button[data-pz-act="full"] { width: auto; padding: 0 13px; font-size: 13px; }
-.tg-tools button:hover { background: #fff; border-color: #b9c6d3; }
+.tg-tools button:hover { background: var(--surface); border-color: #b9c6d3; }
 .tg-hint {
   position: absolute; left: 12px; bottom: 12px; z-index: 2; pointer-events: none;
   font-size: 12px; color: var(--muted); background: rgba(255, 255, 255, .92);
@@ -760,7 +761,7 @@ a:hover .tg-node { stroke-width: 2.4; }
 .ub-main {
   display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap;
   font-weight: 600; font-size: 14.5px; color: var(--accent); text-decoration: none;
-  padding: 8px 16px; border: 1.5px solid var(--accent); border-radius: 10px; background: #fff;
+  padding: 8px 16px; border: 1.5px solid var(--accent); border-radius: 10px; background: var(--surface);
 }
 .ub-main:hover { background: var(--accent); color: #fff; }
 .ub-main:hover .ub-sub { color: rgba(255, 255, 255, 0.85); }
@@ -777,6 +778,130 @@ a:hover .tg-node { stroke-width: 2.4; }
   background: var(--accent); color: #fff; white-space: nowrap;
 }
 
+/* ================= 头部工具按钮（搜索 / 主题） ================= */
+.nav-ico {
+  border: 1px solid var(--border); background: var(--surface); color: var(--muted);
+  border-radius: 8px; padding: 3px 9px; font-size: 13px; cursor: pointer; line-height: 1.5;
+}
+.nav-ico:hover { color: var(--accent); border-color: var(--accent); }
+
+/* ================= 站内搜索浮层 ================= */
+#search-ov {
+  position: fixed; inset: 0; z-index: 90; background: rgba(20, 28, 38, 0.45);
+  display: flex; align-items: flex-start; justify-content: center; padding: 9vh 16px 16px;
+}
+.sov-box {
+  width: 100%; max-width: 620px; background: var(--surface); border: 1px solid var(--border);
+  border-radius: 14px; box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25); overflow: hidden;
+}
+#sov-in {
+  width: 100%; border: none; outline: none; background: transparent; color: var(--text);
+  font-size: 16px; padding: 15px 18px; border-bottom: 1px solid var(--border);
+  font-family: inherit;
+}
+#sov-res { max-height: 52vh; overflow-y: auto; padding: 6px; }
+.sov-empty { color: var(--muted); font-size: 13.5px; padding: 14px 12px; margin: 0; }
+.sov-item {
+  display: flex; align-items: baseline; gap: 8px; padding: 8px 10px; border-radius: 9px;
+  text-decoration: none; color: var(--text); flex-wrap: wrap;
+}
+.sov-item.sel, .sov-item:hover { background: var(--accent-soft); }
+.sov-k {
+  font-size: 11px; padding: 0 7px; border-radius: 999px; flex-shrink: 0;
+  background: var(--accent-soft); color: var(--accent);
+}
+.sov-k-章节 { background: var(--green-soft); color: var(--green); }
+.sov-k-题型 { background: #f6e3f0; color: #8c2f6b; }
+.sov-t { font-size: 14px; font-weight: 500; }
+.sov-d { font-size: 12px; color: var(--muted); }
+.sov-foot {
+  border-top: 1px solid var(--border); color: var(--muted); font-size: 12px; padding: 8px 14px;
+}
+
+/* ================= 收藏星标 ================= */
+.fav-star {
+  margin-left: auto; border: 1px solid var(--border); background: var(--surface);
+  color: var(--muted); border-radius: 999px; padding: 3px 13px; font-size: 13px; cursor: pointer;
+}
+.fav-star:hover { color: var(--accent); border-color: var(--accent); }
+.fav-star.on { background: #faeeda; border-color: #eed9b8; color: #8a5a00; }
+
+/* ================= 例题自测模式 ================= */
+.st-bar { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 14px; }
+.st-toggle {
+  border: 1.5px solid var(--accent); background: var(--accent-soft); color: var(--accent);
+  font-weight: 600; font-size: 13.5px; border-radius: 10px; padding: 7px 15px; cursor: pointer;
+}
+.st-toggle:hover { background: var(--accent); color: #fff; }
+.st-hint { font-size: 12.5px; color: var(--muted); }
+.st-row { display: none; align-items: center; gap: 8px; flex-wrap: wrap; padding: 10px 2px 2px; }
+.st-on .st-row { display: flex; }
+.st-on .ex-body { display: none; }
+.st-on details.ex.st-reveal .ex-body { display: block; }
+.st-on details.ex .ex-answer { display: none; }
+.st-on details.ex.st-reveal .ex-answer { display: block; }
+.st-row button {
+  border: 1px solid var(--border); background: var(--surface); color: var(--text);
+  border-radius: 8px; padding: 4px 12px; font-size: 13px; cursor: pointer;
+}
+.st-row button:hover { border-color: var(--accent); color: var(--accent); }
+.st-row .st-ok:hover { border-color: var(--green); color: var(--green); }
+.st-row .st-no:hover { border-color: var(--red); color: var(--red); }
+.st-row.st-done-ok .st-ok { background: var(--green-soft); border-color: var(--green); color: var(--green); }
+.st-row.st-done-no .st-no { background: #fdeceb; border-color: var(--red); color: var(--red); }
+.st-tip { font-size: 12px; color: var(--muted); }
+
+/* ================= 收藏 / 错题本页面 ================= */
+.fav-tabs { display: flex; gap: 10px; margin-top: 6px; }
+.fv-tab {
+  border: 1px solid var(--border); background: var(--surface); color: var(--muted);
+  border-radius: 999px; padding: 7px 18px; font-size: 14px; cursor: pointer;
+}
+.fv-tab.on { background: var(--accent); border-color: var(--accent); color: #fff; }
+.fav-list { margin-top: 16px; display: flex; flex-direction: column; gap: 10px; }
+.fav-item {
+  display: flex; align-items: center; gap: 12px; background: var(--surface);
+  border: 1px solid var(--border); border-radius: 12px; padding: 12px 16px;
+}
+.fi-link { flex: 1; text-decoration: none; color: var(--text); min-width: 0; }
+.fi-link b { font-weight: 500; font-size: 14.5px; display: block; }
+.fi-link:hover b { color: var(--accent); }
+.fi-meta { font-size: 12px; color: var(--muted); }
+.fi-del {
+  flex-shrink: 0; border: 1px solid var(--border); background: transparent; color: var(--muted);
+  border-radius: 8px; padding: 4px 11px; font-size: 12.5px; cursor: pointer;
+}
+.fi-del:hover { color: var(--red); border-color: var(--red); }
+
+/* ================= 章目录「上次看到」高亮 ================= */
+.card.last-pt-card { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* ================= 深色主题 ================= */
+[data-theme="dark"] {
+  --bg: #17191d;
+  --surface: #1f2227;
+  --border: #343a41;
+  --text: #d9dde1;
+  --muted: #9aa3ac;
+  --accent: #5b9bd5;
+  --accent-soft: #1c3043;
+  --green: #3aa88a;
+  --green-soft: #16302a;
+  --red: #d46a6a;
+}
+[data-theme="dark"] header.site { background: var(--surface); }
+[data-theme="dark"] .trap-box { background: #2b2418; border-color: #4a3d20; }
+[data-theme="dark"] .kind.combo { background: #2b2418; color: #d9a441; }
+[data-theme="dark"] .kind.full, [data-theme="dark"] .sov-k-题型 { background: #33202e; color: #d183b4; }
+[data-theme="dark"] section.blk .warn-box, [data-theme="dark"] .ex-warn { background: #332022; border-color: #553034; }
+[data-theme="dark"] .fb-badge.ok { color: var(--green); border-color: #2a4a40; }
+[data-theme="dark"] .fb-badge.warn { background: #2b2418; color: #d9a441; border-color: #4a3d20; }
+[data-theme="dark"] .fav-star.on { background: #2b2418; border-color: #4a3d20; color: #d9a441; }
+[data-theme="dark"] .st-row.st-done-no .st-no { background: #332022; }
+[data-theme="dark"] #search-ov { background: rgba(0, 0, 0, 0.6); }
+[data-theme="dark"] .viz-box,
+[data-theme="dark"] .tg-pz { border-radius: 10px; overflow: hidden; }
+
 </style>
 </head>
 <body>
@@ -788,6 +913,9 @@ a:hover .tg-node { stroke-width: 2.4; }
     <a href="../../congruence/patterns.html" class="on">题型库</a>
     <a href="../../congruence/locate.html">题目定位器</a>
     <a href="../../tracks/">专项图谱</a>
+    <a href="../../favorites.html">收藏</a>
+    <button type="button" class="nav-ico" id="nav-search" title="搜索知识点 / 题型（快捷键 /）">🔍</button>
+    <button type="button" class="nav-ico" id="nav-theme" title="切换深浅色">🌙</button>
   </nav>
 </div></header>
 <main><div class="container">
@@ -25244,6 +25372,319 @@ window.SITE_COMMENT_API = "/api/comments";
     document.addEventListener('DOMContentLoaded', buildUI);
   } else {
     buildUI();
+  }
+})();
+
+</script>
+<script>
+window.__PAGE_CTX__ = {"type":"patterns","ch":"congruence","chTitle":"全等三角形"};
+/*
+ * extras.js —— 站内搜索 / 收藏与错题本 / 例题自测 / 深浅色主题 / 章目录定位
+ * 全部功能只依赖 localStorage，无后端。
+ * 页面身份由 build.js 注入 window.__PAGE_CTX__ = {type, ch, chTitle, point?}
+ *   type: home | points(章目录) | point | patterns | pattern | locate | fav | tracks
+ */
+(function () {
+  'use strict';
+  var CTX = window.__PAGE_CTX__ || {};
+  var $ = function (s, r) { return (r || document).querySelector(s); };
+
+  /* ================= 本地存储 ================= */
+  function load(k) { try { return JSON.parse(localStorage.getItem(k) || '[]'); } catch (e) { return []; } }
+  function save(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) { /* 隐私模式忽略 */ } }
+  function pageTitle() { return String(document.title || '').split(' - ')[0].trim(); }
+  function here() { return location.pathname; }
+
+  var FAV = 'k12v-fav', WRONG = 'k12v-wrong';
+  function favList() { return load(FAV); }
+  function wrongList() { return load(WRONG); }
+  function isFaved(u) { return favList().some(function (x) { return x.u === u; }); }
+  function toggleFav() {
+    var u = here(), l = favList();
+    if (l.some(function (x) { return x.u === u; })) {
+      l = l.filter(function (x) { return x.u !== u; });
+      save(FAV, l); return false;
+    }
+    l.push({ u: u, t: pageTitle(), c: CTX.chTitle || '', ts: Date.now() });
+    save(FAV, l); return true;
+  }
+  function addWrong() {
+    var u = here(), l = wrongList();
+    if (l.some(function (x) { return x.u === u; })) return;
+    l.push({ u: u, t: pageTitle(), c: CTX.chTitle || '', ts: Date.now() });
+    save(WRONG, l);
+  }
+  function removeWrong(u) {
+    save(WRONG, wrongList().filter(function (x) { return x.u !== u; }));
+  }
+
+  /* ================= 深浅色主题 ================= */
+  var themeBtn = $('#nav-theme');
+  if (themeBtn) {
+    function syncThemeIcon() {
+      var dark = document.documentElement.getAttribute('data-theme') === 'dark';
+      themeBtn.textContent = dark ? '☀️' : '🌙';
+    }
+    syncThemeIcon();
+    themeBtn.addEventListener('click', function () {
+      var dark = document.documentElement.getAttribute('data-theme') === 'dark';
+      var next = dark ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      try { localStorage.setItem('k12v-theme', next); } catch (e) {}
+      syncThemeIcon();
+    });
+  }
+
+  /* ================= 站内搜索 ================= */
+  var searchBtn = $('#nav-search');
+  var ov = null, sovIn = null, sovRes = null;
+  var INDEX = null, sel = -1, shown = [];
+
+  function buildOv() {
+    ov = document.createElement('div');
+    ov.id = 'search-ov';
+    ov.hidden = true;
+    ov.innerHTML = '<div class="sov-box">'
+      + '<input id="sov-in" type="text" placeholder="搜知识点 / 题型 / 章节，回车打开第一条" autocomplete="off">'
+      + '<div id="sov-res"></div>'
+      + '<div class="sov-foot">↑↓ 选择 · 回车打开 · Esc 关闭</div>'
+      + '</div>';
+    document.body.appendChild(ov);
+    sovIn = $('#sov-in', ov);
+    sovRes = $('#sov-res', ov);
+    ov.addEventListener('mousedown', function (e) { if (e.target === ov) closeOv(); });
+    sovIn.addEventListener('input', doSearch);
+    sovIn.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowDown') { e.preventDefault(); move(1); }
+      else if (e.key === 'ArrowUp') { e.preventDefault(); move(-1); }
+      else if (e.key === 'Enter') { e.preventDefault(); if (shown[sel]) location.href = shown[sel].u; }
+    });
+  }
+  function openOv() {
+    if (!ov) buildOv();
+    ov.hidden = false;
+    sovIn.value = '';
+    doSearch();
+    sovIn.focus();
+    if (!INDEX) {
+      fetch('/search-index.json').then(function (r) { return r.json(); }).then(function (j) {
+        INDEX = j;
+        doSearch();
+      }).catch(function () { INDEX = []; });
+    }
+  }
+  function closeOv() { if (ov) { ov.hidden = true; sel = -1; } }
+  function move(d) {
+    if (!shown.length) return;
+    sel = (sel + d + shown.length) % shown.length;
+    paintSel();
+  }
+  function paintSel() {
+    var nodes = sovRes.querySelectorAll('.sov-item');
+    for (var i = 0; i < nodes.length; i++) nodes[i].classList.toggle('sel', i === sel);
+    if (nodes[sel] && nodes[sel].scrollIntoView) nodes[sel].scrollIntoView({ block: 'nearest' });
+  }
+  function doSearch() {
+    var q = (sovIn.value || '').trim().toLowerCase();
+    var pool = INDEX || [];
+    if (!q) {
+      shown = pool.filter(function (x) { return x.k === '章节'; }).slice(0, 8);
+      renderRes(q ? '' : '输入关键词，比如「配方法」「因数」「双曲线」。也可以先看看各册章节：');
+      return;
+    }
+    var scored = [];
+    pool.forEach(function (x) {
+      var t = (x.t || '').toLowerCase(), d = (x.d || '').toLowerCase(), c = (x.c || '').toLowerCase();
+      var s = 0;
+      if (t.indexOf(q) === 0) s = 30;
+      else if (t.indexOf(q) > -1) s = 20;
+      else if (c.indexOf(q) > -1) s = 8;
+      else if (d.indexOf(q) > -1) s = 4;
+      if (s) scored.push({ x: x, s: s });
+    });
+    scored.sort(function (a, b) { return b.s - a.s; });
+    shown = scored.slice(0, 20).map(function (y) { return y.x; });
+    renderRes(shown.length ? '' : '没有匹配的内容，换个词试试（如「配方法」「相似」「因数」）。');
+  }
+  function renderRes(empty) {
+    if (empty) { sovRes.innerHTML = '<p class="sov-empty">' + empty + '</p>'; return; }
+    sovRes.innerHTML = shown.map(function (x, i) {
+      return '<a class="sov-item" href="' + x.u + '" data-i="' + i + '">'
+        + '<span class="sov-k sov-k-' + x.k + '">' + x.k + '</span>'
+        + '<span class="sov-t">' + esc(x.t) + '</span>'
+        + '<span class="sov-d">' + esc(x.c ? x.c + ' · ' : '') + esc(x.d || '') + '</span>'
+        + '</a>';
+    }).join('');
+    [].forEach.call(sovRes.querySelectorAll('.sov-item'), function (a) {
+      a.addEventListener('click', function () { closeOv(); });
+    });
+    sel = shown.length ? 0 : -1;
+    paintSel();
+  }
+  function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+
+  if (searchBtn) {
+    searchBtn.addEventListener('click', openOv);
+    document.addEventListener('keydown', function (e) {
+      var tag = (e.target.tagName || '').toLowerCase();
+      if (e.key === 'Escape') { closeOv(); return; }
+      if (e.key === '/' && tag !== 'input' && tag !== 'textarea' && (ov ? ov.hidden : true)) {
+        e.preventDefault(); openOv();
+      }
+    });
+  }
+
+  /* ================= 收藏星标（知识点页 / 题型页） ================= */
+  var isPointPage = CTX.type === 'points' && !!CTX.point;
+  var isPatternPage = CTX.type === 'pattern';
+  if (isPointPage || isPatternPage) {
+    var meta = $('.point-meta');
+    if (meta) {
+      var star = document.createElement('button');
+      star.type = 'button';
+      star.className = 'fav-star';
+      function paintStar() {
+        var on = isFaved(here());
+        star.textContent = on ? '★ 已收藏' : '☆ 收藏';
+        star.classList.toggle('on', on);
+      }
+      paintStar();
+      star.addEventListener('click', function () { toggleFav(); paintStar(); });
+      meta.appendChild(star);
+    }
+  }
+
+  /* ================= 例题自测（知识点页） ================= */
+  if (isPointPage) {
+    // 章目录记住「看到第几个知识点」
+    try { localStorage.setItem('k12v-point', JSON.stringify({ c: CTX.ch, p: CTX.point })); } catch (e) {}
+
+    var exSec = null;
+    [].forEach.call(document.querySelectorAll('section.blk'), function (s) {
+      var h = s.querySelector('h2');
+      if (h && h.textContent.indexOf('典型例题') === 0 && !exSec) exSec = s;
+    });
+    if (exSec && exSec.querySelectorAll('details.ex').length) {
+      var exs = exSec.querySelectorAll('details.ex');
+      var bar = document.createElement('div');
+      bar.className = 'st-bar';
+      bar.innerHTML = '<button type="button" class="st-toggle">🎯 进入自测模式</button>'
+        + '<span class="st-hint">先自己想，再对答案；点了「不会」的会进收藏页的错题单。</span>';
+      exSec.insertBefore(bar, exSec.firstChild);
+      var on = false;
+      var rows = [];
+      exs.forEach ? exs.forEach(init) : [].forEach.call(exs, init);
+      function init(ex, i) {
+        var row = document.createElement('div');
+        row.className = 'st-row';
+        row.innerHTML = '<button type="button" class="st-see">看解答</button>'
+          + '<button type="button" class="st-ok">✅ 会了</button>'
+          + '<button type="button" class="st-no">❌ 不会</button>';
+        ex.appendChild(row);
+        rows.push(row);
+        row.querySelector('.st-see').addEventListener('click', function () {
+          ex.classList.toggle('st-reveal');
+        });
+        row.querySelector('.st-ok').addEventListener('click', function () {
+          removeWrong(here());
+          mark(row, 'ok', '已记「会了」，不会出现在错题单');
+        });
+        row.querySelector('.st-no').addEventListener('click', function () {
+          addWrong();
+          mark(row, 'no', '已记入错题单，去收藏页可以复习');
+        });
+      }
+      function mark(row, cls, txt) {
+        row.classList.remove('st-done-ok', 'st-done-no');
+        row.classList.add('st-done-' + cls);
+        row.querySelector('.st-see').textContent = '看解答';
+        var tip = row.querySelector('.st-tip');
+        if (!tip) { tip = document.createElement('span'); tip.className = 'st-tip'; row.appendChild(tip); }
+        tip.textContent = txt;
+      }
+      bar.querySelector('.st-toggle').addEventListener('click', function () {
+        on = !on;
+        exSec.classList.toggle('st-on', on);
+        this.textContent = on ? '📖 退出自测' : '🎯 进入自测模式';
+        if (!on) {
+          [].forEach.call(rows, function (r) { r.parentNode.classList.remove('st-reveal'); });
+        }
+      });
+    }
+  }
+
+  /* ================= 章目录：定位到上次看到的知识点 ================= */
+  if (CTX.type === 'points' && !CTX.point && /\/index\.html$/.test(here())) {
+    var last = null;
+    try { last = JSON.parse(localStorage.getItem('k12v-point') || 'null'); } catch (e) {}
+    if (last && last.c === CTX.ch && last.p) {
+      var card = document.querySelector('.card[href="' + last.p + '.html"]');
+      if (card) {
+        card.classList.add('last-pt-card');
+        var meta2 = card.querySelector('.meta');
+        if (meta2) {
+          var b = document.createElement('span');
+          b.className = 'badge last-badge';
+          b.textContent = '上次看到';
+          meta2.appendChild(b);
+        }
+        setTimeout(function () { card.scrollIntoView({ block: 'center' }); }, 60);
+      }
+    }
+  }
+
+  /* ================= 收藏 / 错题本页面 ================= */
+  if (CTX.type === 'fav') {
+    var root = $('#fav-root');
+    var tab = 'fav';
+    function itemRow(x, kind) {
+      var row = document.createElement('div');
+      row.className = 'fav-item';
+      var d = new Date(x.ts || Date.now());
+      row.innerHTML = '<a class="fi-link" href="' + x.u + '"><b>' + esc(x.t) + '</b>'
+        + '<span class="fi-meta">' + esc(x.c || '') + (x.c ? ' · ' : '') + d.toLocaleDateString() + '</span></a>'
+        + '<button type="button" class="fi-del">' + (kind === 'fav' ? '取消收藏' : '移出错题单') + '</button>';
+      row.querySelector('.fi-del').addEventListener('click', function () {
+        if (kind === 'fav') {
+          save(FAV, favList().filter(function (y) { return y.u !== x.u; }));
+        } else {
+          removeWrong(x.u);
+        }
+        paint();
+      });
+      return row;
+    }
+    function paint() {
+      var favs = favList(), wrongs = wrongList();
+      root.innerHTML = '<div class="fav-tabs">'
+        + '<button type="button" class="fv-tab' + (tab === 'fav' ? ' on' : '') + '" data-t="fav">★ 收藏（' + favs.length + '）</button>'
+        + '<button type="button" class="fv-tab' + (tab === 'wrong' ? ' on' : '') + '" data-t="wrong">❌ 错题（' + wrongs.length + '）</button>'
+        + '</div>';
+      var list = tab === 'fav' ? favs : wrongs;
+      if (!list.length) {
+        root.innerHTML += '<div class="loc-empty" style="margin-top:16px">'
+          + (tab === 'fav'
+            ? '还没有收藏。在知识点页或题型页点标题旁的「☆ 收藏」，就会出现在这里。'
+            : '错题单是空的。在知识点页进入「🎯 自测模式」，点了「不会」的例题会自动收进来。')
+          + '</div>';
+      } else {
+        var wrap = document.createElement('div');
+        wrap.className = 'fav-list';
+        list.forEach(function (x) { wrap.appendChild(itemRow(x, tab)); });
+        root.appendChild(wrap);
+        if (tab === 'wrong') {
+          var tip = document.createElement('p');
+          tip.className = 'loc-hint';
+          tip.style.marginTop = '14px';
+          tip.innerHTML = '重做后已掌握？回到该知识点页的自测模式点「✅ 会了」，或直接点右侧按钮移出。';
+          root.appendChild(tip);
+        }
+      }
+      [].forEach.call(root.querySelectorAll('.fv-tab'), function (b) {
+        b.addEventListener('click', function () { tab = b.getAttribute('data-t'); paint(); });
+      });
+    }
+    paint();
   }
 })();
 

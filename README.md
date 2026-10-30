@@ -1,89 +1,62 @@
-# 图知学堂 · 初中数学可视化学习
+# 图知学堂 · K12 数学可视化学习
 
-K12 可视化学习工具，当前覆盖九年级全学年 + 八年级下册两章，共十一章。核心理念：**知识点是零件，题型是装配图，定位器是「看见题就知道拿哪张装配图」**。
+**知识点是零件，题型是装配图，定位器是「看见题就知道拿哪张装配图」。**
 
-## 当前内容
+线上：**https://teach.toolona.com**（Cloudflare Pages，push 自动部署）
 
-| 章 | 知识点 | 例题 | 题型 |
-|---|---|---|---|
-| 一元二次方程（人教九上 21 章） | 10 | 19 | 12 |
-| 二次函数（人教九上 22 章） | 10 | 21 | 12 |
-| 旋转（人教九上 23 章） | 7 | 12 | 8 |
-| 圆（人教九上 24 章） | 8 | 14 | 10 |
-| 概率初步（人教九上 25 章） | 7 | 14 | 10 |
-| 反比例函数（人教九下 26 章） | 6 | 12 | 9 |
-| 锐角三角函数（人教九下 28 章） | 7 | 12 | 10 |
-| 相似（人教九下 27 章） | 7 | 12 | 10 |
-| 投影与视图（人教九下 29 章） | 5 | 10 | 8 |
-| 勾股定理（人教八下 17 章） | 6 | 11 | 9 |
-| 一次函数（人教八下 19 章） | 6 | 12 | 9 |
+## 当前内容（2026-10，内容生产已收官）
 
-线上：**https://teach.toolona.com**（Cloudflare Pages，push 自动构建）
+| 学段 | 覆盖 | 章节 |
+|---|---|---|
+| 小学 | 人教版一~六年级全部 12 册 | 93 章 |
+| 初中 | 人教版七~九年级全部 6 册 | 27 章 |
+| 高中 | 人教 A 版必修一二 + 选必一二三 | 18 章 |
+| **合计** | | **138 章 / 641 知识点页 / 864 题型页 / 138 个题目定位器** |
+
+每个知识点 = 一个 SEO 页面，包含：可拖动的交互演示（canvas）、分步例题（支持自测模式）、
+调用它的题型反查、现实应用场景。每类题型拆解：题面信号 → 知识点链条（逆向解读）→ 固定解题路线 → 易错点。
+
+## 站点功能
+
+- **三学段目录**：首页按小学 / 初中 / 高中分页签；会记住你上次学到的学段和章节，回来自动定位。
+- **站内搜索**：右上角 🔍 或按 `/`，搜知识点 / 题型 / 章节名（静态 JSON 索引 `search-index.json`，打开时才加载）。
+- **收藏 & 错题本**：知识点 / 题型页可收藏；例题自测模式里点「不会」自动进错题单。数据全在浏览器 localStorage，`/favorites.html` 查看。
+- **题目定位器**：每章一个，两问（求什么 + 题面信号词）打分匹配题型，直接给第一步动作。
+- **专项图谱**：`/tracks/`（初中+高中五条主线）、`/tracks/primary/`（小学四条线），SVG 可拖动缩放。
+- **导航**：面包屑 + 底部「返回上一级」栏 + 左下角「返回上一步」浮钮（sessionStorage 访问栈）。
+- **深浅色**：跟随系统，右上角 🌙 手动切换。
+- **留言板**：右下角浮动按钮，自动附画面引用（正在看的组件 + 参数 + 截图缩略图），提交到 Cloudflare Pages Functions + D1。
 
 ## 架构
 
-- **一章一文件**：`data/chapters/<chapterId>.json` 包含该章全部数据（meta / points / examples / patterns）。加一章 = 加一个文件，重跑 `node build.js`，目录、导航、sitemap 全自动更新。
-- **语义化 URL**：`/<chapterId>/<pointId>.html`（如 `/quadratic-equation/completing-square.html`），ID 全局语义化（`vertex-form`、`vieta`），不再用 p01/t04 序号——跨章引用不会冲突，SEO 友好。
-- **零依赖**：纯 Node 标准库构建，产物为纯静态文件，样式/脚本内联进每个页面，直接托管 Cloudflare Pages。
-- **讲解流（blocks）**：每个知识点的 `blocks` 数组支持三种块：`{t:"p"}` 文字、`{t:"viz"}` 可视化、`{t:"list"}` 步骤列表，图文交替。
-- **返回导航**：所有页面共享轻量访问栈（sessionStorage），顶部「回到刚才的…」上下文条 + 滚动后左下角浮动返回按钮；回旧页自动截断历史防绕圈，pageshow 处理 bfcache。
+- **一章一文件**：`data/chapters/<chapterId>.json`（meta / points / examples / patterns）。加一章 = 加一个 JSON + 重跑构建，目录、导航、sitemap、搜索索引全自动。
+- **零依赖**：纯 Node 标准库，`node build.js` 产出纯静态 `dist/`。样式与脚本按页内联，无构建链、无框架。
+- **数据生成走脚手架**：`.shots/gen-lib.js`（P/V/L/pt/save，save 内做 schema 校验），历史生成脚本都在 `.shots/`。
+- **语义化 URL**：`/<chapterId>/<pointId>.html`，ID 全局语义化，跨章引用不冲突。
 
-## 可视化组件库（assets/viz.js）
-
-- `plot`：静态函数图像（标注、箭头、虚线、区间、自动找零点）
-- `parabola-lab`：抛物线实验室（拖 a/h/k 或 a/b/c，实时顶点、对称轴、交点）
-- `steps`：分步动画（参数滑块联动，每步图形 + 文字数值实时更新）
-- `complete-square`：配方法几何拼图（拖 b，看 x² 补上缺角成为 (x+b/2)²）
-- `equation`：判别式与韦达实验台（拖 a/b/c，Δ、两根、和与积实时联动）
-- `growth`：增长率柱状图（拖初始值/增长率，三期高度与反推开方演示）
-- `rotate`：旋转实验台（拖旋转角/中心位置，原图虚线 → 新图实线，对应点连线与旋转角弧实时标注）
-- `coord-rot`：坐标系旋转（拖点与角度，(x,y)→(−y,x) 等三条坐标规律联动演示）
-- `pattern`：旋转对称（拖叶片数 n 与当前转角，验证最小旋转角 360°÷n 与重合判定）
-- `clock`：钟表夹角（拖时/分，双针旋转、夹角弧与 |30H − 5.5M| 公式实时对照）
-- 圆章组件：`anatomy`（圆的解剖：半径/直径/弦/弧标注）、`chord`（垂径实验台：r² = d² + (半弦)² 弦长拱高联动）、`inscribed`（圆周角定理：C 随便拖，恒等于圆心角一半，n=180 时锁死 90°）、`position`（点与圆 d vs r）、`tangent`（直线与圆：相交/相切/相离，d=r 时 OT⊥l）、`sector`（弧长与扇形：比例思想 + S=½lr 核对）
-- 概率章组件：`event-scale`（事件可能性标尺：拖 P 看转盘着色，不可能/随机/必然三区）、`bag`（等可能摸球台：球排 + 概率条，P=m/n 数出来）、`sum-table`（列表法 6×6：拖目标点数和高亮对角线，1~6~1 分布）、`tree`（树状图不放回：第二步分母减一，末端概率相乘）、`coin`（频率稳定性实验：10000 次伪随机折线收敛到理论概率，可换种子批次）、`dart`（面积型概率：(r/R)² 平方关系可视化）
-- 一次函数章组件：`linear`（y=kx+b：拖 k 感受旋转、拖 b 感受平移，附斜率三角）、`linear-quad`（象限高亮：k、b 符号决定经过哪几块）、`linear-cross`（两条直线交点 + 不等式解集自动分段着色）、`linear-model`（两家计费方案比价，交点即分水岭）、`linear-translate`（同一条线的三种写法：y=kx / y=kx+b / y=k(x−m)）、`linear-fit`（待定系数法：拖两点定直线，Δx/Δy 三角形）
-- 勾股章组件：`pythag-squares`（三边向外作正方形，a²+b²=c² 面积恒等式实时验证）、`pythag-puzzle`（赵爽弦图：4 全等直角三角形 + 小正方形拼大正方形，数面积即证明）、`pythag-solve`（知二求一：拖直角边与斜边，自动勾股自检）、`pythag-inverse`（逆定理：拖三边看 ∠C 卡在 90° 或塌成钝角，锐/直/钝三色判定）、`pythag-ladder`（梯子靠墙：梯脚外移 1 m 梯顶降多少实时算）
-- 投影视图章组件：`proj-shadow`（中心投影 vs 平行投影：拖光源看影子甩动，太阳光线对照）、`proj-orth`（正投影：拖倾角看投影长 L·cosθ 三种情况）、`view-three`（长方体三视图：拖长宽高，长对正/高平齐/宽相等联动标注）、`view-solid`（圆柱/圆锥/球三视图模板，kind 参数化 + 立体图）、`view-blocks`（方块堆积：拖三列高度，立体图 + 三视图 + 块数与多解说明）
-- 相似章组件：`sim-golden`（黄金分割：拖分割点找 0.618 + 黄金矩形拆分）、`sim-parallel`（A 型平行截线：拖 k 看三组比值同时变，含平行箭头与同位角弧）、`sim-judge`（AA 判定：拖两角两三角形形状同步变、拖 k 只变大小）、`sim-area`（嵌套共角三角形：周长比 = k、面积比 = k² 实时数值）、`sim-nested`（母子型双垂直：射影定理三件套数值全验证）、`sim-homothety`（位似：拖 k 从 −2 到 2，看缩放/翻转/异侧，坐标 (kx,ky) 标注）、`sim-shadow`（影长测高 + 落在墙上的影子 + 平行光线）
-- 三角章组件：`trig-ratio`（直角三角形实验台：拖斜边看三边同比例变化、三个比值纹丝不动）、`trig-special`（两个特殊三角形：45° 的 1:1:√2 与 30° 的 1:√3:2，拖 k 看比值不变）、`trig-solve`（解直角三角形：已知一边一角，对边与斜边实时算出并勾股自检）、`trig-height`（仰角测高：塔高 = 仪器高 + d·tanα，同步画出塔顶俯角）、`trig-slope`（坡度坡角：i = h/l = tanα，高/水平宽/坡长三量同屏）、`trig-altitude`（作高：非直角三角形拆成两个直角三角形，钝角时垂足落在形外）
-- 反比例章组件：`inverse`（双曲线实验台：拖 k 看象限翻面、拖动点验证 xy=k）、`k-area`（k 的几何意义：点动、矩形面积恒为 |k|）、`inverse-cross`（与一次函数交点 + 不等式解集，Δ 由正变负时交点消失，解集自动分段）、`inverse-use`（面积固定的矩形建模：长宽此消彼长）
-- `bridge` / `profit` / `fence` / `fountain` / `shot`：实物场景（拱桥、定价、围栏、喷泉、投篮）
-
-## 题型层
-
-- 每类题型带：题面信号、**逆向解读链**（由哪些知识点按什么顺序拼成，起点高亮）、固定解题路线、完整解答、易错点。
-- 题型库首页：知识点 × 题型交叉矩阵 + 知识点共现排行。
-- `locate.html` 题目定位器：两问打分匹配 → Top 结果 + 第一步动作。每章有自己的 asks / features 配置。
-- 知识点页自动反查「出现在哪些题型里」。
-
-## 留言板（含画面引用自动采集）
-
-- 所有页面右下角「留言」浮动按钮，打开留言抽屉：提交建议 / 求内容 / 指出错。
-- **自动附上画面引用**（本站特色，追溯时一眼还原现场）：提交时自动采集当前页面身份（路径 + 标题 + 面包屑）、**视口内正在显示的交互组件**（类型 + 参数状态文字，如「旋转角 θ = 60° 逆时针」）、**画面截图缩略图**（canvas 降采样 JPEG，单张约 2KB）。
-- **两种模式**：
-  - 预览模式（默认）：留言存访客本机 localStorage（上限 40 条，超配额自动去缩略图）。
-  - 正式模式：`build.js` 里 `SITE.commentApi = '/api/comments'`，留言 POST 到 Cloudflare Pages Functions + D1 汇总（`functions/api/comments.js` 已备好，含 `GET ?token=` 管理端拉取）。启用步骤见 `functions/api/comments.js` 头部注释。
-
-## 用法
+## 常用命令
 
 ```bash
-node build.js          # 生成 dist/
-python -m http.server 8137 --directory dist   # 本地预览
+node build.js                                # 构建 dist/（约 1-3 分钟）
+python -m http.server 8137 --directory dist  # 本地预览
+node .shots/stub-test.js                     # 组件桩测试（老组件桩限制误报可忽略）
+node .shots/geom-check.js all                # 文字溢出 / 图元越界自检
+node indexnow.js                             # push 部署完成后提交搜索引擎
 ```
 
-## 上线前 checklist
+**发布流程**：改数据/组件 → `node build.js` → 本地抽查 → commit/push → 等部署（约 1 分钟）→ `node indexnow.js`。
 
-1. `build.js` 顶部 `SITE.base` 换成真实域名
-2. GSC 提交 `sitemap.xml`、接 IndexNow（复用工具站脚本）
-3. 站名「图知学堂」为工作名，可随时改
+## 数据 schema 要点（改数据前必读）
 
-## 扩展新章节
+- `meta.grade` 写「X年级上/下册」；小学章节 `meta.unit: true`、`bookNo` 为教材单元号。
+- `patterns.patterns[]`：`no/id/title/kind/asks[]/signals[]/chain[{point,role}]/route[]/solution[{text,math}]/trap/stem/locate`。
+- `route` 是知识点 URL 数组（`/章/点`，与 chain 一一对应）；高中的是文字步骤，两种都支持。
+- **`chain` / `prerequisites` 只在章内解析**，跨章 id 会静默失效；跨章关系用 `meta.prereqChapters: ["章id"]`。
+- `viz.type` 不能带 `-lab` 后缀（桩测试会推导成 xxxLabLab）。
+- 消费端契约：改 asks/signals/route 结构时，同步检查 `build.js`（renderLocate/renderPattern）和 `assets/locate.js`。
 
-复制 `data/chapters/quadratic-equation.json` 为模板，改 meta（id/title/order）和内容。**不要在构建脚本里 rmSync 清空 dist**（本机安全删除机制会拦截），构建是增量覆盖模式。
+## 部署与运营
 
-## 已验证
-
-- 全站 3311 条内链 0 失效（Python 静态检查，剥除 script/style 后）
-- 新组件 canvas 均有渲染、滑块联动正常、无 JS 异常（headless Chrome + CDP 实测；浏览器不可用时退化为 `.shots/stub-test.js` Node 桩环境：真实执行全部组件 + 模拟拖滑块；`.shots/geom-check.js` 进一步记录所有绘制坐标，检查 NaN 参数、图元越界、文字溢出画布）
-- 返回导航 8 场景（含 bfcache、无栈进入、跨类型跳转）实测通过
+- Cloudflare Pages 直连仓库，push 即上线；`assets/*.js/css` 边缘缓存 max-age=14400，改完部署后几分钟内刷新，验证线上用 `curl -o` 落盘 + `cmp`。
+- sitemap 已提交 GSC；IndexNow key 在 `site.json`。
+- 留言存 D1，管理端拉取需 `ADMIN_TOKEN`（Pages 环境变量）。
