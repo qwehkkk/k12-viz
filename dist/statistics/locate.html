@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>题目定位器 - 数据的分析 - 图知学堂</title>
 <meta name="description" content="回答两三个问题，快速判断一道数据的分析题属于哪类经典题型，以及第一步该做什么。">
+<script>try{localStorage.setItem('k12v-last',JSON.stringify({s:'junior',c:'statistics'}))}catch(e){}</script>
 <style>
 :root {
   --bg: #fafaf8;
@@ -750,6 +751,32 @@ a:hover .tg-node { stroke-width: 2.4; }
 .strand-ghosts { font-size: 12.5px; color: var(--muted); margin-top: 10px; }
 .grade-empty { font-size: 13px; color: var(--muted); margin: 0; padding: 4px 0 6px; }
 
+/* ---------- 底部「返回上一级」栏 ---------- */
+.up-back {
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  margin-top: 28px; padding: 14px 16px;
+  background: var(--bg); border: 1px solid var(--border); border-radius: 12px;
+}
+.ub-main {
+  display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  font-weight: 600; font-size: 14.5px; color: var(--accent); text-decoration: none;
+  padding: 8px 16px; border: 1.5px solid var(--accent); border-radius: 10px; background: #fff;
+}
+.ub-main:hover { background: var(--accent); color: #fff; }
+.ub-main:hover .ub-sub { color: rgba(255, 255, 255, 0.85); }
+.ub-arrow { font-size: 16px; line-height: 1; }
+.ub-sub { font-weight: 400; font-size: 12.5px; color: var(--muted); }
+.ub-else { font-size: 13px; color: var(--muted); }
+.ub-else a { color: var(--muted); text-decoration: underline dotted; padding: 0 2px; }
+.ub-else a:hover { color: var(--accent); }
+
+/* ---------- 目录页「上次学到这」高亮 ---------- */
+.chapter-card.last-card { outline: 2px solid var(--accent); outline-offset: 2px; }
+.last-badge {
+  font-size: 11px; padding: 1px 9px; border-radius: 999px;
+  background: var(--accent); color: #fff; white-space: nowrap;
+}
+
 </style>
 </head>
 <body>
@@ -795,6 +822,10 @@ a:hover .tg-node { stroke-width: 2.4; }
 <div class="locate-bar" style="margin-top:36px">
   定位完还是不会做？去<a href="patterns.html">题型库</a>看这类题的「逆向解读」——它由哪几个知识点拼成，缺哪一环一眼就看得出来。
 </div>
+<nav class="up-back">
+  <a class="ub-main" href="index.html"><span class="ub-arrow">↩</span>返回本章目录<span class="ub-sub">八年级下册 · 数据的分析</span></a>
+  <span class="ub-else">或直达：<a href="patterns.html">本章题型库</a> · <a href="../index.html">课程目录</a></span>
+</nav>
 
 <script>
 window.__LOCATE_DATA__ = {"asks":[{"k":"平均数","label":"求平均数、加权平均数"},{"k":"中位数","label":"排序求中位数"},{"k":"众数","label":"频数与出现次数"},{"k":"方差","label":"方差、标准差、稳定性"},{"k":"统计量选择","label":"哪个量更能代表一般水平"}],"features":{"k":"数据分析","words":["平均数","平均分","加权","中位数","众数","方差","标准差","波动","稳定","稳定性","出现次数最多","最中间","正中间","排序","频数","权重","百分比","代表","一般水平","人均"]},"patterns":[{"id":"stat-calc-mean","no":1,"title":"平均数与加权平均数的计算","kind":"计算","asks":["平均数"],"signals":["平均数","平均成绩","占百分之","权重","加权","人数不同"],"route":["/statistics/stat-mean"],"chain":[{"point":"stat-mean","role":"总和 ÷ 个数 / 加权","title":"平均数与加权平均数"}]},{"id":"stat-calc-median","no":2,"title":"求中位数","kind":"计算","asks":["中位数"],"signals":["中位数","正中间","从小到大","奇数","偶数"],"route":["/statistics/stat-median"],"chain":[{"point":"stat-median","role":"先排序再取中间","title":"中位数"}]},{"id":"stat-calc-mode","no":3,"title":"求众数","kind":"计算","asks":["众数"],"signals":["众数","出现次数最多","频数","最常见的"],"route":["/statistics/stat-mode"],"chain":[{"point":"stat-mode","role":"只看出现频率","title":"众数"}]},{"id":"stat-reverse-mean","no":4,"title":"由统计量反求数据","kind":"组合型","asks":["平均数","中位数","众数"],"signals":["平均数是","求 x","已知平均数","若加入一个数据"],"route":["/statistics/stat-mean","/statistics/stat-median"],"chain":[{"point":"stat-mean","role":"总和 = 平均数 × 个数","title":"平均数与加权平均数"},{"point":"stat-median","role":"位置关系反推","title":"中位数"}]},{"id":"stat-calc-var","no":5,"title":"方差与标准差的计算","kind":"计算","asks":["方差"],"signals":["方差","标准差","s²","求波动"],"route":["/statistics/stat-var"],"chain":[{"point":"stat-var","role":"偏差平方取平均","title":"方差与标准差"}]},{"id":"stat-compare-var","no":6,"title":"用方差比较稳定性","kind":"组合型","asks":["方差"],"signals":["谁更稳定","方差小的","波动","选谁","成绩更稳定"],"route":["/statistics/stat-var","/statistics/stat-mean"],"chain":[{"point":"stat-var","role":"方差小的波动小","title":"方差与标准差"},{"point":"stat-mean","role":"先确认平均数相同","title":"平均数与加权平均数"}]},{"id":"stat-choose-metric","no":7,"title":"统计量的选择与说理","kind":"应用型","asks":["统计量选择"],"signals":["更能代表","哪个更合理","一般水平","极端值","拉高","拉低","工资","房价"],"route":["/statistics/stat-choice","/statistics/stat-median","/statistics/stat-mean"],"chain":[{"point":"stat-choice","role":"三个量的分工","title":"三个统计量怎么选"},{"point":"stat-median","role":"对极端值免疫","title":"中位数"},{"point":"stat-mean","role":"受极端值影响","title":"平均数与加权平均数"}]},{"id":"stat-robust-var","no":8,"title":"数据变化对方差的影响","kind":"综合","asks":["方差","平均数"],"signals":["每个数据都加","都乘","平均数和方差","变化后","平移"],"route":["/statistics/stat-var","/statistics/stat-mean"],"chain":[{"point":"stat-var","role":"偏差不变则方差不变","title":"方差与标准差"},{"point":"stat-mean","role":"平均数跟着动","title":"平均数与加权平均数"}]}],"patternsUrl":"patterns.html","prefix":""};

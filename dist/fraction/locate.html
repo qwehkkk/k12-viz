@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>题目定位器 - 分式 - 图知学堂</title>
 <meta name="description" content="回答两三个问题，快速判断一道分式题属于哪类经典题型，以及第一步该做什么。">
+<script>try{localStorage.setItem('k12v-last',JSON.stringify({s:'junior',c:'fraction'}))}catch(e){}</script>
 <style>
 :root {
   --bg: #fafaf8;
@@ -750,6 +751,32 @@ a:hover .tg-node { stroke-width: 2.4; }
 .strand-ghosts { font-size: 12.5px; color: var(--muted); margin-top: 10px; }
 .grade-empty { font-size: 13px; color: var(--muted); margin: 0; padding: 4px 0 6px; }
 
+/* ---------- 底部「返回上一级」栏 ---------- */
+.up-back {
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  margin-top: 28px; padding: 14px 16px;
+  background: var(--bg); border: 1px solid var(--border); border-radius: 12px;
+}
+.ub-main {
+  display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  font-weight: 600; font-size: 14.5px; color: var(--accent); text-decoration: none;
+  padding: 8px 16px; border: 1.5px solid var(--accent); border-radius: 10px; background: #fff;
+}
+.ub-main:hover { background: var(--accent); color: #fff; }
+.ub-main:hover .ub-sub { color: rgba(255, 255, 255, 0.85); }
+.ub-arrow { font-size: 16px; line-height: 1; }
+.ub-sub { font-weight: 400; font-size: 12.5px; color: var(--muted); }
+.ub-else { font-size: 13px; color: var(--muted); }
+.ub-else a { color: var(--muted); text-decoration: underline dotted; padding: 0 2px; }
+.ub-else a:hover { color: var(--accent); }
+
+/* ---------- 目录页「上次学到这」高亮 ---------- */
+.chapter-card.last-card { outline: 2px solid var(--accent); outline-offset: 2px; }
+.last-badge {
+  font-size: 11px; padding: 1px 9px; border-radius: 999px;
+  background: var(--accent); color: #fff; white-space: nowrap;
+}
+
 </style>
 </head>
 <body>
@@ -795,6 +822,10 @@ a:hover .tg-node { stroke-width: 2.4; }
 <div class="locate-bar" style="margin-top:36px">
   定位完还是不会做？去<a href="patterns.html">题型库</a>看这类题的「逆向解读」——它由哪几个知识点拼成，缺哪一环一眼就看得出来。
 </div>
+<nav class="up-back">
+  <a class="ub-main" href="index.html"><span class="ub-arrow">↩</span>返回本章目录<span class="ub-sub">八年级上册 · 分式</span></a>
+  <span class="ub-else">或直达：<a href="patterns.html">本章题型库</a> · <a href="../index.html">课程目录</a></span>
+</nav>
 
 <script>
 window.__LOCATE_DATA__ = {"asks":[{"k":"意义条件","label":"分式有意义 / 无意义 / 值为 0 的条件"},{"k":"约分通分","label":"约分、最简分式、通分"},{"k":"乘除乘方","label":"分式的乘除与乘方化简"},{"k":"加减化简","label":"异分母加减与混合化简"},{"k":"化简求值","label":"先化简再代值（避开禁点）"},{"k":"分式方程","label":"解分式方程与验根增根"},{"k":"应用题","label":"行程、工程、售价类分式方程应用"}],"features":[{"k":"分式","words":["分式","最简公分母","通分","约分","增根","验根","分母","有意义","值为 0","倒数","最简分式"]}],"patterns":[{"id":"fr-basic-mean","no":"基础 1","title":"分式有意义与值为 0","kind":"概念","asks":["意义条件"],"signals":["有意义","值为 0","分母","取何值"],"route":["/fraction/fr-concept"],"chain":[{"point":"fr-concept","role":"分母 ≠ 0 铁律与双条件","title":"分式的概念与意义"}]},{"id":"fr-basic-simp","no":"基础 2","title":"约分化简","kind":"计算","asks":["约分通分"],"signals":["化简","最简分式","约分"],"route":["/fraction/fr-props"],"chain":[{"point":"fr-props","role":"先分解后约分","title":"基本性质与约分通分"}]},{"id":"fr-basic-mul","no":"基础 3","title":"乘除与乘方","kind":"计算","asks":["乘除乘方"],"signals":["计算","×","÷","乘方"],"route":["/fraction/fr-muldiv"],"chain":[{"point":"fr-muldiv","role":"乘除法则与颠倒","title":"分式的乘除与乘方"}]},{"id":"fr-adv-add","no":"进阶 1","title":"异分母加减化简","kind":"计算","asks":["加减化简"],"signals":["通分","相加减","先化简"],"route":["/fraction/fr-props","/fraction/fr-addsub"],"chain":[{"point":"fr-props","role":"最简公分母","title":"基本性质与约分通分"},{"point":"fr-addsub","role":"通分与分子括号","title":"分式的加减"}]},{"id":"fr-adv-eval","no":"进阶 2","title":"化简求值","kind":"计算","asks":["化简求值"],"signals":["先化简","再求值","其中 x ="],"route":["/fraction/fr-muldiv","/fraction/fr-addsub"],"chain":[{"point":"fr-muldiv","role":"乘除化简","title":"分式的乘除与乘方"},{"point":"fr-addsub","role":"加减化简","title":"分式的加减"}]},{"id":"fr-adv-eq","no":"进阶 3","title":"解分式方程与增根","kind":"计算","asks":["分式方程"],"signals":["解方程","分母含 x","验根","增根"],"route":["/fraction/fr-eq"],"chain":[{"point":"fr-eq","role":"去分母与验根","title":"分式方程与验根"}]},{"id":"fr-app-trip","no":"应用 1","title":"行程类应用题","kind":"应用","asks":["应用题"],"signals":["速度","提前","早到","km/h","提高"],"route":["/fraction/fr-concept","/fraction/fr-eq"],"chain":[{"point":"fr-concept","role":"设未知数的意义域","title":"分式的概念与意义"},{"point":"fr-eq","role":"列分式方程与验根","title":"分式方程与验根"}]},{"id":"fr-app-work","no":"应用 2","title":"工程类应用题","kind":"综合","asks":["应用题","分式方程"],"signals":["单独完成","合作","效率","天","比另一队少"],"route":["/fraction/fr-addsub","/fraction/fr-eq"],"chain":[{"point":"fr-addsub","role":"效率和 = 各效率之和","title":"分式的加减"},{"point":"fr-eq","role":"分式方程求解验根","title":"分式方程与验根"}]}],"patternsUrl":"patterns.html","prefix":""};

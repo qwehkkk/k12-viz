@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>题目定位器 - 比例 - 图知学堂</title>
 <meta name="description" content="回答两三个问题，快速判断一道比例题属于哪类经典题型，以及第一步该做什么。">
+<script>try{localStorage.setItem('k12v-last',JSON.stringify({s:'primary',c:'p6b-prop'}))}catch(e){}</script>
 <style>
 :root {
   --bg: #fafaf8;
@@ -750,6 +751,32 @@ a:hover .tg-node { stroke-width: 2.4; }
 .strand-ghosts { font-size: 12.5px; color: var(--muted); margin-top: 10px; }
 .grade-empty { font-size: 13px; color: var(--muted); margin: 0; padding: 4px 0 6px; }
 
+/* ---------- 底部「返回上一级」栏 ---------- */
+.up-back {
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  margin-top: 28px; padding: 14px 16px;
+  background: var(--bg); border: 1px solid var(--border); border-radius: 12px;
+}
+.ub-main {
+  display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  font-weight: 600; font-size: 14.5px; color: var(--accent); text-decoration: none;
+  padding: 8px 16px; border: 1.5px solid var(--accent); border-radius: 10px; background: #fff;
+}
+.ub-main:hover { background: var(--accent); color: #fff; }
+.ub-main:hover .ub-sub { color: rgba(255, 255, 255, 0.85); }
+.ub-arrow { font-size: 16px; line-height: 1; }
+.ub-sub { font-weight: 400; font-size: 12.5px; color: var(--muted); }
+.ub-else { font-size: 13px; color: var(--muted); }
+.ub-else a { color: var(--muted); text-decoration: underline dotted; padding: 0 2px; }
+.ub-else a:hover { color: var(--accent); }
+
+/* ---------- 目录页「上次学到这」高亮 ---------- */
+.chapter-card.last-card { outline: 2px solid var(--accent); outline-offset: 2px; }
+.last-badge {
+  font-size: 11px; padding: 1px 9px; border-radius: 999px;
+  background: var(--accent); color: #fff; white-space: nowrap;
+}
+
 </style>
 </head>
 <body>
@@ -795,6 +822,10 @@ a:hover .tg-node { stroke-width: 2.4; }
 <div class="locate-bar" style="margin-top:36px">
   定位完还是不会做？去<a href="patterns.html">题型库</a>看这类题的「逆向解读」——它由哪几个知识点拼成，缺哪一环一眼就看得出来。
 </div>
+<nav class="up-back">
+  <a class="ub-main" href="index.html"><span class="ub-arrow">↩</span>返回本章目录<span class="ub-sub">六年级下册 · 比例</span></a>
+  <span class="ub-else">或直达：<a href="patterns.html">本章题型库</a> · <a href="../index.html">课程目录</a></span>
+</nav>
 
 <script>
 window.__LOCATE_DATA__ = {"asks":[{"k":"解比例","desc":"用内项积 = 外项积求未知数"},{"k":"判断比例","desc":"判断两个比能否组成比例"},{"k":"正比例","desc":"判断或应用正比例"},{"k":"反比例","desc":"判断或应用反比例"},{"k":"比例尺","desc":"图上距离与实际距离互求"}],"features":["「商一定」是正比例，「积一定」是反比例","解比例一律交叉相乘，别硬除","比例尺题先统一单位","放大缩小只看对应边，面积按平方变"],"patterns":[{"id":"p6b-prop-t-solve","no":"基础 1","title":"解比例","kind":"计算","asks":["解比例"],"signals":["解比例","x :"],"route":["/p6b-prop/p6b-prop-mean"],"chain":[{"point":"p6b-prop-mean","role":"外项积 = 内项积","title":"比例的意义与基本性质"}]},{"id":"p6b-prop-t-judge","no":"基础 2","title":"判断能否组成比例","kind":"概念","asks":["判断比例"],"signals":["能否","组成比例"],"route":["/p6b-prop/p6b-prop-mean"],"chain":[{"point":"p6b-prop-mean","role":"比值相等或外项积 = 内项积","title":"比例的意义与基本性质"}]},{"id":"p6b-prop-t-direct","no":"中档 1","title":"正比例判断","kind":"概念","asks":["正比例"],"signals":["成正比例","一定"],"route":["/p6b-prop/p6b-prop-direct"],"chain":[{"point":"p6b-prop-direct","role":"商一定","title":"正比例"}]},{"id":"p6b-prop-t-inverse","no":"中档 2","title":"反比例判断","kind":"概念","asks":["反比例"],"signals":["成反比例","积一定"],"route":["/p6b-prop/p6b-prop-inverse"],"chain":[{"point":"p6b-prop-inverse","role":"积一定","title":"反比例"}]},{"id":"p6b-prop-t-scale","no":"提升 1","title":"比例尺应用","kind":"应用","asks":["比例尺"],"signals":["比例尺","图上距离"],"route":["/p6b-prop/p6b-prop-scale","/p6b-prop/p6b-prop-mean"],"chain":[{"point":"p6b-prop-scale","role":"统一单位后按比例换算","title":"比例尺与图形的放大缩小"},{"point":"p6b-prop-mean","role":"用解比例求未知量","title":"比例的意义与基本性质"}]}],"patternsUrl":"patterns.html","prefix":""};

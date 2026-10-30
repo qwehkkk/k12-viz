@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>题目定位器 - 除数是一位数的除法 - 图知学堂</title>
 <meta name="description" content="回答两三个问题，快速判断一道除数是一位数的除法题属于哪类经典题型，以及第一步该做什么。">
+<script>try{localStorage.setItem('k12v-last',JSON.stringify({s:'primary',c:'p3b-div'}))}catch(e){}</script>
 <style>
 :root {
   --bg: #fafaf8;
@@ -750,6 +751,32 @@ a:hover .tg-node { stroke-width: 2.4; }
 .strand-ghosts { font-size: 12.5px; color: var(--muted); margin-top: 10px; }
 .grade-empty { font-size: 13px; color: var(--muted); margin: 0; padding: 4px 0 6px; }
 
+/* ---------- 底部「返回上一级」栏 ---------- */
+.up-back {
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  margin-top: 28px; padding: 14px 16px;
+  background: var(--bg); border: 1px solid var(--border); border-radius: 12px;
+}
+.ub-main {
+  display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  font-weight: 600; font-size: 14.5px; color: var(--accent); text-decoration: none;
+  padding: 8px 16px; border: 1.5px solid var(--accent); border-radius: 10px; background: #fff;
+}
+.ub-main:hover { background: var(--accent); color: #fff; }
+.ub-main:hover .ub-sub { color: rgba(255, 255, 255, 0.85); }
+.ub-arrow { font-size: 16px; line-height: 1; }
+.ub-sub { font-weight: 400; font-size: 12.5px; color: var(--muted); }
+.ub-else { font-size: 13px; color: var(--muted); }
+.ub-else a { color: var(--muted); text-decoration: underline dotted; padding: 0 2px; }
+.ub-else a:hover { color: var(--accent); }
+
+/* ---------- 目录页「上次学到这」高亮 ---------- */
+.chapter-card.last-card { outline: 2px solid var(--accent); outline-offset: 2px; }
+.last-badge {
+  font-size: 11px; padding: 1px 9px; border-radius: 999px;
+  background: var(--accent); color: #fff; white-space: nowrap;
+}
+
 </style>
 </head>
 <body>
@@ -795,6 +822,10 @@ a:hover .tg-node { stroke-width: 2.4; }
 <div class="locate-bar" style="margin-top:36px">
   定位完还是不会做？去<a href="patterns.html">题型库</a>看这类题的「逆向解读」——它由哪几个知识点拼成，缺哪一环一眼就看得出来。
 </div>
+<nav class="up-back">
+  <a class="ub-main" href="index.html"><span class="ub-arrow">↩</span>返回本章目录<span class="ub-sub">三年级下册 · 除数是一位数的除法</span></a>
+  <span class="ub-else">或直达：<a href="patterns.html">本章题型库</a> · <a href="../index.html">课程目录</a></span>
+</nav>
 
 <script>
 window.__LOCATE_DATA__ = {"asks":[{"k":"笔算除法","desc":"竖式逐步算，处理余数"},{"k":"商中间末尾有0","desc":"不够除时补 0 占位"},{"k":"除法应用","desc":"平均分与包含情境列式"},{"k":"余数判断","desc":"余数与除数大小的关系"},{"k":"验算","desc":"商×除数+余数=被除数"}],"features":["从最高位除起，商的位置和被除数的位对齐","不够除就商 0，这个 0 不能省","余数一定小于除数，大于等于说明商取小了","验算永远用「商 × 除数 + 余数 = 被除数」"],"patterns":[{"id":"p3b-div-t-vert","no":"基础 1","title":"三位数除以一位数","kind":"计算","asks":["笔算除法"],"signals":["计算","竖式","÷"],"route":["/p3b-div/p3b-div-vert"],"chain":[{"point":"p3b-div-vert","role":"逐位除的顺序","title":"笔算除法：逐位除"}]},{"id":"p3b-div-t-zero-mid","no":"基础 2","title":"商中间有 0","kind":"计算","asks":["商中间末尾有0"],"signals":["商中间","有 0","不够除"],"route":["/p3b-div/p3b-div-zero"],"chain":[{"point":"p3b-div-zero","role":"不够除商 0 占位","title":"商中间、末尾有 0"}]},{"id":"p3b-div-t-rem","no":"提升 1","title":"有余数并验算","kind":"计算","asks":["笔算除法","验算"],"signals":["余","验算"],"route":["/p3b-div/p3b-div-vert","/p3b-div/p3b-div-zero"],"chain":[{"point":"p3b-div-vert","role":"余数处理","title":"笔算除法：逐位除"},{"point":"p3b-div-zero","role":"末位商 0","title":"商中间、末尾有 0"}]},{"id":"p3b-div-t-apply","no":"提升 2","title":"平均分情境","kind":"应用","asks":["除法应用"],"signals":["平均","每","还剩"],"route":["/p3b-div/p3b-div-mean","/p3b-div/p3b-div-vert"],"chain":[{"point":"p3b-div-mean","role":"等分与包含","title":"除法的两种意思"},{"point":"p3b-div-vert","role":"笔算","title":"笔算除法：逐位除"}]},{"id":"p3b-div-t-remmax","no":"拓展","title":"余数最大是多少","kind":"推理","asks":["余数判断"],"signals":["余数最大","除数","被除数"],"route":["/p3b-div/p3b-div-vert"],"chain":[{"point":"p3b-div-vert","role":"余数小于除数","title":"笔算除法：逐位除"}]}],"patternsUrl":"patterns.html","prefix":""};

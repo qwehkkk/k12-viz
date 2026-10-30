@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>题目定位器 - 相似 - 图知学堂</title>
 <meta name="description" content="回答两三个问题，快速判断一道相似题属于哪类经典题型，以及第一步该做什么。">
+<script>try{localStorage.setItem('k12v-last',JSON.stringify({s:'junior',c:'similarity'}))}catch(e){}</script>
 <style>
 :root {
   --bg: #fafaf8;
@@ -750,6 +751,32 @@ a:hover .tg-node { stroke-width: 2.4; }
 .strand-ghosts { font-size: 12.5px; color: var(--muted); margin-top: 10px; }
 .grade-empty { font-size: 13px; color: var(--muted); margin: 0; padding: 4px 0 6px; }
 
+/* ---------- 底部「返回上一级」栏 ---------- */
+.up-back {
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  margin-top: 28px; padding: 14px 16px;
+  background: var(--bg); border: 1px solid var(--border); border-radius: 12px;
+}
+.ub-main {
+  display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  font-weight: 600; font-size: 14.5px; color: var(--accent); text-decoration: none;
+  padding: 8px 16px; border: 1.5px solid var(--accent); border-radius: 10px; background: #fff;
+}
+.ub-main:hover { background: var(--accent); color: #fff; }
+.ub-main:hover .ub-sub { color: rgba(255, 255, 255, 0.85); }
+.ub-arrow { font-size: 16px; line-height: 1; }
+.ub-sub { font-weight: 400; font-size: 12.5px; color: var(--muted); }
+.ub-else { font-size: 13px; color: var(--muted); }
+.ub-else a { color: var(--muted); text-decoration: underline dotted; padding: 0 2px; }
+.ub-else a:hover { color: var(--accent); }
+
+/* ---------- 目录页「上次学到这」高亮 ---------- */
+.chapter-card.last-card { outline: 2px solid var(--accent); outline-offset: 2px; }
+.last-badge {
+  font-size: 11px; padding: 1px 9px; border-radius: 999px;
+  background: var(--accent); color: #fff; white-space: nowrap;
+}
+
 </style>
 </head>
 <body>
@@ -795,6 +822,10 @@ a:hover .tg-node { stroke-width: 2.4; }
 <div class="locate-bar" style="margin-top:36px">
   定位完还是不会做？去<a href="patterns.html">题型库</a>看这类题的「逆向解读」——它由哪几个知识点拼成，缺哪一环一眼就看得出来。
 </div>
+<nav class="up-back">
+  <a class="ub-main" href="index.html"><span class="ub-arrow">↩</span>返回本章目录<span class="ub-sub">九年级下册 · 相似</span></a>
+  <span class="ub-else">或直达：<a href="patterns.html">本章题型库</a> · <a href="../index.html">课程目录</a></span>
+</nav>
 
 <script>
 window.__LOCATE_DATA__ = {"asks":[{"k":"比例线段","label":"求比例线段、黄金分割、比例中项"},{"k":"求线段长","label":"由相似求未知线段"},{"k":"证明相似","label":"判定两个三角形相似并写出对应比例"},{"k":"求面积周长","label":"用相似比求面积比、周长或反求"},{"k":"射影定理","label":"直角三角形斜边上的高及相关计算"},{"k":"位似坐标","label":"坐标系里的位似变换求像的坐标"},{"k":"实际测量","label":"影长、镜面反射等测高测距应用"}],"features":[{"k":"基本图形","words":["A 型","X 型","8 字型","基本图形","平行线分线段"]},{"k":"找等角","words":["公共角","对顶角","同位角","∠A 为公共角","内错角"]},{"k":"垂直与直角","words":["斜边上的高","CD ⊥ AB","射影","∠ACB = 90°","直角"]},{"k":"坐标与位似","words":["位似","位似中心","坐标","原点","(kx, ky)"]}],"patterns":[{"id":"sim-golden-calc","no":1,"title":"黄金分割与比例中项","kind":"单一型","asks":["比例线段"],"signals":["黄金分割","0.618","比例中项","较长段","AC² = AB·CB"],"route":["设较长段为 x，另一段用全长减 x 表示","按黄金分割定义列比例：x/L = (L−x)/x","交叉相乘化为一元二次方程","求根公式取正根，另一段 = 全长 − x"],"chain":[{"point":"similarity-concept","role":"按定义列比例，转化为方程","title":"比例线段与相似多边形"}]},{"id":"sim-a-type-seg","no":2,"title":"A 型基本图形：平行截线求线段","kind":"单一型","asks":["求线段长"],"signals":["DE ∥ BC","平行于","D、E 分别在","AD/AB","△ABC"],"route":["确认 DE ∥ BC，△ADE ∽ △ABC","求「另一段」用 AD/DB = AE/EC","求「平行线段」用 AD/AB = DE/BC","代入数值解比例（交叉相乘）"],"chain":[{"point":"similarity-parallel","role":"选对两套比例（上比下 / 上比全）","title":"平行线分线段成比例"},{"point":"similarity-judge","role":"说明为什么相似（AA：平行给同位角）","title":"相似三角形的判定"}]},{"id":"sim-x-type-seg","no":3,"title":"X 型（8 字型）：对顶角 + 平行","kind":"单一型","asks":["求线段长","证明相似"],"signals":["交于点 O","AC ∥ BD","对顶角","X 型","8 字型"],"route":["标记交点 O 与两条平行线段","找等角：对顶角相等 + 平行线同位角（内错角）相等","△AOC ∽ △DOB（顶点按等角重新排序）","画交叉箭头对应对边，列比例求解"],"chain":[{"point":"similarity-parallel","role":"识别 X 型基本图形","title":"平行线分线段成比例"},{"point":"similarity-judge","role":"对顶角 + 平行线同位角，AA 判定","title":"相似三角形的判定"}]},{"id":"sim-judge-aa","no":4,"title":"AA 判定证明：公共角 + 已知角","kind":"单一型","asks":["证明相似"],"signals":["求证：△　∽ △","公共角","∠　= ∠","对顶角相等"],"route":["扫图找免费等角：公共角、对顶角、同位角（平行线）、直角","找第二个等角（已知条件或互余/互补推出）","写清 △　∽ △　的对应顶点顺序","由相似写需要的比例式或乘积式"],"chain":[{"point":"similarity-judge","role":"AA 判定 + 免费等角的四个来源","title":"相似三角形的判定"}]},{"id":"sim-judge-sas","no":5,"title":"SAS / SSS 判定与共角变形","kind":"单一型","asks":["证明相似","求线段长"],"signals":["两边成比例","夹角","AB/AC = AD/AE","三边成比例","SAS"],"route":["核对相等的角是否为两组对应边的夹角（SAS）","或核对三组边的比是否全部相等（SSS）","写相似并排对应顶点","由比例求目标线段"],"chain":[{"point":"similarity-judge","role":"SAS 夹角核对 / SSS 三组全验","title":"相似三角形的判定"},{"point":"similarity-parallel","role":"共角型常叠加平行线","title":"平行线分线段成比例"}]},{"id":"sim-prop-area","no":6,"title":"面积比与相似比互求","kind":"单一型","asks":["求面积周长"],"signals":["面积比","相似比","周长比","k²","4 : 9"],"route":["分清给的是面积比还是长度比","面积比 → 相似比：开平方","相似比 → 面积比：平方","周长、高、中线、对角线都按长度比算"],"chain":[{"point":"similarity-property","role":"一维 k、二维 k² 的换算","title":"相似三角形的性质"}]},{"id":"sim-prop-height","no":7,"title":"对应高、中线、角平分线的比","kind":"复合型","asks":["求面积周长","求线段长"],"signals":["对应高","对应中线","角平分线的比","高之比","周长"],"route":["由对应高（中线）之比确定 k","需要面积时用 S = ½·底·高，底和高各按 k 缩放（自动 k²）","需要周长直接乘 k","反求原三角形任一线段：目标 = 大 × k 或 ÷ k"],"chain":[{"point":"similarity-property","role":"对应线段比都等于 k","title":"相似三角形的性质"},{"point":"similarity-judge","role":"若需先证相似再使用","title":"相似三角形的判定"}]},{"id":"sim-nested-project","no":8,"title":"母子型：斜边上的高与射影定理","kind":"综合型","asks":["射影定理","求线段长"],"signals":["斜边上的高","CD ⊥ AB","射影","CD² = AD·BD","∠ACB = 90°"],"route":["确认直角 + 斜边上的高的图形结构","已知两段斜边 → 先用 CD² = AD·BD","已知直角边和斜边 → 用 AC² = AD·AB","面积法 CD = ab/c 交叉验证"],"chain":[{"point":"similarity-nested","role":"母子相似 + 射影定理三件套","title":"斜边上的高与射影定理"},{"point":"similarity-judge","role":"同角的余角相等给 AA","title":"相似三角形的判定"}]},{"id":"sim-coord-homothety","no":9,"title":"坐标系里的位似变换","kind":"单一型","asks":["位似坐标"],"signals":["位似","原点","坐标","位似比","(x, y) → (kx, ky)"],"route":["确认位似中心是否为原点","逐点乘 k 得像坐标","题目说「缩小/放大到原的 n 分之 n」且未限定同侧时，k = ±n 都要写","反求 k：用任一对对应点 k = x′/x 检验 y′/y 一致"],"chain":[{"point":"similarity-homothety","role":"(kx, ky) 规则 + 双解意识","title":"位似变换"}]},{"id":"sim-shadow-measure","no":10,"title":"影长与镜面反射测高","kind":"综合型","asks":["实际测量","求线段长"],"signals":["同一时刻","影长","镜子","平面镜","人影","楼高"],"route":["判断是影长模型还是镜面模型","影长：h₁/s₁ = H/s₂（同一时刻成对使用）","镜面：人高/人到镜距 = 塔高/镜到塔距","影落在墙上时先折算延伸影长再列比例","统一单位后求解"],"chain":[{"point":"similarity-apply","role":"影长/镜面两种建模","title":"相似的应用：测高与测距"},{"point":"similarity-judge","role":"AA 判定依据（平行/反射 + 直角）","title":"相似三角形的判定"}]}],"patternsUrl":"patterns.html","prefix":""};

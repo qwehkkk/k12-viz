@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>题目定位器 - 表内乘法（一） - 图知学堂</title>
 <meta name="description" content="回答两三个问题，快速判断一道表内乘法（一）题属于哪类经典题型，以及第一步该做什么。">
+<script>try{localStorage.setItem('k12v-last',JSON.stringify({s:'primary',c:'p2a-mult1'}))}catch(e){}</script>
 <style>
 :root {
   --bg: #fafaf8;
@@ -750,6 +751,32 @@ a:hover .tg-node { stroke-width: 2.4; }
 .strand-ghosts { font-size: 12.5px; color: var(--muted); margin-top: 10px; }
 .grade-empty { font-size: 13px; color: var(--muted); margin: 0; padding: 4px 0 6px; }
 
+/* ---------- 底部「返回上一级」栏 ---------- */
+.up-back {
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  margin-top: 28px; padding: 14px 16px;
+  background: var(--bg); border: 1px solid var(--border); border-radius: 12px;
+}
+.ub-main {
+  display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  font-weight: 600; font-size: 14.5px; color: var(--accent); text-decoration: none;
+  padding: 8px 16px; border: 1.5px solid var(--accent); border-radius: 10px; background: #fff;
+}
+.ub-main:hover { background: var(--accent); color: #fff; }
+.ub-main:hover .ub-sub { color: rgba(255, 255, 255, 0.85); }
+.ub-arrow { font-size: 16px; line-height: 1; }
+.ub-sub { font-weight: 400; font-size: 12.5px; color: var(--muted); }
+.ub-else { font-size: 13px; color: var(--muted); }
+.ub-else a { color: var(--muted); text-decoration: underline dotted; padding: 0 2px; }
+.ub-else a:hover { color: var(--accent); }
+
+/* ---------- 目录页「上次学到这」高亮 ---------- */
+.chapter-card.last-card { outline: 2px solid var(--accent); outline-offset: 2px; }
+.last-badge {
+  font-size: 11px; padding: 1px 9px; border-radius: 999px;
+  background: var(--accent); color: #fff; white-space: nowrap;
+}
+
 </style>
 </head>
 <body>
@@ -795,6 +822,10 @@ a:hover .tg-node { stroke-width: 2.4; }
 <div class="locate-bar" style="margin-top:36px">
   定位完还是不会做？去<a href="patterns.html">题型库</a>看这类题的「逆向解读」——它由哪几个知识点拼成，缺哪一环一眼就看得出来。
 </div>
+<nav class="up-back">
+  <a class="ub-main" href="index.html"><span class="ub-arrow">↩</span>返回本章目录<span class="ub-sub">二年级上册 · 表内乘法（一）</span></a>
+  <span class="ub-else">或直达：<a href="patterns.html">本章题型库</a> · <a href="../index.html">课程目录</a></span>
+</nav>
 
 <script>
 window.__LOCATE_DATA__ = {"asks":[{"k":"乘法意义","desc":"改写与读法"},{"k":"口诀求积","desc":"用口诀计算"},{"k":"一句两式","desc":"由口诀写两道算式"},{"k":"看图列式","desc":"按图意列乘法"},{"k":"解决问题","desc":"每份 × 份数"}],"features":["相同加数才能写成乘法","口诀从加法排队来","一句口诀两道算式","每份数 × 份数 = 总数"],"patterns":[{"id":"p2a-mult1-t-mean","no":"基础 1","title":"改写乘法","kind":"计算","asks":["乘法意义"],"signals":["改写","几个几"],"route":["/p2a-mult1/p2a-mult1-mean"],"chain":[{"point":"p2a-mult1-mean","role":"连加变乘","title":"乘法的初步认识"}]},{"id":"p2a-mult1-t-kj","no":"基础 2","title":"口诀求积","kind":"计算","asks":["口诀求积"],"signals":["计算","×"],"route":["/p2a-mult1/p2a-mult1-5"],"chain":[{"point":"p2a-mult1-5","role":"对口诀","title":"5 的乘法口诀"}]},{"id":"p2a-mult1-t-two","no":"中档 1","title":"一句两式","kind":"计算","asks":["一句两式"],"signals":["写出两道"],"route":["/p2a-mult1/p2a-mult1-234"],"chain":[{"point":"p2a-mult1-234","role":"交换写两式","title":"2、3、4 的乘法口诀"}]},{"id":"p2a-mult1-t-pic","no":"中档 2","title":"看图列式","kind":"应用","asks":["看图列式"],"signals":["看图"],"route":["/p2a-mult1/p2a-mult1-solve"],"chain":[{"point":"p2a-mult1-solve","role":"每份 × 份数","title":"用乘法解决问题"}]},{"id":"p2a-mult1-t-app","no":"提升 1","title":"乘法应用","kind":"综合","asks":["解决问题"],"signals":["每","一共"],"route":["/p2a-mult1/p2a-mult1-solve"],"chain":[{"point":"p2a-mult1-solve","role":"每份数 × 份数","title":"用乘法解决问题"}]}],"patternsUrl":"patterns.html","prefix":""};

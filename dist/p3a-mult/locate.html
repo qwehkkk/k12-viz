@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>题目定位器 - 多位数乘一位数 - 图知学堂</title>
 <meta name="description" content="回答两三个问题，快速判断一道多位数乘一位数题属于哪类经典题型，以及第一步该做什么。">
+<script>try{localStorage.setItem('k12v-last',JSON.stringify({s:'primary',c:'p3a-mult'}))}catch(e){}</script>
 <style>
 :root {
   --bg: #fafaf8;
@@ -750,6 +751,32 @@ a:hover .tg-node { stroke-width: 2.4; }
 .strand-ghosts { font-size: 12.5px; color: var(--muted); margin-top: 10px; }
 .grade-empty { font-size: 13px; color: var(--muted); margin: 0; padding: 4px 0 6px; }
 
+/* ---------- 底部「返回上一级」栏 ---------- */
+.up-back {
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  margin-top: 28px; padding: 14px 16px;
+  background: var(--bg); border: 1px solid var(--border); border-radius: 12px;
+}
+.ub-main {
+  display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  font-weight: 600; font-size: 14.5px; color: var(--accent); text-decoration: none;
+  padding: 8px 16px; border: 1.5px solid var(--accent); border-radius: 10px; background: #fff;
+}
+.ub-main:hover { background: var(--accent); color: #fff; }
+.ub-main:hover .ub-sub { color: rgba(255, 255, 255, 0.85); }
+.ub-arrow { font-size: 16px; line-height: 1; }
+.ub-sub { font-weight: 400; font-size: 12.5px; color: var(--muted); }
+.ub-else { font-size: 13px; color: var(--muted); }
+.ub-else a { color: var(--muted); text-decoration: underline dotted; padding: 0 2px; }
+.ub-else a:hover { color: var(--accent); }
+
+/* ---------- 目录页「上次学到这」高亮 ---------- */
+.chapter-card.last-card { outline: 2px solid var(--accent); outline-offset: 2px; }
+.last-badge {
+  font-size: 11px; padding: 1px 9px; border-radius: 999px;
+  background: var(--accent); color: #fff; white-space: nowrap;
+}
+
 </style>
 </head>
 <body>
@@ -795,6 +822,10 @@ a:hover .tg-node { stroke-width: 2.4; }
 <div class="locate-bar" style="margin-top:36px">
   定位完还是不会做？去<a href="patterns.html">题型库</a>看这类题的「逆向解读」——它由哪几个知识点拼成，缺哪一环一眼就看得出来。
 </div>
+<nav class="up-back">
+  <a class="ub-main" href="index.html"><span class="ub-arrow">↩</span>返回本章目录<span class="ub-sub">三年级上册 · 多位数乘一位数</span></a>
+  <span class="ub-else">或直达：<a href="patterns.html">本章题型库</a> · <a href="../index.html">课程目录</a></span>
+</nav>
 
 <script>
 window.__LOCATE_DATA__ = {"asks":[{"k":"整十整百","desc":"先算数字再补 0"},{"k":"拆分口算","desc":"整十 + 个位分别乘"},{"k":"进位竖式","desc":"满几十进几"},{"k":"0 的处理","desc":"中间 0 参与，末尾 0 后补"}],"features":["看到 20、200 乘一位数，先撇开 0 算 2 × 3","两位数乘一位数先想拆分，能不能口算","竖式一定从个位起乘，进位写清楚","算完数一数积的位数，位数不对必错"],"patterns":[{"id":"p3a-mult-t-ten","no":"基础 1","title":"整十整百数乘一位数","kind":"口算","asks":["整十整百"],"signals":["20 ×","200 ×","整十"],"route":["/p3a-mult/p3a-mult-oral"],"chain":[{"point":"p3a-mult-oral","role":"先算数字后补 0","title":"整十、整百数乘一位数"}]},{"id":"p3a-mult-t-split","no":"基础 2","title":"两位数乘一位数口算","kind":"口算","asks":["拆分口算"],"signals":["口算","23 × 3"],"route":["/p3a-mult/p3a-mult-split"],"chain":[{"point":"p3a-mult-split","role":"拆整十和个位","title":"两位数乘一位数的拆分"}]},{"id":"p3a-mult-t-carry","no":"中档 3","title":"进位乘法竖式","kind":"笔算","asks":["进位竖式"],"signals":["列竖式","128 × 4"],"route":["/p3a-mult/p3a-mult-vertical"],"chain":[{"point":"p3a-mult-vertical","role":"逐位乘并加进位","title":"乘法竖式与进位"}]},{"id":"p3a-mult-t-zero","no":"中档 4","title":"中间有 0 的乘法","kind":"笔算","asks":["0 的处理"],"signals":["205 ×","中间有 0"],"route":["/p3a-mult/p3a-mult-zero"],"chain":[{"point":"p3a-mult-zero","role":"0 要加进位","title":"中间有 0、末尾有 0 的乘法"}]},{"id":"p3a-mult-t-endzero","no":"提升 5","title":"末尾有 0 的乘法","kind":"笔算","asks":["0 的处理"],"signals":["340 ×","末尾有 0"],"route":["/p3a-mult/p3a-mult-zero"],"chain":[{"point":"p3a-mult-zero","role":"先算再补 0","title":"中间有 0、末尾有 0 的乘法"}]}],"patternsUrl":"patterns.html","prefix":""};

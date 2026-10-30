@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>题目定位器 - 一元函数的导数及其应用 - 图知学堂</title>
 <meta name="description" content="回答两三个问题，快速判断一道一元函数的导数及其应用题属于哪类经典题型，以及第一步该做什么。">
+<script>try{localStorage.setItem('k12v-last',JSON.stringify({s:'senior',c:'derivative'}))}catch(e){}</script>
 <style>
 :root {
   --bg: #fafaf8;
@@ -750,6 +751,32 @@ a:hover .tg-node { stroke-width: 2.4; }
 .strand-ghosts { font-size: 12.5px; color: var(--muted); margin-top: 10px; }
 .grade-empty { font-size: 13px; color: var(--muted); margin: 0; padding: 4px 0 6px; }
 
+/* ---------- 底部「返回上一级」栏 ---------- */
+.up-back {
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  margin-top: 28px; padding: 14px 16px;
+  background: var(--bg); border: 1px solid var(--border); border-radius: 12px;
+}
+.ub-main {
+  display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  font-weight: 600; font-size: 14.5px; color: var(--accent); text-decoration: none;
+  padding: 8px 16px; border: 1.5px solid var(--accent); border-radius: 10px; background: #fff;
+}
+.ub-main:hover { background: var(--accent); color: #fff; }
+.ub-main:hover .ub-sub { color: rgba(255, 255, 255, 0.85); }
+.ub-arrow { font-size: 16px; line-height: 1; }
+.ub-sub { font-weight: 400; font-size: 12.5px; color: var(--muted); }
+.ub-else { font-size: 13px; color: var(--muted); }
+.ub-else a { color: var(--muted); text-decoration: underline dotted; padding: 0 2px; }
+.ub-else a:hover { color: var(--accent); }
+
+/* ---------- 目录页「上次学到这」高亮 ---------- */
+.chapter-card.last-card { outline: 2px solid var(--accent); outline-offset: 2px; }
+.last-badge {
+  font-size: 11px; padding: 1px 9px; border-radius: 999px;
+  background: var(--accent); color: #fff; white-space: nowrap;
+}
+
 </style>
 </head>
 <body>
@@ -795,6 +822,10 @@ a:hover .tg-node { stroke-width: 2.4; }
 <div class="locate-bar" style="margin-top:36px">
   定位完还是不会做？去<a href="patterns.html">题型库</a>看这类题的「逆向解读」——它由哪几个知识点拼成，缺哪一环一眼就看得出来。
 </div>
+<nav class="up-back">
+  <a class="ub-main" href="index.html"><span class="ub-arrow">↩</span>返回本章目录<span class="ub-sub">高二下册 · 一元函数的导数及其应用</span></a>
+  <span class="ub-else">或直达：<a href="patterns.html">本章题型库</a> · <a href="../index.html">课程目录</a></span>
+</nav>
 
 <script>
 window.__LOCATE_DATA__ = {"asks":[{"k":"求导数","desc":"公式 + 四则 + 复合"},{"k":"切线","desc":"斜率 = 导数值"},{"k":"单调区间","desc":"解 f′(x) 的不等式"},{"k":"极值最值","desc":"变号 + 端点比较"},{"k":"含参讨论","desc":"按根的位置分类"},{"k":"不等式证明","desc":"构造 + 求最小值"}],"features":["出现「切线」先求导数值得斜率，再确认切点是否已知","问「单调区间」必须写区间形式并先求定义域","「恒成立」问题一律转成最值问题","含参题先解 f′(x) = 0，再看根是否在定义域/给定区间内"],"patterns":[{"id":"dv-t-calc","no":"基础 1","title":"求导运算","kind":"求导","asks":["求导数"],"signals":["求导","导数"],"route":["/derivative/dv-calc"],"chain":[{"point":"dv-calc","role":"公式与法则","title":"求导公式与运算法则"}]},{"id":"dv-t-tan","no":"基础 2","title":"切线方程","kind":"切线","asks":["切线"],"signals":["切线","切点","相切"],"route":["/derivative/dv-def","/derivative/dv-calc"],"chain":[{"point":"dv-def","role":"导数 = 切线斜率","title":"导数的定义与几何意义"},{"point":"dv-calc","role":"求导函数","title":"求导公式与运算法则"}]},{"id":"dv-t-mono","no":"基础 3","title":"求单调区间","kind":"单调性","asks":["单调区间"],"signals":["单调","递增","递减","区间"],"route":["/derivative/dv-mono","/derivative/dv-calc"],"chain":[{"point":"dv-mono","role":"解不等式","title":"导数与单调性"},{"point":"dv-calc","role":"求导","title":"求导公式与运算法则"}]},{"id":"dv-t-extreme","no":"中档 4","title":"极值最值","kind":"极值","asks":["极值最值"],"signals":["极值","最大值","最小值","闭区间"],"route":["/derivative/dv-extreme","/derivative/dv-mono"],"chain":[{"point":"dv-extreme","role":"变号判极值","title":"极值与最值"},{"point":"dv-mono","role":"单调性","title":"导数与单调性"}]},{"id":"dv-t-param","no":"中档 5","title":"含参讨论","kind":"含参","asks":["含参讨论","单调区间"],"signals":["讨论","参数","a 的取值范围"],"route":["/derivative/dv-mono","/derivative/dv-extreme"],"chain":[{"point":"dv-mono","role":"解含参不等式","title":"导数与单调性"},{"point":"dv-extreme","role":"根的位置","title":"极值与最值"}]},{"id":"dv-t-ineq","no":"中档 6","title":"不等式证明","kind":"不等式","asks":["不等式证明","极值最值"],"signals":["证明","不等式","恒成立"],"route":["/derivative/dv-opt","/derivative/dv-extreme"],"chain":[{"point":"dv-opt","role":"构造函数","title":"导数的应用：优化与不等式"},{"point":"dv-extreme","role":"求最小值","title":"极值与最值"}]},{"id":"dv-t-zero","no":"综合 7","title":"零点个数","kind":"零点","asks":["极值最值","含参讨论"],"signals":["零点","交点","根的个数"],"route":["/derivative/dv-extreme","/derivative/dv-mono"],"chain":[{"point":"dv-extreme","role":"极值符号定交点","title":"极值与最值"},{"point":"dv-mono","role":"单调性","title":"导数与单调性"}]},{"id":"dv-t-opt","no":"综合 8","title":"实际优化","kind":"优化","asks":["极值最值","不等式证明"],"signals":["最大","最省","用料","成本"],"route":["/derivative/dv-opt","/derivative/dv-extreme"],"chain":[{"point":"dv-opt","role":"建模","title":"导数的应用：优化与不等式"},{"point":"dv-extreme","role":"求最值","title":"极值与最值"}]}],"patternsUrl":"patterns.html","prefix":""};

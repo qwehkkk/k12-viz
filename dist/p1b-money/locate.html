@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>题目定位器 - 认识人民币 - 图知学堂</title>
 <meta name="description" content="回答两三个问题，快速判断一道认识人民币题属于哪类经典题型，以及第一步该做什么。">
+<script>try{localStorage.setItem('k12v-last',JSON.stringify({s:'primary',c:'p1b-money'}))}catch(e){}</script>
 <style>
 :root {
   --bg: #fafaf8;
@@ -750,6 +751,32 @@ a:hover .tg-node { stroke-width: 2.4; }
 .strand-ghosts { font-size: 12.5px; color: var(--muted); margin-top: 10px; }
 .grade-empty { font-size: 13px; color: var(--muted); margin: 0; padding: 4px 0 6px; }
 
+/* ---------- 底部「返回上一级」栏 ---------- */
+.up-back {
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  margin-top: 28px; padding: 14px 16px;
+  background: var(--bg); border: 1px solid var(--border); border-radius: 12px;
+}
+.ub-main {
+  display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  font-weight: 600; font-size: 14.5px; color: var(--accent); text-decoration: none;
+  padding: 8px 16px; border: 1.5px solid var(--accent); border-radius: 10px; background: #fff;
+}
+.ub-main:hover { background: var(--accent); color: #fff; }
+.ub-main:hover .ub-sub { color: rgba(255, 255, 255, 0.85); }
+.ub-arrow { font-size: 16px; line-height: 1; }
+.ub-sub { font-weight: 400; font-size: 12.5px; color: var(--muted); }
+.ub-else { font-size: 13px; color: var(--muted); }
+.ub-else a { color: var(--muted); text-decoration: underline dotted; padding: 0 2px; }
+.ub-else a:hover { color: var(--accent); }
+
+/* ---------- 目录页「上次学到这」高亮 ---------- */
+.chapter-card.last-card { outline: 2px solid var(--accent); outline-offset: 2px; }
+.last-badge {
+  font-size: 11px; padding: 1px 9px; border-radius: 999px;
+  background: var(--accent); color: #fff; white-space: nowrap;
+}
+
 </style>
 </head>
 <body>
@@ -795,6 +822,10 @@ a:hover .tg-node { stroke-width: 2.4; }
 <div class="locate-bar" style="margin-top:36px">
   定位完还是不会做？去<a href="patterns.html">题型库</a>看这类题的「逆向解读」——它由哪几个知识点拼成，缺哪一环一眼就看得出来。
 </div>
+<nav class="up-back">
+  <a class="ub-main" href="index.html"><span class="ub-arrow">↩</span>返回本章目录<span class="ub-sub">一年级下册 · 认识人民币</span></a>
+  <span class="ub-else">或直达：<a href="patterns.html">本章题型库</a> · <a href="../index.html">课程目录</a></span>
+</nav>
 
 <script>
 window.__LOCATE_DATA__ = {"asks":[{"k":"单位换算","desc":"元角分互换"},{"k":"两名数计算","desc":"几元几角的加减"},{"k":"付钱","desc":"多种付钱方法"},{"k":"找零","desc":"找回多少钱"},{"k":"够不够","desc":"比较与判断"}],"features":["进率全是 10","计算先统一单位（化角）","付钱答案不唯一","找零 = 付出 − 花掉"],"patterns":[{"id":"p1b-money-t-unit","no":"基础 1","title":"单位换算","kind":"计算","asks":["单位换算"],"signals":["= 角","= 元"],"route":["/p1b-money/p1b-money-unit"],"chain":[{"point":"p1b-money-unit","role":"进率 10","title":"元、角、分"}]},{"id":"p1b-money-t-change","no":"基础 2","title":"两名数","kind":"计算","asks":["两名数计算"],"signals":["几元几角"],"route":["/p1b-money/p1b-money-change"],"chain":[{"point":"p1b-money-change","role":"先化角","title":"几元几角与换算"}]},{"id":"p1b-money-t-pay","no":"中档 1","title":"多种付法","kind":"应用","asks":["付钱"],"signals":["怎样付","可以付"],"route":["/p1b-money/p1b-money-pay"],"chain":[{"point":"p1b-money-pay","role":"凑价格","title":"付钱的方法"}]},{"id":"p1b-money-t-back","no":"中档 2","title":"找零","kind":"应用","asks":["找零"],"signals":["找回","付了"],"route":["/p1b-money/p1b-money-back"],"chain":[{"point":"p1b-money-back","role":"付出减花掉","title":"找零与简单购物"}]},{"id":"p1b-money-t-enough","no":"提升 1","title":"够不够","kind":"综合","asks":["够不够"],"signals":["够吗","还差"],"route":["/p1b-money/p1b-money-change"],"chain":[{"point":"p1b-money-change","role":"统一后比较","title":"几元几角与换算"}]}],"patternsUrl":"patterns.html","prefix":""};

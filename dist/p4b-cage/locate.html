@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>题目定位器 - 数学广角——鸡兔同笼 - 图知学堂</title>
 <meta name="description" content="回答两三个问题，快速判断一道数学广角——鸡兔同笼题属于哪类经典题型，以及第一步该做什么。">
+<script>try{localStorage.setItem('k12v-last',JSON.stringify({s:'primary',c:'p4b-cage'}))}catch(e){}</script>
 <style>
 :root {
   --bg: #fafaf8;
@@ -750,6 +751,32 @@ a:hover .tg-node { stroke-width: 2.4; }
 .strand-ghosts { font-size: 12.5px; color: var(--muted); margin-top: 10px; }
 .grade-empty { font-size: 13px; color: var(--muted); margin: 0; padding: 4px 0 6px; }
 
+/* ---------- 底部「返回上一级」栏 ---------- */
+.up-back {
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  margin-top: 28px; padding: 14px 16px;
+  background: var(--bg); border: 1px solid var(--border); border-radius: 12px;
+}
+.ub-main {
+  display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  font-weight: 600; font-size: 14.5px; color: var(--accent); text-decoration: none;
+  padding: 8px 16px; border: 1.5px solid var(--accent); border-radius: 10px; background: #fff;
+}
+.ub-main:hover { background: var(--accent); color: #fff; }
+.ub-main:hover .ub-sub { color: rgba(255, 255, 255, 0.85); }
+.ub-arrow { font-size: 16px; line-height: 1; }
+.ub-sub { font-weight: 400; font-size: 12.5px; color: var(--muted); }
+.ub-else { font-size: 13px; color: var(--muted); }
+.ub-else a { color: var(--muted); text-decoration: underline dotted; padding: 0 2px; }
+.ub-else a:hover { color: var(--accent); }
+
+/* ---------- 目录页「上次学到这」高亮 ---------- */
+.chapter-card.last-card { outline: 2px solid var(--accent); outline-offset: 2px; }
+.last-badge {
+  font-size: 11px; padding: 1px 9px; border-radius: 999px;
+  background: var(--accent); color: #fff; white-space: nowrap;
+}
+
 </style>
 </head>
 <body>
@@ -795,6 +822,10 @@ a:hover .tg-node { stroke-width: 2.4; }
 <div class="locate-bar" style="margin-top:36px">
   定位完还是不会做？去<a href="patterns.html">题型库</a>看这类题的「逆向解读」——它由哪几个知识点拼成，缺哪一环一眼就看得出来。
 </div>
+<nav class="up-back">
+  <a class="ub-main" href="index.html"><span class="ub-arrow">↩</span>返回本章目录<span class="ub-sub">四年级下册 · 数学广角——鸡兔同笼</span></a>
+  <span class="ub-else">或直达：<a href="patterns.html">本章题型库</a> · <a href="../index.html">课程目录</a></span>
+</nav>
 
 <script>
 window.__LOCATE_DATA__ = {"asks":[{"k":"假设法","desc":"全按一种算，差额 ÷ 单件差"},{"k":"列表枚举","desc":"按序调整直到吻合"},{"k":"变式迁移","desc":"龟鹤、船、得分同款模型"},{"k":"检验","desc":"头、脚（总量）双对账"}],"features":["识别信号：两个总量 + 两种「单价」","假设法公式：**差额 ÷ 单件差** = 另一种的数量","变式先算「单件差」：答错一题损失对分 + 错分","算完必验算两个总量"],"patterns":[{"id":"p4b-cage-t-basic","no":"基础 1","title":"标准鸡兔同笼","kind":"假设","asks":["假设法"],"signals":["鸡兔","头","脚"],"route":["/p4b-cage/p4b-cage-assume"],"chain":[{"point":"p4b-cage-assume","role":"全鸡假设 → 差额 ÷ 2","title":"假设法"}]},{"id":"p4b-cage-t-list","no":"基础 2","title":"列表枚举","kind":"枚举","asks":["列表枚举"],"signals":["列表","试"],"route":["/p4b-cage/p4b-cage-list"],"chain":[{"point":"p4b-cage-list","role":"按序调整","title":"列表法：按序枚举"}]},{"id":"p4b-cage-t-boat","no":"中档 1","title":"租船变式","kind":"变式","asks":["变式迁移"],"signals":["大船","小船","正好坐满"],"route":["/p4b-cage/p4b-cage-model"],"chain":[{"point":"p4b-cage-model","role":"人头当脚数","title":"鸡兔同笼的变式"}]},{"id":"p4b-cage-t-score","no":"中档 2","title":"答题得分变式","kind":"变式","asks":["变式迁移"],"signals":["答对","答错","得分"],"route":["/p4b-cage/p4b-cage-model"],"chain":[{"point":"p4b-cage-model","role":"单件差 = 对分 + 错分","title":"鸡兔同笼的变式"}]},{"id":"p4b-cage-t-both","no":"提升 1","title":"假设法说理","kind":"说理","asks":["假设法"],"signals":["说一说","为什么"],"route":["/p4b-cage/p4b-cage-sum"],"chain":[{"point":"p4b-cage-sum","role":"假设—计算—检验","title":"三种方法怎么选"}]}],"patternsUrl":"patterns.html","prefix":""};

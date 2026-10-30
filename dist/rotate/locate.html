@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>题目定位器 - 旋转 - 图知学堂</title>
 <meta name="description" content="回答两三个问题，快速判断一道旋转题属于哪类经典题型，以及第一步该做什么。">
+<script>try{localStorage.setItem('k12v-last',JSON.stringify({s:'junior',c:'rotate'}))}catch(e){}</script>
 <style>
 :root {
   --bg: #fafaf8;
@@ -750,6 +751,32 @@ a:hover .tg-node { stroke-width: 2.4; }
 .strand-ghosts { font-size: 12.5px; color: var(--muted); margin-top: 10px; }
 .grade-empty { font-size: 13px; color: var(--muted); margin: 0; padding: 4px 0 6px; }
 
+/* ---------- 底部「返回上一级」栏 ---------- */
+.up-back {
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  margin-top: 28px; padding: 14px 16px;
+  background: var(--bg); border: 1px solid var(--border); border-radius: 12px;
+}
+.ub-main {
+  display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  font-weight: 600; font-size: 14.5px; color: var(--accent); text-decoration: none;
+  padding: 8px 16px; border: 1.5px solid var(--accent); border-radius: 10px; background: #fff;
+}
+.ub-main:hover { background: var(--accent); color: #fff; }
+.ub-main:hover .ub-sub { color: rgba(255, 255, 255, 0.85); }
+.ub-arrow { font-size: 16px; line-height: 1; }
+.ub-sub { font-weight: 400; font-size: 12.5px; color: var(--muted); }
+.ub-else { font-size: 13px; color: var(--muted); }
+.ub-else a { color: var(--muted); text-decoration: underline dotted; padding: 0 2px; }
+.ub-else a:hover { color: var(--accent); }
+
+/* ---------- 目录页「上次学到这」高亮 ---------- */
+.chapter-card.last-card { outline: 2px solid var(--accent); outline-offset: 2px; }
+.last-badge {
+  font-size: 11px; padding: 1px 9px; border-radius: 999px;
+  background: var(--accent); color: #fff; white-space: nowrap;
+}
+
 </style>
 </head>
 <body>
@@ -795,6 +822,10 @@ a:hover .tg-node { stroke-width: 2.4; }
 <div class="locate-bar" style="margin-top:36px">
   定位完还是不会做？去<a href="patterns.html">题型库</a>看这类题的「逆向解读」——它由哪几个知识点拼成，缺哪一环一眼就看得出来。
 </div>
+<nav class="up-back">
+  <a class="ub-main" href="index.html"><span class="ub-arrow">↩</span>返回本章目录<span class="ub-sub">九年级上册 · 旋转</span></a>
+  <span class="ub-else">或直达：<a href="patterns.html">本章题型库</a> · <a href="../index.html">课程目录</a></span>
+</nav>
 
 <script>
 window.__LOCATE_DATA__ = {"asks":[{"k":"求角度","label":"求旋转角 / 某个角的度数"},{"k":"证线段","label":"证线段相等 / 三角形全等"},{"k":"求坐标","label":"求旋转后点的坐标"},{"k":"判别","label":"判断对称 / 重合 / 图形性质"},{"k":"作图","label":"画出旋转后的图形"},{"k":"实际量","label":"求实际角度或时间（时钟等）"}],"features":[{"k":"旋转","label":"出现「旋转」「绕某点」「转到」","words":["旋转","绕点","绕原点","转到"]},{"k":"中心对称","label":"出现「中心对称」「关于原点对称」","words":["中心对称","关于原点","对称中心"]},{"k":"坐标系","label":"给了坐标系和点的坐标","words":["坐标","原点","横坐标","象限"]},{"k":"时钟","label":"提到时针、分针、几点几分","words":["时针","分针","钟表","时钟","几点","时刻"]},{"k":"网格","label":"在方格纸 / 网格中作图","words":["方格","网格","格子"]},{"k":"重合","label":"出现「与自身重合」「与原图重合」","words":["重合","与自身","至少旋转"]},{"k":"最值","label":"问最短 / 最小 / 最大","words":["最短","最小","最大","最值"]}],"patterns":[{"id":"rotate-props-proof","no":1,"title":"旋转性质证线段：从「绕点旋转」抄出全等","kind":"单一型","asks":["证线段"],"signals":["绕点 O 旋转","对应点","OA = OA′","旋转角","证明线段相等"],"route":["标出旋转中心和对应点（A → A′，B → B′）","写「旋转性质三件套」：OA = OA′，OB = OB′，∠AOA′ = ∠BOB′ = 旋转角","需要全等就用 SAS：△OAB ≌ △OA′B′","把题目要证的线段/角翻译成对应元素，直接得结论"],"chain":[{"point":"rotation-concept","role":"先认清三要素：谁是中心、谁对应谁、转了多少度","title":"图形的旋转与三要素"},{"point":"rotation-properties","role":"抄性质：OA = OA′、∠AOA′ = 旋转角、△全等，结论通常自己冒出来","title":"旋转的性质"}]},{"id":"angle-correspondence","no":2,"title":"旋转角计算：认准「对应点连线」","kind":"单一型","asks":["求角度"],"signals":["旋转角","∠AOC","∠BOD","对应","°"],"route":["从题干字母顺序读出对应关系（△AOB → △COD 即 A→C、O→O、B→D）","旋转角 = 任意一对对应点与中心的连线夹角","题目给的角如果不是对应连线夹角，就用角的和差转化","注意题目问的是旋转角还是图形内的角，别答错对象"],"chain":[{"point":"rotation-concept","role":"确定对应关系：A 对应 C、B 对应 D","title":"图形的旋转与三要素"},{"point":"rotation-properties","role":"所有「对应点连线夹角」都等于旋转角，知道一个就知道全部","title":"旋转的性质"}]},{"id":"coord-rotate","no":3,"title":"坐标系旋转求坐标：三条规律换方向","kind":"单一型","asks":["求坐标"],"signals":["绕原点","逆时针","顺时针","旋转 90°","坐标"],"route":["确认中心是原点（不是原点先平移，转完再移回去）","统一方向：顺时针 θ° = 逆时针 (360° − θ°)","按角度选规律：90° → (−y, x)，180° → (−x, −y)，270° → (y, −x)","多次旋转可以合并角度一次算，再用另一条路验证"],"chain":[{"point":"rotation-concept","role":"确认旋转中心是原点、方向是逆还是顺","title":"图形的旋转与三要素"},{"point":"rotation-coordinate","role":"套坐标规律；顺时针 90° 先换成逆时针 270°","title":"坐标系中的旋转：坐标规律"}]},{"id":"center-symmetry-id","no":4,"title":"中心对称图形判别：只认「转 180° 重合」","kind":"单一型","asks":["判别"],"signals":["中心对称图形","旋转 180°","对称中心","下列图形"],"route":["找候选对称中心（平行四边形在对角线交点、圆在圆心、线段在中点）","想象图形绕它转 180°：每个顶点转到哪？能对上自己吗？","排除法记清单：正奇数边形、等腰三角形、角都不是","区分三个概念：轴对称（翻折）、旋转对称（转某角）、中心对称（转 180°）"],"chain":[{"point":"rotation-concept","role":"旋转 180° 就是转半圈","title":"图形的旋转与三要素"},{"point":"center-symmetry","role":"套判别标准，逐个想象转半圈的画面","title":"中心对称与中心对称图形"}]},{"id":"rotate-draw","no":5,"title":"旋转作图：连、转、截、标","kind":"单一型","asks":["作图"],"signals":["方格纸","网格","画出旋转后的图形","绕点","直尺","量角器"],"route":["读出三要素并在图上标出旋转中心","逐点执行：连（中心到关键点）→ 转（转旋转角）→ 截（截等长）→ 标（标对应点）","网格题可以直接用坐标规律算出新点坐标再描点","顺次连接对应点，标出旋转角，检查方向"],"chain":[{"point":"rotation-concept","role":"先确定三要素：中心、角度、方向","title":"图形的旋转与三要素"},{"point":"rotation-properties","role":"作图依据：对应点到中心等距、连线夹角等于旋转角","title":"旋转的性质"},{"point":"rotation-drawing","role":"执行四步口诀，逐点作出对应点","title":"旋转作图：连、转、截、标"}]},{"id":"rotation-symmetry","no":6,"title":"旋转对称与最小旋转角：360° ÷ n","kind":"单一型","asks":["判别","求角度"],"signals":["与自身重合","至少旋转","正 n 边形","旋转对称","花瓣"],"route":["数清「重复单元」的个数 n（正多边形是边数，花瓣图是花瓣数，五角星是 5）","最小旋转角 = 360° ÷ n","问「所有能重合的角度」：最小角的 1 倍、2 倍……直到 360°","反向问题：n = 360° ÷ 最小角"],"chain":[{"point":"rotation-patterns","role":"识别 n 重对称，套 360° ÷ n","title":"旋转对称与图案设计"},{"point":"center-symmetry","role":"顺带判断：若 360° ÷ n 能整除 180，则它还是中心对称图形","title":"中心对称与中心对称图形"}]},{"id":"clock-problem","no":7,"title":"钟表夹角与重合：旋转版的追赶问题","kind":"组合型","asks":["实际量","求角度"],"signals":["时针","分针","几点几分","夹角","重合","成直线"],"route":["求夹角：时针角 30H + 0.5M，分针角 6M，相减取绝对值，超 180° 取补","求重合：设 x 分钟，列 6x = 领先角 + 0.5x","求成直线：6x = 领先角 + 0.5x ± 180°","速度差 5.5°/分是固定工具，领先角按整点位置数出来"],"chain":[{"point":"rotation-concept","role":"把钟针看成绕表心旋转的射线","title":"图形的旋转与三要素"},{"point":"clock-app","role":"用速度（6°/分 与 0.5°/分）算角度，或列追及方程","title":"钟表上的旋转问题"}]},{"id":"hand-in-hand","no":8,"title":"手拉手模型：旋转全等的压轴用法","kind":"综合型","asks":["证线段","求角度"],"signals":["等边三角形","共顶点","旋转","全等","证线段相等","手拉手"],"route":["确认模型：两个共顶点 O 的等边三角形 △OAB、△OCD","找全等三角形：△OAC 与 △OBD（OA = OB、OC = OD、夹角 ∠AOC = ∠BOD，都是 60° 加减公共角）","写角的等式：∠AOC = ∠AOB ± ∠BOC = ∠DOB = ∠BOD","SAS 得全等 → AC = BD；旋转角 = 60°，还能顺手得到 AC 与 BD 的夹角"],"chain":[{"point":"rotation-concept","role":"把「共顶点的两个等边三角形」看成一个是另一个旋转 60° 得到的","title":"图形的旋转与三要素"},{"point":"rotation-properties","role":"对应边相等 + 旋转角相等 → SAS 全等","title":"旋转的性质"},{"point":"rotation-properties","role":"全等给出对应线段相等，即交叉的那两条「拉手线」","title":"旋转的性质"}]}],"patternsUrl":"patterns.html","prefix":""};

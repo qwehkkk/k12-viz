@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>题目定位器 - 角的度量 - 图知学堂</title>
 <meta name="description" content="回答两三个问题，快速判断一道角的度量题属于哪类经典题型，以及第一步该做什么。">
+<script>try{localStorage.setItem('k12v-last',JSON.stringify({s:'primary',c:'p4a-angle'}))}catch(e){}</script>
 <style>
 :root {
   --bg: #fafaf8;
@@ -750,6 +751,32 @@ a:hover .tg-node { stroke-width: 2.4; }
 .strand-ghosts { font-size: 12.5px; color: var(--muted); margin-top: 10px; }
 .grade-empty { font-size: 13px; color: var(--muted); margin: 0; padding: 4px 0 6px; }
 
+/* ---------- 底部「返回上一级」栏 ---------- */
+.up-back {
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  margin-top: 28px; padding: 14px 16px;
+  background: var(--bg); border: 1px solid var(--border); border-radius: 12px;
+}
+.ub-main {
+  display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  font-weight: 600; font-size: 14.5px; color: var(--accent); text-decoration: none;
+  padding: 8px 16px; border: 1.5px solid var(--accent); border-radius: 10px; background: #fff;
+}
+.ub-main:hover { background: var(--accent); color: #fff; }
+.ub-main:hover .ub-sub { color: rgba(255, 255, 255, 0.85); }
+.ub-arrow { font-size: 16px; line-height: 1; }
+.ub-sub { font-weight: 400; font-size: 12.5px; color: var(--muted); }
+.ub-else { font-size: 13px; color: var(--muted); }
+.ub-else a { color: var(--muted); text-decoration: underline dotted; padding: 0 2px; }
+.ub-else a:hover { color: var(--accent); }
+
+/* ---------- 目录页「上次学到这」高亮 ---------- */
+.chapter-card.last-card { outline: 2px solid var(--accent); outline-offset: 2px; }
+.last-badge {
+  font-size: 11px; padding: 1px 9px; border-radius: 999px;
+  background: var(--accent); color: #fff; white-space: nowrap;
+}
+
 </style>
 </head>
 <body>
@@ -795,6 +822,10 @@ a:hover .tg-node { stroke-width: 2.4; }
 <div class="locate-bar" style="margin-top:36px">
   定位完还是不会做？去<a href="patterns.html">题型库</a>看这类题的「逆向解读」——它由哪几个知识点拼成，缺哪一环一眼就看得出来。
 </div>
+<nav class="up-back">
+  <a class="ub-main" href="index.html"><span class="ub-arrow">↩</span>返回本章目录<span class="ub-sub">四年级上册 · 角的度量</span></a>
+  <span class="ub-else">或直达：<a href="patterns.html">本章题型库</a> · <a href="../index.html">课程目录</a></span>
+</nav>
 
 <script>
 window.__LOCATE_DATA__ = {"asks":[{"k":"量角器读数","desc":"两重合一看，0° 在哪圈读哪圈"},{"k":"角的分类","desc":"锐 <90、直 =90、钝 90~180、平 =180、周 =360"},{"k":"拼角画角","desc":"三角板角两两拼；画角三步走"},{"k":"数角","desc":"n 条射线两两组合，C(n,2) 个角"}],"features":["量角先完成两个重合，再判断读内圈还是外圈","用锐钝性自检：钝角读出小于 90° 一定读反了","画角之前先想三角板能不能拼，拼不出再用量角器","角的大小与边的长短无关"],"patterns":[{"id":"p4a-angle-t-read","no":"基础 1","title":"量角器读锐角","kind":"读数","asks":["量角器读数"],"signals":["量角器","度数"],"route":["/p4a-angle/p4a-angle-measure"],"chain":[{"point":"p4a-angle-measure","role":"两重合一看","title":"用量角器量角"}]},{"id":"p4a-angle-t-class","no":"基础 2","title":"五类角判断","kind":"分类","asks":["角的分类"],"signals":["什么角","锐角","钝角"],"route":["/p4a-angle/p4a-angle-class"],"chain":[{"point":"p4a-angle-class","role":"与 90°/180° 比较","title":"角的分类与画角"}]},{"id":"p4a-angle-t-anti","no":"中档 1","title":"钝角防读反","kind":"读数","asks":["量角器读数"],"signals":["量角器","钝角"],"route":["/p4a-angle/p4a-angle-measure"],"chain":[{"point":"p4a-angle-measure","role":"内外圈选择 + 锐钝自检","title":"用量角器量角"}]},{"id":"p4a-angle-t-set","no":"中档 2","title":"三角板拼角","kind":"拼角","asks":["拼角画角"],"signals":["一副三角板","拼出"],"route":["/p4a-angle/p4a-angle-class"],"chain":[{"point":"p4a-angle-class","role":"30/45/60/90 两两拼","title":"角的分类与画角"}]},{"id":"p4a-angle-t-count","no":"提升 1","title":"数角的个数","kind":"数角","asks":["数角"],"signals":["引出","几条射线","几个角"],"route":["/p4a-angle/p4a-angle-line"],"chain":[{"point":"p4a-angle-line","role":"每两条射线一个角","title":"线段、射线与直线"}]}],"patternsUrl":"patterns.html","prefix":""};

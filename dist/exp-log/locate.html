@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>题目定位器 - 指数函数与对数函数 - 图知学堂</title>
 <meta name="description" content="回答两三个问题，快速判断一道指数函数与对数函数题属于哪类经典题型，以及第一步该做什么。">
+<script>try{localStorage.setItem('k12v-last',JSON.stringify({s:'senior',c:'exp-log'}))}catch(e){}</script>
 <style>
 :root {
   --bg: #fafaf8;
@@ -750,6 +751,32 @@ a:hover .tg-node { stroke-width: 2.4; }
 .strand-ghosts { font-size: 12.5px; color: var(--muted); margin-top: 10px; }
 .grade-empty { font-size: 13px; color: var(--muted); margin: 0; padding: 4px 0 6px; }
 
+/* ---------- 底部「返回上一级」栏 ---------- */
+.up-back {
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  margin-top: 28px; padding: 14px 16px;
+  background: var(--bg); border: 1px solid var(--border); border-radius: 12px;
+}
+.ub-main {
+  display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  font-weight: 600; font-size: 14.5px; color: var(--accent); text-decoration: none;
+  padding: 8px 16px; border: 1.5px solid var(--accent); border-radius: 10px; background: #fff;
+}
+.ub-main:hover { background: var(--accent); color: #fff; }
+.ub-main:hover .ub-sub { color: rgba(255, 255, 255, 0.85); }
+.ub-arrow { font-size: 16px; line-height: 1; }
+.ub-sub { font-weight: 400; font-size: 12.5px; color: var(--muted); }
+.ub-else { font-size: 13px; color: var(--muted); }
+.ub-else a { color: var(--muted); text-decoration: underline dotted; padding: 0 2px; }
+.ub-else a:hover { color: var(--accent); }
+
+/* ---------- 目录页「上次学到这」高亮 ---------- */
+.chapter-card.last-card { outline: 2px solid var(--accent); outline-offset: 2px; }
+.last-badge {
+  font-size: 11px; padding: 1px 9px; border-radius: 999px;
+  background: var(--accent); color: #fff; white-space: nowrap;
+}
+
 </style>
 </head>
 <body>
@@ -795,6 +822,10 @@ a:hover .tg-node { stroke-width: 2.4; }
 <div class="locate-bar" style="margin-top:36px">
   定位完还是不会做？去<a href="patterns.html">题型库</a>看这类题的「逆向解读」——它由哪几个知识点拼成，缺哪一环一眼就看得出来。
 </div>
+<nav class="up-back">
+  <a class="ub-main" href="index.html"><span class="ub-arrow">↩</span>返回本章目录<span class="ub-sub">高一上册 · 指数函数与对数函数</span></a>
+  <span class="ub-else">或直达：<a href="patterns.html">本章题型库</a> · <a href="../index.html">课程目录</a></span>
+</nav>
 
 <script>
 window.__LOCATE_DATA__ = {"asks":[{"k":"幂运算","label":"分数指数幂、根式互化"},{"k":"指数函数","label":"由点求底、比较大小、单调性"},{"k":"对数互化","label":"指数式↔对数式、求值"},{"k":"对数运算","label":"运算律、换底公式化简"},{"k":"对数函数","label":"定义域、复合单调性"},{"k":"反函数对称","label":"关于 y = x 对称、定点"},{"k":"应用建模","label":"复利、半衰期、增长率"},{"k":"含参讨论","label":"底数分类、恒成立问题"}],"features":[{"k":"指数对数","words":["指数","对数","log","lg","ln","底数","真数","幂","根式","换底","a^x","复利","半衰期"]}],"patterns":[{"id":"el-b-eval","no":"基础 1","title":"幂与对数求值","kind":"运算","asks":["幂运算","对数互化"],"signals":["计算","求值","log","指数幂"],"route":["/exp-log/el-root","/exp-log/el-logcon"],"chain":[{"point":"el-root","role":"分数指数幂化根式","title":"n 次方根与分数指数幂"},{"point":"el-logcon","role":"log_a N ⇔ a^x = N","title":"对数的概念"}]},{"id":"el-b-log","no":"基础 2","title":"对数运算律化简","kind":"运算","asks":["对数运算"],"signals":["化简","lg","log","求值"],"route":["/exp-log/el-logop"],"chain":[{"point":"el-logop","role":"积商幂三条运算律","title":"对数运算与换底"}]},{"id":"el-b-domain","no":"基础 3","title":"对数型函数定义域","kind":"定义域","asks":["对数函数"],"signals":["定义域","log","真数","有意义"],"route":["/exp-log/el-logfn"],"chain":[{"point":"el-logfn","role":"真数 > 0 且底数合法","title":"对数函数 y = log_a x"}]},{"id":"el-b-compare","no":"基础 4","title":"指数对数比较大小","kind":"比较大小","asks":["指数函数","对数函数"],"signals":["比较大小","大小关系","0.3","log"],"route":["/exp-log/el-exp","/exp-log/el-logfn"],"chain":[{"point":"el-exp","role":"同底用单调性","title":"指数函数 y = a^x"},{"point":"el-logfn","role":"与 0、1 比较搭桥","title":"对数函数 y = log_a x"}]},{"id":"el-m-change","no":"中档 1","title":"换底公式综合","kind":"运算","asks":["对数运算"],"signals":["换底","log","不同底","相乘"],"route":["/exp-log/el-logop","/exp-log/el-logcon"],"chain":[{"point":"el-logop","role":"换底公式与循环乘积","title":"对数运算与换底"},{"point":"el-logcon","role":"对数恒等式","title":"对数的概念"}]},{"id":"el-m-mono","no":"中档 2","title":"复合函数单调性","kind":"单调性","asks":["对数函数"],"signals":["单调区间","复合","log","递增区间"],"route":["/exp-log/el-logfn","/exp-log/el-logop"],"chain":[{"point":"el-logfn","role":"定义域优先 + 同增异减","title":"对数函数 y = log_a x"},{"point":"el-logop","role":"真数范围化成不等式组","title":"对数运算与换底"}]},{"id":"el-m-inverse","no":"中档 3","title":"反函数与对称","kind":"反函数","asks":["反函数对称"],"signals":["反函数","对称","y=x","交点"],"route":["/exp-log/el-logfn"],"chain":[{"point":"el-logfn","role":"指数与对数关于 y = x 对称","title":"对数函数 y = log_a x"}]},{"id":"el-m-app","no":"中档 4","title":"增长率与衰减建模","kind":"应用","asks":["应用建模"],"signals":["增长","衰减","半衰期","复利","年利率","百分比"],"route":["/exp-log/el-exp","/exp-log/el-logfn"],"chain":[{"point":"el-exp","role":"指数增长 / 衰减模型","title":"指数函数 y = a^x"},{"point":"el-logfn","role":"用对数解指数方程","title":"对数函数 y = log_a x"}]},{"id":"el-h-param","no":"拔高 1","title":"含参对数不等式","kind":"含参","asks":["含参讨论"],"signals":["恒成立","取值范围","log","对任意"],"route":["/exp-log/el-logfn","/exp-log/el-logop"],"chain":[{"point":"el-logfn","role":"底数分类讨论","title":"对数函数 y = log_a x"},{"point":"el-logop","role":"化成同底再比较","title":"对数运算与换底"}]}],"patternsUrl":"patterns.html","prefix":""};

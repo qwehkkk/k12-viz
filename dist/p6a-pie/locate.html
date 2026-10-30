@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>题目定位器 - 扇形统计图 - 图知学堂</title>
 <meta name="description" content="回答两三个问题，快速判断一道扇形统计图题属于哪类经典题型，以及第一步该做什么。">
+<script>try{localStorage.setItem('k12v-last',JSON.stringify({s:'primary',c:'p6a-pie'}))}catch(e){}</script>
 <style>
 :root {
   --bg: #fafaf8;
@@ -750,6 +751,32 @@ a:hover .tg-node { stroke-width: 2.4; }
 .strand-ghosts { font-size: 12.5px; color: var(--muted); margin-top: 10px; }
 .grade-empty { font-size: 13px; color: var(--muted); margin: 0; padding: 4px 0 6px; }
 
+/* ---------- 底部「返回上一级」栏 ---------- */
+.up-back {
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  margin-top: 28px; padding: 14px 16px;
+  background: var(--bg); border: 1px solid var(--border); border-radius: 12px;
+}
+.ub-main {
+  display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  font-weight: 600; font-size: 14.5px; color: var(--accent); text-decoration: none;
+  padding: 8px 16px; border: 1.5px solid var(--accent); border-radius: 10px; background: #fff;
+}
+.ub-main:hover { background: var(--accent); color: #fff; }
+.ub-main:hover .ub-sub { color: rgba(255, 255, 255, 0.85); }
+.ub-arrow { font-size: 16px; line-height: 1; }
+.ub-sub { font-weight: 400; font-size: 12.5px; color: var(--muted); }
+.ub-else { font-size: 13px; color: var(--muted); }
+.ub-else a { color: var(--muted); text-decoration: underline dotted; padding: 0 2px; }
+.ub-else a:hover { color: var(--accent); }
+
+/* ---------- 目录页「上次学到这」高亮 ---------- */
+.chapter-card.last-card { outline: 2px solid var(--accent); outline-offset: 2px; }
+.last-badge {
+  font-size: 11px; padding: 1px 9px; border-radius: 999px;
+  background: var(--accent); color: #fff; white-space: nowrap;
+}
+
 </style>
 </head>
 <body>
@@ -795,6 +822,10 @@ a:hover .tg-node { stroke-width: 2.4; }
 <div class="locate-bar" style="margin-top:36px">
   定位完还是不会做？去<a href="patterns.html">题型库</a>看这类题的「逆向解读」——它由哪几个知识点拼成，缺哪一环一眼就看得出来。
 </div>
+<nav class="up-back">
+  <a class="ub-main" href="index.html"><span class="ub-arrow">↩</span>返回本章目录<span class="ub-sub">六年级上册 · 扇形统计图</span></a>
+  <span class="ub-else">或直达：<a href="patterns.html">本章题型库</a> · <a href="../index.html">课程目录</a></span>
+</nav>
 
 <script>
 window.__LOCATE_DATA__ = {"asks":[{"k":"读图","desc":"整圆 100%，各部分之和 100%"},{"k":"求部分量","desc":"总量 × 百分比"},{"k":"求总量","desc":"部分 ÷ 百分比"},{"k":"圆心角","desc":"百分比 × 360°"},{"k":"选统计图","desc":"数量/趋势/占比"}],"features":["先加一遍百分比检查是否为 100%","扇形图不给具体数量，必需总量才能算","圆心角与百分比成正比，乘 3.6 即可","选图先问「要说明什么」"],"patterns":[{"id":"p6a-pie-t-part","no":"基础 1","title":"求部分量","kind":"计算","asks":["求部分量"],"signals":["占","一共","多少"],"route":["/p6a-pie/p6a-pie-calc"],"chain":[{"point":"p6a-pie-calc","role":"总量 × 百分比","title":"看图计算：部分量与总量"}]},{"id":"p6a-pie-t-ang","no":"基础 2","title":"圆心角换算","kind":"计算","asks":["圆心角"],"signals":["圆心角","度"],"route":["/p6a-pie/p6a-pie-ang"],"chain":[{"point":"p6a-pie-ang","role":"百分比 × 360°","title":"扇形圆心角"}]},{"id":"p6a-pie-t-total","no":"中档 1","title":"求总量","kind":"应用","asks":["求总量"],"signals":["对应","共有","全校"],"route":["/p6a-pie/p6a-pie-calc"],"chain":[{"point":"p6a-pie-calc","role":"部分 ÷ 百分比","title":"看图计算：部分量与总量"}]},{"id":"p6a-pie-t-multi","no":"中档 2","title":"两部分的差","kind":"综合","asks":["求部分量"],"signals":["多","少","相差"],"route":["/p6a-pie/p6a-pie-calc","/p6a-pie/p6a-pie-read"],"chain":[{"point":"p6a-pie-calc","role":"分别求两部分","title":"看图计算：部分量与总量"},{"point":"p6a-pie-read","role":"百分比之差就是占比之差","title":"认识扇形统计图"}]},{"id":"p6a-pie-t-choose","no":"提升 1","title":"选择统计图","kind":"判断","asks":["选统计图"],"signals":["表示","合适","统计图"],"route":["/p6a-pie/p6a-pie-choose","/p6a-pie/p6a-pie-read"],"chain":[{"point":"p6a-pie-choose","role":"看要说明什么","title":"选哪种统计图"},{"point":"p6a-pie-read","role":"扇形图只管占比","title":"认识扇形统计图"}]}],"patternsUrl":"patterns.html","prefix":""};

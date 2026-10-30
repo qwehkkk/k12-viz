@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>题目定位器 - 投影与视图 - 图知学堂</title>
 <meta name="description" content="回答两三个问题，快速判断一道投影与视图题属于哪类经典题型，以及第一步该做什么。">
+<script>try{localStorage.setItem('k12v-last',JSON.stringify({s:'junior',c:'projection'}))}catch(e){}</script>
 <style>
 :root {
   --bg: #fafaf8;
@@ -750,6 +751,32 @@ a:hover .tg-node { stroke-width: 2.4; }
 .strand-ghosts { font-size: 12.5px; color: var(--muted); margin-top: 10px; }
 .grade-empty { font-size: 13px; color: var(--muted); margin: 0; padding: 4px 0 6px; }
 
+/* ---------- 底部「返回上一级」栏 ---------- */
+.up-back {
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  margin-top: 28px; padding: 14px 16px;
+  background: var(--bg); border: 1px solid var(--border); border-radius: 12px;
+}
+.ub-main {
+  display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  font-weight: 600; font-size: 14.5px; color: var(--accent); text-decoration: none;
+  padding: 8px 16px; border: 1.5px solid var(--accent); border-radius: 10px; background: #fff;
+}
+.ub-main:hover { background: var(--accent); color: #fff; }
+.ub-main:hover .ub-sub { color: rgba(255, 255, 255, 0.85); }
+.ub-arrow { font-size: 16px; line-height: 1; }
+.ub-sub { font-weight: 400; font-size: 12.5px; color: var(--muted); }
+.ub-else { font-size: 13px; color: var(--muted); }
+.ub-else a { color: var(--muted); text-decoration: underline dotted; padding: 0 2px; }
+.ub-else a:hover { color: var(--accent); }
+
+/* ---------- 目录页「上次学到这」高亮 ---------- */
+.chapter-card.last-card { outline: 2px solid var(--accent); outline-offset: 2px; }
+.last-badge {
+  font-size: 11px; padding: 1px 9px; border-radius: 999px;
+  background: var(--accent); color: #fff; white-space: nowrap;
+}
+
 </style>
 </head>
 <body>
@@ -795,6 +822,10 @@ a:hover .tg-node { stroke-width: 2.4; }
 <div class="locate-bar" style="margin-top:36px">
   定位完还是不会做？去<a href="patterns.html">题型库</a>看这类题的「逆向解读」——它由哪几个知识点拼成，缺哪一环一眼就看得出来。
 </div>
+<nav class="up-back">
+  <a class="ub-main" href="index.html"><span class="ub-arrow">↩</span>返回本章目录<span class="ub-sub">九年级下册 · 投影与视图</span></a>
+  <span class="ub-else">或直达：<a href="patterns.html">本章题型库</a> · <a href="../index.html">课程目录</a></span>
+</nav>
 
 <script>
 window.__LOCATE_DATA__ = {"asks":[{"k":"影子问题","label":"路灯/太阳下的影子计算与作图"},{"k":"正投影","label":"正投影长度、面积的计算与判断"},{"k":"画三视图","label":"画几何体的三视图"},{"k":"读三视图","label":"由三视图读尺寸、判断几何体"},{"k":"方块计数","label":"由视图求小立方块的最少/最多数目"},{"k":"求体积面积","label":"由三视图求体积、全面积"}],"features":[{"k":"投影","words":["路灯","影子","同一时刻","手电筒","光线","太阳"]},{"k":"正投影","words":["正投影","投影面","垂直于投影面","cosθ"]},{"k":"三视图","words":["主视图","左视图","俯视图","长对正","高平齐","宽相等"]},{"k":"旋转体","words":["圆柱","圆锥","球","母线","πr²h"]}],"patterns":[{"id":"proj-street-lamp","no":1,"title":"中心投影：路灯下的影子","kind":"单一型","asks":["影子问题"],"signals":["路灯","灯下","影子长","身高","点光源"],"route":["建图：光源 S、物体顶端 T、影子端点共线","影子端点到灯杆的水平距离 = 物体到灯杆距离 + 影长","小三角形（物高/影长）∽ 大三角形（灯高/总距离）","列比例解未知量"],"chain":[{"point":"project-concept","role":"中心投影：光线从一点发出，连直线定影子","title":"投影：平行投影与中心投影"}]},{"id":"proj-parallel-ratio","no":2,"title":"平行投影：同一时刻的比例","kind":"单一型","asks":["影子问题"],"signals":["同一时刻","太阳","影长","物高","成比例"],"route":["确认「同一时刻」（平行投影前提）","列出 h₁/s₁ = h₂/s₂","代入三个已知量解第四个","单位统一后作答"],"chain":[{"point":"project-concept","role":"平行投影 → 同一时刻比例统一","title":"投影：平行投影与中心投影"}]},{"id":"proj-orth-calc","no":3,"title":"正投影的长度与面积","kind":"单一型","asks":["正投影"],"signals":["正投影","投影面","夹角","与投影面平行/倾斜/垂直"],"route":["确认是正投影（投影线 ⊥ 投影面）而非影子","找线段与投影面的夹角 θ","投影长 = L·cosθ；面积按不变边 × cosθ 缩放","θ = 0° 等长、θ = 90° 成点，作答前核对"],"chain":[{"point":"project-orth","role":"正投影长 = L·cosθ，三种情况统一","title":"正投影"}]},{"id":"view-draw-three","no":4,"title":"画简单几何体的三视图","kind":"单一型","asks":["画三视图"],"signals":["画出三视图","主视图","左视图","俯视图","长方体/圆柱/圆锥"],"route":["确定观察方向（前、左、上）","画主视图：按真实比例","主视图正下方画俯视图（长对正）","主视图右侧画左视图（高平齐、宽相等）","检查虚线（被遮挡轮廓）与尺寸一致性"],"chain":[{"point":"view-three","role":"三视图位置约定与三等关系","title":"三视图与三等关系"},{"point":"view-solid","role":"旋转体的视图模板","title":"常见几何体的三视图"}]},{"id":"view-read-size","no":5,"title":"由三视图读尺寸","kind":"单一型","asks":["读三视图"],"signals":["三视图如图","求长/宽/高","主视图为　×　的矩形","俯视图为　的圆"],"route":["主视图读出「长、高」","俯视图读出「长、宽」（长应与主视图一致，作校验）","左视图读出「宽、高」（与俯、主分别核对）","圆柱/圆锥：主视图宽 = 直径，主视图高 = 几何体高"],"chain":[{"point":"view-three","role":"三等关系反推尺寸","title":"三视图与三等关系"}]},{"id":"view-identify-solid","no":6,"title":"识别几何体：由视图定形状","kind":"单一型","asks":["读三视图"],"signals":["两个矩形一个圆","两个三角形一个圆","三个圆","判断是什么几何体"],"route":["列出三个视图的形状","对照模板：矩形对、三角对、圆、同心圆环","注意俯视图有没有圆心（圆锥）","组合体拆成基本体分别核对"],"chain":[{"point":"view-solid","role":"旋转体三视图模板库","title":"常见几何体的三视图"}]},{"id":"view-blocks-count","no":7,"title":"方块组合：最少与最多","kind":"综合型","asks":["方块计数"],"signals":["小立方块","俯视图","最少","最多","搭成"],"route":["按俯视图列出所有底面格子","每个格子的可能高度范围 = 同时满足主视图与左视图的约束","最少：每格取满足约束的最小值（通常 1）","最多：每格取约束允许的最大值","求和作答"],"chain":[{"point":"view-restore","role":"俯视图定位置、主左视图定高度","title":"由三视图还原与计算"},{"point":"view-three","role":"三等关系核对每个格子的约束","title":"三视图与三等关系"}]},{"id":"view-solid-calc","no":8,"title":"由三视图求体积与全面积","kind":"综合型","asks":["求体积面积"],"signals":["求体积","全面积","三视图","π","保留 π"],"route":["由三视图认几何体、读出 r 与 h（虚线读出孔的尺寸）","体积：V柱 = πr²h，V锥 = ⅓πr²h，V球 = 4/3πr³；挖孔用减法","全面积：底面积 ×2 + 侧面积（圆柱 2πrh，圆锥 πrl，l 用勾股求）","统一保留 π 作答"],"chain":[{"point":"view-restore","role":"认体 + 读尺寸 + 虚线提示内部结构","title":"由三视图还原与计算"},{"point":"view-solid","role":"旋转体体积/侧面积公式","title":"常见几何体的三视图"}]}],"patternsUrl":"patterns.html","prefix":""};

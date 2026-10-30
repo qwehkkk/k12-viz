@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>题目定位器 - 小数的加法和减法 - 图知学堂</title>
 <meta name="description" content="回答两三个问题，快速判断一道小数的加法和减法题属于哪类经典题型，以及第一步该做什么。">
+<script>try{localStorage.setItem('k12v-last',JSON.stringify({s:'primary',c:'p4b-decalc'}))}catch(e){}</script>
 <style>
 :root {
   --bg: #fafaf8;
@@ -750,6 +751,32 @@ a:hover .tg-node { stroke-width: 2.4; }
 .strand-ghosts { font-size: 12.5px; color: var(--muted); margin-top: 10px; }
 .grade-empty { font-size: 13px; color: var(--muted); margin: 0; padding: 4px 0 6px; }
 
+/* ---------- 底部「返回上一级」栏 ---------- */
+.up-back {
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  margin-top: 28px; padding: 14px 16px;
+  background: var(--bg); border: 1px solid var(--border); border-radius: 12px;
+}
+.ub-main {
+  display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  font-weight: 600; font-size: 14.5px; color: var(--accent); text-decoration: none;
+  padding: 8px 16px; border: 1.5px solid var(--accent); border-radius: 10px; background: #fff;
+}
+.ub-main:hover { background: var(--accent); color: #fff; }
+.ub-main:hover .ub-sub { color: rgba(255, 255, 255, 0.85); }
+.ub-arrow { font-size: 16px; line-height: 1; }
+.ub-sub { font-weight: 400; font-size: 12.5px; color: var(--muted); }
+.ub-else { font-size: 13px; color: var(--muted); }
+.ub-else a { color: var(--muted); text-decoration: underline dotted; padding: 0 2px; }
+.ub-else a:hover { color: var(--accent); }
+
+/* ---------- 目录页「上次学到这」高亮 ---------- */
+.chapter-card.last-card { outline: 2px solid var(--accent); outline-offset: 2px; }
+.last-badge {
+  font-size: 11px; padding: 1px 9px; border-radius: 999px;
+  background: var(--accent); color: #fff; white-space: nowrap;
+}
+
 </style>
 </head>
 <body>
@@ -795,6 +822,10 @@ a:hover .tg-node { stroke-width: 2.4; }
 <div class="locate-bar" style="margin-top:36px">
   定位完还是不会做？去<a href="patterns.html">题型库</a>看这类题的「逆向解读」——它由哪几个知识点拼成，缺哪一环一眼就看得出来。
 </div>
+<nav class="up-back">
+  <a class="ub-main" href="index.html"><span class="ub-arrow">↩</span>返回本章目录<span class="ub-sub">四年级下册 · 小数的加法和减法</span></a>
+  <span class="ub-else">或直达：<a href="patterns.html">本章题型库</a> · <a href="../index.html">课程目录</a></span>
+</nav>
 
 <script>
 window.__LOCATE_DATA__ = {"asks":[{"k":"竖式对位","desc":"小数点对齐；位数不足补 0"},{"k":"进退位","desc":"进位借位跨过小数点"},{"k":"混合运算","desc":"顺序与整数相同"},{"k":"购物应用","desc":"总价、找零、相差"}],"features":["竖式第一眼检查：**小数点上下一条线吗**","位数不同先补 0（3.6 → 3.60）再算","动笔前先估算量级，防止小数点错位","结果末尾 0 化简：3.70 → 3.7"],"patterns":[{"id":"p4b-decalc-t-add","no":"基础 1","title":"小数加法竖式","kind":"笔算","asks":["竖式对位"],"signals":["竖式计算"],"route":["/p4b-decalc/p4b-decalc-point"],"chain":[{"point":"p4b-decalc-point","role":"小数点对齐","title":"小数点对齐"}]},{"id":"p4b-decalc-t-sub","no":"基础 2","title":"整数减小数","kind":"笔算","asks":["进退位"],"signals":["竖式计算","整数 − 小数"],"route":["/p4b-decalc/p4b-decalc-mixed"],"chain":[{"point":"p4b-decalc-mixed","role":"补 0 退位","title":"小数加减混合运算"}]},{"id":"p4b-decalc-t-gap","no":"中档 1","title":"位数不同的对位","kind":"笔算","asks":["竖式对位"],"signals":["位数不同"],"route":["/p4b-decalc/p4b-decalc-point"],"chain":[{"point":"p4b-decalc-point","role":"补 0 对位","title":"小数点对齐"}]},{"id":"p4b-decalc-t-mix","no":"中档 2","title":"小数混合运算","kind":"计算","asks":["混合运算"],"signals":["计算"],"route":["/p4b-decalc/p4b-decalc-mixed"],"chain":[{"point":"p4b-decalc-mixed","role":"顺序规则迁移","title":"小数加减混合运算"}]},{"id":"p4b-decalc-t-shop","no":"提升 1","title":"购物找零综合","kind":"应用","asks":["购物应用"],"signals":["付","找回","够不够"],"route":["/p4b-decalc/p4b-decalc-apply","/p4b-decalc/p4b-decalc-apply"],"chain":[{"point":"p4b-decalc-apply","role":"总价","title":"小数加减的应用"},{"point":"p4b-decalc-apply","role":"找零 = 付款 − 总价","title":"小数加减的应用"}]}],"patternsUrl":"patterns.html","prefix":""};

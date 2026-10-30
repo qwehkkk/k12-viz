@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>题目定位器 - 数据的收集、整理与描述 - 图知学堂</title>
 <meta name="description" content="回答两三个问题，快速判断一道数据的收集、整理与描述题属于哪类经典题型，以及第一步该做什么。">
+<script>try{localStorage.setItem('k12v-last',JSON.stringify({s:'junior',c:'datacollect'}))}catch(e){}</script>
 <style>
 :root {
   --bg: #fafaf8;
@@ -750,6 +751,32 @@ a:hover .tg-node { stroke-width: 2.4; }
 .strand-ghosts { font-size: 12.5px; color: var(--muted); margin-top: 10px; }
 .grade-empty { font-size: 13px; color: var(--muted); margin: 0; padding: 4px 0 6px; }
 
+/* ---------- 底部「返回上一级」栏 ---------- */
+.up-back {
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  margin-top: 28px; padding: 14px 16px;
+  background: var(--bg); border: 1px solid var(--border); border-radius: 12px;
+}
+.ub-main {
+  display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  font-weight: 600; font-size: 14.5px; color: var(--accent); text-decoration: none;
+  padding: 8px 16px; border: 1.5px solid var(--accent); border-radius: 10px; background: #fff;
+}
+.ub-main:hover { background: var(--accent); color: #fff; }
+.ub-main:hover .ub-sub { color: rgba(255, 255, 255, 0.85); }
+.ub-arrow { font-size: 16px; line-height: 1; }
+.ub-sub { font-weight: 400; font-size: 12.5px; color: var(--muted); }
+.ub-else { font-size: 13px; color: var(--muted); }
+.ub-else a { color: var(--muted); text-decoration: underline dotted; padding: 0 2px; }
+.ub-else a:hover { color: var(--accent); }
+
+/* ---------- 目录页「上次学到这」高亮 ---------- */
+.chapter-card.last-card { outline: 2px solid var(--accent); outline-offset: 2px; }
+.last-badge {
+  font-size: 11px; padding: 1px 9px; border-radius: 999px;
+  background: var(--accent); color: #fff; white-space: nowrap;
+}
+
 </style>
 </head>
 <body>
@@ -795,6 +822,10 @@ a:hover .tg-node { stroke-width: 2.4; }
 <div class="locate-bar" style="margin-top:36px">
   定位完还是不会做？去<a href="patterns.html">题型库</a>看这类题的「逆向解读」——它由哪几个知识点拼成，缺哪一环一眼就看得出来。
 </div>
+<nav class="up-back">
+  <a class="ub-main" href="index.html"><span class="ub-arrow">↩</span>返回本章目录<span class="ub-sub">七年级下册 · 数据的收集、整理与描述</span></a>
+  <span class="ub-else">或直达：<a href="patterns.html">本章题型库</a> · <a href="../index.html">课程目录</a></span>
+</nav>
 
 <script>
 window.__LOCATE_DATA__ = {"asks":[{"k":"调查概念","label":"总体/个体/样本辨析、普查与抽样的选择"},{"k":"选图与读图","label":"统计图的选择与信息读取"},{"k":"扇形计算","label":"圆心角、占比与总数互求"},{"k":"直方图","label":"频数分布表/直方图的补全与读数"},{"k":"样本估总体","label":"用样本估计总体数量"},{"k":"防误导","label":"识别图表的不规范与误导"}],"features":[{"k":"数据的收集整理与描述","words":["全面调查","抽样调查","普查","总体","个体","样本","样本容量","扇形统计图","条形统计图","折线统计图","直方图","频数","频率","组距","组数","圆心角","百分比","估计"]}],"patterns":[{"id":"dc-basic-concept","no":"基础 1","title":"总体个体样本辨析","kind":"概念","asks":["调查概念"],"signals":["总体是","个体是","样本容量","全面调查","抽样调查"],"route":["/datacollect/dc-survey"],"chain":[{"point":"dc-survey","role":"四概念定义","title":"统计调查：全面与抽样"}]},{"id":"dc-basic-choose","no":"基础 2","title":"调查方式与统计图选择","kind":"概念","asks":["选图与读图","调查概念"],"signals":["适合全面调查的是","应选择","什么统计图","表示…变化趋势"],"route":["/datacollect/dc-survey","/datacollect/dc-chart"],"chain":[{"point":"dc-survey","role":"普查/抽样判断","title":"统计调查：全面与抽样"},{"point":"dc-chart","role":"四种图的选择","title":"数据的整理与统计图的选择"}]},{"id":"dc-basic-pie","no":"基础 3","title":"扇形图圆心角计算","kind":"计算","asks":["扇形计算"],"signals":["圆心角","占","扇形统计图"],"route":["/datacollect/dc-pie"],"chain":[{"point":"dc-pie","role":"圆心角 = 占比 × 360°","title":"扇形统计图与圆心角"}]},{"id":"dc-adv-two-charts","no":"进阶 1","title":"条形 + 扇形联用求未知","kind":"计算","asks":["扇形计算","选图与读图"],"signals":["两图","补全","各占","求 a","共多少人"],"route":["/datacollect/dc-pie","/datacollect/dc-chart"],"chain":[{"point":"dc-pie","role":"由数量与占比求总数","title":"扇形统计图与圆心角"},{"point":"dc-chart","role":"读图取数","title":"数据的整理与统计图的选择"}]},{"id":"dc-adv-hist","no":"进阶 2","title":"频数分布表/直方图补全","kind":"计算","asks":["直方图"],"signals":["补全频数分布表","组距","频数","频率","a = ","b = "],"route":["/datacollect/dc-hist","/datacollect/dc-chart"],"chain":[{"point":"dc-hist","role":"频数频率关系","title":"频数分布直方图"},{"point":"dc-chart","role":"读图取数","title":"数据的整理与统计图的选择"}]},{"id":"dc-adv-estimate","no":"进阶 3","title":"用样本估计总体","kind":"计算","asks":["样本估总体"],"signals":["估计","全校","约多少人","抽取","占"],"route":["/datacollect/dc-survey","/datacollect/dc-read"],"chain":[{"point":"dc-survey","role":"样本代表性","title":"统计调查：全面与抽样"},{"point":"dc-read","role":"占比外推总体","title":"读图、用图与防误导"}]},{"id":"dc-app-comprehensive","no":"应用 1","title":"综合统计大题（完整链路）","kind":"综合","asks":["直方图","样本估总体","扇形计算"],"signals":["回答下列问题","补全","估计","若该市共有","抽查"],"route":["/datacollect/dc-hist","/datacollect/dc-pie","/datacollect/dc-read"],"chain":[{"point":"dc-hist","role":"补全图表","title":"频数分布直方图"},{"point":"dc-pie","role":"占比换算","title":"扇形统计图与圆心角"},{"point":"dc-read","role":"外推总体","title":"读图、用图与防误导"}]},{"id":"dc-app-mislead","no":"应用 2","title":"识别误导与规范作图","kind":"综合","asks":["防误导"],"signals":["为什么不规范","容易使人产生错觉","纵轴","不从 0 开始","修改建议"],"route":["/datacollect/dc-read","/datacollect/dc-chart"],"chain":[{"point":"dc-read","role":"纵轴截断的放大效应","title":"读图、用图与防误导"},{"point":"dc-chart","role":"规范作图要求","title":"数据的整理与统计图的选择"}]}],"patternsUrl":"patterns.html","prefix":""};

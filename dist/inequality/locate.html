@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>题目定位器 - 不等式与不等式组 - 图知学堂</title>
 <meta name="description" content="回答两三个问题，快速判断一道不等式与不等式组题属于哪类经典题型，以及第一步该做什么。">
+<script>try{localStorage.setItem('k12v-last',JSON.stringify({s:'junior',c:'inequality'}))}catch(e){}</script>
 <style>
 :root {
   --bg: #fafaf8;
@@ -750,6 +751,32 @@ a:hover .tg-node { stroke-width: 2.4; }
 .strand-ghosts { font-size: 12.5px; color: var(--muted); margin-top: 10px; }
 .grade-empty { font-size: 13px; color: var(--muted); margin: 0; padding: 4px 0 6px; }
 
+/* ---------- 底部「返回上一级」栏 ---------- */
+.up-back {
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  margin-top: 28px; padding: 14px 16px;
+  background: var(--bg); border: 1px solid var(--border); border-radius: 12px;
+}
+.ub-main {
+  display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  font-weight: 600; font-size: 14.5px; color: var(--accent); text-decoration: none;
+  padding: 8px 16px; border: 1.5px solid var(--accent); border-radius: 10px; background: #fff;
+}
+.ub-main:hover { background: var(--accent); color: #fff; }
+.ub-main:hover .ub-sub { color: rgba(255, 255, 255, 0.85); }
+.ub-arrow { font-size: 16px; line-height: 1; }
+.ub-sub { font-weight: 400; font-size: 12.5px; color: var(--muted); }
+.ub-else { font-size: 13px; color: var(--muted); }
+.ub-else a { color: var(--muted); text-decoration: underline dotted; padding: 0 2px; }
+.ub-else a:hover { color: var(--accent); }
+
+/* ---------- 目录页「上次学到这」高亮 ---------- */
+.chapter-card.last-card { outline: 2px solid var(--accent); outline-offset: 2px; }
+.last-badge {
+  font-size: 11px; padding: 1px 9px; border-radius: 999px;
+  background: var(--accent); color: #fff; white-space: nowrap;
+}
+
 </style>
 </head>
 <body>
@@ -795,6 +822,10 @@ a:hover .tg-node { stroke-width: 2.4; }
 <div class="locate-bar" style="margin-top:36px">
   定位完还是不会做？去<a href="patterns.html">题型库</a>看这类题的「逆向解读」——它由哪几个知识点拼成，缺哪一环一眼就看得出来。
 </div>
+<nav class="up-back">
+  <a class="ub-main" href="index.html"><span class="ub-arrow">↩</span>返回本章目录<span class="ub-sub">七年级下册 · 不等式与不等式组</span></a>
+  <span class="ub-else">或直达：<a href="patterns.html">本章题型库</a> · <a href="../index.html">课程目录</a></span>
+</nav>
 
 <script>
 window.__LOCATE_DATA__ = {"asks":[{"k":"解不等式","label":"解一元一次不等式并求特殊解"},{"k":"解不等式组","label":"解不等式组、写整数解"},{"k":"概念翻译","label":"列不等式、数轴表示解集"},{"k":"性质判断","label":"不等式性质的运用与判断"},{"k":"参数问题","label":"由解集情况求字母的取值"},{"k":"应用建模","label":"至少 / 最多类实际问题"}],"features":[{"k":"不等式与不等式组","words":["不等式","不等号","解集","至少","最多","不低于","不超过","超过","不足","非负","整数解","无解","大于","小于","限","预算","方案"]}],"patterns":[{"id":"ineq-basic-solve","no":"基础 1","title":"解一元一次不等式","kind":"计算","asks":["解不等式"],"signals":["解不等式","解集","并在数轴上表示"],"route":["/inequality/ineq-solve"],"chain":[{"point":"ineq-solve","role":"五步解法 + 变号","title":"一元一次不等式的解法"}]},{"id":"ineq-basic-axis","no":"基础 2","title":"数轴表示与概念翻译","kind":"概念","asks":["概念翻译"],"signals":["在数轴上表示","用不等式表示","非负数","至少","不超过"],"route":["/inequality/ineq-concept"],"chain":[{"point":"ineq-concept","role":"解集的数轴表示","title":"不等式及其解集"}]},{"id":"ineq-basic-prop","no":"基础 3","title":"不等式性质判断","kind":"概念","asks":["性质判断"],"signals":["已知 a > b","判断","正确的是","一定成立"],"route":["/inequality/ineq-props"],"chain":[{"point":"ineq-props","role":"三条性质逐条对照","title":"不等式的性质"}]},{"id":"ineq-adv-system","no":"进阶 1","title":"解不等式组与整数解","kind":"计算","asks":["解不等式组"],"signals":["解不等式组","整数解","所有整数解"],"route":["/inequality/ineq-solve","/inequality/ineq-set"],"chain":[{"point":"ineq-solve","role":"分别解两个不等式","title":"一元一次不等式的解法"},{"point":"ineq-set","role":"数轴取公共部分","title":"一元一次不等式组"}]},{"id":"ineq-adv-param","no":"进阶 2","title":"由解集情况求参数","kind":"计算","asks":["参数问题"],"signals":["无解","有解","只有一个整数解","求 a 的取值范围"],"route":["/inequality/ineq-set","/inequality/ineq-concept"],"chain":[{"point":"ineq-set","role":"解集存在性翻译成端点关系","title":"一元一次不等式组"},{"point":"ineq-concept","role":"数轴上数整数","title":"不等式及其解集"}]},{"id":"ineq-adv-nosol","no":"进阶 3","title":"无解不等式组求参数","kind":"计算","asks":["参数问题"],"signals":["不等式组无解","恒成立","求取值范围"],"route":["/inequality/ineq-set"],"chain":[{"point":"ineq-set","role":"无解 ⇔ 两段背对背","title":"一元一次不等式组"}]},{"id":"ineq-app-score","no":"应用 1","title":"得分型：至少答对几题","kind":"应用","asks":["应用建模"],"signals":["答对得…分","答错扣…分","不低于","至少要","总分不少于"],"route":["/inequality/ineq-apply","/inequality/ineq-solve"],"chain":[{"point":"ineq-apply","role":"列不等式与取端点","title":"实际应用：方案与最值"},{"point":"ineq-solve","role":"解不等式","title":"一元一次不等式的解法"}]},{"id":"ineq-app-plan","no":"应用 2","title":"方案型：预算与采购","kind":"综合","asks":["应用建模","解不等式"],"signals":["预算","单价","最多买","不超过","两种方案","哪种更划算"],"route":["/inequality/ineq-apply","/inequality/ineq-set"],"chain":[{"point":"ineq-apply","role":"预算约束列不等式","title":"实际应用：方案与最值"},{"point":"ineq-set","role":"方案比较即区间比较","title":"一元一次不等式组"}]}],"patternsUrl":"patterns.html","prefix":""};

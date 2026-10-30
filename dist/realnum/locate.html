@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>题目定位器 - 实数 - 图知学堂</title>
 <meta name="description" content="回答两三个问题，快速判断一道实数题属于哪类经典题型，以及第一步该做什么。">
+<script>try{localStorage.setItem('k12v-last',JSON.stringify({s:'junior',c:'realnum'}))}catch(e){}</script>
 <style>
 :root {
   --bg: #fafaf8;
@@ -750,6 +751,32 @@ a:hover .tg-node { stroke-width: 2.4; }
 .strand-ghosts { font-size: 12.5px; color: var(--muted); margin-top: 10px; }
 .grade-empty { font-size: 13px; color: var(--muted); margin: 0; padding: 4px 0 6px; }
 
+/* ---------- 底部「返回上一级」栏 ---------- */
+.up-back {
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  margin-top: 28px; padding: 14px 16px;
+  background: var(--bg); border: 1px solid var(--border); border-radius: 12px;
+}
+.ub-main {
+  display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  font-weight: 600; font-size: 14.5px; color: var(--accent); text-decoration: none;
+  padding: 8px 16px; border: 1.5px solid var(--accent); border-radius: 10px; background: #fff;
+}
+.ub-main:hover { background: var(--accent); color: #fff; }
+.ub-main:hover .ub-sub { color: rgba(255, 255, 255, 0.85); }
+.ub-arrow { font-size: 16px; line-height: 1; }
+.ub-sub { font-weight: 400; font-size: 12.5px; color: var(--muted); }
+.ub-else { font-size: 13px; color: var(--muted); }
+.ub-else a { color: var(--muted); text-decoration: underline dotted; padding: 0 2px; }
+.ub-else a:hover { color: var(--accent); }
+
+/* ---------- 目录页「上次学到这」高亮 ---------- */
+.chapter-card.last-card { outline: 2px solid var(--accent); outline-offset: 2px; }
+.last-badge {
+  font-size: 11px; padding: 1px 9px; border-radius: 999px;
+  background: var(--accent); color: #fff; white-space: nowrap;
+}
+
 </style>
 </head>
 <body>
@@ -795,6 +822,10 @@ a:hover .tg-node { stroke-width: 2.4; }
 <div class="locate-bar" style="margin-top:36px">
   定位完还是不会做？去<a href="patterns.html">题型库</a>看这类题的「逆向解读」——它由哪几个知识点拼成，缺哪一环一眼就看得出来。
 </div>
+<nav class="up-back">
+  <a class="ub-main" href="index.html"><span class="ub-arrow">↩</span>返回本章目录<span class="ub-sub">七年级下册 · 实数</span></a>
+  <span class="ub-else">或直达：<a href="patterns.html">本章题型库</a> · <a href="../index.html">课程目录</a></span>
+</nav>
 
 <script>
 window.__LOCATE_DATA__ = {"asks":[{"k":"开方计算","label":"平方根、算术平方根、立方根的计算与辨析"},{"k":"概念分类","label":"实数分类、无理数识别"},{"k":"估算比较","label":"夹逼估算与大小比较"},{"k":"非负性","label":"被开方数非负、非负数和为零"},{"k":"字母求值","label":"由平方根/立方根反求字母"},{"k":"混合运算","label":"实数的混合运算"}],"features":[{"k":"实数","words":["平方根","算术平方根","立方根","开方","无理数","实数","√","根号","估算","无限不循环","被开方数","夹在","整数部分"]}],"patterns":[{"id":"rn-basic-sqrt","no":"基础 1","title":"平方根与算术平方根辨析","kind":"计算","asks":["开方计算"],"signals":["平方根","算术平方根","√"],"route":["/realnum/rn-sqrt"],"chain":[{"point":"rn-sqrt","role":"定义与 ± 区别","title":"平方根与算术平方根"}]},{"id":"rn-basic-cube","no":"基础 2","title":"立方根计算与性质","kind":"计算","asks":["开方计算"],"signals":["立方根","∛","开立方"],"route":["/realnum/rn-cube"],"chain":[{"point":"rn-cube","role":"立方根唯一性与负数开立方","title":"立方根"}]},{"id":"rn-basic-class","no":"基础 3","title":"实数分类判断","kind":"概念","asks":["概念分类"],"signals":["无理数","有理数","实数","下列各数中"],"route":["/realnum/rn-irr"],"chain":[{"point":"rn-irr","role":"实数分类树","title":"无理数与实数"}]},{"id":"rn-adv-est","no":"进阶 1","title":"估算与夹逼","kind":"计算","asks":["估算比较"],"signals":["估算","整数部分","在哪两个整数之间","比较大小"],"route":["/realnum/rn-est"],"chain":[{"point":"rn-est","role":"夹逼与大小比较","title":"估算与比较大小"}]},{"id":"rn-adv-nonneg","no":"进阶 2","title":"非负性综合","kind":"计算","asks":["非负性"],"signals":["有意义","非负","之和为 0","√(x−a) + √(a−x)"],"route":["/realnum/rn-ops","/realnum/rn-sqrt"],"chain":[{"point":"rn-ops","role":"双重非负性","title":"实数的运算与性质"},{"point":"rn-sqrt","role":"被开方数条件","title":"平方根与算术平方根"}]},{"id":"rn-adv-letter","no":"进阶 3","title":"由根反求字母","kind":"计算","asks":["字母求值"],"signals":["的平方根是","的立方根是","算术平方根是","求 a、b"],"route":["/realnum/rn-sqrt","/realnum/rn-cube"],"chain":[{"point":"rn-sqrt","role":"平方根成对 → 升平方","title":"平方根与算术平方根"},{"point":"rn-cube","role":"立方根唯一 → 升立方","title":"立方根"}]},{"id":"rn-app-geom","no":"应用 1","title":"面积体积逆问题","kind":"应用","asks":["混合运算"],"signals":["正方形面积","边长","体积","棱长","对角线"],"route":["/realnum/rn-sqrt","/realnum/rn-cube","/realnum/rn-est"],"chain":[{"point":"rn-sqrt","role":"面积开平方","title":"平方根与算术平方根"},{"point":"rn-cube","role":"体积开立方","title":"立方根"},{"point":"rn-est","role":"结果估算取舍","title":"估算与比较大小"}]},{"id":"rn-app-shift","no":"应用 2","title":"开方规律与近似迁移","kind":"综合","asks":["混合运算","估算比较"],"signals":["已知 √a ≈ b","估算","小数点","滚动","数轴上表示"],"route":["/realnum/rn-est","/realnum/rn-irr"],"chain":[{"point":"rn-est","role":"移位规律","title":"估算与比较大小"},{"point":"rn-irr","role":"数轴上表示无理数","title":"无理数与实数"}]}],"patternsUrl":"patterns.html","prefix":""};

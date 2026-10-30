@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>题目定位器 - 全等三角形 - 图知学堂</title>
 <meta name="description" content="回答两三个问题，快速判断一道全等三角形题属于哪类经典题型，以及第一步该做什么。">
+<script>try{localStorage.setItem('k12v-last',JSON.stringify({s:'junior',c:'congruence'}))}catch(e){}</script>
 <style>
 :root {
   --bg: #fafaf8;
@@ -750,6 +751,32 @@ a:hover .tg-node { stroke-width: 2.4; }
 .strand-ghosts { font-size: 12.5px; color: var(--muted); margin-top: 10px; }
 .grade-empty { font-size: 13px; color: var(--muted); margin: 0; padding: 4px 0 6px; }
 
+/* ---------- 底部「返回上一级」栏 ---------- */
+.up-back {
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  margin-top: 28px; padding: 14px 16px;
+  background: var(--bg); border: 1px solid var(--border); border-radius: 12px;
+}
+.ub-main {
+  display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  font-weight: 600; font-size: 14.5px; color: var(--accent); text-decoration: none;
+  padding: 8px 16px; border: 1.5px solid var(--accent); border-radius: 10px; background: #fff;
+}
+.ub-main:hover { background: var(--accent); color: #fff; }
+.ub-main:hover .ub-sub { color: rgba(255, 255, 255, 0.85); }
+.ub-arrow { font-size: 16px; line-height: 1; }
+.ub-sub { font-weight: 400; font-size: 12.5px; color: var(--muted); }
+.ub-else { font-size: 13px; color: var(--muted); }
+.ub-else a { color: var(--muted); text-decoration: underline dotted; padding: 0 2px; }
+.ub-else a:hover { color: var(--accent); }
+
+/* ---------- 目录页「上次学到这」高亮 ---------- */
+.chapter-card.last-card { outline: 2px solid var(--accent); outline-offset: 2px; }
+.last-badge {
+  font-size: 11px; padding: 1px 9px; border-radius: 999px;
+  background: var(--accent); color: #fff; white-space: nowrap;
+}
+
 </style>
 </head>
 <body>
@@ -795,6 +822,10 @@ a:hover .tg-node { stroke-width: 2.4; }
 <div class="locate-bar" style="margin-top:36px">
   定位完还是不会做？去<a href="patterns.html">题型库</a>看这类题的「逆向解读」——它由哪几个知识点拼成，缺哪一环一眼就看得出来。
 </div>
+<nav class="up-back">
+  <a class="ub-main" href="index.html"><span class="ub-arrow">↩</span>返回本章目录<span class="ub-sub">八年级上册 · 全等三角形</span></a>
+  <span class="ub-else">或直达：<a href="patterns.html">本章题型库</a> · <a href="../index.html">课程目录</a></span>
+</nav>
 
 <script>
 window.__LOCATE_DATA__ = {"asks":[{"k":"找对应关系","label":"由全等求边、求角"},{"k":"证全等","label":"用 SSS/SAS/ASA/AAS/HL 证两个三角形全等"},{"k":"证角相等","label":"两次全等、综合证明"},{"k":"判定辨析","label":"判断某个条件组合能否判定全等"},{"k":"角平分线","label":"角平分线的性质、逆定理与作图"}],"features":{"k":"全等","words":["全等","≌","对应边","对应角","sss","sas","asa","aas","hl","边边边","边角边","角边角","斜边","直角边","角平分线","求证","证明"]},"patterns":[{"id":"cong-find","no":1,"title":"由全等求边与角（读对应关系）","kind":"计算","asks":["找对应关系"],"signals":["△ABC ≌ △DEF","求 ∠F","求 DE","全等三角形的周长","对应边"],"route":["/congruence/cong-concept"],"chain":[{"point":"cong-concept","role":"对应边相等、对应角相等","title":"全等三角形的性质：对应边、对应角"}]},{"id":"cong-sss-proof","no":2,"title":"SSS 证全等（含公共边）","kind":"证明","asks":["证全等","证角相等"],"signals":["AB = AC，BD = CD","公共边","中点","求证 ∠B = ∠C","三条边"],"route":["/congruence/cong-sss","/congruence/cong-concept"],"chain":[{"point":"cong-sss","role":"三边分别相等","title":"边边边（SSS）"},{"point":"cong-concept","role":"全等后取对应角","title":"全等三角形的性质：对应边、对应角"}]},{"id":"cong-sas-proof","no":3,"title":"SAS 证全等（对角、公共角、平分线）","kind":"证明","asks":["证全等","证角相等"],"signals":["两边 + 夹角","对顶角","角平分线","中点","求证 AB = DE"],"route":["/congruence/cong-sas","/congruence/cong-concept"],"chain":[{"point":"cong-sas","role":"两边及其夹角相等","title":"边角边（SAS）与「边边角」陷阱"},{"point":"cong-concept","role":"对应边相等","title":"全等三角形的性质：对应边、对应角"}]},{"id":"cong-asa-proof","no":4,"title":"ASA / AAS 证全等（平行线造角）","kind":"证明","asks":["证全等","证角相等"],"signals":["两角 + 一边","平行线","内错角","∠B = ∠E","公共角"],"route":["/congruence/cong-asa","/congruence/cong-concept"],"chain":[{"point":"cong-asa","role":"两角及夹边（或对边）相等","title":"角边角（ASA）与角角边（AAS）"},{"point":"cong-concept","role":"对应边相等","title":"全等三角形的性质：对应边、对应角"}]},{"id":"cong-hl-proof","no":5,"title":"HL 证全等（直角三角形专用）","kind":"证明","asks":["证全等","证角相等"],"signals":["Rt△","垂直","高","斜边","直角边","∠C = 90°"],"route":["/congruence/cong-hl","/congruence/cong-concept"],"chain":[{"point":"cong-hl","role":"斜边 + 一条直角边","title":"斜边、直角边（HL）"},{"point":"cong-concept","role":"对应角相等","title":"全等三角形的性质：对应边、对应角"}]},{"id":"cong-chain","no":6,"title":"两次全等：先证一对，再证另一对","kind":"组合型","asks":["证角相等","证全等"],"signals":["求证 ∠… = ∠…","线段相等","两个结论","中点","正方形/平行四边形背景"],"route":["/congruence/cong-concept","/congruence/cong-sas"],"chain":[{"point":"cong-concept","role":"第一次全等提供新条件","title":"全等三角形的性质：对应边、对应角"},{"point":"cong-sas","role":"第二次全等完成目标","title":"边角边（SAS）与「边边角」陷阱"}]},{"id":"cong-ssa-trap","no":7,"title":"判定辨析：为什么「边边角」不行","kind":"判断","asks":["判定辨析"],"signals":["下列条件不能判定全等的是","两边及其中一边的对角","选择题","说法正确的是","SSA"],"route":["/congruence/cong-sas","/congruence/cong-hl"],"chain":[{"point":"cong-sas","role":"必须是夹角，SSA 反例","title":"边角边（SAS）与「边边角」陷阱"},{"point":"cong-hl","role":"HL 是 SSA 的唯一例外","title":"斜边、直角边（HL）"}]},{"id":"bisector-proof","no":8,"title":"角平分线：性质定理与逆定理的应用","kind":"组合型","asks":["角平分线","证角相等","证全等"],"signals":["角平分线","到两边的距离","PM ⊥ OA","内心","到三边距离相等"],"route":["/congruence/bisector","/congruence/cong-hl"],"chain":[{"point":"bisector","role":"距离相等 ⟺ 在平分线上","title":"角的平分线：距离相等"},{"point":"cong-hl","role":"用 HL 证两个直角三角形全等","title":"斜边、直角边（HL）"}]},{"id":"bisector-apply","no":9,"title":"角平分线的尺规作图与实际选址","kind":"应用","asks":["角平分线"],"signals":["尺规作图","作角平分线","到两条路距离相等","选址","保留作图痕迹"],"route":["/congruence/bisector"],"chain":[{"point":"bisector","role":"作图步骤与「距离相等」的实际含义","title":"角的平分线：距离相等"}]}],"patternsUrl":"patterns.html","prefix":""};

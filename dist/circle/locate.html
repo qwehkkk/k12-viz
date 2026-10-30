@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>题目定位器 - 圆 - 图知学堂</title>
 <meta name="description" content="回答两三个问题，快速判断一道圆题属于哪类经典题型，以及第一步该做什么。">
+<script>try{localStorage.setItem('k12v-last',JSON.stringify({s:'junior',c:'circle'}))}catch(e){}</script>
 <style>
 :root {
   --bg: #fafaf8;
@@ -750,6 +751,32 @@ a:hover .tg-node { stroke-width: 2.4; }
 .strand-ghosts { font-size: 12.5px; color: var(--muted); margin-top: 10px; }
 .grade-empty { font-size: 13px; color: var(--muted); margin: 0; padding: 4px 0 6px; }
 
+/* ---------- 底部「返回上一级」栏 ---------- */
+.up-back {
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  margin-top: 28px; padding: 14px 16px;
+  background: var(--bg); border: 1px solid var(--border); border-radius: 12px;
+}
+.ub-main {
+  display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  font-weight: 600; font-size: 14.5px; color: var(--accent); text-decoration: none;
+  padding: 8px 16px; border: 1.5px solid var(--accent); border-radius: 10px; background: #fff;
+}
+.ub-main:hover { background: var(--accent); color: #fff; }
+.ub-main:hover .ub-sub { color: rgba(255, 255, 255, 0.85); }
+.ub-arrow { font-size: 16px; line-height: 1; }
+.ub-sub { font-weight: 400; font-size: 12.5px; color: var(--muted); }
+.ub-else { font-size: 13px; color: var(--muted); }
+.ub-else a { color: var(--muted); text-decoration: underline dotted; padding: 0 2px; }
+.ub-else a:hover { color: var(--accent); }
+
+/* ---------- 目录页「上次学到这」高亮 ---------- */
+.chapter-card.last-card { outline: 2px solid var(--accent); outline-offset: 2px; }
+.last-badge {
+  font-size: 11px; padding: 1px 9px; border-radius: 999px;
+  background: var(--accent); color: #fff; white-space: nowrap;
+}
+
 </style>
 </head>
 <body>
@@ -795,6 +822,10 @@ a:hover .tg-node { stroke-width: 2.4; }
 <div class="locate-bar" style="margin-top:36px">
   定位完还是不会做？去<a href="patterns.html">题型库</a>看这类题的「逆向解读」——它由哪几个知识点拼成，缺哪一环一眼就看得出来。
 </div>
+<nav class="up-back">
+  <a class="ub-main" href="index.html"><span class="ub-arrow">↩</span>返回本章目录<span class="ub-sub">九年级上册 · 圆</span></a>
+  <span class="ub-else">或直达：<a href="patterns.html">本章题型库</a> · <a href="../index.html">课程目录</a></span>
+</nav>
 
 <script>
 window.__LOCATE_DATA__ = {"asks":[{"k":"求线段","label":"求线段（弦长、半径、弦心距、切线长）"},{"k":"求角度","label":"求角度（圆周角、圆心角、夹角）"},{"k":"判位置","label":"判断点/直线与圆的位置关系或求范围"},{"k":"证切线","label":"证明某条直线是圆的切线"},{"k":"求面积","label":"求面积 / 弧长 / 扫过面积"},{"k":"证等量","label":"证明线段或弧相等"},{"k":"综合","label":"压轴：多问综合（含参数、动点、存在性）"}],"features":[{"k":"直径","words":["直径","半圆"]},{"k":"切线","words":["切线","切点","相切"]},{"k":"拱形","words":["拱桥","拱高","管道","隧道","水面","跨度"]},{"k":"阴影","words":["阴影","扫过","旋转扫"]},{"k":"圆锥","words":["圆锥","侧面展开","母线"]},{"k":"生活圈","words":["台风","覆盖","预警","信号","半径范围内"]}],"patterns":[{"id":"chord-pythagora","no":1,"title":"半径 + 弦 → 弦心距：垂径勾股一条龙","kind":"单一型","asks":["求线段"],"signals":["半径","弦长","求圆心到弦的距离","弦心距"],"route":["过圆心作弦的垂线（弦心距），垂足平分弦","连接圆心与弦的一个端点（半径）","在直角三角形里用 r² = d² + (半弦)² 求未知量"],"chain":[{"point":"circle-concept","role":"确认对象：圆 + 弦，画出基本图形","title":"圆的概念与确定圆"},{"point":"perpendicular-chord","role":"作弦心距 → 半弦 = 弦长一半 → 勾股求第四个量","title":"垂径定理"}]},{"id":"sagitta-bridge","no":2,"title":"拱桥 / 管道截面：由跨度拱高反解半径","kind":"组合型","asks":["求线段"],"signals":["拱桥","拱高","跨度","管道","水面宽","隧道"],"route":["画图：弦 = 跨度，拱高 = 弦中点到弧顶","设半径 r，弦心距 d = r − 拱高","勾股列方程 r² = (半跨)² + (r − 拱高)²，解出 r","问水位/净空变化时，改 d 重算半弦，宽度 = 2 × 半弦"],"chain":[{"point":"circle-concept","role":"确认是圆弧模型，设出半径 r","title":"圆的概念与确定圆"},{"point":"perpendicular-chord","role":"垂径定理构造直角三角形，列方程 r² = 半跨² + (r − 拱高)²","title":"垂径定理"}]},{"id":"equal-arcs","no":3,"title":"等弧对等弦：圆心角「等对等」证明","kind":"单一型","asks":["证等量"],"signals":["证明弧相等","证明弦相等","圆心角相等","中点","平分"],"route":["连接相关的两条半径（构造等腰三角形或中心角）","证圆心角相等（SAS / 旋转重合 / 已知等角）","由「等圆心角 ⟺ 等弧 ⟺ 等弦」写出结论"],"chain":[{"point":"arc-chord-angle","role":"把要证的等量统一转化到圆心角","title":"弧、弦与圆心角"},{"point":"circle-symmetry","role":"用旋转对称或全等（SSS：两半径 + 公共边）说明重合","title":"圆的对称性"}]},{"id":"inscribed-half","no":4,"title":"圆心角与圆周角互化求角度","kind":"单一型","asks":["求角度"],"signals":["圆周角","圆心角","所对的弧","同弧"],"route":["确认角的顶点位置（圆心 or 圆上）","确认两个角所对的弧是否相同","同弧 → 圆周角 = 圆心角/2；不同弧 → 先算弧的度数再转化"],"chain":[{"point":"arc-chord-angle","role":"确认两个角对的是同一条弧","title":"弧、弦与圆心角"},{"point":"inscribed-angle","role":"圆周角 = 圆心角的一半；同弧圆周角相等可转移","title":"圆周角定理"}]},{"id":"diameter-right","no":5,"title":"直径对直角：见直径 → 找 90° → 勾股","kind":"组合型","asks":["求线段","求角度"],"signals":["直径","半圆","内接","直角三角形"],"route":["见到直径，连接直径两端与圆上的点","得到 90° 圆周角","勾股定理 / 锐角三角函数 / 相似，按需选择"],"chain":[{"point":"inscribed-angle","role":"直径 → ∠C = 90°，把圆问题变成直角三角形问题","title":"圆周角定理"},{"point":"perpendicular-chord","role":"需要时再用垂径/等腰三角形补条件","title":"垂径定理"}]},{"id":"position-judge","no":6,"title":"点 / 直线与圆的位置关系：比大小定范围","kind":"单一型","asks":["判位置"],"signals":["在圆内","在圆外","相切","相交","相离","多少小时后受影响","覆盖"],"route":["找出半径 r 与距离 d 的表达式","比大小得关系；或由关系反写不等式求参数范围","应用题里关注临界：d = r 是开始/结束影响的时刻"],"chain":[{"point":"circle-concept","role":"认清 r 和 d 各是谁","title":"圆的概念与确定圆"},{"point":"point-circle","role":"d < r 内 / d = r 上 / d > r 外；直线版本同理","title":"点与圆的位置关系"}]},{"id":"tangent-proof","no":7,"title":"证切线：连半径证垂直（或作垂直证 d = r）","kind":"组合型","asks":["证切线"],"signals":["证明是切线","相切","切点","垂直"],"route":["判断直线与圆是否已有公共点","有公共点：连这点与圆心，证夹角 90°（等腰三角形 / 直径对直角 / 已知垂直）","无公共点：过圆心作直线垂线，证距离 d = r","书写规范：明确写出「经过半径外端」「垂直」两个条件"],"chain":[{"point":"circle-concept","role":"明确切点是否存在，选择套路","title":"圆的概念与确定圆"},{"point":"tangent","role":"判定定理：过半径外端 + 垂直 ⟹ 切线","title":"切线的判定与性质"},{"point":"inscribed-angle","role":"常借「直径对直角」制造垂直","title":"圆周角定理"}]},{"id":"tangent-length","no":8,"title":"双切线与切线长：对称一半就够算","kind":"组合型","asks":["求线段","求角度"],"signals":["两条切线","切线长","PA、PB","外一点"],"route":["连圆心与两个切点（得两个直角），连圆心与圆外那点","用切线长定理：PA = PB，OP 平分 ∠APB 与 ∠AOB","在半个图形的直角三角形里解出目标量"],"chain":[{"point":"tangent","role":"切线性质：连切点得两个 90°","title":"切线的判定与性质"},{"point":"arc-chord-angle","role":"圆心角取一半后用弧长/弦长收尾","title":"弧、弦与圆心角"}]},{"id":"sector-shadow","no":9,"title":"阴影面积：扇形加减 + 旋转扫过","kind":"组合型","asks":["求面积"],"signals":["阴影","求面积","扫过","旋转","弓形"],"route":["把阴影拆成「扇形 ± 三角形 ± 弓形」的组合","旋转扫过：认准每个端点的旋转半径（不是斜边！）","套 l = nπr/180、S = nπr²/360，按比例列式"],"chain":[{"point":"sector","role":"扇形/弓形面积公式与比例思想","title":"弧长、扇形面积与圆锥"},{"point":"arc-chord-angle","role":"确定扫过角度（往往藏在旋转角里）","title":"弧、弦与圆心角"}]},{"id":"cone-unfold","no":10,"title":"圆锥侧面展开：平面与立体的桥","kind":"组合型","asks":["求面积","求角度"],"signals":["圆锥","侧面展开","母线","圣诞帽","漏斗"],"route":["认准三个量：底面半径 r、母线 l、展开圆心角 n","弧长守恒：2πr = nπl/180","S侧 = πrl，S全 = πrl + πr²，高用勾股 h = √(l² − r²)"],"chain":[{"point":"sector","role":"扇形公式 + 比例思想","title":"弧长、扇形面积与圆锥"},{"point":"circle-concept","role":"底面圆周长与半径的关系","title":"圆的概念与确定圆"}]}],"patternsUrl":"patterns.html","prefix":""};

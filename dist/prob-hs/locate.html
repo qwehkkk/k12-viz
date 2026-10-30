@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>题目定位器 - 概率 - 图知学堂</title>
 <meta name="description" content="回答两三个问题，快速判断一道概率题属于哪类经典题型，以及第一步该做什么。">
+<script>try{localStorage.setItem('k12v-last',JSON.stringify({s:'senior',c:'prob-hs'}))}catch(e){}</script>
 <style>
 :root {
   --bg: #fafaf8;
@@ -750,6 +751,32 @@ a:hover .tg-node { stroke-width: 2.4; }
 .strand-ghosts { font-size: 12.5px; color: var(--muted); margin-top: 10px; }
 .grade-empty { font-size: 13px; color: var(--muted); margin: 0; padding: 4px 0 6px; }
 
+/* ---------- 底部「返回上一级」栏 ---------- */
+.up-back {
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  margin-top: 28px; padding: 14px 16px;
+  background: var(--bg); border: 1px solid var(--border); border-radius: 12px;
+}
+.ub-main {
+  display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  font-weight: 600; font-size: 14.5px; color: var(--accent); text-decoration: none;
+  padding: 8px 16px; border: 1.5px solid var(--accent); border-radius: 10px; background: #fff;
+}
+.ub-main:hover { background: var(--accent); color: #fff; }
+.ub-main:hover .ub-sub { color: rgba(255, 255, 255, 0.85); }
+.ub-arrow { font-size: 16px; line-height: 1; }
+.ub-sub { font-weight: 400; font-size: 12.5px; color: var(--muted); }
+.ub-else { font-size: 13px; color: var(--muted); }
+.ub-else a { color: var(--muted); text-decoration: underline dotted; padding: 0 2px; }
+.ub-else a:hover { color: var(--accent); }
+
+/* ---------- 目录页「上次学到这」高亮 ---------- */
+.chapter-card.last-card { outline: 2px solid var(--accent); outline-offset: 2px; }
+.last-badge {
+  font-size: 11px; padding: 1px 9px; border-radius: 999px;
+  background: var(--accent); color: #fff; white-space: nowrap;
+}
+
 </style>
 </head>
 <body>
@@ -795,6 +822,10 @@ a:hover .tg-node { stroke-width: 2.4; }
 <div class="locate-bar" style="margin-top:36px">
   定位完还是不会做？去<a href="patterns.html">题型库</a>看这类题的「逆向解读」——它由哪几个知识点拼成，缺哪一环一眼就看得出来。
 </div>
+<nav class="up-back">
+  <a class="ub-main" href="index.html"><span class="ub-arrow">↩</span>返回本章目录<span class="ub-sub">高一下册 · 概率</span></a>
+  <span class="ub-else">或直达：<a href="patterns.html">本章题型库</a> · <a href="../index.html">课程目录</a></span>
+</nav>
 
 <script>
 window.__LOCATE_DATA__ = {"asks":[{"k":"样本空间","label":"列举样本点、事件的关系"},{"k":"古典概型","label":"数样本点求概率、有放回与无放回"},{"k":"互斥对立","label":"加法公式、1 − P(A)"},{"k":"独立性","label":"乘法公式、串联并联、至少一个"},{"k":"频率估计","label":"频率与概率、随机模拟"}],"features":[{"k":"列举/树状图","desc":"结果可数 → 古典概型，先数清分母"},{"k":"至少/至多","desc":"优先考虑对立面，用 1 减"},{"k":"互不影响","desc":"出现「独立」「各自」→ 概率相乘"},{"k":"不能同时","desc":"出现「互斥」「恰有一个」→ 概率相加"},{"k":"试验次数","desc":"给频率问概率 → 大数定律、估计"}],"patterns":[{"id":"ph-b-space","no":"基础 1","title":"样本空间与事件","kind":"概念","asks":["样本空间"],"signals":["样本空间","样本点","包含"],"route":["/prob-hs/ph-space"],"chain":[{"point":"ph-space","role":"事件是样本空间的子集","title":"样本空间与随机事件"}]},{"id":"ph-b-classic","no":"基础 2","title":"古典概型求概率","kind":"计算","asks":["古典概型"],"signals":["概率","任取","随机"],"route":["/prob-hs/ph-classic"],"chain":[{"point":"ph-classic","role":"k/n 数样本点","title":"古典概型"}]},{"id":"ph-b-opp","no":"基础 3","title":"对立事件","kind":"计算","asks":["互斥对立"],"signals":["至少","对立","不超过"],"route":["/prob-hs/ph-props"],"chain":[{"point":"ph-props","role":"P(Ā) = 1 − P(A)","title":"概率的基本性质：互斥与对立"}]},{"id":"ph-i-add","no":"提升 1","title":"互斥与容斥","kind":"计算","asks":["互斥对立"],"signals":["互斥","至少一个发生","P(A∪B)"],"route":["/prob-hs/ph-props"],"chain":[{"point":"ph-props","role":"加法公式与容斥","title":"概率的基本性质：互斥与对立"}]},{"id":"ph-i-indep","no":"提升 2","title":"独立事件乘法","kind":"计算","asks":["独立性"],"signals":["独立","各自","都成功"],"route":["/prob-hs/ph-indep"],"chain":[{"point":"ph-indep","role":"P(AB) = P(A)P(B)","title":"事件的独立性"}]},{"id":"ph-i-freq","no":"提升 3","title":"频率与概率","kind":"概念","asks":["频率估计"],"signals":["频率","估计","试验"],"route":["/prob-hs/ph-freq"],"chain":[{"point":"ph-freq","role":"频率稳定于概率","title":"频率与概率、随机模拟"}]},{"id":"ph-a-geo","no":"综合 1","title":"几何概型","kind":"应用","asks":["古典概型"],"signals":["等车","随机到达","区间"],"route":["/prob-hs/ph-classic","/prob-hs/ph-space"],"chain":[{"point":"ph-classic","role":"等可能 → 用长度比","title":"古典概型"},{"point":"ph-space","role":"样本空间是连续区间","title":"样本空间与随机事件"}]},{"id":"ph-a-mix","no":"综合 2","title":"互斥与独立综合","kind":"综合","asks":["互斥对立","独立性"],"signals":["系统","至少","独立工作"],"route":["/prob-hs/ph-indep","/prob-hs/ph-props"],"chain":[{"point":"ph-indep","role":"独立乘法","title":"事件的独立性"},{"point":"ph-props","role":"对立取补","title":"概率的基本性质：互斥与对立"}]}],"patternsUrl":"patterns.html","prefix":""};

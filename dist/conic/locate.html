@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>题目定位器 - 圆锥曲线的方程 - 图知学堂</title>
 <meta name="description" content="回答两三个问题，快速判断一道圆锥曲线的方程题属于哪类经典题型，以及第一步该做什么。">
+<script>try{localStorage.setItem('k12v-last',JSON.stringify({s:'senior',c:'conic'}))}catch(e){}</script>
 <style>
 :root {
   --bg: #fafaf8;
@@ -750,6 +751,32 @@ a:hover .tg-node { stroke-width: 2.4; }
 .strand-ghosts { font-size: 12.5px; color: var(--muted); margin-top: 10px; }
 .grade-empty { font-size: 13px; color: var(--muted); margin: 0; padding: 4px 0 6px; }
 
+/* ---------- 底部「返回上一级」栏 ---------- */
+.up-back {
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  margin-top: 28px; padding: 14px 16px;
+  background: var(--bg); border: 1px solid var(--border); border-radius: 12px;
+}
+.ub-main {
+  display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  font-weight: 600; font-size: 14.5px; color: var(--accent); text-decoration: none;
+  padding: 8px 16px; border: 1.5px solid var(--accent); border-radius: 10px; background: #fff;
+}
+.ub-main:hover { background: var(--accent); color: #fff; }
+.ub-main:hover .ub-sub { color: rgba(255, 255, 255, 0.85); }
+.ub-arrow { font-size: 16px; line-height: 1; }
+.ub-sub { font-weight: 400; font-size: 12.5px; color: var(--muted); }
+.ub-else { font-size: 13px; color: var(--muted); }
+.ub-else a { color: var(--muted); text-decoration: underline dotted; padding: 0 2px; }
+.ub-else a:hover { color: var(--accent); }
+
+/* ---------- 目录页「上次学到这」高亮 ---------- */
+.chapter-card.last-card { outline: 2px solid var(--accent); outline-offset: 2px; }
+.last-badge {
+  font-size: 11px; padding: 1px 9px; border-radius: 999px;
+  background: var(--accent); color: #fff; white-space: nowrap;
+}
+
 </style>
 </head>
 <body>
@@ -795,6 +822,10 @@ a:hover .tg-node { stroke-width: 2.4; }
 <div class="locate-bar" style="margin-top:36px">
   定位完还是不会做？去<a href="patterns.html">题型库</a>看这类题的「逆向解读」——它由哪几个知识点拼成，缺哪一环一眼就看得出来。
 </div>
+<nav class="up-back">
+  <a class="ub-main" href="index.html"><span class="ub-arrow">↩</span>返回本章目录<span class="ub-sub">高二上册 · 圆锥曲线的方程</span></a>
+  <span class="ub-else">或直达：<a href="patterns.html">本章题型库</a> · <a href="../index.html">课程目录</a></span>
+</nav>
 
 <script>
 window.__LOCATE_DATA__ = {"asks":[{"k":"求标准方程","desc":"待定系数或定义"},{"k":"基本量","desc":"a、b、c、e、焦点、准线"},{"k":"求离心率","desc":"找 a 与 c 的齐次关系"},{"k":"定义转化","desc":"距离和/差/相等"},{"k":"弦长","desc":"韦达 + √(1+k²)"},{"k":"中点弦","desc":"点差法"}],"features":["题目给「焦点在 x 轴上」时可以直接设标准式，否则要分两种情况","出现「到焦点距离」时优先想定义，往往能跳过解方程","问弦长、中点、定点，基本都要联立 + 韦达","离心率题常给几何条件（垂直、等腰、中点），先翻译成 a、b、c 的方程"],"patterns":[{"id":"cn-t-eq","no":"基础 1","title":"求椭圆方程","kind":"求方程","asks":["求标准方程"],"signals":["椭圆","焦点","过点"],"route":["/conic/cn-ellipse","/conic/cn-eprop"],"chain":[{"point":"cn-ellipse","role":"标准式待定","title":"椭圆的定义与标准方程"},{"point":"cn-eprop","role":"a、b、c 关系","title":"椭圆的几何性质"}]},{"id":"cn-t-basic","no":"基础 2","title":"基本量换算","kind":"基本量","asks":["基本量"],"signals":["方程","焦点","离心率","准线"],"route":["/conic/cn-ellipse","/conic/cn-eprop"],"chain":[{"point":"cn-ellipse","role":"读分母","title":"椭圆的定义与标准方程"},{"point":"cn-eprop","role":"e 与 c","title":"椭圆的几何性质"}]},{"id":"cn-t-def","no":"基础 3","title":"定义转化","kind":"定义","asks":["定义转化"],"signals":["到焦点距离","和","差"],"route":["/conic/cn-ellipse","/conic/cn-hyperbola"],"chain":[{"point":"cn-ellipse","role":"和为 2a","title":"椭圆的定义与标准方程"},{"point":"cn-hyperbola","role":"差为 2a","title":"双曲线"}]},{"id":"cn-t-e","no":"中档 4","title":"求离心率","kind":"离心率","asks":["求离心率"],"signals":["离心率","垂直","中点","等边"],"route":["/conic/cn-eprop","/conic/cn-ellipse"],"chain":[{"point":"cn-eprop","role":"e = c/a","title":"椭圆的几何性质"},{"point":"cn-ellipse","role":"a、b、c 关系","title":"椭圆的定义与标准方程"}]},{"id":"cn-t-chord","no":"中档 5","title":"弦长","kind":"弦长","asks":["弦长"],"signals":["弦长","相交","交于"],"route":["/conic/cn-line","/conic/cn-parabola"],"chain":[{"point":"cn-line","role":"联立 + 韦达","title":"直线与圆锥曲线"},{"point":"cn-parabola","role":"曲线方程","title":"抛物线"}]},{"id":"cn-t-mid","no":"中档 6","title":"中点弦","kind":"中点弦","asks":["中点弦"],"signals":["中点","弦","斜率"],"route":["/conic/cn-line"],"chain":[{"point":"cn-line","role":"点差法","title":"直线与圆锥曲线"}]},{"id":"cn-t-area","no":"综合 7","title":"焦点三角形面积","kind":"面积","asks":["定义转化","基本量"],"signals":["面积","焦点三角形","夹角"],"route":["/conic/cn-ellipse","/conic/cn-eprop"],"chain":[{"point":"cn-ellipse","role":"定义 + 余弦定理","title":"椭圆的定义与标准方程"},{"point":"cn-eprop","role":"b²·tan(θ/2)","title":"椭圆的几何性质"}]},{"id":"cn-t-fixed","no":"综合 8","title":"定点问题","kind":"定点","asks":["弦长","中点弦"],"signals":["恒过","定点","求证"],"route":["/conic/cn-line","/conic/cn-parabola"],"chain":[{"point":"cn-line","role":"联立 + 韦达","title":"直线与圆锥曲线"},{"point":"cn-parabola","role":"抛物线方程","title":"抛物线"}]}],"patternsUrl":"patterns.html","prefix":""};

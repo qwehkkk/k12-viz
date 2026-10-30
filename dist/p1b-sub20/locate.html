@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>题目定位器 - 20 以内的退位减法 - 图知学堂</title>
 <meta name="description" content="回答两三个问题，快速判断一道20 以内的退位减法题属于哪类经典题型，以及第一步该做什么。">
+<script>try{localStorage.setItem('k12v-last',JSON.stringify({s:'primary',c:'p1b-sub20'}))}catch(e){}</script>
 <style>
 :root {
   --bg: #fafaf8;
@@ -750,6 +751,32 @@ a:hover .tg-node { stroke-width: 2.4; }
 .strand-ghosts { font-size: 12.5px; color: var(--muted); margin-top: 10px; }
 .grade-empty { font-size: 13px; color: var(--muted); margin: 0; padding: 4px 0 6px; }
 
+/* ---------- 底部「返回上一级」栏 ---------- */
+.up-back {
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  margin-top: 28px; padding: 14px 16px;
+  background: var(--bg); border: 1px solid var(--border); border-radius: 12px;
+}
+.ub-main {
+  display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  font-weight: 600; font-size: 14.5px; color: var(--accent); text-decoration: none;
+  padding: 8px 16px; border: 1.5px solid var(--accent); border-radius: 10px; background: #fff;
+}
+.ub-main:hover { background: var(--accent); color: #fff; }
+.ub-main:hover .ub-sub { color: rgba(255, 255, 255, 0.85); }
+.ub-arrow { font-size: 16px; line-height: 1; }
+.ub-sub { font-weight: 400; font-size: 12.5px; color: var(--muted); }
+.ub-else { font-size: 13px; color: var(--muted); }
+.ub-else a { color: var(--muted); text-decoration: underline dotted; padding: 0 2px; }
+.ub-else a:hover { color: var(--accent); }
+
+/* ---------- 目录页「上次学到这」高亮 ---------- */
+.chapter-card.last-card { outline: 2px solid var(--accent); outline-offset: 2px; }
+.last-badge {
+  font-size: 11px; padding: 1px 9px; border-radius: 999px;
+  background: var(--accent); color: #fff; white-space: nowrap;
+}
+
 </style>
 </head>
 <body>
@@ -795,6 +822,10 @@ a:hover .tg-node { stroke-width: 2.4; }
 <div class="locate-bar" style="margin-top:36px">
   定位完还是不会做？去<a href="patterns.html">题型库</a>看这类题的「逆向解读」——它由哪几个知识点拼成，缺哪一环一眼就看得出来。
 </div>
+<nav class="up-back">
+  <a class="ub-main" href="index.html"><span class="ub-arrow">↩</span>返回本章目录<span class="ub-sub">一年级下册 · 20 以内的退位减法</span></a>
+  <span class="ub-else">或直达：<a href="patterns.html">本章题型库</a> · <a href="../index.html">课程目录</a></span>
+</nav>
 
 <script>
 window.__LOCATE_DATA__ = {"asks":[{"k":"破十法","desc":"破十计算退位减法"},{"k":"平十法","desc":"连减到十"},{"k":"想加算减","desc":"用加法想减法"},{"k":"还剩","desc":"去掉求剩余"},{"k":"相差","desc":"比多少问题"}],"features":["个位不够减才退位","破十：10 − 几再加个位","熟练后想加算减最快","相差多少用大数减小数"],"patterns":[{"id":"p1b-sub20-t-broken","no":"基础 1","title":"破十法","kind":"计算","asks":["破十法"],"signals":["十几减"],"route":["/p1b-sub20/p1b-sub20-broken"],"chain":[{"point":"p1b-sub20-broken","role":"破十","title":"破十法"}]},{"id":"p1b-sub20-t-flat","no":"基础 2","title":"平十法","kind":"计算","asks":["平十法"],"signals":["连减"],"route":["/p1b-sub20/p1b-sub20-flat"],"chain":[{"point":"p1b-sub20-flat","role":"先减到 10","title":"平十法（连减）"}]},{"id":"p1b-sub20-t-thinkadd","no":"中档 1","title":"想加算减","kind":"计算","asks":["想加算减"],"signals":["想加"],"route":["/p1b-sub20/p1b-sub20-thinkadd"],"chain":[{"point":"p1b-sub20-thinkadd","role":"逆运算","title":"想加算减"}]},{"id":"p1b-sub20-t-left","no":"中档 2","title":"求剩余","kind":"应用","asks":["还剩"],"signals":["还剩","飞走","吃掉"],"route":["/p1b-sub20/p1b-sub20-solve"],"chain":[{"point":"p1b-sub20-solve","role":"减法","title":"解决问题"}]},{"id":"p1b-sub20-t-diff","no":"提升 1","title":"相差问题","kind":"应用","asks":["相差"],"signals":["多几","少几","相差"],"route":["/p1b-sub20/p1b-sub20-solve"],"chain":[{"point":"p1b-sub20-solve","role":"大数减小数","title":"解决问题"}]}],"patternsUrl":"patterns.html","prefix":""};

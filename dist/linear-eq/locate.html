@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>题目定位器 - 一元一次方程 - 图知学堂</title>
 <meta name="description" content="回答两三个问题，快速判断一道一元一次方程题属于哪类经典题型，以及第一步该做什么。">
+<script>try{localStorage.setItem('k12v-last',JSON.stringify({s:'junior',c:'linear-eq'}))}catch(e){}</script>
 <style>
 :root {
   --bg: #fafaf8;
@@ -750,6 +751,32 @@ a:hover .tg-node { stroke-width: 2.4; }
 .strand-ghosts { font-size: 12.5px; color: var(--muted); margin-top: 10px; }
 .grade-empty { font-size: 13px; color: var(--muted); margin: 0; padding: 4px 0 6px; }
 
+/* ---------- 底部「返回上一级」栏 ---------- */
+.up-back {
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  margin-top: 28px; padding: 14px 16px;
+  background: var(--bg); border: 1px solid var(--border); border-radius: 12px;
+}
+.ub-main {
+  display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  font-weight: 600; font-size: 14.5px; color: var(--accent); text-decoration: none;
+  padding: 8px 16px; border: 1.5px solid var(--accent); border-radius: 10px; background: #fff;
+}
+.ub-main:hover { background: var(--accent); color: #fff; }
+.ub-main:hover .ub-sub { color: rgba(255, 255, 255, 0.85); }
+.ub-arrow { font-size: 16px; line-height: 1; }
+.ub-sub { font-weight: 400; font-size: 12.5px; color: var(--muted); }
+.ub-else { font-size: 13px; color: var(--muted); }
+.ub-else a { color: var(--muted); text-decoration: underline dotted; padding: 0 2px; }
+.ub-else a:hover { color: var(--accent); }
+
+/* ---------- 目录页「上次学到这」高亮 ---------- */
+.chapter-card.last-card { outline: 2px solid var(--accent); outline-offset: 2px; }
+.last-badge {
+  font-size: 11px; padding: 1px 9px; border-radius: 999px;
+  background: var(--accent); color: #fff; white-space: nowrap;
+}
+
 </style>
 </head>
 <body>
@@ -795,6 +822,10 @@ a:hover .tg-node { stroke-width: 2.4; }
 <div class="locate-bar" style="margin-top:36px">
   定位完还是不会做？去<a href="patterns.html">题型库</a>看这类题的「逆向解读」——它由哪几个知识点拼成，缺哪一环一眼就看得出来。
 </div>
+<nav class="up-back">
+  <a class="ub-main" href="index.html"><span class="ub-arrow">↩</span>返回本章目录<span class="ub-sub">七年级上册 · 一元一次方程</span></a>
+  <span class="ub-else">或直达：<a href="patterns.html">本章题型库</a> · <a href="../index.html">课程目录</a></span>
+</nav>
 
 <script>
 window.__LOCATE_DATA__ = {"asks":[{"k":"方程的解","label":"判断/检验方程的解"},{"k":"等式性质","label":"用等式性质变形"},{"k":"移项求解","label":"移项、合并、系数化 1"},{"k":"去括号","label":"含括号的方程求解"},{"k":"去分母","label":"含分母的方程求解"},{"k":"行程问题","label":"相遇、追及、顺逆流"},{"k":"利润打折","label":"利润率、打折、增长率"},{"k":"配套问题","label":"按比例配套、人员分配"}],"features":{"k":"一元一次方程","words":["方程","一元一次","解方程","移项","去括号","去分母","方程的解","相遇","追及","行程","利润","打折","售价","进价","利润率","增长率","配套","设未知数"]},"patterns":[{"id":"le-check-solution","no":1,"title":"判断与检验方程的解","kind":"概念","asks":["方程的解"],"signals":["是不是解","检验","代回","哪个是方程"],"route":["/linear-eq/eq-def"],"chain":[{"point":"eq-def","role":"解的定义与检验","title":"方程与方程的解"}]},{"id":"le-move-solve","no":2,"title":"移项与系数化 1","kind":"计算","asks":["移项求解","等式性质"],"signals":["解方程","ax + b = c","ax + b = cx + d"],"route":["/linear-eq/eq-solve","/linear-eq/eq-prop"],"chain":[{"point":"eq-solve","role":"移项变号、系数化 1","title":"移项、合并与系数化 1"},{"point":"eq-prop","role":"依据是等式性质","title":"等式的性质：天平法则"}]},{"id":"le-bracket-solve","no":3,"title":"去括号解方程","kind":"计算","asks":["去括号"],"signals":["解方程","a(x + b)","−a(x − b)","括号"],"route":["/linear-eq/eq-bracket"],"chain":[{"point":"eq-bracket","role":"分配律乘每一项","title":"去括号与去分母"}]},{"id":"le-denominator-solve","no":4,"title":"去分母解方程","kind":"计算","asks":["去分母"],"signals":["解方程","分母","(x + a)/b","最小公倍数"],"route":["/linear-eq/eq-bracket"],"chain":[{"point":"eq-bracket","role":"去分母后再去括号","title":"去括号与去分母"}]},{"id":"le-motion-meet","no":5,"title":"行程问题：相遇","kind":"应用","asks":["行程问题"],"signals":["相向而行","相遇","两车（人）同时出发","两地相距"],"route":["/linear-eq/eq-motion"],"chain":[{"point":"eq-motion","role":"路程相加 = 全程","title":"行程问题：相遇与追及"}]},{"id":"le-motion-catch","no":6,"title":"行程问题：追及","kind":"应用","asks":["行程问题"],"signals":["同向而行","追上","先出发","晚出发"],"route":["/linear-eq/eq-motion"],"chain":[{"point":"eq-motion","role":"路程差 = 初始差距","title":"行程问题：相遇与追及"}]},{"id":"le-profit-discount","no":7,"title":"利润率、打折与增长率","kind":"应用","asks":["利润打折"],"signals":["进价","售价","利润率","打折","标价","增长"],"route":["/linear-eq/eq-profit"],"chain":[{"point":"eq-profit","role":"售价 = 进价×(1+r)","title":"利润、打折与增长率"}]},{"id":"le-match-ratio","no":8,"title":"配套与人员分配","kind":"综合","asks":["配套问题"],"signals":["配套","恰好配成","按比例","安排多少人"],"route":["/linear-eq/eq-bracket"],"chain":[{"point":"eq-bracket","role":"去括号解出人数","title":"去括号与去分母"}]}],"patternsUrl":"patterns.html","prefix":""};

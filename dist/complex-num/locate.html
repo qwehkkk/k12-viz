@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>题目定位器 - 复数 - 图知学堂</title>
 <meta name="description" content="回答两三个问题，快速判断一道复数题属于哪类经典题型，以及第一步该做什么。">
+<script>try{localStorage.setItem('k12v-last',JSON.stringify({s:'senior',c:'complex-num'}))}catch(e){}</script>
 <style>
 :root {
   --bg: #fafaf8;
@@ -750,6 +751,32 @@ a:hover .tg-node { stroke-width: 2.4; }
 .strand-ghosts { font-size: 12.5px; color: var(--muted); margin-top: 10px; }
 .grade-empty { font-size: 13px; color: var(--muted); margin: 0; padding: 4px 0 6px; }
 
+/* ---------- 底部「返回上一级」栏 ---------- */
+.up-back {
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  margin-top: 28px; padding: 14px 16px;
+  background: var(--bg); border: 1px solid var(--border); border-radius: 12px;
+}
+.ub-main {
+  display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  font-weight: 600; font-size: 14.5px; color: var(--accent); text-decoration: none;
+  padding: 8px 16px; border: 1.5px solid var(--accent); border-radius: 10px; background: #fff;
+}
+.ub-main:hover { background: var(--accent); color: #fff; }
+.ub-main:hover .ub-sub { color: rgba(255, 255, 255, 0.85); }
+.ub-arrow { font-size: 16px; line-height: 1; }
+.ub-sub { font-weight: 400; font-size: 12.5px; color: var(--muted); }
+.ub-else { font-size: 13px; color: var(--muted); }
+.ub-else a { color: var(--muted); text-decoration: underline dotted; padding: 0 2px; }
+.ub-else a:hover { color: var(--accent); }
+
+/* ---------- 目录页「上次学到这」高亮 ---------- */
+.chapter-card.last-card { outline: 2px solid var(--accent); outline-offset: 2px; }
+.last-badge {
+  font-size: 11px; padding: 1px 9px; border-radius: 999px;
+  background: var(--accent); color: #fff; white-space: nowrap;
+}
+
 </style>
 </head>
 <body>
@@ -795,6 +822,10 @@ a:hover .tg-node { stroke-width: 2.4; }
 <div class="locate-bar" style="margin-top:36px">
   定位完还是不会做？去<a href="patterns.html">题型库</a>看这类题的「逆向解读」——它由哪几个知识点拼成，缺哪一环一眼就看得出来。
 </div>
+<nav class="up-back">
+  <a class="ub-main" href="index.html"><span class="ub-arrow">↩</span>返回本章目录<span class="ub-sub">高一下册 · 复数</span></a>
+  <span class="ub-else">或直达：<a href="patterns.html">本章题型库</a> · <a href="../index.html">课程目录</a></span>
+</nav>
 
 <script>
 window.__LOCATE_DATA__ = {"asks":[{"k":"概念分类","label":"实数 / 虚数 / 纯虚数的判定"},{"k":"相等求参","label":"实部虚部分别相等列方程"},{"k":"四则运算","label":"加减乘除与 i 的幂"},{"k":"模与几何","label":"求模、复平面位置、轨迹"},{"k":"方程求根","label":"判别式小于零、虚根成对"}],"features":[{"k":"含参数 m","desc":"出现「是实数 / 是纯虚数」→ 分类讨论实部虚部"},{"k":"等式","desc":"两个复数相等 → 拆成两个实数方程"},{"k":"分式","desc":"分母有 i → 乘共轭实数化"},{"k":"高次幂","desc":"i 的 n 次方 → 指数除以 4 取余"},{"k":"无实根","desc":"Δ < 0 或「有一个虚根」→ 共轭虚根成对"}],"patterns":[{"id":"cx-b-class","no":"基础 1","title":"复数分类求参","kind":"概念","asks":["概念分类"],"signals":["实数","纯虚数","虚部"],"route":["/complex-num/cx-concept"],"chain":[{"point":"cx-concept","role":"虚部是否为 0 决定分类","title":"复数的概念与分类"}]},{"id":"cx-b-equal","no":"基础 2","title":"复数相等求参数","kind":"计算","asks":["相等求参"],"signals":["相等","=","求 x"],"route":["/complex-num/cx-equal"],"chain":[{"point":"cx-equal","role":"实部虚部分别相等","title":"复数相等与共轭复数"}]},{"id":"cx-b-power","no":"基础 3","title":"i 的幂运算","kind":"计算","asks":["四则运算"],"signals":["i 的","次方","i²⁰"],"route":["/complex-num/cx-concept"],"chain":[{"point":"cx-concept","role":"i 的幂 4 周期","title":"复数的概念与分类"}]},{"id":"cx-i-arith","no":"提升 1","title":"四则混合运算","kind":"计算","asks":["四则运算"],"signals":["计算","化简","分式"],"route":["/complex-num/cx-op","/complex-num/cx-equal"],"chain":[{"point":"cx-op","role":"展开与 i² = −1","title":"复数的四则运算"},{"point":"cx-equal","role":"共轭实数化","title":"复数相等与共轭复数"}]},{"id":"cx-i-mod","no":"提升 2","title":"模的计算与几何意义","kind":"组合","asks":["模与几何"],"signals":["|z|","模","象限","距离"],"route":["/complex-num/cx-plane","/complex-num/cx-op"],"chain":[{"point":"cx-plane","role":"模即距离","title":"复平面与模"},{"point":"cx-op","role":"先化简再求模","title":"复数的四则运算"}]},{"id":"cx-i-traj","no":"提升 3","title":"复数轨迹问题","kind":"综合","asks":["模与几何"],"signals":["轨迹","|z −","圆","垂直平分线"],"route":["/complex-num/cx-plane"],"chain":[{"point":"cx-plane","role":"|z − z₀| 是距离","title":"复平面与模"}]},{"id":"cx-a-quad","no":"综合 1","title":"实系数方程的虚根","kind":"综合","asks":["方程求根"],"signals":["虚根","Δ<0","共轭"],"route":["/complex-num/cx-quad","/complex-num/cx-equal"],"chain":[{"point":"cx-quad","role":"Δ<0 求根公式","title":"复数与实系数方程"},{"point":"cx-equal","role":"虚根成对共轭","title":"复数相等与共轭复数"}]},{"id":"cx-a-param","no":"综合 2","title":"含参综合（分类讨论）","kind":"综合","asks":["概念分类","方程求根"],"signals":["含参","方程","讨论"],"route":["/complex-num/cx-concept","/complex-num/cx-quad"],"chain":[{"point":"cx-concept","role":"参数决定类型","title":"复数的概念与分类"},{"point":"cx-quad","role":"虚根情形","title":"复数与实系数方程"}]}],"patternsUrl":"patterns.html","prefix":""};

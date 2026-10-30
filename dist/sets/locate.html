@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>题目定位器 - 集合与常用逻辑用语 - 图知学堂</title>
 <meta name="description" content="回答两三个问题，快速判断一道集合与常用逻辑用语题属于哪类经典题型，以及第一步该做什么。">
+<script>try{localStorage.setItem('k12v-last',JSON.stringify({s:'senior',c:'sets'}))}catch(e){}</script>
 <style>
 :root {
   --bg: #fafaf8;
@@ -750,6 +751,32 @@ a:hover .tg-node { stroke-width: 2.4; }
 .strand-ghosts { font-size: 12.5px; color: var(--muted); margin-top: 10px; }
 .grade-empty { font-size: 13px; color: var(--muted); margin: 0; padding: 4px 0 6px; }
 
+/* ---------- 底部「返回上一级」栏 ---------- */
+.up-back {
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  margin-top: 28px; padding: 14px 16px;
+  background: var(--bg); border: 1px solid var(--border); border-radius: 12px;
+}
+.ub-main {
+  display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  font-weight: 600; font-size: 14.5px; color: var(--accent); text-decoration: none;
+  padding: 8px 16px; border: 1.5px solid var(--accent); border-radius: 10px; background: #fff;
+}
+.ub-main:hover { background: var(--accent); color: #fff; }
+.ub-main:hover .ub-sub { color: rgba(255, 255, 255, 0.85); }
+.ub-arrow { font-size: 16px; line-height: 1; }
+.ub-sub { font-weight: 400; font-size: 12.5px; color: var(--muted); }
+.ub-else { font-size: 13px; color: var(--muted); }
+.ub-else a { color: var(--muted); text-decoration: underline dotted; padding: 0 2px; }
+.ub-else a:hover { color: var(--accent); }
+
+/* ---------- 目录页「上次学到这」高亮 ---------- */
+.chapter-card.last-card { outline: 2px solid var(--accent); outline-offset: 2px; }
+.last-badge {
+  font-size: 11px; padding: 1px 9px; border-radius: 999px;
+  background: var(--accent); color: #fff; white-space: nowrap;
+}
+
 </style>
 </head>
 <body>
@@ -795,6 +822,10 @@ a:hover .tg-node { stroke-width: 2.4; }
 <div class="locate-bar" style="margin-top:36px">
   定位完还是不会做？去<a href="patterns.html">题型库</a>看这类题的「逆向解读」——它由哪几个知识点拼成，缺哪一环一眼就看得出来。
 </div>
+<nav class="up-back">
+  <a class="ub-main" href="index.html"><span class="ub-arrow">↩</span>返回本章目录<span class="ub-sub">高一上册 · 集合与常用逻辑用语</span></a>
+  <span class="ub-else">或直达：<a href="patterns.html">本章题型库</a> · <a href="../index.html">课程目录</a></span>
+</nav>
 
 <script>
 window.__LOCATE_DATA__ = {"asks":[{"k":"元素关系","label":"∈/∉ 判断、互异性求参"},{"k":"集合表示","label":"列举法、描述法、区间互化"},{"k":"子集关系","label":"子集个数、含参包含关系"},{"k":"交并补","label":"数轴区间运算、韦恩图"},{"k":"充分必要","label":"充分/必要/充要条件判断"},{"k":"含参运算","label":"由运算结果反求参数"}],"features":[{"k":"集合","words":["集合","∈","子集","真子集","交集","并集","补集","∩","∪","全集","空集","充分","必要","充要","韦恩"]}],"patterns":[{"id":"st-b-elem","no":"基础 1","title":"元素与集合关系","kind":"概念","asks":["元素关系"],"signals":["∈","∉","属于","互异"],"route":["/sets/st-def"],"chain":[{"point":"st-def","role":"三特性与常用数集","title":"集合的概念与元素关系"}]},{"id":"st-b-count","no":"基础 2","title":"子集个数","kind":"概念","asks":["子集关系"],"signals":["子集个数","真子集","非空真子集","2ⁿ"],"route":["/sets/st-rel"],"chain":[{"point":"st-rel","role":"2ⁿ 计数公式","title":"子集与真子集"}]},{"id":"st-b-ops","no":"基础 3","title":"交并补运算","kind":"计算","asks":["交并补"],"signals":["∩","∪","补集","全集"],"route":["/sets/st-ops"],"chain":[{"point":"st-ops","role":"数轴运算","title":"交集、并集与补集"}]},{"id":"st-a-sub","no":"进阶 1","title":"由包含关系求参数","kind":"计算","asks":["子集关系","含参运算"],"signals":["A ⊆ B","B ⊆ A","A ∩ B = A","含参数"],"route":["/sets/st-rel","/sets/st-ops"],"chain":[{"point":"st-rel","role":"子集定义与空集","title":"子集与真子集"},{"point":"st-ops","role":"区间比较","title":"交集、并集与补集"}]},{"id":"st-a-cond","no":"进阶 2","title":"充分必要条件判断","kind":"概念","asks":["充分必要"],"signals":["充分条件","必要条件","充要","是…的什么条件"],"route":["/sets/st-imply"],"chain":[{"point":"st-imply","role":"集合观点判断","title":"充分条件与必要条件"}]},{"id":"st-a-union","no":"进阶 3","title":"交并集含参端点","kind":"计算","asks":["交并补","含参运算"],"signals":["A ∩ B ≠ ∅","A ∪ B = B","求 a 的取值范围"],"route":["/sets/st-ops"],"chain":[{"point":"st-ops","role":"数轴含参端点","title":"交集、并集与补集"}]},{"id":"st-app-venn","no":"应用 1","title":"韦恩图与实际问题","kind":"应用","asks":["交并补"],"signals":["都","共","至少","全班","都不"],"route":["/sets/st-ops"],"chain":[{"point":"st-ops","role":"区域计数","title":"交集、并集与补集"}]},{"id":"st-app-logic","no":"应用 2","title":"充要条件与参数范围","kind":"综合","asks":["充分必要","含参运算"],"signals":["充分不必要","必要不充分","充要条件","求 a 的范围"],"route":["/sets/st-imply","/sets/st-rel"],"chain":[{"point":"st-imply","role":"集合包含与逻辑互推","title":"充分条件与必要条件"},{"point":"st-rel","role":"真子集与端点取舍","title":"子集与真子集"}]}],"patternsUrl":"patterns.html","prefix":""};

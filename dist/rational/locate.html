@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>题目定位器 - 有理数 - 图知学堂</title>
 <meta name="description" content="回答两三个问题，快速判断一道有理数题属于哪类经典题型，以及第一步该做什么。">
+<script>try{localStorage.setItem('k12v-last',JSON.stringify({s:'junior',c:'rational'}))}catch(e){}</script>
 <style>
 :root {
   --bg: #fafaf8;
@@ -750,6 +751,32 @@ a:hover .tg-node { stroke-width: 2.4; }
 .strand-ghosts { font-size: 12.5px; color: var(--muted); margin-top: 10px; }
 .grade-empty { font-size: 13px; color: var(--muted); margin: 0; padding: 4px 0 6px; }
 
+/* ---------- 底部「返回上一级」栏 ---------- */
+.up-back {
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  margin-top: 28px; padding: 14px 16px;
+  background: var(--bg); border: 1px solid var(--border); border-radius: 12px;
+}
+.ub-main {
+  display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  font-weight: 600; font-size: 14.5px; color: var(--accent); text-decoration: none;
+  padding: 8px 16px; border: 1.5px solid var(--accent); border-radius: 10px; background: #fff;
+}
+.ub-main:hover { background: var(--accent); color: #fff; }
+.ub-main:hover .ub-sub { color: rgba(255, 255, 255, 0.85); }
+.ub-arrow { font-size: 16px; line-height: 1; }
+.ub-sub { font-weight: 400; font-size: 12.5px; color: var(--muted); }
+.ub-else { font-size: 13px; color: var(--muted); }
+.ub-else a { color: var(--muted); text-decoration: underline dotted; padding: 0 2px; }
+.ub-else a:hover { color: var(--accent); }
+
+/* ---------- 目录页「上次学到这」高亮 ---------- */
+.chapter-card.last-card { outline: 2px solid var(--accent); outline-offset: 2px; }
+.last-badge {
+  font-size: 11px; padding: 1px 9px; border-radius: 999px;
+  background: var(--accent); color: #fff; white-space: nowrap;
+}
+
 </style>
 </head>
 <body>
@@ -795,6 +822,10 @@ a:hover .tg-node { stroke-width: 2.4; }
 <div class="locate-bar" style="margin-top:36px">
   定位完还是不会做？去<a href="patterns.html">题型库</a>看这类题的「逆向解读」——它由哪几个知识点拼成，缺哪一环一眼就看得出来。
 </div>
+<nav class="up-back">
+  <a class="ub-main" href="index.html"><span class="ub-arrow">↩</span>返回本章目录<span class="ub-sub">七年级上册 · 有理数</span></a>
+  <span class="ub-else">或直达：<a href="patterns.html">本章题型库</a> · <a href="../index.html">课程目录</a></span>
+</nav>
 
 <script>
 window.__LOCATE_DATA__ = {"asks":[{"k":"正负数表示","label":"用正负数表示相反意义的量、判断正负"},{"k":"分类","label":"有理数按符号或整数分数分类"},{"k":"数轴","label":"在数轴上表示数、比大小"},{"k":"相反数","label":"求相反数、多重符号化简"},{"k":"绝对值","label":"化简绝对值、绝对值方程"},{"k":"加减运算","label":"有理数加减混合运算"},{"k":"乘除运算","label":"有理数乘除与连乘定号"},{"k":"乘方","label":"乘方计算与混合运算顺序"}],"features":{"k":"有理数","words":["有理数","正数","负数","数轴","相反数","绝对值","绝对值的","加减","乘除","乘方","平方","立方","混合运算","倒数","比大小"]},"patterns":[{"id":"r-posneg-apply","no":1,"title":"正负数表示相反意义的量","kind":"概念","asks":["正负数表示"],"signals":["记作","收入/支出","零上/零下","相反意义的量"],"route":["/rational/rat-posneg"],"chain":[{"point":"rat-posneg","role":"正负号表示方向","title":"正数与负数：比 0 小的数"}]},{"id":"r-classify","no":2,"title":"有理数分类填集合","kind":"概念","asks":["分类"],"signals":["填入","集合","正数集合","负数集合","整数集合","分数集合"],"route":["/rational/rat-nums"],"chain":[{"point":"rat-nums","role":"分类标准唯一","title":"有理数：给数分个家"}]},{"id":"r-axis-compare","no":3,"title":"数轴表示与大小比较","kind":"计算","asks":["数轴"],"signals":["数轴上表示","用 < 连接","比较大小","从小到大"],"route":["/rational/rat-line"],"chain":[{"point":"rat-line","role":"右边的数大","title":"数轴：所有有理数的家"}]},{"id":"r-opposite-simplify","no":4,"title":"相反数与多重符号化简","kind":"计算","asks":["相反数"],"signals":["相反数","化简","−(−a)","多重符号"],"route":["/rational/rat-opposite"],"chain":[{"point":"rat-opposite","role":"负号偶正奇负","title":"相反数：换个方向"}]},{"id":"r-abs-simplify","no":5,"title":"绝对值化简（含字母）","kind":"计算","asks":["绝对值"],"signals":["绝对值","化简","a < 0","a > 0","|a| ="],"route":["/rational/rat-abs"],"chain":[{"point":"rat-abs","role":"先讨论符号","title":"绝对值：只看距离"}]},{"id":"r-abs-equation","no":6,"title":"绝对值方程：两个解","kind":"计算","asks":["绝对值"],"signals":["|x| =","|x − a| =","求 x"],"route":["/rational/rat-abs","/rational/rat-line"],"chain":[{"point":"rat-abs","role":"距离意义","title":"绝对值：只看距离"},{"point":"rat-line","role":"数轴上左右各一点","title":"数轴：所有有理数的家"}]},{"id":"r-add-sub-mixed","no":7,"title":"有理数加减混合运算","kind":"计算","asks":["加减运算"],"signals":["计算","加减混合","(−a) + b − (−c)"],"route":["/rational/rat-addsub"],"chain":[{"point":"rat-addsub","role":"减法转加法","title":"有理数的加减法：沿数轴走路"}]},{"id":"r-mul-power-order","no":8,"title":"乘除连乘定号与混合运算","kind":"计算","asks":["乘除运算","乘方"],"signals":["计算","×","÷","乘方","混合运算"],"route":["/rational/rat-muldiv","/rational/rat-power"],"chain":[{"point":"rat-muldiv","role":"同号得正异号得负","title":"有理数的乘除法：先定号，再算值"},{"point":"rat-power","role":"先乘方再乘除后加减","title":"乘方与混合运算"}]}],"patternsUrl":"patterns.html","prefix":""};

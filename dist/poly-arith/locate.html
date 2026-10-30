@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>题目定位器 - 整式的加减 - 图知学堂</title>
 <meta name="description" content="回答两三个问题，快速判断一道整式的加减题属于哪类经典题型，以及第一步该做什么。">
+<script>try{localStorage.setItem('k12v-last',JSON.stringify({s:'junior',c:'poly-arith'}))}catch(e){}</script>
 <style>
 :root {
   --bg: #fafaf8;
@@ -750,6 +751,32 @@ a:hover .tg-node { stroke-width: 2.4; }
 .strand-ghosts { font-size: 12.5px; color: var(--muted); margin-top: 10px; }
 .grade-empty { font-size: 13px; color: var(--muted); margin: 0; padding: 4px 0 6px; }
 
+/* ---------- 底部「返回上一级」栏 ---------- */
+.up-back {
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  margin-top: 28px; padding: 14px 16px;
+  background: var(--bg); border: 1px solid var(--border); border-radius: 12px;
+}
+.ub-main {
+  display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  font-weight: 600; font-size: 14.5px; color: var(--accent); text-decoration: none;
+  padding: 8px 16px; border: 1.5px solid var(--accent); border-radius: 10px; background: #fff;
+}
+.ub-main:hover { background: var(--accent); color: #fff; }
+.ub-main:hover .ub-sub { color: rgba(255, 255, 255, 0.85); }
+.ub-arrow { font-size: 16px; line-height: 1; }
+.ub-sub { font-weight: 400; font-size: 12.5px; color: var(--muted); }
+.ub-else { font-size: 13px; color: var(--muted); }
+.ub-else a { color: var(--muted); text-decoration: underline dotted; padding: 0 2px; }
+.ub-else a:hover { color: var(--accent); }
+
+/* ---------- 目录页「上次学到这」高亮 ---------- */
+.chapter-card.last-card { outline: 2px solid var(--accent); outline-offset: 2px; }
+.last-badge {
+  font-size: 11px; padding: 1px 9px; border-radius: 999px;
+  background: var(--accent); color: #fff; white-space: nowrap;
+}
+
 </style>
 </head>
 <body>
@@ -795,6 +822,10 @@ a:hover .tg-node { stroke-width: 2.4; }
 <div class="locate-bar" style="margin-top:36px">
   定位完还是不会做？去<a href="patterns.html">题型库</a>看这类题的「逆向解读」——它由哪几个知识点拼成，缺哪一环一眼就看得出来。
 </div>
+<nav class="up-back">
+  <a class="ub-main" href="index.html"><span class="ub-arrow">↩</span>返回本章目录<span class="ub-sub">七年级上册 · 整式的加减</span></a>
+  <span class="ub-else">或直达：<a href="patterns.html">本章题型库</a> · <a href="../index.html">课程目录</a></span>
+</nav>
 
 <script>
 window.__LOCATE_DATA__ = {"asks":[{"k":"整式概念","label":"单项式系数次数、多项式项数次数"},{"k":"同类项","label":"同类项判断与由同类项求参数"},{"k":"化简计算","label":"去括号、合并同类项化简整式"},{"k":"化简求值","label":"先化简再代入求值（含整体代入）"},{"k":"无关与规律","label":"与字母取值无关、用整式表示规律"}],"features":[{"k":"整式的加减","words":["单项式","多项式","系数","次数","同类项","合并","去括号","化简","求值","先化简","无关","整式","常数项","几次几项"]}],"patterns":[{"id":"ia-basic-merge","no":"基础 1","title":"合并同类项","kind":"计算","asks":["化简计算"],"signals":["合并同类项","化简下列各式"],"route":["/poly-arith/ia-like","/poly-arith/ia-merge"],"chain":[{"point":"ia-like","role":"先认同类","title":"同类项"},{"point":"ia-merge","role":"系数相加","title":"合并同类项"}]},{"id":"ia-basic-paren","no":"基础 2","title":"去括号化简","kind":"计算","asks":["化简计算"],"signals":["去括号","化简","括号"],"route":["/poly-arith/ia-paren","/poly-arith/ia-merge"],"chain":[{"point":"ia-paren","role":"符号法则","title":"去括号与添括号"},{"point":"ia-merge","role":"合并收尾","title":"合并同类项"}]},{"id":"ia-basic-concept","no":"基础 3","title":"整式概念辨析","kind":"概念","asks":["整式概念"],"signals":["系数","次数","几次几项式","常数项","是单项式的是"],"route":["/poly-arith/ia-term"],"chain":[{"point":"ia-term","role":"系数、次数、项的定义","title":"整式：单项式与多项式"}]},{"id":"ia-adv-like-param","no":"进阶 1","title":"由同类项求参数","kind":"计算","asks":["同类项"],"signals":["是同类项","求 m、n","字母的指数"],"route":["/poly-arith/ia-like"],"chain":[{"point":"ia-like","role":"同类项两条件列方程","title":"同类项"}]},{"id":"ia-adv-eval","no":"进阶 2","title":"化简求值（负数代入）","kind":"计算","asks":["化简求值"],"signals":["先化简，再求值","其中 x =","代入"],"route":["/poly-arith/ia-paren","/poly-arith/ia-merge","/poly-arith/ia-eval"],"chain":[{"point":"ia-paren","role":"去括号","title":"去括号与添括号"},{"point":"ia-merge","role":"合并","title":"合并同类项"},{"point":"ia-eval","role":"代入求值","title":"整式的化简求值"}]},{"id":"ia-adv-independent","no":"进阶 3","title":"与字母取值无关求参数","kind":"计算","asks":["无关与规律"],"signals":["与 x 的取值无关","无论 x 取何值","恒成立","求字母"],"route":["/poly-arith/ia-eval","/poly-arith/ia-merge"],"chain":[{"point":"ia-eval","role":"无关 ⇔ 系数为 0","title":"整式的化简求值"},{"point":"ia-merge","role":"化简分离系数","title":"合并同类项"}]},{"id":"ia-app-digits","no":"应用 1","title":"用整式表示数与规律","kind":"应用","asks":["无关与规律"],"signals":["十位数字","个位数字","三位数","交换","一定是…的倍数"],"route":["/poly-arith/ia-term","/poly-arith/ia-merge"],"chain":[{"point":"ia-term","role":"位值原理：10a + b","title":"整式：单项式与多项式"},{"point":"ia-merge","role":"作差化简找规律","title":"合并同类项"}]},{"id":"ia-app-fee","no":"应用 2","title":"费用型整式与整体代入","kind":"综合","asks":["化简求值","无关与规律"],"signals":["每…元","共…人","总费用","用式子表示","当…时总费用"],"route":["/poly-arith/ia-term","/poly-arith/ia-eval"],"chain":[{"point":"ia-term","role":"列整式","title":"整式：单项式与多项式"},{"point":"ia-eval","role":"整体代入求值","title":"整式的化简求值"}]}],"patternsUrl":"patterns.html","prefix":""};

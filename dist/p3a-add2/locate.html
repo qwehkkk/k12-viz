@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>题目定位器 - 万以内的加法和减法（二） - 图知学堂</title>
 <meta name="description" content="回答两三个问题，快速判断一道万以内的加法和减法（二）题属于哪类经典题型，以及第一步该做什么。">
+<script>try{localStorage.setItem('k12v-last',JSON.stringify({s:'primary',c:'p3a-add2'}))}catch(e){}</script>
 <style>
 :root {
   --bg: #fafaf8;
@@ -750,6 +751,32 @@ a:hover .tg-node { stroke-width: 2.4; }
 .strand-ghosts { font-size: 12.5px; color: var(--muted); margin-top: 10px; }
 .grade-empty { font-size: 13px; color: var(--muted); margin: 0; padding: 4px 0 6px; }
 
+/* ---------- 底部「返回上一级」栏 ---------- */
+.up-back {
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  margin-top: 28px; padding: 14px 16px;
+  background: var(--bg); border: 1px solid var(--border); border-radius: 12px;
+}
+.ub-main {
+  display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  font-weight: 600; font-size: 14.5px; color: var(--accent); text-decoration: none;
+  padding: 8px 16px; border: 1.5px solid var(--accent); border-radius: 10px; background: #fff;
+}
+.ub-main:hover { background: var(--accent); color: #fff; }
+.ub-main:hover .ub-sub { color: rgba(255, 255, 255, 0.85); }
+.ub-arrow { font-size: 16px; line-height: 1; }
+.ub-sub { font-weight: 400; font-size: 12.5px; color: var(--muted); }
+.ub-else { font-size: 13px; color: var(--muted); }
+.ub-else a { color: var(--muted); text-decoration: underline dotted; padding: 0 2px; }
+.ub-else a:hover { color: var(--accent); }
+
+/* ---------- 目录页「上次学到这」高亮 ---------- */
+.chapter-card.last-card { outline: 2px solid var(--accent); outline-offset: 2px; }
+.last-badge {
+  font-size: 11px; padding: 1px 9px; border-radius: 999px;
+  background: var(--accent); color: #fff; white-space: nowrap;
+}
+
 </style>
 </head>
 <body>
@@ -795,6 +822,10 @@ a:hover .tg-node { stroke-width: 2.4; }
 <div class="locate-bar" style="margin-top:36px">
   定位完还是不会做？去<a href="patterns.html">题型库</a>看这类题的「逆向解读」——它由哪几个知识点拼成，缺哪一环一眼就看得出来。
 </div>
+<nav class="up-back">
+  <a class="ub-main" href="index.html"><span class="ub-arrow">↩</span>返回本章目录<span class="ub-sub">三年级上册 · 万以内的加法和减法（二）</span></a>
+  <span class="ub-else">或直达：<a href="patterns.html">本章题型库</a> · <a href="../index.html">课程目录</a></span>
+</nav>
 
 <script>
 window.__LOCATE_DATA__ = {"asks":[{"k":"笔算加法","desc":"对齐、满十进一"},{"k":"笔算减法","desc":"不够减向前借一"},{"k":"验算","desc":"差 + 减数 = 被减数"},{"k":"解决问题","desc":"判断加还是减"}],"features":["看到「竖式计算」，第一件事是数位对齐","减法个位不够先看前一位是不是 0，是 0 就一路往前借","题目出现「验算」，必须写出逆运算竖式","应用题先问：求总数、求剩余，还是求相差"],"patterns":[{"id":"p3a-add2-t-add","no":"基础 1","title":"三位数进位加法","kind":"笔算","asks":["笔算加法"],"signals":["列竖式","一共","总和"],"route":["/p3a-add2/p3a-add2-add"],"chain":[{"point":"p3a-add2-add","role":"满十进一","title":"三位数加三位数的竖式"}]},{"id":"p3a-add2-t-sub","no":"基础 2","title":"三位数退位减法","kind":"笔算","asks":["笔算减法"],"signals":["列竖式","还剩","少多少"],"route":["/p3a-add2/p3a-add2-sub"],"chain":[{"point":"p3a-add2-sub","role":"借一当十","title":"三位数减三位数的竖式"}]},{"id":"p3a-add2-t-zero","no":"中档 3","title":"中间有 0 的减法","kind":"笔算","asks":["笔算减法"],"signals":["中间是 0","500 −","整百"],"route":["/p3a-add2/p3a-add2-sub"],"chain":[{"point":"p3a-add2-sub","role":"连续退位","title":"三位数减三位数的竖式"}]},{"id":"p3a-add2-t-check","no":"中档 4","title":"验算","kind":"检查","asks":["验算"],"signals":["验算","算得对吗"],"route":["/p3a-add2/p3a-add2-check"],"chain":[{"point":"p3a-add2-check","role":"逆运算","title":"验算：用逆运算检查"}]},{"id":"p3a-add2-t-apply","no":"提升 5","title":"两步解决问题","kind":"应用","asks":["解决问题"],"signals":["比……多","一共","还剩"],"route":["/p3a-add2/p3a-add2-apply","/p3a-add2/p3a-add2-add"],"chain":[{"point":"p3a-add2-apply","role":"判断加减","title":"解决问题：比多比少与连加"},{"point":"p3a-add2-add","role":"笔算加法","title":"三位数加三位数的竖式"}]}],"patternsUrl":"patterns.html","prefix":""};

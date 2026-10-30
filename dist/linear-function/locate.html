@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>题目定位器 - 一次函数 - 图知学堂</title>
 <meta name="description" content="回答两三个问题，快速判断一道一次函数题属于哪类经典题型，以及第一步该做什么。">
+<script>try{localStorage.setItem('k12v-last',JSON.stringify({s:'junior',c:'linear-function'}))}catch(e){}</script>
 <style>
 :root {
   --bg: #fafaf8;
@@ -750,6 +751,32 @@ a:hover .tg-node { stroke-width: 2.4; }
 .strand-ghosts { font-size: 12.5px; color: var(--muted); margin-top: 10px; }
 .grade-empty { font-size: 13px; color: var(--muted); margin: 0; padding: 4px 0 6px; }
 
+/* ---------- 底部「返回上一级」栏 ---------- */
+.up-back {
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  margin-top: 28px; padding: 14px 16px;
+  background: var(--bg); border: 1px solid var(--border); border-radius: 12px;
+}
+.ub-main {
+  display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  font-weight: 600; font-size: 14.5px; color: var(--accent); text-decoration: none;
+  padding: 8px 16px; border: 1.5px solid var(--accent); border-radius: 10px; background: #fff;
+}
+.ub-main:hover { background: var(--accent); color: #fff; }
+.ub-main:hover .ub-sub { color: rgba(255, 255, 255, 0.85); }
+.ub-arrow { font-size: 16px; line-height: 1; }
+.ub-sub { font-weight: 400; font-size: 12.5px; color: var(--muted); }
+.ub-else { font-size: 13px; color: var(--muted); }
+.ub-else a { color: var(--muted); text-decoration: underline dotted; padding: 0 2px; }
+.ub-else a:hover { color: var(--accent); }
+
+/* ---------- 目录页「上次学到这」高亮 ---------- */
+.chapter-card.last-card { outline: 2px solid var(--accent); outline-offset: 2px; }
+.last-badge {
+  font-size: 11px; padding: 1px 9px; border-radius: 999px;
+  background: var(--accent); color: #fff; white-space: nowrap;
+}
+
 </style>
 </head>
 <body>
@@ -795,6 +822,10 @@ a:hover .tg-node { stroke-width: 2.4; }
 <div class="locate-bar" style="margin-top:36px">
   定位完还是不会做？去<a href="patterns.html">题型库</a>看这类题的「逆向解读」——它由哪几个知识点拼成，缺哪一环一眼就看得出来。
 </div>
+<nav class="up-back">
+  <a class="ub-main" href="index.html"><span class="ub-arrow">↩</span>返回本章目录<span class="ub-sub">八年级下册 · 一次函数</span></a>
+  <span class="ub-else">或直达：<a href="patterns.html">本章题型库</a> · <a href="../index.html">课程目录</a></span>
+</nav>
 
 <script>
 window.__LOCATE_DATA__ = {"asks":[{"k":"概念辨析","label":"判断是否一次函数、含参求 m 的范围"},{"k":"图象性质","label":"象限判断、增减性比较、交点与面积"},{"k":"平移变换","label":"平移求新解析式（左加右减、上加下减）"},{"k":"待定系数","label":"两点（或一点一条件）求解析式"},{"k":"方程不等式","label":"图象法解方程/方程组/不等式"},{"k":"实际建模","label":"分段计费、行程、方案比较"},{"k":"含参综合","label":"含参数的一次函数综合题"}],"features":{"k":"一次函数","words":["一次函数","正比例函数","y=kx+b","kxb","斜率","截距","象限","平移","待定系数","方案","起步价","话费","行程","追及"]},"patterns":[{"id":"linear-concept-judge","no":1,"title":"概念辨析与含参取值范围","kind":"单一型","asks":["概念辨析"],"signals":["下列函数","是一次函数","是正比例函数","m 为何值"],"route":["/linear-function/linear-concept"],"chain":[{"point":"linear-concept","role":"定义与 k≠0 条件","title":"一次函数的概念"}]},{"id":"linear-quadrant-judge","no":2,"title":"由 k、b 判断象限 / 由象限反推符号","kind":"单一型","asks":["图象性质"],"signals":["经过第几象限","不经过","图象经过第一、三、四象限"],"route":["/linear-function/linear-graph"],"chain":[{"point":"linear-graph","role":"k 定对角、b 定加减","title":"图象：一条直线，k 管方向 b 管位置"}]},{"id":"linear-prop-calc","no":3,"title":"交点、面积与增减性计算","kind":"单一型","asks":["图象性质"],"signals":["与 x 轴交点","与 y 轴交点","面积","y 随 x 增大而","比较 y₁ 与 y₂"],"route":["/linear-function/linear-property"],"chain":[{"point":"linear-property","role":"增减性、交点公式、面积公式","title":"性质：增减性、交点、平行"}]},{"id":"linear-translate-rule","no":4,"title":"平移变换求解析式","kind":"单一型","asks":["平移变换"],"signals":["平移","向左/右","向上/下","个单位","得到的直线"],"route":["/linear-function/linear-translate"],"chain":[{"point":"linear-translate","role":"左加右减、上加下减","title":"平移：上加下减、左加右减"}]},{"id":"linear-fit-coeff","no":5,"title":"待定系数法求解析式","kind":"组合型","asks":["待定系数"],"signals":["经过点","两点","求解析式","图象过"],"route":["/linear-function/linear-application","/linear-function/linear-graph"],"chain":[{"point":"linear-application","role":"设式、代点、解方程组","title":"待定系数法与实际建模"},{"point":"linear-graph","role":"用图象位置检验结果","title":"图象：一条直线，k 管方向 b 管位置"}]},{"id":"linear-eq-ineq","no":6,"title":"图象法解方程与不等式","kind":"组合型","asks":["方程不等式"],"signals":["交点","解集","不等式","方程组的解","图象如图"],"route":["/linear-function/linear-relation","/linear-function/linear-property"],"chain":[{"point":"linear-relation","role":"交点↔方程解、上下↔不等式","title":"与方程、不等式的关系"},{"point":"linear-property","role":"求交点坐标","title":"性质：增减性、交点、平行"}]},{"id":"linear-model-fee","no":7,"title":"分段计费与方案比较","kind":"综合型","asks":["实际建模"],"signals":["起步价","超过部分","月租","两种方案","哪种更合算","每公里"],"route":["/linear-function/linear-application","/linear-function/linear-relation"],"chain":[{"point":"linear-application","role":"分段解析式与建模步骤","title":"待定系数法与实际建模"},{"point":"linear-relation","role":"交点即分水岭、比较大小","title":"与方程、不等式的关系"}]},{"id":"linear-model-motion","no":8,"title":"行程与匀速运动建模","kind":"综合型","asks":["实际建模"],"signals":["相向而行","同向","追上","相距","速度","小时后"],"route":["/linear-function/linear-application","/linear-function/linear-relation"],"chain":[{"point":"linear-application","role":"路程=速度×时间，列两个解析式","title":"待定系数法与实际建模"},{"point":"linear-relation","role":"相遇/追及即两图象交点","title":"与方程、不等式的关系"}]},{"id":"linear-param-comprehensive","no":9,"title":"含参一次函数综合","kind":"综合型","asks":["含参综合","概念辨析"],"signals":["含参数","无论 m 取何值","恒过定点","图象与","m 的取值范围"],"route":["/linear-function/linear-concept","/linear-function/linear-graph","/linear-function/linear-relation"],"chain":[{"point":"linear-concept","role":"k ≠ 0 分类讨论","title":"一次函数的概念"},{"point":"linear-graph","role":"含参直线的位置随 m 变化","title":"图象：一条直线，k 管方向 b 管位置"},{"point":"linear-relation","role":"交点个数与解集讨论","title":"与方程、不等式的关系"}]}],"patternsUrl":"patterns.html","prefix":""};

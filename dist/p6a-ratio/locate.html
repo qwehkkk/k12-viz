@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>题目定位器 - 比 - 图知学堂</title>
 <meta name="description" content="回答两三个问题，快速判断一道比题属于哪类经典题型，以及第一步该做什么。">
+<script>try{localStorage.setItem('k12v-last',JSON.stringify({s:'primary',c:'p6a-ratio'}))}catch(e){}</script>
 <style>
 :root {
   --bg: #fafaf8;
@@ -750,6 +751,32 @@ a:hover .tg-node { stroke-width: 2.4; }
 .strand-ghosts { font-size: 12.5px; color: var(--muted); margin-top: 10px; }
 .grade-empty { font-size: 13px; color: var(--muted); margin: 0; padding: 4px 0 6px; }
 
+/* ---------- 底部「返回上一级」栏 ---------- */
+.up-back {
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  margin-top: 28px; padding: 14px 16px;
+  background: var(--bg); border: 1px solid var(--border); border-radius: 12px;
+}
+.ub-main {
+  display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  font-weight: 600; font-size: 14.5px; color: var(--accent); text-decoration: none;
+  padding: 8px 16px; border: 1.5px solid var(--accent); border-radius: 10px; background: #fff;
+}
+.ub-main:hover { background: var(--accent); color: #fff; }
+.ub-main:hover .ub-sub { color: rgba(255, 255, 255, 0.85); }
+.ub-arrow { font-size: 16px; line-height: 1; }
+.ub-sub { font-weight: 400; font-size: 12.5px; color: var(--muted); }
+.ub-else { font-size: 13px; color: var(--muted); }
+.ub-else a { color: var(--muted); text-decoration: underline dotted; padding: 0 2px; }
+.ub-else a:hover { color: var(--accent); }
+
+/* ---------- 目录页「上次学到这」高亮 ---------- */
+.chapter-card.last-card { outline: 2px solid var(--accent); outline-offset: 2px; }
+.last-badge {
+  font-size: 11px; padding: 1px 9px; border-radius: 999px;
+  background: var(--accent); color: #fff; white-space: nowrap;
+}
+
 </style>
 </head>
 <body>
@@ -795,6 +822,10 @@ a:hover .tg-node { stroke-width: 2.4; }
 <div class="locate-bar" style="margin-top:36px">
   定位完还是不会做？去<a href="patterns.html">题型库</a>看这类题的「逆向解读」——它由哪几个知识点拼成，缺哪一环一眼就看得出来。
 </div>
+<nav class="up-back">
+  <a class="ub-main" href="index.html"><span class="ub-arrow">↩</span>返回本章目录<span class="ub-sub">六年级上册 · 比</span></a>
+  <span class="ub-else">或直达：<a href="patterns.html">本章题型库</a> · <a href="../index.html">课程目录</a></span>
+</nav>
 
 <script>
 window.__LOCATE_DATA__ = {"asks":[{"k":"求比值","desc":"前项除以后项，得一个数"},{"k":"化简比","desc":"化成最简整数比"},{"k":"按比分配","desc":"总份数 → 每份 → 各部分"},{"k":"求总量","desc":"已知部分，先求每份"},{"k":"比的性质","desc":"前后项同乘同除，比值不变"}],"features":["先分清题目要「比」还是要「数」","化简比一路做到互质为止","按比分配先算总份数，别拿其中一个数当总数","分完一定检验各部分之和"],"patterns":[{"id":"p6a-ratio-t-value","no":"基础 1","title":"求比值","kind":"计算","asks":["求比值"],"signals":["比值"],"route":["/p6a-ratio/p6a-ratio-mean"],"chain":[{"point":"p6a-ratio-mean","role":"前项 ÷ 后项","title":"比的意义"}]},{"id":"p6a-ratio-t-simplify","no":"基础 2","title":"化简比","kind":"计算","asks":["化简比"],"signals":["化简","最简"],"route":["/p6a-ratio/p6a-ratio-basic"],"chain":[{"point":"p6a-ratio-basic","role":"同乘同除不变量","title":"比的基本性质与化简"}]},{"id":"p6a-ratio-t-split","no":"中档 1","title":"按比分配","kind":"应用","asks":["按比分配"],"signals":["按","比","分"],"route":["/p6a-ratio/p6a-ratio-split"],"chain":[{"point":"p6a-ratio-split","role":"总份→每份→各部分","title":"按比分配"}]},{"id":"p6a-ratio-t-part","no":"中档 2","title":"已知部分求总量","kind":"应用","asks":["求总量"],"signals":["其中","已知","共"],"route":["/p6a-ratio/p6a-ratio-app","/p6a-ratio/p6a-ratio-split"],"chain":[{"point":"p6a-ratio-app","role":"一份 = 已知量 ÷ 份数","title":"比的应用：已知部分求总量"},{"point":"p6a-ratio-split","role":"总量 = 每份 × 总份数","title":"按比分配"}]},{"id":"p6a-ratio-t-triple","no":"提升 1","title":"三项连比","kind":"综合","asks":["按比分配"],"signals":["甲","乙","丙","比是"],"route":["/p6a-ratio/p6a-ratio-app","/p6a-ratio/p6a-ratio-split"],"chain":[{"point":"p6a-ratio-app","role":"三项先加总份数","title":"比的应用：已知部分求总量"},{"point":"p6a-ratio-split","role":"按份数分","title":"按比分配"}]}],"patternsUrl":"patterns.html","prefix":""};

@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>题目定位器 - 小数乘法 - 图知学堂</title>
 <meta name="description" content="回答两三个问题，快速判断一道小数乘法题属于哪类经典题型，以及第一步该做什么。">
+<script>try{localStorage.setItem('k12v-last',JSON.stringify({s:'primary',c:'p5a-decmul'}))}catch(e){}</script>
 <style>
 :root {
   --bg: #fafaf8;
@@ -750,6 +751,32 @@ a:hover .tg-node { stroke-width: 2.4; }
 .strand-ghosts { font-size: 12.5px; color: var(--muted); margin-top: 10px; }
 .grade-empty { font-size: 13px; color: var(--muted); margin: 0; padding: 4px 0 6px; }
 
+/* ---------- 底部「返回上一级」栏 ---------- */
+.up-back {
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  margin-top: 28px; padding: 14px 16px;
+  background: var(--bg); border: 1px solid var(--border); border-radius: 12px;
+}
+.ub-main {
+  display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  font-weight: 600; font-size: 14.5px; color: var(--accent); text-decoration: none;
+  padding: 8px 16px; border: 1.5px solid var(--accent); border-radius: 10px; background: #fff;
+}
+.ub-main:hover { background: var(--accent); color: #fff; }
+.ub-main:hover .ub-sub { color: rgba(255, 255, 255, 0.85); }
+.ub-arrow { font-size: 16px; line-height: 1; }
+.ub-sub { font-weight: 400; font-size: 12.5px; color: var(--muted); }
+.ub-else { font-size: 13px; color: var(--muted); }
+.ub-else a { color: var(--muted); text-decoration: underline dotted; padding: 0 2px; }
+.ub-else a:hover { color: var(--accent); }
+
+/* ---------- 目录页「上次学到这」高亮 ---------- */
+.chapter-card.last-card { outline: 2px solid var(--accent); outline-offset: 2px; }
+.last-badge {
+  font-size: 11px; padding: 1px 9px; border-radius: 999px;
+  background: var(--accent); color: #fff; white-space: nowrap;
+}
+
 </style>
 </head>
 <body>
@@ -795,6 +822,10 @@ a:hover .tg-node { stroke-width: 2.4; }
 <div class="locate-bar" style="margin-top:36px">
   定位完还是不会做？去<a href="patterns.html">题型库</a>看这类题的「逆向解读」——它由哪几个知识点拼成，缺哪一环一眼就看得出来。
 </div>
+<nav class="up-back">
+  <a class="ub-main" href="index.html"><span class="ub-arrow">↩</span>返回本章目录<span class="ub-sub">五年级上册 · 小数乘法</span></a>
+  <span class="ub-else">或直达：<a href="patterns.html">本章题型库</a> · <a href="../index.html">课程目录</a></span>
+</nav>
 
 <script>
 window.__LOCATE_DATA__ = {"asks":[{"k":"竖式计算","desc":"末位对齐按整数乘，积的小数位数 = 因数位数之和"},{"k":"积的大小比较","desc":"因数比 1 大积变大，比 1 小积变小"},{"k":"估算","desc":"用「乘小数变小」夹出范围"},{"k":"分段计费","desc":"起步价 + 超出量 × 单价，各段分开算"}],"features":["先数两个因数共有几位小数，再决定点几位","末尾有 0 先化简，答案才规范","不计算也能判大小：盯着第二个因数和 1 比","分段计费先找「分界点」，别把起步价也按千米乘"],"patterns":[{"id":"p5a-decmul-t-place","no":"基础 1","title":"确定积的小数位数","kind":"计算","asks":["竖式计算"],"signals":["计算","积是几位小数"],"route":["/p5a-decmul/p5a-decmul-dec"],"chain":[{"point":"p5a-decmul-dec","role":"积的位数法则","title":"小数乘小数：积的位数"}]},{"id":"p5a-decmul-t-cmp","no":"基础 2","title":"积与因数比大小","kind":"比较","asks":["积的大小比较"],"signals":["不计算","比大小"],"route":["/p5a-decmul/p5a-decmul-size"],"chain":[{"point":"p5a-decmul-size","role":"乘 1 不变的方向规律","title":"积与因数的大小"}]},{"id":"p5a-decmul-t-zero","no":"中档 1","title":"补 0 点小数点","kind":"计算","asks":["竖式计算"],"signals":["计算","小数乘小数"],"route":["/p5a-decmul/p5a-decmul-dec"],"chain":[{"point":"p5a-decmul-dec","role":"位数不够用 0 补足","title":"小数乘小数：积的位数"}]},{"id":"p5a-decmul-t-buy","no":"中档 2","title":"小数数量的总价","kind":"应用","asks":["分段计费"],"signals":["每千克","买","要多少元"],"route":["/p5a-decmul/p5a-decmul-int","/p5a-decmul/p5a-decmul-fee"],"chain":[{"point":"p5a-decmul-int","role":"小数乘整数","title":"小数乘整数"},{"point":"p5a-decmul-fee","role":"单价 × 数量","title":"分段计费与购物问题"}]},{"id":"p5a-decmul-taxi","no":"提升 1","title":"出租车两段费用","kind":"应用","asks":["分段计费"],"signals":["起步价","每千米","一共"],"route":["/p5a-decmul/p5a-decmul-fee","/p5a-decmul/p5a-decmul-int"],"chain":[{"point":"p5a-decmul-fee","role":"分段：起步 + 超出","title":"分段计费与购物问题"},{"point":"p5a-decmul-int","role":"小数乘整数算超出段","title":"小数乘整数"}]}],"patternsUrl":"patterns.html","prefix":""};

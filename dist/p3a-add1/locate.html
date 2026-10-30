@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>题目定位器 - 万以内的加法和减法（一） - 图知学堂</title>
 <meta name="description" content="回答两三个问题，快速判断一道万以内的加法和减法（一）题属于哪类经典题型，以及第一步该做什么。">
+<script>try{localStorage.setItem('k12v-last',JSON.stringify({s:'primary',c:'p3a-add1'}))}catch(e){}</script>
 <style>
 :root {
   --bg: #fafaf8;
@@ -750,6 +751,32 @@ a:hover .tg-node { stroke-width: 2.4; }
 .strand-ghosts { font-size: 12.5px; color: var(--muted); margin-top: 10px; }
 .grade-empty { font-size: 13px; color: var(--muted); margin: 0; padding: 4px 0 6px; }
 
+/* ---------- 底部「返回上一级」栏 ---------- */
+.up-back {
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  margin-top: 28px; padding: 14px 16px;
+  background: var(--bg); border: 1px solid var(--border); border-radius: 12px;
+}
+.ub-main {
+  display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  font-weight: 600; font-size: 14.5px; color: var(--accent); text-decoration: none;
+  padding: 8px 16px; border: 1.5px solid var(--accent); border-radius: 10px; background: #fff;
+}
+.ub-main:hover { background: var(--accent); color: #fff; }
+.ub-main:hover .ub-sub { color: rgba(255, 255, 255, 0.85); }
+.ub-arrow { font-size: 16px; line-height: 1; }
+.ub-sub { font-weight: 400; font-size: 12.5px; color: var(--muted); }
+.ub-else { font-size: 13px; color: var(--muted); }
+.ub-else a { color: var(--muted); text-decoration: underline dotted; padding: 0 2px; }
+.ub-else a:hover { color: var(--accent); }
+
+/* ---------- 目录页「上次学到这」高亮 ---------- */
+.chapter-card.last-card { outline: 2px solid var(--accent); outline-offset: 2px; }
+.last-badge {
+  font-size: 11px; padding: 1px 9px; border-radius: 999px;
+  background: var(--accent); color: #fff; white-space: nowrap;
+}
+
 </style>
 </head>
 <body>
@@ -795,6 +822,10 @@ a:hover .tg-node { stroke-width: 2.4; }
 <div class="locate-bar" style="margin-top:36px">
   定位完还是不会做？去<a href="patterns.html">题型库</a>看这类题的「逆向解读」——它由哪几个知识点拼成，缺哪一环一眼就看得出来。
 </div>
+<nav class="up-back">
+  <a class="ub-main" href="index.html"><span class="ub-arrow">↩</span>返回本章目录<span class="ub-sub">三年级上册 · 万以内的加法和减法（一）</span></a>
+  <span class="ub-else">或直达：<a href="patterns.html">本章题型库</a> · <a href="../index.html">课程目录</a></span>
+</nav>
 
 <script>
 window.__LOCATE_DATA__ = {"asks":[{"k":"口算加减","desc":"拆整十 + 个位"},{"k":"几百几十","desc":"换成「几个十」再算"},{"k":"估算够不够","desc":"按需要估大或估小"},{"k":"估算查错","desc":"先估量级再查进位"}],"features":["两位数加减一律先拆整十，别在心里竖式硬算","看到 380、540 这类数，先问「这是几个十」","「够不够」题要判断估大还是估小才安全","算完先估一次，量级不对立刻回去查进位"],"patterns":[{"id":"p3a-add1-t-oral","no":"基础 1","title":"两位数进位加法口算","kind":"口算","asks":["口算加减"],"signals":["口算","相加","一共"],"route":["/p3a-add1/p3a-add1-oral"],"chain":[{"point":"p3a-add1-oral","role":"拆整十再加个位","title":"两位数加减两位数的口算"}]},{"id":"p3a-add1-t-sub","no":"基础 2","title":"两位数退位减法口算","kind":"口算","asks":["口算加减"],"signals":["口算","还剩","少"],"route":["/p3a-add1/p3a-add1-oral"],"chain":[{"point":"p3a-add1-oral","role":"拆整十再减个位","title":"两位数加减两位数的口算"}]},{"id":"p3a-add1-t-tens","no":"基础 3","title":"几百几十加减","kind":"口算","asks":["几百几十"],"signals":["几百几十","米","元"],"route":["/p3a-add1/p3a-add1-tens"],"chain":[{"point":"p3a-add1-tens","role":"换成几个十","title":"几百几十加减几百几十"}]},{"id":"p3a-add1-t-enough","no":"中档 4","title":"估算判断够不够","kind":"应用","asks":["估算够不够"],"signals":["够吗","带了多少","大约"],"route":["/p3a-add1/p3a-add1-est"],"chain":[{"point":"p3a-add1-est","role":"估大判够","title":"用估算判断「够不够」"}]},{"id":"p3a-add1-t-check","no":"中档 5","title":"用估算找出错误答案","kind":"检查","asks":["估算查错"],"signals":["算得对吗","对不对","判断"],"route":["/p3a-add1/p3a-add1-check","/p3a-add1/p3a-add1-oral"],"chain":[{"point":"p3a-add1-check","role":"估量级","title":"用估算检查计算结果"},{"point":"p3a-add1-oral","role":"重算","title":"两位数加减两位数的口算"}]}],"patternsUrl":"patterns.html","prefix":""};

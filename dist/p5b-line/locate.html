@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>题目定位器 - 折线统计图 - 图知学堂</title>
 <meta name="description" content="回答两三个问题，快速判断一道折线统计图题属于哪类经典题型，以及第一步该做什么。">
+<script>try{localStorage.setItem('k12v-last',JSON.stringify({s:'primary',c:'p5b-line'}))}catch(e){}</script>
 <style>
 :root {
   --bg: #fafaf8;
@@ -750,6 +751,32 @@ a:hover .tg-node { stroke-width: 2.4; }
 .strand-ghosts { font-size: 12.5px; color: var(--muted); margin-top: 10px; }
 .grade-empty { font-size: 13px; color: var(--muted); margin: 0; padding: 4px 0 6px; }
 
+/* ---------- 底部「返回上一级」栏 ---------- */
+.up-back {
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  margin-top: 28px; padding: 14px 16px;
+  background: var(--bg); border: 1px solid var(--border); border-radius: 12px;
+}
+.ub-main {
+  display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  font-weight: 600; font-size: 14.5px; color: var(--accent); text-decoration: none;
+  padding: 8px 16px; border: 1.5px solid var(--accent); border-radius: 10px; background: #fff;
+}
+.ub-main:hover { background: var(--accent); color: #fff; }
+.ub-main:hover .ub-sub { color: rgba(255, 255, 255, 0.85); }
+.ub-arrow { font-size: 16px; line-height: 1; }
+.ub-sub { font-weight: 400; font-size: 12.5px; color: var(--muted); }
+.ub-else { font-size: 13px; color: var(--muted); }
+.ub-else a { color: var(--muted); text-decoration: underline dotted; padding: 0 2px; }
+.ub-else a:hover { color: var(--accent); }
+
+/* ---------- 目录页「上次学到这」高亮 ---------- */
+.chapter-card.last-card { outline: 2px solid var(--accent); outline-offset: 2px; }
+.last-badge {
+  font-size: 11px; padding: 1px 9px; border-radius: 999px;
+  background: var(--accent); color: #fff; white-space: nowrap;
+}
+
 </style>
 </head>
 <body>
@@ -795,6 +822,10 @@ a:hover .tg-node { stroke-width: 2.4; }
 <div class="locate-bar" style="margin-top:36px">
   定位完还是不会做？去<a href="patterns.html">题型库</a>看这类题的「逆向解读」——它由哪几个知识点拼成，缺哪一环一眼就看得出来。
 </div>
+<nav class="up-back">
+  <a class="ub-main" href="index.html"><span class="ub-arrow">↩</span>返回本章目录<span class="ub-sub">五年级下册 · 折线统计图</span></a>
+  <span class="ub-else">或直达：<a href="patterns.html">本章题型库</a> · <a href="../index.html">课程目录</a></span>
+</nav>
 
 <script>
 window.__LOCATE_DATA__ = {"asks":[{"k":"画折线图","desc":"描点、标数、顺次连线"},{"k":"读数据","desc":"横找时间、竖找数量"},{"k":"变化快慢","desc":"看陡缓：陡=快、缓=慢"},{"k":"复式对比","desc":"认图例、比高低、看差距"}],"features":["画图三步：描点 → 标数 → 连线，一步不能少","比较变化快慢先看陡，再用数字验证","复式图先认图例，再看交点与差距","预测用「可能」，顺着趋势说"],"patterns":[{"id":"p5b-line-t-draw","no":"基础 1","title":"补画折线","kind":"操作","asks":["画折线图"],"signals":["画","统计图"],"route":["/p5b-line/p5b-line-draw"],"chain":[{"point":"p5b-line-draw","role":"描点连线标数","title":"折线图怎么画"}]},{"id":"p5b-line-t-updown","no":"基础 2","title":"读升降与差","kind":"读图","asks":["读数据"],"signals":["上升","下降","多少"],"route":["/p5b-line/p5b-line-trend"],"chain":[{"point":"p5b-line-trend","role":"方向与差值","title":"从线的陡缓看变化"}]},{"id":"p5b-line-t-steep","no":"中档 1","title":"谁变化快","kind":"比较","asks":["变化快慢"],"signals":["变化最快","上升最快"],"route":["/p5b-line/p5b-line-trend"],"chain":[{"point":"p5b-line-trend","role":"陡缓 = 快慢","title":"从线的陡缓看变化"}]},{"id":"p5b-line-t-dual","no":"中档 2","title":"复式图对比","kind":"读图","asks":["复式对比"],"signals":["两地","两个","比较"],"route":["/p5b-line/p5b-line-dual"],"chain":[{"point":"p5b-line-dual","role":"图例 + 高低 + 差距","title":"复式折线图"}]},{"id":"p5b-line-t-guess","no":"提升 1","title":"趋势外推","kind":"应用","asks":["变化快慢","复式对比"],"signals":["预测","接下来","可能"],"route":["/p5b-line/p5b-line-forecast","/p5b-line/p5b-line-trend"],"chain":[{"point":"p5b-line-forecast","role":"按趋势外推","title":"分析与预测"},{"point":"p5b-line-trend","role":"先确认趋势方向","title":"从线的陡缓看变化"}]}],"patternsUrl":"patterns.html","prefix":""};

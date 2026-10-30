@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>题目定位器 - 可能性 - 图知学堂</title>
 <meta name="description" content="回答两三个问题，快速判断一道可能性题属于哪类经典题型，以及第一步该做什么。">
+<script>try{localStorage.setItem('k12v-last',JSON.stringify({s:'primary',c:'p5a-poss'}))}catch(e){}</script>
 <style>
 :root {
   --bg: #fafaf8;
@@ -750,6 +751,32 @@ a:hover .tg-node { stroke-width: 2.4; }
 .strand-ghosts { font-size: 12.5px; color: var(--muted); margin-top: 10px; }
 .grade-empty { font-size: 13px; color: var(--muted); margin: 0; padding: 4px 0 6px; }
 
+/* ---------- 底部「返回上一级」栏 ---------- */
+.up-back {
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  margin-top: 28px; padding: 14px 16px;
+  background: var(--bg); border: 1px solid var(--border); border-radius: 12px;
+}
+.ub-main {
+  display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  font-weight: 600; font-size: 14.5px; color: var(--accent); text-decoration: none;
+  padding: 8px 16px; border: 1.5px solid var(--accent); border-radius: 10px; background: #fff;
+}
+.ub-main:hover { background: var(--accent); color: #fff; }
+.ub-main:hover .ub-sub { color: rgba(255, 255, 255, 0.85); }
+.ub-arrow { font-size: 16px; line-height: 1; }
+.ub-sub { font-weight: 400; font-size: 12.5px; color: var(--muted); }
+.ub-else { font-size: 13px; color: var(--muted); }
+.ub-else a { color: var(--muted); text-decoration: underline dotted; padding: 0 2px; }
+.ub-else a:hover { color: var(--accent); }
+
+/* ---------- 目录页「上次学到这」高亮 ---------- */
+.chapter-card.last-card { outline: 2px solid var(--accent); outline-offset: 2px; }
+.last-badge {
+  font-size: 11px; padding: 1px 9px; border-radius: 999px;
+  background: var(--accent); color: #fff; white-space: nowrap;
+}
+
 </style>
 </head>
 <body>
@@ -795,6 +822,10 @@ a:hover .tg-node { stroke-width: 2.4; }
 <div class="locate-bar" style="margin-top:36px">
   定位完还是不会做？去<a href="patterns.html">题型库</a>看这类题的「逆向解读」——它由哪几个知识点拼成，缺哪一环一眼就看得出来。
 </div>
+<nav class="up-back">
+  <a class="ub-main" href="index.html"><span class="ub-arrow">↩</span>返回本章目录<span class="ub-sub">五年级上册 · 可能性</span></a>
+  <span class="ub-else">或直达：<a href="patterns.html">本章题型库</a> · <a href="../index.html">课程目录</a></span>
+</nav>
 
 <script>
 window.__LOCATE_DATA__ = {"asks":[{"k":"事件判断","desc":"一定 / 可能 / 不可能，看条件里有什么"},{"k":"可能性大小","desc":"数量多的可能性大，但不等于一定"},{"k":"公平性","desc":"双方可能性相等才公平"},{"k":"方案设计","desc":"把要求反向翻译成数量安排"}],"features":["判断事件先列「条件里有什么」，再对照三种身份","「可能性大」和「一定」是两句话，别混","公平性只看可能性是否相等，与其他因素无关","设计题答案不唯一，符合数量条件即可"],"patterns":[{"id":"p5a-poss-t-judge","no":"基础 1","title":"三分类判断","kind":"判断","asks":["事件判断"],"signals":["一定","可能","不可能"],"route":["/p5a-poss/p5a-poss-event"],"chain":[{"point":"p5a-poss-event","role":"事件三分类","title":"一定、可能、不可能"}]},{"id":"p5a-poss-t-size","no":"基础 2","title":"比可能性大小","kind":"比较","asks":["可能性大小"],"signals":["可能性大","更容易"],"route":["/p5a-poss/p5a-poss-size"],"chain":[{"point":"p5a-poss-size","role":"数量定大小","title":"可能性有大有小"}]},{"id":"p5a-poss-t-fair","no":"中档 1","title":"规则公平吗","kind":"判断","asks":["公平性"],"signals":["公平吗","谁赢的可能大"],"route":["/p5a-poss/p5a-poss-fair"],"chain":[{"point":"p5a-poss-fair","role":"公平 = 可能性相等","title":"游戏公平吗"}]},{"id":"p5a-poss-t-fix","no":"中档 2","title":"改造不公平规则","kind":"设计","asks":["公平性","方案设计"],"signals":["怎样改","才公平"],"route":["/p5a-poss/p5a-poss-fair"],"chain":[{"point":"p5a-poss-fair","role":"把数量调成相等","title":"游戏公平吗"}]},{"id":"p5a-poss-t-design","no":"提升 1","title":"多条件设计方案","kind":"设计","asks":["方案设计","可能性大小"],"signals":["设计","按要求"],"route":["/p5a-poss/p5a-poss-design","/p5a-poss/p5a-poss-size"],"chain":[{"point":"p5a-poss-design","role":"要求 → 数量条件","title":"按要求设计方案"},{"point":"p5a-poss-size","role":"多与少定大小","title":"可能性有大有小"}]}],"patternsUrl":"patterns.html","prefix":""};

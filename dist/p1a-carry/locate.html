@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>题目定位器 - 20 以内的进位加法 - 图知学堂</title>
 <meta name="description" content="回答两三个问题，快速判断一道20 以内的进位加法题属于哪类经典题型，以及第一步该做什么。">
+<script>try{localStorage.setItem('k12v-last',JSON.stringify({s:'primary',c:'p1a-carry'}))}catch(e){}</script>
 <style>
 :root {
   --bg: #fafaf8;
@@ -750,6 +751,32 @@ a:hover .tg-node { stroke-width: 2.4; }
 .strand-ghosts { font-size: 12.5px; color: var(--muted); margin-top: 10px; }
 .grade-empty { font-size: 13px; color: var(--muted); margin: 0; padding: 4px 0 6px; }
 
+/* ---------- 底部「返回上一级」栏 ---------- */
+.up-back {
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  margin-top: 28px; padding: 14px 16px;
+  background: var(--bg); border: 1px solid var(--border); border-radius: 12px;
+}
+.ub-main {
+  display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  font-weight: 600; font-size: 14.5px; color: var(--accent); text-decoration: none;
+  padding: 8px 16px; border: 1.5px solid var(--accent); border-radius: 10px; background: #fff;
+}
+.ub-main:hover { background: var(--accent); color: #fff; }
+.ub-main:hover .ub-sub { color: rgba(255, 255, 255, 0.85); }
+.ub-arrow { font-size: 16px; line-height: 1; }
+.ub-sub { font-weight: 400; font-size: 12.5px; color: var(--muted); }
+.ub-else { font-size: 13px; color: var(--muted); }
+.ub-else a { color: var(--muted); text-decoration: underline dotted; padding: 0 2px; }
+.ub-else a:hover { color: var(--accent); }
+
+/* ---------- 目录页「上次学到这」高亮 ---------- */
+.chapter-card.last-card { outline: 2px solid var(--accent); outline-offset: 2px; }
+.last-badge {
+  font-size: 11px; padding: 1px 9px; border-radius: 999px;
+  background: var(--accent); color: #fff; white-space: nowrap;
+}
+
 </style>
 </head>
 <body>
@@ -795,6 +822,10 @@ a:hover .tg-node { stroke-width: 2.4; }
 <div class="locate-bar" style="margin-top:36px">
   定位完还是不会做？去<a href="patterns.html">题型库</a>看这类题的「逆向解读」——它由哪几个知识点拼成，缺哪一环一眼就看得出来。
 </div>
+<nav class="up-back">
+  <a class="ub-main" href="index.html"><span class="ub-arrow">↩</span>返回本章目录<span class="ub-sub">一年级上册 · 20 以内的进位加法</span></a>
+  <span class="ub-else">或直达：<a href="patterns.html">本章题型库</a> · <a href="../index.html">课程目录</a></span>
+</nav>
 
 <script>
 window.__LOCATE_DATA__ = {"asks":[{"k":"9加几","desc":"9 加几的凑十计算"},{"k":"876加几","desc":"8、7、6 加几"},{"k":"交换","desc":"交换加数巧算"},{"k":"解决问题","desc":"加法应用题"},{"k":"还原问题","desc":"已知部分求原数"}],"features":["看大数、拆小数、凑成十、加剩数","9 加几个位少 1","小数在前先交换","应用题答语要完整"],"patterns":[{"id":"p1a-carry-t-9","no":"基础 1","title":"9 加几","kind":"计算","asks":["9加几"],"signals":["9 +"],"route":["/p1a-carry/p1a-carry-nine"],"chain":[{"point":"p1a-carry-nine","role":"拿 1 凑十","title":"9 加几：凑十的起点"}]},{"id":"p1a-carry-t-87","no":"基础 2","title":"8 加几","kind":"计算","asks":["876加几"],"signals":["8 +"],"route":["/p1a-carry/p1a-carry-make"],"chain":[{"point":"p1a-carry-make","role":"拆 2 凑十","title":"凑十法的一般步骤"}]},{"id":"p1a-carry-t-swap","no":"中档 1","title":"交换巧算","kind":"计算","asks":["交换"],"signals":["小数在前"],"route":["/p1a-carry/p1a-carry-swap"],"chain":[{"point":"p1a-carry-swap","role":"换位再凑十","title":"交换加数巧算"}]},{"id":"p1a-carry-t-solve","no":"中档 2","title":"求一共","kind":"应用","asks":["解决问题"],"signals":["一共","合起来"],"route":["/p1a-carry/p1a-carry-solve"],"chain":[{"point":"p1a-carry-solve","role":"找两部分相加","title":"解决问题"}]},{"id":"p1a-carry-t-back","no":"提升 1","title":"求原数","kind":"应用","asks":["还原问题"],"signals":["吃了","还剩","原来"],"route":["/p1a-carry/p1a-carry-solve"],"chain":[{"point":"p1a-carry-solve","role":"部分 + 部分 = 原数","title":"解决问题"}]}],"patternsUrl":"patterns.html","prefix":""};

@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>题目定位器 - 平行四边形和梯形 - 图知学堂</title>
 <meta name="description" content="回答两三个问题，快速判断一道平行四边形和梯形题属于哪类经典题型，以及第一步该做什么。">
+<script>try{localStorage.setItem('k12v-last',JSON.stringify({s:'primary',c:'p4a-quad'}))}catch(e){}</script>
 <style>
 :root {
   --bg: #fafaf8;
@@ -750,6 +751,32 @@ a:hover .tg-node { stroke-width: 2.4; }
 .strand-ghosts { font-size: 12.5px; color: var(--muted); margin-top: 10px; }
 .grade-empty { font-size: 13px; color: var(--muted); margin: 0; padding: 4px 0 6px; }
 
+/* ---------- 底部「返回上一级」栏 ---------- */
+.up-back {
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  margin-top: 28px; padding: 14px 16px;
+  background: var(--bg); border: 1px solid var(--border); border-radius: 12px;
+}
+.ub-main {
+  display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  font-weight: 600; font-size: 14.5px; color: var(--accent); text-decoration: none;
+  padding: 8px 16px; border: 1.5px solid var(--accent); border-radius: 10px; background: #fff;
+}
+.ub-main:hover { background: var(--accent); color: #fff; }
+.ub-main:hover .ub-sub { color: rgba(255, 255, 255, 0.85); }
+.ub-arrow { font-size: 16px; line-height: 1; }
+.ub-sub { font-weight: 400; font-size: 12.5px; color: var(--muted); }
+.ub-else { font-size: 13px; color: var(--muted); }
+.ub-else a { color: var(--muted); text-decoration: underline dotted; padding: 0 2px; }
+.ub-else a:hover { color: var(--accent); }
+
+/* ---------- 目录页「上次学到这」高亮 ---------- */
+.chapter-card.last-card { outline: 2px solid var(--accent); outline-offset: 2px; }
+.last-badge {
+  font-size: 11px; padding: 1px 9px; border-radius: 999px;
+  background: var(--accent); color: #fff; white-space: nowrap;
+}
+
 </style>
 </head>
 <body>
@@ -795,6 +822,10 @@ a:hover .tg-node { stroke-width: 2.4; }
 <div class="locate-bar" style="margin-top:36px">
   定位完还是不会做？去<a href="patterns.html">题型库</a>看这类题的「逆向解读」——它由哪几个知识点拼成，缺哪一环一眼就看得出来。
 </div>
+<nav class="up-back">
+  <a class="ub-main" href="index.html"><span class="ub-arrow">↩</span>返回本章目录<span class="ub-sub">四年级上册 · 平行四边形和梯形</span></a>
+  <span class="ub-else">或直达：<a href="patterns.html">本章题型库</a> · <a href="../index.html">课程目录</a></span>
+</nav>
 
 <script>
 window.__LOCATE_DATA__ = {"asks":[{"k":"平行垂直判断","desc":"不相交→平行；成直角→垂直"},{"k":"画高","desc":"虚线＋直角符号；底和高要对应"},{"k":"图形判断","desc":"数平行组数：两组→平行四边形，一组→梯形"},{"k":"集合关系","desc":"正方形⊂长方形⊂平行四边形；梯形并列"}],"features":["判断图形先数「几组对边平行」","画高必须虚线加直角符号，光画一条竖线不给分","「只有一组」是梯形的命门——有两组平行就出局","包含关系用集合圈想，别背文字"],"patterns":[{"id":"p4a-quad-t-judge","no":"基础 1","title":"判断平行与垂直","kind":"判断","asks":["平行垂直判断"],"signals":["同一平面","不相交","直角"],"route":["/p4a-quad/p4a-quad-parallel"],"chain":[{"point":"p4a-quad-parallel","role":"位置关系定义","title":"平行与垂直"}]},{"id":"p4a-quad-t-para","no":"基础 2","title":"识别平行四边形","kind":"判断","asks":["图形判断"],"signals":["两组对边","平行"],"route":["/p4a-quad/p4a-quad-para"],"chain":[{"point":"p4a-quad-para","role":"两组对边分别平行","title":"认识平行四边形"}]},{"id":"p4a-quad-t-height","no":"中档 1","title":"画对应的高","kind":"画图","asks":["画高"],"signals":["以……为底","画高"],"route":["/p4a-quad/p4a-quad-para"],"chain":[{"point":"p4a-quad-para","role":"高垂直于指定底","title":"认识平行四边形"}]},{"id":"p4a-quad-t-trap","no":"中档 2","title":"梯形还是平行四边形","kind":"判断","asks":["图形判断"],"signals":["只有一组","两组"],"route":["/p4a-quad/p4a-quad-trap"],"chain":[{"point":"p4a-quad-trap","role":"数平行组数","title":"认识梯形"}]},{"id":"p4a-quad-t-set","no":"提升 1","title":"集合关系推理","kind":"推理","asks":["集合关系"],"signals":["特殊的","一定","一定不"],"route":["/p4a-quad/p4a-quad-family"],"chain":[{"point":"p4a-quad-family","role":"用集合图判断真假","title":"四边形家族的关系"}]}],"patternsUrl":"patterns.html","prefix":""};

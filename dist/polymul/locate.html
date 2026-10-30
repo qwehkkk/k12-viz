@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>题目定位器 - 整式的乘法与因式分解 - 图知学堂</title>
 <meta name="description" content="回答两三个问题，快速判断一道整式的乘法与因式分解题属于哪类经典题型，以及第一步该做什么。">
+<script>try{localStorage.setItem('k12v-last',JSON.stringify({s:'junior',c:'polymul'}))}catch(e){}</script>
 <style>
 :root {
   --bg: #fafaf8;
@@ -750,6 +751,32 @@ a:hover .tg-node { stroke-width: 2.4; }
 .strand-ghosts { font-size: 12.5px; color: var(--muted); margin-top: 10px; }
 .grade-empty { font-size: 13px; color: var(--muted); margin: 0; padding: 4px 0 6px; }
 
+/* ---------- 底部「返回上一级」栏 ---------- */
+.up-back {
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  margin-top: 28px; padding: 14px 16px;
+  background: var(--bg); border: 1px solid var(--border); border-radius: 12px;
+}
+.ub-main {
+  display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  font-weight: 600; font-size: 14.5px; color: var(--accent); text-decoration: none;
+  padding: 8px 16px; border: 1.5px solid var(--accent); border-radius: 10px; background: #fff;
+}
+.ub-main:hover { background: var(--accent); color: #fff; }
+.ub-main:hover .ub-sub { color: rgba(255, 255, 255, 0.85); }
+.ub-arrow { font-size: 16px; line-height: 1; }
+.ub-sub { font-weight: 400; font-size: 12.5px; color: var(--muted); }
+.ub-else { font-size: 13px; color: var(--muted); }
+.ub-else a { color: var(--muted); text-decoration: underline dotted; padding: 0 2px; }
+.ub-else a:hover { color: var(--accent); }
+
+/* ---------- 目录页「上次学到这」高亮 ---------- */
+.chapter-card.last-card { outline: 2px solid var(--accent); outline-offset: 2px; }
+.last-badge {
+  font-size: 11px; padding: 1px 9px; border-radius: 999px;
+  background: var(--accent); color: #fff; white-space: nowrap;
+}
+
 </style>
 </head>
 <body>
@@ -795,6 +822,10 @@ a:hover .tg-node { stroke-width: 2.4; }
 <div class="locate-bar" style="margin-top:36px">
   定位完还是不会做？去<a href="patterns.html">题型库</a>看这类题的「逆向解读」——它由哪几个知识点拼成，缺哪一环一眼就看得出来。
 </div>
+<nav class="up-back">
+  <a class="ub-main" href="index.html"><span class="ub-arrow">↩</span>返回本章目录<span class="ub-sub">八年级上册 · 整式的乘法与因式分解</span></a>
+  <span class="ub-else">或直达：<a href="patterns.html">本章题型库</a> · <a href="../index.html">课程目录</a></span>
+</nav>
 
 <script>
 window.__LOCATE_DATA__ = {"asks":[{"k":"幂运算","label":"同底数幂、幂的乘方、积的乘方辨析与计算"},{"k":"整式乘法","label":"单项式/多项式乘法展开"},{"k":"乘法公式","label":"平方差、完全平方的计算与简便运算"},{"k":"因式分解","label":"提公因式、公式法分解"},{"k":"参数问题","label":"完全平方式求参数"}],"features":[{"k":"整式的乘法与因式分解","words":["幂","同底数幂","乘方","平方差","完全平方","因式分解","分解因式","提公因式","公因式","展开","配方法","简便运算","多项式乘"]}],"patterns":[{"id":"pm-basic-power","no":"基础 1","title":"幂的运算辨析","kind":"计算","asks":["幂运算"],"signals":["计算","a³·a²","(a³)²","(2a)³","下列运算正确的是"],"route":["/polymul/pm-power"],"chain":[{"point":"pm-power","role":"三条法则对照","title":"幂的运算"}]},{"id":"pm-basic-multiply","no":"基础 2","title":"整式乘法展开","kind":"计算","asks":["整式乘法"],"signals":["计算","展开","(x + a)(x + b)","单项式乘多项式"],"route":["/polymul/pm-multiply"],"chain":[{"point":"pm-multiply","role":"分配律逐项乘","title":"整式的乘法"}]},{"id":"pm-basic-formula","no":"基础 3","title":"乘法公式直接套","kind":"计算","asks":["乘法公式"],"signals":["平方差","完全平方","(a + b)(a − b)","简便计算"],"route":["/polymul/pm-formula"],"chain":[{"point":"pm-formula","role":"两公式识别与套用","title":"乘法公式"}]},{"id":"pm-adv-chain","no":"进阶 1","title":"公式连用与变形","kind":"计算","asks":["乘法公式"],"signals":["(x−y)(x+y)(x²+y²)","(a−b−1)(a+b−1)","化简"],"route":["/polymul/pm-formula","/polymul/pm-multiply"],"chain":[{"point":"pm-formula","role":"平方差迭代","title":"乘法公式"},{"point":"pm-multiply","role":"分组后再套公式","title":"整式的乘法"}]},{"id":"pm-adv-perfect-param","no":"进阶 2","title":"完全平方式求参数","kind":"计算","asks":["参数问题"],"signals":["是完全平方式","求 k","加上一个单项式成为完全平方式"],"route":["/polymul/pm-formula"],"chain":[{"point":"pm-formula","role":"中间项 = 2ab 定参数","title":"乘法公式"}]},{"id":"pm-adv-factor","no":"进阶 3","title":"因式分解综合（彻底性）","kind":"计算","asks":["因式分解"],"signals":["分解因式","提公因式","公式法"],"route":["/polymul/pm-factor","/polymul/pm-formula-factor"],"chain":[{"point":"pm-factor","role":"一提","title":"因式分解与提公因式"},{"point":"pm-formula-factor","role":"二套三查","title":"公式法与分解彻底"}]},{"id":"pm-app-fast","no":"应用 1","title":"速算与凑完全平方","kind":"应用","asks":["乘法公式"],"signals":["简便计算","99²","102×98","87² + 87×26 + 13²"],"route":["/polymul/pm-formula","/polymul/pm-formula-factor"],"chain":[{"point":"pm-formula","role":"拆数套公式","title":"乘法公式"},{"point":"pm-formula-factor","role":"逆用公式凑结构","title":"公式法与分解彻底"}]},{"id":"pm-app-area","no":"应用 2","title":"图形面积验证公式","kind":"综合","asks":["乘法公式","因式分解"],"signals":["如图","拼成","长方形","正方形","面积","剪拼"],"route":["/polymul/pm-multiply","/polymul/pm-formula-factor"],"chain":[{"point":"pm-multiply","role":"面积模型正向","title":"整式的乘法"},{"point":"pm-formula-factor","role":"逆向分解","title":"公式法与分解彻底"}]}],"patternsUrl":"patterns.html","prefix":""};

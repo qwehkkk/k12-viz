@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>题目定位器 - 成对数据的统计分析 - 图知学堂</title>
 <meta name="description" content="回答两三个问题，快速判断一道成对数据的统计分析题属于哪类经典题型，以及第一步该做什么。">
+<script>try{localStorage.setItem('k12v-last',JSON.stringify({s:'senior',c:'pairstat'}))}catch(e){}</script>
 <style>
 :root {
   --bg: #fafaf8;
@@ -750,6 +751,32 @@ a:hover .tg-node { stroke-width: 2.4; }
 .strand-ghosts { font-size: 12.5px; color: var(--muted); margin-top: 10px; }
 .grade-empty { font-size: 13px; color: var(--muted); margin: 0; padding: 4px 0 6px; }
 
+/* ---------- 底部「返回上一级」栏 ---------- */
+.up-back {
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  margin-top: 28px; padding: 14px 16px;
+  background: var(--bg); border: 1px solid var(--border); border-radius: 12px;
+}
+.ub-main {
+  display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  font-weight: 600; font-size: 14.5px; color: var(--accent); text-decoration: none;
+  padding: 8px 16px; border: 1.5px solid var(--accent); border-radius: 10px; background: #fff;
+}
+.ub-main:hover { background: var(--accent); color: #fff; }
+.ub-main:hover .ub-sub { color: rgba(255, 255, 255, 0.85); }
+.ub-arrow { font-size: 16px; line-height: 1; }
+.ub-sub { font-weight: 400; font-size: 12.5px; color: var(--muted); }
+.ub-else { font-size: 13px; color: var(--muted); }
+.ub-else a { color: var(--muted); text-decoration: underline dotted; padding: 0 2px; }
+.ub-else a:hover { color: var(--accent); }
+
+/* ---------- 目录页「上次学到这」高亮 ---------- */
+.chapter-card.last-card { outline: 2px solid var(--accent); outline-offset: 2px; }
+.last-badge {
+  font-size: 11px; padding: 1px 9px; border-radius: 999px;
+  background: var(--accent); color: #fff; white-space: nowrap;
+}
+
 </style>
 </head>
 <body>
@@ -795,6 +822,10 @@ a:hover .tg-node { stroke-width: 2.4; }
 <div class="locate-bar" style="margin-top:36px">
   定位完还是不会做？去<a href="patterns.html">题型库</a>看这类题的「逆向解读」——它由哪几个知识点拼成，缺哪一环一眼就看得出来。
 </div>
+<nav class="up-back">
+  <a class="ub-main" href="index.html"><span class="ub-arrow">↩</span>返回本章目录<span class="ub-sub">高三上册 · 成对数据的统计分析</span></a>
+  <span class="ub-else">或直达：<a href="patterns.html">本章题型库</a> · <a href="../index.html">课程目录</a></span>
+</nav>
 
 <script>
 window.__LOCATE_DATA__ = {"asks":[{"k":"散点图相关","desc":"方向 + 强度 + r"},{"k":"求回归方程","desc":"b̂、â 公式，过中心"},{"k":"回归预测","desc":"代入方程，解释斜率"},{"k":"拟合效果","desc":"残差 + R²"},{"k":"列联表","desc":"频率对比"},{"k":"独立性检验","desc":"χ² 与临界值"}],"features":["求回归方程题先算 (x̄, ȳ)，b̂ 的分子分母分开算降低出错率","「预测 y」直接代方程；「x 每增加 1」答的是斜率 b̂","看见「有多大的把握认为有关」就是 χ² 检验题","结论表述永远带置信度（90%/95%/99%），不能说「一定有关」"],"patterns":[{"id":"pd-t-scatter","no":"基础 1","title":"散点图与相关性判断","kind":"相关","asks":["散点图相关"],"signals":["散点图","正相关","负相关","相关关系"],"route":["/pairstat/pd-scatter"],"chain":[{"point":"pd-scatter","role":"散点图与 r","title":"散点图与相关关系"}]},{"id":"pd-t-regress","no":"基础 2","title":"求回归方程","kind":"回归","asks":["求回归方程"],"signals":["回归方程","最小二乘","ŷ ="],"route":["/pairstat/pd-regress"],"chain":[{"point":"pd-regress","role":"b̂ â 公式","title":"一元线性回归与最小二乘法"}]},{"id":"pd-t-predict","no":"中档 3","title":"回归预测与斜率解释","kind":"回归","asks":["回归预测","求回归方程"],"signals":["预测","增加 1","平均增加","估计"],"route":["/pairstat/pd-regress"],"chain":[{"point":"pd-regress","role":"方程与预测","title":"一元线性回归与最小二乘法"}]},{"id":"pd-t-fit","no":"中档 4","title":"R² 与残差分析","kind":"拟合","asks":["拟合效果"],"signals":["R²","残差","拟合效果","解释了"],"route":["/pairstat/pd-fit"],"chain":[{"point":"pd-fit","role":"残差与 R²","title":"拟合效果：残差与决定系数 R²"}]},{"id":"pd-t-table","no":"基础 5","title":"列联表与频率","kind":"列联表","asks":["列联表"],"signals":["列联表","患病率","百分比"],"route":["/pairstat/pd-table"],"chain":[{"point":"pd-table","role":"交叉计数与频率","title":"分类变量与列联表"}]},{"id":"pd-t-chi2","no":"中档 6","title":"χ² 独立性检验","kind":"检验","asks":["独立性检验"],"signals":["独立性检验","有多大把握","χ²"],"route":["/pairstat/pd-chi2"],"chain":[{"point":"pd-chi2","role":"公式与临界值","title":"χ² 独立性检验"}]},{"id":"pd-t-nonlin","no":"中档 7","title":"非线性转线性","kind":"综合","asks":["求回归方程"],"signals":["非线性","取对数","变换"],"route":["/pairstat/pd-fit","/pairstat/pd-regress"],"chain":[{"point":"pd-fit","role":"模型不适配的信号","title":"拟合效果：残差与决定系数 R²"},{"point":"pd-regress","role":"变换后回归","title":"一元线性回归与最小二乘法"}]},{"id":"pd-t-mix","no":"综合 8","title":"回归 + 检验综合大题","kind":"综合","asks":["求回归方程","独立性检验"],"signals":["回归方程","预测","列联表","把握"],"route":["/pairstat/pd-regress","/pairstat/pd-chi2"],"chain":[{"point":"pd-regress","role":"回归求方程","title":"一元线性回归与最小二乘法"},{"point":"pd-chi2","role":"检验下结论","title":"χ² 独立性检验"}]}],"patternsUrl":"patterns.html","prefix":""};

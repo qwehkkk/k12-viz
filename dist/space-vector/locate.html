@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>题目定位器 - 空间向量与立体几何 - 图知学堂</title>
 <meta name="description" content="回答两三个问题，快速判断一道空间向量与立体几何题属于哪类经典题型，以及第一步该做什么。">
+<script>try{localStorage.setItem('k12v-last',JSON.stringify({s:'senior',c:'space-vector'}))}catch(e){}</script>
 <style>
 :root {
   --bg: #fafaf8;
@@ -750,6 +751,32 @@ a:hover .tg-node { stroke-width: 2.4; }
 .strand-ghosts { font-size: 12.5px; color: var(--muted); margin-top: 10px; }
 .grade-empty { font-size: 13px; color: var(--muted); margin: 0; padding: 4px 0 6px; }
 
+/* ---------- 底部「返回上一级」栏 ---------- */
+.up-back {
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  margin-top: 28px; padding: 14px 16px;
+  background: var(--bg); border: 1px solid var(--border); border-radius: 12px;
+}
+.ub-main {
+  display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  font-weight: 600; font-size: 14.5px; color: var(--accent); text-decoration: none;
+  padding: 8px 16px; border: 1.5px solid var(--accent); border-radius: 10px; background: #fff;
+}
+.ub-main:hover { background: var(--accent); color: #fff; }
+.ub-main:hover .ub-sub { color: rgba(255, 255, 255, 0.85); }
+.ub-arrow { font-size: 16px; line-height: 1; }
+.ub-sub { font-weight: 400; font-size: 12.5px; color: var(--muted); }
+.ub-else { font-size: 13px; color: var(--muted); }
+.ub-else a { color: var(--muted); text-decoration: underline dotted; padding: 0 2px; }
+.ub-else a:hover { color: var(--accent); }
+
+/* ---------- 目录页「上次学到这」高亮 ---------- */
+.chapter-card.last-card { outline: 2px solid var(--accent); outline-offset: 2px; }
+.last-badge {
+  font-size: 11px; padding: 1px 9px; border-radius: 999px;
+  background: var(--accent); color: #fff; white-space: nowrap;
+}
+
 </style>
 </head>
 <body>
@@ -795,6 +822,10 @@ a:hover .tg-node { stroke-width: 2.4; }
 <div class="locate-bar" style="margin-top:36px">
   定位完还是不会做？去<a href="patterns.html">题型库</a>看这类题的「逆向解读」——它由哪几个知识点拼成，缺哪一环一眼就看得出来。
 </div>
+<nav class="up-back">
+  <a class="ub-main" href="index.html"><span class="ub-arrow">↩</span>返回本章目录<span class="ub-sub">高二上册 · 空间向量与立体几何</span></a>
+  <span class="ub-else">或直达：<a href="patterns.html">本章题型库</a> · <a href="../index.html">课程目录</a></span>
+</nav>
 
 <script>
 window.__LOCATE_DATA__ = {"asks":[{"k":"建系求坐标","desc":"选原点、写点、算向量"},{"k":"证垂直平行","desc":"点积为零 / 法向量共线"},{"k":"求线线角","desc":"取绝对值再反余弦"},{"k":"求线面角","desc":"用 sin，配法向量"},{"k":"求二面角","desc":"两个法向量 + 判锐钝"},{"k":"求点到面距","desc":"投影到法向量"}],"features":["出现「正方体 / 长方体 / 直棱柱 / 正四棱锥」——必可建系","问「所成角」「距离」而不是「证明某结论」时，向量法几乎总比几何法稳","图形里有中点、三等分点，坐标里就出现 1/2、1/3","题目给了具体长度比例时，优先取特殊值（棱长为 2 便于取中点）"],"patterns":[{"id":"sv-t-sys","no":"基础 1","title":"建系写坐标","kind":"建系","asks":["建系求坐标","求线面角"],"signals":["正方体","棱长","中点"],"route":["/space-vector/sv-coord","/space-vector/sv-angle"],"chain":[{"point":"sv-coord","role":"点与向量坐标","title":"空间直角坐标系与向量坐标"},{"point":"sv-angle","role":"线面角公式","title":"用向量求三种角"}]},{"id":"sv-t-perp","no":"基础 2","title":"证垂直","kind":"证垂直","asks":["证垂直平行"],"signals":["求证","垂直","正方体"],"route":["/space-vector/sv-dot","/space-vector/sv-coord"],"chain":[{"point":"sv-dot","role":"点积为 0","title":"空间向量的数量积"},{"point":"sv-coord","role":"写方向向量","title":"空间直角坐标系与向量坐标"}]},{"id":"sv-t-normal","no":"基础 3","title":"求法向量","kind":"法向量","asks":["证垂直平行","求点到面距"],"signals":["平面","法向量","过三点"],"route":["/space-vector/sv-normal","/space-vector/sv-dot"],"chain":[{"point":"sv-normal","role":"解方程组","title":"平面的法向量"},{"point":"sv-dot","role":"两个点积为零","title":"空间向量的数量积"}]},{"id":"sv-t-line","no":"中档 4","title":"线面角","kind":"线面角","asks":["求线面角"],"signals":["所成角","平面","直线"],"route":["/space-vector/sv-normal","/space-vector/sv-angle"],"chain":[{"point":"sv-normal","role":"求平面法向量","title":"平面的法向量"},{"point":"sv-angle","role":"sin 公式","title":"用向量求三种角"}]},{"id":"sv-t-dihedral","no":"中档 5","title":"二面角","kind":"二面角","asks":["求二面角"],"signals":["二面角","平面","锐","钝"],"route":["/space-vector/sv-normal","/space-vector/sv-angle"],"chain":[{"point":"sv-normal","role":"两个面的法向量","title":"平面的法向量"},{"point":"sv-angle","role":"余弦 + 判锐钝","title":"用向量求三种角"}]},{"id":"sv-t-dist","no":"中档 6","title":"点到面距离","kind":"距离","asks":["求点到面距"],"signals":["距离","平面","点"],"route":["/space-vector/sv-normal","/space-vector/sv-dist"],"chain":[{"point":"sv-normal","role":"求法向量","title":"平面的法向量"},{"point":"sv-dist","role":"投影公式","title":"用向量求距离"}]},{"id":"sv-t-exist","no":"综合 7","title":"存在性问题","kind":"存在性","asks":["建系求坐标","求线面角"],"signals":["是否存在","使","点"],"route":["/space-vector/sv-coord","/space-vector/sv-angle"],"chain":[{"point":"sv-coord","role":"设参数表示点","title":"空间直角坐标系与向量坐标"},{"point":"sv-angle","role":"列方程","title":"用向量求三种角"}]},{"id":"sv-t-fold","no":"综合 8","title":"折叠问题","kind":"折叠","asks":["求二面角","求点到面距"],"signals":["翻折","折起","平面"],"route":["/space-vector/sv-coord","/space-vector/sv-angle"],"chain":[{"point":"sv-coord","role":"折后重新建系","title":"空间直角坐标系与向量坐标"},{"point":"sv-angle","role":"二面角","title":"用向量求三种角"}]}],"patternsUrl":"patterns.html","prefix":""};

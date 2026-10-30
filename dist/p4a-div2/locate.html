@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>题目定位器 - 除数是两位数的除法 - 图知学堂</title>
 <meta name="description" content="回答两三个问题，快速判断一道除数是两位数的除法题属于哪类经典题型，以及第一步该做什么。">
+<script>try{localStorage.setItem('k12v-last',JSON.stringify({s:'primary',c:'p4a-div2'}))}catch(e){}</script>
 <style>
 :root {
   --bg: #fafaf8;
@@ -750,6 +751,32 @@ a:hover .tg-node { stroke-width: 2.4; }
 .strand-ghosts { font-size: 12.5px; color: var(--muted); margin-top: 10px; }
 .grade-empty { font-size: 13px; color: var(--muted); margin: 0; padding: 4px 0 6px; }
 
+/* ---------- 底部「返回上一级」栏 ---------- */
+.up-back {
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  margin-top: 28px; padding: 14px 16px;
+  background: var(--bg); border: 1px solid var(--border); border-radius: 12px;
+}
+.ub-main {
+  display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  font-weight: 600; font-size: 14.5px; color: var(--accent); text-decoration: none;
+  padding: 8px 16px; border: 1.5px solid var(--accent); border-radius: 10px; background: #fff;
+}
+.ub-main:hover { background: var(--accent); color: #fff; }
+.ub-main:hover .ub-sub { color: rgba(255, 255, 255, 0.85); }
+.ub-arrow { font-size: 16px; line-height: 1; }
+.ub-sub { font-weight: 400; font-size: 12.5px; color: var(--muted); }
+.ub-else { font-size: 13px; color: var(--muted); }
+.ub-else a { color: var(--muted); text-decoration: underline dotted; padding: 0 2px; }
+.ub-else a:hover { color: var(--accent); }
+
+/* ---------- 目录页「上次学到这」高亮 ---------- */
+.chapter-card.last-card { outline: 2px solid var(--accent); outline-offset: 2px; }
+.last-badge {
+  font-size: 11px; padding: 1px 9px; border-radius: 999px;
+  background: var(--accent); color: #fff; white-space: nowrap;
+}
+
 </style>
 </head>
 <body>
@@ -795,6 +822,10 @@ a:hover .tg-node { stroke-width: 2.4; }
 <div class="locate-bar" style="margin-top:36px">
   定位完还是不会做？去<a href="patterns.html">题型库</a>看这类题的「逆向解读」——它由哪几个知识点拼成，缺哪一环一眼就看得出来。
 </div>
+<nav class="up-back">
+  <a class="ub-main" href="index.html"><span class="ub-arrow">↩</span>返回本章目录<span class="ub-sub">四年级上册 · 除数是两位数的除法</span></a>
+  <span class="ub-else">或直达：<a href="patterns.html">本章题型库</a> · <a href="../index.html">课程目录</a></span>
+</nav>
 
 <script>
 window.__LOCATE_DATA__ = {"asks":[{"k":"试商调商","desc":"四舍初商偏大调小；五入初商偏小调大"},{"k":"竖式除法","desc":"前两位够除商两位，不够除商一位"},{"k":"商不变简算","desc":"同乘同除商不变；余数要还原"},{"k":"余数应用","desc":"进一法（坐车装箱）、余数必须小于除数"}],"features":["试商用四舍五入看整十，试完立刻验证","余数 ≥ 除数 = 商小了；商 × 除数 > 被除数 = 商大了","末尾有 0 同去掉，但**余数要放大回去**","做完除法验算：商 × 除数 + 余数 = 被除数"],"patterns":[{"id":"p4a-div2-t-oral","no":"基础 1","title":"整十数除法口算","kind":"口算","asks":["竖式除法"],"signals":["口算","整十"],"route":["/p4a-div2/p4a-div2-oral"],"chain":[{"point":"p4a-div2-oral","role":"遮 0 用口诀","title":"口算与估商"}]},{"id":"p4a-div2-t-rem","no":"基础 2","title":"余数必须比除数小","kind":"判断","asks":["余数应用"],"signals":["余数","最大是几"],"route":["/p4a-div2/p4a-div2-trial"],"chain":[{"point":"p4a-div2-trial","role":"余数 < 除数铁律","title":"试商与调商"}]},{"id":"p4a-div2-t-trial","no":"中档 1","title":"调商全过程","kind":"笔算","asks":["试商调商"],"signals":["竖式计算"],"route":["/p4a-div2/p4a-div2-trial"],"chain":[{"point":"p4a-div2-trial","role":"试商—验证—调整","title":"试商与调商"}]},{"id":"p4a-div2-t-digits","no":"中档 2","title":"判断商的位数","kind":"判断","asks":["竖式除法"],"signals":["商是几位数"],"route":["/p4a-div2/p4a-div2-vertical"],"chain":[{"point":"p4a-div2-vertical","role":"前两位够除与否定位商","title":"笔算两位数除法"}]},{"id":"p4a-div2-t-rem2","no":"提升 1","title":"简算后的余数还原","kind":"简算","asks":["商不变简算"],"signals":["余几","简算"],"route":["/p4a-div2/p4a-div2-invariant"],"chain":[{"point":"p4a-div2-invariant","role":"商不变余数变","title":"商不变的性质"}]}],"patternsUrl":"patterns.html","prefix":""};

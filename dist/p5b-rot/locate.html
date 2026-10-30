@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>题目定位器 - 图形的运动（三） - 图知学堂</title>
 <meta name="description" content="回答两三个问题，快速判断一道图形的运动（三）题属于哪类经典题型，以及第一步该做什么。">
+<script>try{localStorage.setItem('k12v-last',JSON.stringify({s:'primary',c:'p5b-rot'}))}catch(e){}</script>
 <style>
 :root {
   --bg: #fafaf8;
@@ -750,6 +751,32 @@ a:hover .tg-node { stroke-width: 2.4; }
 .strand-ghosts { font-size: 12.5px; color: var(--muted); margin-top: 10px; }
 .grade-empty { font-size: 13px; color: var(--muted); margin: 0; padding: 4px 0 6px; }
 
+/* ---------- 底部「返回上一级」栏 ---------- */
+.up-back {
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  margin-top: 28px; padding: 14px 16px;
+  background: var(--bg); border: 1px solid var(--border); border-radius: 12px;
+}
+.ub-main {
+  display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  font-weight: 600; font-size: 14.5px; color: var(--accent); text-decoration: none;
+  padding: 8px 16px; border: 1.5px solid var(--accent); border-radius: 10px; background: #fff;
+}
+.ub-main:hover { background: var(--accent); color: #fff; }
+.ub-main:hover .ub-sub { color: rgba(255, 255, 255, 0.85); }
+.ub-arrow { font-size: 16px; line-height: 1; }
+.ub-sub { font-weight: 400; font-size: 12.5px; color: var(--muted); }
+.ub-else { font-size: 13px; color: var(--muted); }
+.ub-else a { color: var(--muted); text-decoration: underline dotted; padding: 0 2px; }
+.ub-else a:hover { color: var(--accent); }
+
+/* ---------- 目录页「上次学到这」高亮 ---------- */
+.chapter-card.last-card { outline: 2px solid var(--accent); outline-offset: 2px; }
+.last-badge {
+  font-size: 11px; padding: 1px 9px; border-radius: 999px;
+  background: var(--accent); color: #fff; white-space: nowrap;
+}
+
 </style>
 </head>
 <body>
@@ -795,6 +822,10 @@ a:hover .tg-node { stroke-width: 2.4; }
 <div class="locate-bar" style="margin-top:36px">
   定位完还是不会做？去<a href="patterns.html">题型库</a>看这类题的「逆向解读」——它由哪几个知识点拼成，缺哪一环一眼就看得出来。
 </div>
+<nav class="up-back">
+  <a class="ub-main" href="index.html"><span class="ub-arrow">↩</span>返回本章目录<span class="ub-sub">五年级下册 · 图形的运动（三）</span></a>
+  <span class="ub-else">或直达：<a href="patterns.html">本章题型库</a> · <a href="../index.html">课程目录</a></span>
+</nav>
 
 <script>
 window.__LOCATE_DATA__ = {"asks":[{"k":"旋转三要素","desc":"中心、方向、角度缺一不可"},{"k":"旋转性质","desc":"对应点到中心等距，形状大小不变"},{"k":"画旋转图","desc":"先转连中心的边，横竖互换"},{"k":"旋转图案","desc":"基本图形连续旋转，360° 均分"}],"features":["描述旋转先问三要素，一个都不能少","画 90° 旋转先抓「横竖互换」再拼图形","顺逆方向决定落点，画前先默念方向","图案题用 360° ÷ 瓣数求每次转角"],"patterns":[{"id":"p5b-rot-t-3w","no":"基础 1","title":"填三要素","kind":"表示","asks":["旋转三要素"],"signals":["绕","旋转","时针"],"route":["/p5b-rot/p5b-rot-def"],"chain":[{"point":"p5b-rot-def","role":"三要素锁定旋转","title":"旋转三要素"}]},{"id":"p5b-rot-t-len","no":"基础 2","title":"旋转后找长度","kind":"判断","asks":["旋转性质"],"signals":["旋转后","多长"],"route":["/p5b-rot/p5b-rot-prop"],"chain":[{"point":"p5b-rot-prop","role":"旋转不改变长度","title":"旋转不改变什么"}]},{"id":"p5b-rot-t-draw","no":"中档 1","title":"方格纸转 90°","kind":"操作","asks":["画旋转图"],"signals":["方格纸","旋转 90°"],"route":["/p5b-rot/p5b-rot-90"],"chain":[{"point":"p5b-rot-90","role":"横竖互换法","title":"方格纸上转 90°"}]},{"id":"p5b-rot-t-same","no":"中档 2","title":"转 180° 的巧合","kind":"判断","asks":["旋转三要素"],"signals":["180°","顺时针还是逆时针"],"route":["/p5b-rot/p5b-rot-def"],"chain":[{"point":"p5b-rot-def","role":"角度决定方向敏感性","title":"旋转三要素"}]},{"id":"p5b-rot-t-design","no":"提升 1","title":"旋转对称图案","kind":"设计","asks":["旋转图案"],"signals":["设计","每次旋转","几瓣"],"route":["/p5b-rot/p5b-rot-design","/p5b-rot/p5b-rot-prop"],"chain":[{"point":"p5b-rot-design","role":"360° 均分给每瓣","title":"用旋转造图案"},{"point":"p5b-rot-prop","role":"旋转复制不变形","title":"旋转不改变什么"}]}],"patternsUrl":"patterns.html","prefix":""};

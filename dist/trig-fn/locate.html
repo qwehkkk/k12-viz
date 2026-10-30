@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>题目定位器 - 三角函数 - 图知学堂</title>
 <meta name="description" content="回答两三个问题，快速判断一道三角函数题属于哪类经典题型，以及第一步该做什么。">
+<script>try{localStorage.setItem('k12v-last',JSON.stringify({s:'senior',c:'trig-fn'}))}catch(e){}</script>
 <style>
 :root {
   --bg: #fafaf8;
@@ -750,6 +751,32 @@ a:hover .tg-node { stroke-width: 2.4; }
 .strand-ghosts { font-size: 12.5px; color: var(--muted); margin-top: 10px; }
 .grade-empty { font-size: 13px; color: var(--muted); margin: 0; padding: 4px 0 6px; }
 
+/* ---------- 底部「返回上一级」栏 ---------- */
+.up-back {
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  margin-top: 28px; padding: 14px 16px;
+  background: var(--bg); border: 1px solid var(--border); border-radius: 12px;
+}
+.ub-main {
+  display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  font-weight: 600; font-size: 14.5px; color: var(--accent); text-decoration: none;
+  padding: 8px 16px; border: 1.5px solid var(--accent); border-radius: 10px; background: #fff;
+}
+.ub-main:hover { background: var(--accent); color: #fff; }
+.ub-main:hover .ub-sub { color: rgba(255, 255, 255, 0.85); }
+.ub-arrow { font-size: 16px; line-height: 1; }
+.ub-sub { font-weight: 400; font-size: 12.5px; color: var(--muted); }
+.ub-else { font-size: 13px; color: var(--muted); }
+.ub-else a { color: var(--muted); text-decoration: underline dotted; padding: 0 2px; }
+.ub-else a:hover { color: var(--accent); }
+
+/* ---------- 目录页「上次学到这」高亮 ---------- */
+.chapter-card.last-card { outline: 2px solid var(--accent); outline-offset: 2px; }
+.last-badge {
+  font-size: 11px; padding: 1px 9px; border-radius: 999px;
+  background: var(--accent); color: #fff; white-space: nowrap;
+}
+
 </style>
 </head>
 <body>
@@ -795,6 +822,10 @@ a:hover .tg-node { stroke-width: 2.4; }
 <div class="locate-bar" style="margin-top:36px">
   定位完还是不会做？去<a href="patterns.html">题型库</a>看这类题的「逆向解读」——它由哪几个知识点拼成，缺哪一环一眼就看得出来。
 </div>
+<nav class="up-back">
+  <a class="ub-main" href="index.html"><span class="ub-arrow">↩</span>返回本章目录<span class="ub-sub">高一上册 · 三角函数</span></a>
+  <span class="ub-else">或直达：<a href="patterns.html">本章题型库</a> · <a href="../index.html">课程目录</a></span>
+</nav>
 
 <script>
 window.__LOCATE_DATA__ = {"asks":[{"k":"弧度扇形","label":"度弧互化、弧长面积"},{"k":"定义求值","label":"终边上点求 sin/cos/tan"},{"k":"同角关系","label":"知一求二、齐次式"},{"k":"诱导公式","label":"化简求值、奇变偶不变"},{"k":"图象变换","label":"平移伸缩、由图象求解析式"},{"k":"性质应用","label":"单调区间、对称轴中心、最值"},{"k":"建模应用","label":"简谐运动、摩天轮、气温"},{"k":"综合化简","label":"含参、恒等变形"}],"features":[{"k":"三角函数","words":["sin","cos","tan","正弦","余弦","正切","弧度","扇形","周期","振幅","初相","诱导","终边","单位圆"]}],"patterns":[{"id":"tf-b-radian","no":"基础 1","title":"弧度制与扇形计算","kind":"弧度","asks":["弧度扇形"],"signals":["弧度","弧长","扇形","面积","圆心角"],"route":["/trig-fn/tf-radian"],"chain":[{"point":"tf-radian","role":"l = αr、S = ½lr","title":"弧度制与扇形"}]},{"id":"tf-b-def","no":"基础 2","title":"由终边点求三角函数值","kind":"定义","asks":["定义求值"],"signals":["终边","经过点","sin","cos","tan"],"route":["/trig-fn/tf-def"],"chain":[{"point":"tf-def","role":"r = √(a²+b²)，sin = b/r","title":"单位圆与任意角的三角函数"}]},{"id":"tf-b-sign","no":"基础 3","title":"三角函数值符号","kind":"符号","asks":["定义求值"],"signals":["符号","正负","象限","sin","cos"],"route":["/trig-fn/tf-def"],"chain":[{"point":"tf-def","role":"一全正二正弦三正切四余弦","title":"单位圆与任意角的三角函数"}]},{"id":"tf-b-induce","no":"基础 4","title":"诱导公式求值","kind":"诱导公式","asks":["诱导公式"],"signals":["sin(","cos(","tan(","化简","求值","°"],"route":["/trig-fn/tf-sign"],"chain":[{"point":"tf-sign","role":"奇变偶不变，符号看象限","title":"同角关系与诱导公式"}]},{"id":"tf-m-homog","no":"中档 1","title":"同角关系与齐次式","kind":"同角关系","asks":["同角关系"],"signals":["tan","sin²","cos²","求值","齐次"],"route":["/trig-fn/tf-sign","/trig-fn/tf-def"],"chain":[{"point":"tf-sign","role":"tan = sin/cos、平方关系","title":"同角关系与诱导公式"},{"point":"tf-def","role":"象限决定符号","title":"单位圆与任意角的三角函数"}]},{"id":"tf-m-graph","no":"中档 2","title":"图象变换与解析式","kind":"图象","asks":["图象变换"],"signals":["平移","伸缩","解析式","图象","变换"],"route":["/trig-fn/tf-graph"],"chain":[{"point":"tf-graph","role":"A、ω、φ 各管一件事","title":"三角函数的图象与五点法"}]},{"id":"tf-m-prop","no":"中档 3","title":"单调区间与对称性","kind":"性质","asks":["性质应用"],"signals":["单调区间","对称轴","对称中心","最值","周期"],"route":["/trig-fn/tf-prop"],"chain":[{"point":"tf-prop","role":"整体代换 u = ωx + φ","title":"三角函数的性质"}]},{"id":"tf-m-model","no":"中档 4","title":"三角函数建模","kind":"建模","asks":["建模应用"],"signals":["最高","最低","温度","高度","周期","模型"],"route":["/trig-fn/tf-apply","/trig-fn/tf-graph"],"chain":[{"point":"tf-apply","role":"四步建模法定 A、ω、φ、h₀","title":"三角函数的应用"},{"point":"tf-graph","role":"周期与 ω 的关系","title":"三角函数的图象与五点法"}]},{"id":"tf-h-range","no":"拔高 1","title":"闭区间上的最值","kind":"最值","asks":["性质应用"],"signals":["最大值","最小值","值域","闭区间","x∈"],"route":["/trig-fn/tf-prop","/trig-fn/tf-graph"],"chain":[{"point":"tf-prop","role":"整体代换求相位范围","title":"三角函数的性质"},{"point":"tf-graph","role":"正弦曲线在指定区间上的走势","title":"三角函数的图象与五点法"}]}],"patternsUrl":"patterns.html","prefix":""};

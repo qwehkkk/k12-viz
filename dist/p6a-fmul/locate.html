@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>题目定位器 - 分数乘法 - 图知学堂</title>
 <meta name="description" content="回答两三个问题，快速判断一道分数乘法题属于哪类经典题型，以及第一步该做什么。">
+<script>try{localStorage.setItem('k12v-last',JSON.stringify({s:'primary',c:'p6a-fmul'}))}catch(e){}</script>
 <style>
 :root {
   --bg: #fafaf8;
@@ -750,6 +751,32 @@ a:hover .tg-node { stroke-width: 2.4; }
 .strand-ghosts { font-size: 12.5px; color: var(--muted); margin-top: 10px; }
 .grade-empty { font-size: 13px; color: var(--muted); margin: 0; padding: 4px 0 6px; }
 
+/* ---------- 底部「返回上一级」栏 ---------- */
+.up-back {
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  margin-top: 28px; padding: 14px 16px;
+  background: var(--bg); border: 1px solid var(--border); border-radius: 12px;
+}
+.ub-main {
+  display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  font-weight: 600; font-size: 14.5px; color: var(--accent); text-decoration: none;
+  padding: 8px 16px; border: 1.5px solid var(--accent); border-radius: 10px; background: #fff;
+}
+.ub-main:hover { background: var(--accent); color: #fff; }
+.ub-main:hover .ub-sub { color: rgba(255, 255, 255, 0.85); }
+.ub-arrow { font-size: 16px; line-height: 1; }
+.ub-sub { font-weight: 400; font-size: 12.5px; color: var(--muted); }
+.ub-else { font-size: 13px; color: var(--muted); }
+.ub-else a { color: var(--muted); text-decoration: underline dotted; padding: 0 2px; }
+.ub-else a:hover { color: var(--accent); }
+
+/* ---------- 目录页「上次学到这」高亮 ---------- */
+.chapter-card.last-card { outline: 2px solid var(--accent); outline-offset: 2px; }
+.last-badge {
+  font-size: 11px; padding: 1px 9px; border-radius: 999px;
+  background: var(--accent); color: #fff; white-space: nowrap;
+}
+
 </style>
 </head>
 <body>
@@ -795,6 +822,10 @@ a:hover .tg-node { stroke-width: 2.4; }
 <div class="locate-bar" style="margin-top:36px">
   定位完还是不会做？去<a href="patterns.html">题型库</a>看这类题的「逆向解读」——它由哪几个知识点拼成，缺哪一环一眼就看得出来。
 </div>
+<nav class="up-back">
+  <a class="ub-main" href="index.html"><span class="ub-arrow">↩</span>返回本章目录<span class="ub-sub">六年级上册 · 分数乘法</span></a>
+  <span class="ub-else">或直达：<a href="patterns.html">本章题型库</a> · <a href="../index.html">课程目录</a></span>
+</nav>
 
 <script>
 window.__LOCATE_DATA__ = {"asks":[{"k":"分数乘整数","desc":"分子乘整数，分母不变"},{"k":"分数乘分数","desc":"求一个数的几分之几"},{"k":"带分数小数","desc":"化假分数或先约分"},{"k":"求几分之几","desc":"单位 1 已知，用乘法"},{"k":"连续求","desc":"单位 1 逐次变化"}],"features":["看到「一个数的几分之几」就写乘号","分子比分母小，乘积会比因数小——这是检查算错的信号","先约分后相乘，永远比先乘完再约安全","连续两问先算「剩下多少」，再取分率"],"patterns":[{"id":"p6a-fmul-t-int","no":"基础 1","title":"分数乘整数","kind":"计算","asks":["分数乘整数"],"signals":["×","整数"],"route":["/p6a-fmul/p6a-fmul-mean"],"chain":[{"point":"p6a-fmul-mean","role":"分子乘整数，分母不变","title":"分数乘整数的意义"}]},{"id":"p6a-fmul-t-frac","no":"基础 2","title":"分数乘分数","kind":"计算","asks":["分数乘分数"],"signals":["×","两个分数"],"route":["/p6a-fmul/p6a-fmul-frac"],"chain":[{"point":"p6a-fmul-frac","role":"分子乘分子，分母乘分母","title":"分数乘分数"}]},{"id":"p6a-fmul-t-mixed","no":"中档 1","title":"带分数与小数","kind":"计算","asks":["带分数小数"],"signals":["带分数","小数"],"route":["/p6a-fmul/p6a-fmul-mixed"],"chain":[{"point":"p6a-fmul-mixed","role":"化假分数或先约分","title":"带分数、小数乘分数"}]},{"id":"p6a-fmul-t-of","no":"中档 2","title":"求一个数的几分之几","kind":"应用","asks":["求几分之几"],"signals":["是","的几分之几"],"route":["/p6a-fmul/p6a-fmul-frac"],"chain":[{"point":"p6a-fmul-frac","role":"分率 × 单位 1","title":"分数乘分数"}]},{"id":"p6a-fmul-t-cont","no":"提升 1","title":"连续求几分之几","kind":"综合","asks":["连续求"],"signals":["第一天","第二天","剩下"],"route":["/p6a-fmul/p6a-fmul-cont","/p6a-fmul/p6a-fmul-frac"],"chain":[{"point":"p6a-fmul-cont","role":"先算剩下，再取分率","title":"连续求一个数的几分之几"},{"point":"p6a-fmul-frac","role":"分率相乘得总占比","title":"分数乘分数"}]}],"patternsUrl":"patterns.html","prefix":""};

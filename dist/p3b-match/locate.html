@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>题目定位器 - 数学广角——搭配（二） - 图知学堂</title>
 <meta name="description" content="回答两三个问题，快速判断一道数学广角——搭配（二）题属于哪类经典题型，以及第一步该做什么。">
+<script>try{localStorage.setItem('k12v-last',JSON.stringify({s:'primary',c:'p3b-match'}))}catch(e){}</script>
 <style>
 :root {
   --bg: #fafaf8;
@@ -750,6 +751,32 @@ a:hover .tg-node { stroke-width: 2.4; }
 .strand-ghosts { font-size: 12.5px; color: var(--muted); margin-top: 10px; }
 .grade-empty { font-size: 13px; color: var(--muted); margin: 0; padding: 4px 0 6px; }
 
+/* ---------- 底部「返回上一级」栏 ---------- */
+.up-back {
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  margin-top: 28px; padding: 14px 16px;
+  background: var(--bg); border: 1px solid var(--border); border-radius: 12px;
+}
+.ub-main {
+  display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  font-weight: 600; font-size: 14.5px; color: var(--accent); text-decoration: none;
+  padding: 8px 16px; border: 1.5px solid var(--accent); border-radius: 10px; background: #fff;
+}
+.ub-main:hover { background: var(--accent); color: #fff; }
+.ub-main:hover .ub-sub { color: rgba(255, 255, 255, 0.85); }
+.ub-arrow { font-size: 16px; line-height: 1; }
+.ub-sub { font-weight: 400; font-size: 12.5px; color: var(--muted); }
+.ub-else { font-size: 13px; color: var(--muted); }
+.ub-else a { color: var(--muted); text-decoration: underline dotted; padding: 0 2px; }
+.ub-else a:hover { color: var(--accent); }
+
+/* ---------- 目录页「上次学到这」高亮 ---------- */
+.chapter-card.last-card { outline: 2px solid var(--accent); outline-offset: 2px; }
+.last-badge {
+  font-size: 11px; padding: 1px 9px; border-radius: 999px;
+  background: var(--accent); color: #fff; white-space: nowrap;
+}
+
 </style>
 </head>
 <body>
@@ -795,6 +822,10 @@ a:hover .tg-node { stroke-width: 2.4; }
 <div class="locate-bar" style="margin-top:36px">
   定位完还是不会做？去<a href="patterns.html">题型库</a>看这类题的「逆向解读」——它由哪几个知识点拼成，缺哪一环一眼就看得出来。
 </div>
+<nav class="up-back">
+  <a class="ub-main" href="index.html"><span class="ub-arrow">↩</span>返回本章目录<span class="ub-sub">三年级下册 · 数学广角——搭配（二）</span></a>
+  <span class="ub-else">或直达：<a href="patterns.html">本章题型库</a> · <a href="../index.html">课程目录</a></span>
+</nav>
 
 <script>
 window.__LOCATE_DATA__ = {"asks":[{"k":"搭配计数","desc":"两类相乘求方案数"},{"k":"有序列举","desc":"树状图或列表不重不漏"},{"k":"组数问题","desc":"数字组两位数"},{"k":"路线问题","desc":"分步相乘"},{"k":"顺序辨析","desc":"排列与组合的区别"}],"features":["先定第一类、再穷举第二类，才不会漏","方案数 = 每步选择数相乘","有「不许重复」时，后面的选择数要递减","往返、密码这类多步问题，步与步之间相乘而不是相加"],"patterns":[{"id":"p3b-match-t-basic","no":"基础 1","title":"两类搭配","kind":"计数","asks":["搭配计数"],"signals":["几种","搭配","各选一"],"route":["/p3b-match/p3b-match-mul"],"chain":[{"point":"p3b-match-mul","role":"相乘","title":"乘法算方案数"}]},{"id":"p3b-match-t-list","no":"基础 2","title":"有序列举","kind":"列举","asks":["有序列举"],"signals":["列出来","所有","不重不漏"],"route":["/p3b-match/p3b-match-tree"],"chain":[{"point":"p3b-match-tree","role":"树状图列举","title":"用树状图列全"}]},{"id":"p3b-match-t-digits","no":"提升 1","title":"组两位数","kind":"计数","asks":["组数问题"],"signals":["数字","组成","两位数","不重复"],"route":["/p3b-match/p3b-match-order","/p3b-match/p3b-match-mul"],"chain":[{"point":"p3b-match-order","role":"顺序有关","title":"顺序算不算不同"},{"point":"p3b-match-mul","role":"递减相乘","title":"乘法算方案数"}]},{"id":"p3b-match-t-route","no":"提升 2","title":"多步路线","kind":"应用","asks":["路线问题"],"signals":["条路","走法","共有"],"route":["/p3b-match/p3b-match-apply"],"chain":[{"point":"p3b-match-apply","role":"分步相乘","title":"实际问题里的搭配"}]},{"id":"p3b-match-t-order","no":"拓展","title":"顺序算不算不同","kind":"辨析","asks":["顺序辨析"],"signals":["握手","比赛","顺序"],"route":["/p3b-match/p3b-match-order"],"chain":[{"point":"p3b-match-order","role":"排列 vs 组合","title":"顺序算不算不同"}]}],"patternsUrl":"patterns.html","prefix":""};

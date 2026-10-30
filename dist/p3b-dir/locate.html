@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>题目定位器 - 位置与方向（一） - 图知学堂</title>
 <meta name="description" content="回答两三个问题，快速判断一道位置与方向（一）题属于哪类经典题型，以及第一步该做什么。">
+<script>try{localStorage.setItem('k12v-last',JSON.stringify({s:'primary',c:'p3b-dir'}))}catch(e){}</script>
 <style>
 :root {
   --bg: #fafaf8;
@@ -750,6 +751,32 @@ a:hover .tg-node { stroke-width: 2.4; }
 .strand-ghosts { font-size: 12.5px; color: var(--muted); margin-top: 10px; }
 .grade-empty { font-size: 13px; color: var(--muted); margin: 0; padding: 4px 0 6px; }
 
+/* ---------- 底部「返回上一级」栏 ---------- */
+.up-back {
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  margin-top: 28px; padding: 14px 16px;
+  background: var(--bg); border: 1px solid var(--border); border-radius: 12px;
+}
+.ub-main {
+  display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  font-weight: 600; font-size: 14.5px; color: var(--accent); text-decoration: none;
+  padding: 8px 16px; border: 1.5px solid var(--accent); border-radius: 10px; background: #fff;
+}
+.ub-main:hover { background: var(--accent); color: #fff; }
+.ub-main:hover .ub-sub { color: rgba(255, 255, 255, 0.85); }
+.ub-arrow { font-size: 16px; line-height: 1; }
+.ub-sub { font-weight: 400; font-size: 12.5px; color: var(--muted); }
+.ub-else { font-size: 13px; color: var(--muted); }
+.ub-else a { color: var(--muted); text-decoration: underline dotted; padding: 0 2px; }
+.ub-else a:hover { color: var(--accent); }
+
+/* ---------- 目录页「上次学到这」高亮 ---------- */
+.chapter-card.last-card { outline: 2px solid var(--accent); outline-offset: 2px; }
+.last-badge {
+  font-size: 11px; padding: 1px 9px; border-radius: 999px;
+  background: var(--accent); color: #fff; white-space: nowrap;
+}
+
 </style>
 </head>
 <body>
@@ -795,6 +822,10 @@ a:hover .tg-node { stroke-width: 2.4; }
 <div class="locate-bar" style="margin-top:36px">
   定位完还是不会做？去<a href="patterns.html">题型库</a>看这类题的「逆向解读」——它由哪几个知识点拼成，缺哪一环一眼就看得出来。
 </div>
+<nav class="up-back">
+  <a class="ub-main" href="index.html"><span class="ub-arrow">↩</span>返回本章目录<span class="ub-sub">三年级下册 · 位置与方向（一）</span></a>
+  <span class="ub-else">或直达：<a href="patterns.html">本章题型库</a> · <a href="../index.html">课程目录</a></span>
+</nav>
 
 <script>
 window.__LOCATE_DATA__ = {"asks":[{"k":"认方向","desc":"面向某方向时判断左右前后"},{"k":"反向描述","desc":"换观测点把方向反过来"},{"k":"路线与往返","desc":"说路线、算返回方向"},{"k":"平面图定位","desc":"按方向标描述相互位置"},{"k":"方向判断","desc":"太阳、影子等生活线索定方向"}],"features":["先说观测点，再说方向——不写观测点的答案一定不完整","相对方向差 180°：八个方向里正对着的那一个","往返路线方向相反、距离相同","地图默认上北下南，图上有方向标就按方向标"],"patterns":[{"id":"p3b-dir-t-rev","no":"基础 1","title":"换观测点说方向","kind":"判断","asks":["反向描述"],"signals":["在……的……面","那么","什么方向"],"route":["/p3b-dir/p3b-dir-rel"],"chain":[{"point":"p3b-dir-rel","role":"相对方向互换","title":"观测点与相对方向"}]},{"id":"p3b-dir-t-eight","no":"基础 2","title":"八个方向的判断","kind":"识图","asks":["认方向"],"signals":["面向","右手边","左后方"],"route":["/p3b-dir/p3b-dir-8"],"chain":[{"point":"p3b-dir-8","role":"八方向排布","title":"八个方向"}]},{"id":"p3b-dir-t-back","no":"提升 1","title":"往返路线求方向","kind":"应用","asks":["路线与往返"],"signals":["从……向……走","返回","向哪个方向"],"route":["/p3b-dir/p3b-dir-walk","/p3b-dir/p3b-dir-rel"],"chain":[{"point":"p3b-dir-walk","role":"往返方向相反","title":"用方向和距离说路线"},{"point":"p3b-dir-rel","role":"取反方向","title":"观测点与相对方向"}]},{"id":"p3b-dir-t-map","no":"提升 2","title":"平面图描述位置","kind":"应用","asks":["平面图定位"],"signals":["平面图","上北下南","在……的……面"],"route":["/p3b-dir/p3b-dir-map"],"chain":[{"point":"p3b-dir-map","role":"按方向标定位","title":"看平面图定位置"}]},{"id":"p3b-dir-t-sun","no":"拓展","title":"用太阳定方向","kind":"推理","asks":["方向判断"],"signals":["早晨","影子","太阳"],"route":["/p3b-dir/p3b-dir-8"],"chain":[{"point":"p3b-dir-8","role":"东升西落","title":"八个方向"}]}],"patternsUrl":"patterns.html","prefix":""};

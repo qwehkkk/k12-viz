@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>题目定位器 - 观察物体（二） - 图知学堂</title>
 <meta name="description" content="回答两三个问题，快速判断一道观察物体（二）题属于哪类经典题型，以及第一步该做什么。">
+<script>try{localStorage.setItem('k12v-last',JSON.stringify({s:'primary',c:'p4b-view'}))}catch(e){}</script>
 <style>
 :root {
   --bg: #fafaf8;
@@ -750,6 +751,32 @@ a:hover .tg-node { stroke-width: 2.4; }
 .strand-ghosts { font-size: 12.5px; color: var(--muted); margin-top: 10px; }
 .grade-empty { font-size: 13px; color: var(--muted); margin: 0; padding: 4px 0 6px; }
 
+/* ---------- 底部「返回上一级」栏 ---------- */
+.up-back {
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  margin-top: 28px; padding: 14px 16px;
+  background: var(--bg); border: 1px solid var(--border); border-radius: 12px;
+}
+.ub-main {
+  display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  font-weight: 600; font-size: 14.5px; color: var(--accent); text-decoration: none;
+  padding: 8px 16px; border: 1.5px solid var(--accent); border-radius: 10px; background: #fff;
+}
+.ub-main:hover { background: var(--accent); color: #fff; }
+.ub-main:hover .ub-sub { color: rgba(255, 255, 255, 0.85); }
+.ub-arrow { font-size: 16px; line-height: 1; }
+.ub-sub { font-weight: 400; font-size: 12.5px; color: var(--muted); }
+.ub-else { font-size: 13px; color: var(--muted); }
+.ub-else a { color: var(--muted); text-decoration: underline dotted; padding: 0 2px; }
+.ub-else a:hover { color: var(--accent); }
+
+/* ---------- 目录页「上次学到这」高亮 ---------- */
+.chapter-card.last-card { outline: 2px solid var(--accent); outline-offset: 2px; }
+.last-badge {
+  font-size: 11px; padding: 1px 9px; border-radius: 999px;
+  background: var(--accent); color: #fff; white-space: nowrap;
+}
+
 </style>
 </head>
 <body>
@@ -795,6 +822,10 @@ a:hover .tg-node { stroke-width: 2.4; }
 <div class="locate-bar" style="margin-top:36px">
   定位完还是不会做？去<a href="patterns.html">题型库</a>看这类题的「逆向解读」——它由哪几个知识点拼成，缺哪一环一眼就看得出来。
 </div>
+<nav class="up-back">
+  <a class="ub-main" href="index.html"><span class="ub-arrow">↩</span>返回本章目录<span class="ub-sub">四年级下册 · 观察物体（二）</span></a>
+  <span class="ub-else">或直达：<a href="patterns.html">本章题型库</a> · <a href="../index.html">课程目录</a></span>
+</nav>
 
 <script>
 window.__LOCATE_DATA__ = {"asks":[{"k":"三向观察","desc":"正面/上面/左面各看到什么平面形状"},{"k":"数方块","desc":"俯视格数 + 摞高修正"},{"k":"还原搭法","desc":"俯视定位置，正侧定高度"},{"k":"左右镜像","desc":"左面看与右面看方向相反"}],"features":["看不见的不画：观察方向上被挡的方块不算","俯视图 = 底面地图，还原搭法先画它","左视图列顺序 = 从前往后；右视图反过来","数方块别忘加「摞起来」的那些"],"patterns":[{"id":"p4b-view-t-front","no":"基础 1","title":"从正面看形状","kind":"观察","asks":["三向观察"],"signals":["从正面看"],"route":["/p4b-view/p4b-view-front"],"chain":[{"point":"p4b-view-front","role":"取每列最高","title":"从正面看"}]},{"id":"p4b-view-t-top","no":"基础 2","title":"从上面看形状","kind":"观察","asks":["三向观察"],"signals":["从上面看"],"route":["/p4b-view/p4b-view-top"],"chain":[{"point":"p4b-view-top","role":"俯视落点","title":"从上面看"}]},{"id":"p4b-view-t-side","no":"中档 1","title":"从左面看与从右面看","kind":"观察","asks":["左右镜像"],"signals":["从左面看","从右面看"],"route":["/p4b-view/p4b-view-side"],"chain":[{"point":"p4b-view-side","role":"前后排转列","title":"从左面看"}]},{"id":"p4b-view-t-count","no":"中档 2","title":"数小正方体","kind":"计数","asks":["数方块"],"signals":["一共","几个正方体"],"route":["/p4b-view/p4b-view-build"],"chain":[{"point":"p4b-view-build","role":"格数 + 摞高","title":"根据视图还原搭法"}]},{"id":"p4b-view-t-build","no":"提升 1","title":"三视图还原判断","kind":"还原","asks":["还原搭法"],"signals":["根据三视图","判断"],"route":["/p4b-view/p4b-view-build"],"chain":[{"point":"p4b-view-build","role":"先底后高再验证","title":"根据视图还原搭法"}]}],"patternsUrl":"patterns.html","prefix":""};

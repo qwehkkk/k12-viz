@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>题目定位器 - 长度单位 - 图知学堂</title>
 <meta name="description" content="回答两三个问题，快速判断一道长度单位题属于哪类经典题型，以及第一步该做什么。">
+<script>try{localStorage.setItem('k12v-last',JSON.stringify({s:'primary',c:'p2a-len'}))}catch(e){}</script>
 <style>
 :root {
   --bg: #fafaf8;
@@ -750,6 +751,32 @@ a:hover .tg-node { stroke-width: 2.4; }
 .strand-ghosts { font-size: 12.5px; color: var(--muted); margin-top: 10px; }
 .grade-empty { font-size: 13px; color: var(--muted); margin: 0; padding: 4px 0 6px; }
 
+/* ---------- 底部「返回上一级」栏 ---------- */
+.up-back {
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  margin-top: 28px; padding: 14px 16px;
+  background: var(--bg); border: 1px solid var(--border); border-radius: 12px;
+}
+.ub-main {
+  display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  font-weight: 600; font-size: 14.5px; color: var(--accent); text-decoration: none;
+  padding: 8px 16px; border: 1.5px solid var(--accent); border-radius: 10px; background: #fff;
+}
+.ub-main:hover { background: var(--accent); color: #fff; }
+.ub-main:hover .ub-sub { color: rgba(255, 255, 255, 0.85); }
+.ub-arrow { font-size: 16px; line-height: 1; }
+.ub-sub { font-weight: 400; font-size: 12.5px; color: var(--muted); }
+.ub-else { font-size: 13px; color: var(--muted); }
+.ub-else a { color: var(--muted); text-decoration: underline dotted; padding: 0 2px; }
+.ub-else a:hover { color: var(--accent); }
+
+/* ---------- 目录页「上次学到这」高亮 ---------- */
+.chapter-card.last-card { outline: 2px solid var(--accent); outline-offset: 2px; }
+.last-badge {
+  font-size: 11px; padding: 1px 9px; border-radius: 999px;
+  background: var(--accent); color: #fff; white-space: nowrap;
+}
+
 </style>
 </head>
 <body>
@@ -795,6 +822,10 @@ a:hover .tg-node { stroke-width: 2.4; }
 <div class="locate-bar" style="margin-top:36px">
   定位完还是不会做？去<a href="patterns.html">题型库</a>看这类题的「逆向解读」——它由哪几个知识点拼成，缺哪一环一眼就看得出来。
 </div>
+<nav class="up-back">
+  <a class="ub-main" href="index.html"><span class="ub-arrow">↩</span>返回本章目录<span class="ub-sub">二年级上册 · 长度单位</span></a>
+  <span class="ub-else">或直达：<a href="patterns.html">本章题型库</a> · <a href="../index.html">课程目录</a></span>
+</nav>
 
 <script>
 window.__LOCATE_DATA__ = {"asks":[{"k":"量长度","desc":"正确使用尺子"},{"k":"选单位","desc":"填合适的长度单位"},{"k":"换算","desc":"米与厘米的换算"},{"k":"画线段","desc":"画指定长度线段"},{"k":"估测","desc":"估一估再验证"}],"features":["0 刻度对齐再读数","不对 0 就末端减起点","填单位想象实物","线段直且有两个端点"],"patterns":[{"id":"p2a-len-t-measure","no":"基础 1","title":"量长度","kind":"应用","asks":["量长度"],"signals":["量一量","多长"],"route":["/p2a-len/p2a-len-cm"],"chain":[{"point":"p2a-len-cm","role":"对 0 读数","title":"厘米的认识"}]},{"id":"p2a-len-t-unit","no":"基础 2","title":"选单位","kind":"概念","asks":["选单位"],"signals":["填","米","厘米"],"route":["/p2a-len/p2a-len-m"],"chain":[{"point":"p2a-len-m","role":"想象实物","title":"米的认识"}]},{"id":"p2a-len-t-conv","no":"中档 1","title":"米厘米换算","kind":"计算","asks":["换算"],"signals":["米","厘米"],"route":["/p2a-len/p2a-len-m"],"chain":[{"point":"p2a-len-m","role":"1 米 = 100 厘米","title":"米的认识"}]},{"id":"p2a-len-t-draw","no":"中档 2","title":"画线段","kind":"应用","asks":["画线段"],"signals":["画一条"],"route":["/p2a-len/p2a-len-seg"],"chain":[{"point":"p2a-len-seg","role":"从 0 画到几","title":"线段的认识"}]},{"id":"p2a-len-t-est","no":"提升 1","title":"估测与验证","kind":"综合","asks":["估测"],"signals":["估一估","大约"],"route":["/p2a-len/p2a-len-est"],"chain":[{"point":"p2a-len-est","role":"参照物估测","title":"估测与合理单位"}]}],"patternsUrl":"patterns.html","prefix":""};

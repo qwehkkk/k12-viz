@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>题目定位器 - 函数的概念与性质 - 图知学堂</title>
 <meta name="description" content="回答两三个问题，快速判断一道函数的概念与性质题属于哪类经典题型，以及第一步该做什么。">
+<script>try{localStorage.setItem('k12v-last',JSON.stringify({s:'senior',c:'function-concept'}))}catch(e){}</script>
 <style>
 :root {
   --bg: #fafaf8;
@@ -750,6 +751,32 @@ a:hover .tg-node { stroke-width: 2.4; }
 .strand-ghosts { font-size: 12.5px; color: var(--muted); margin-top: 10px; }
 .grade-empty { font-size: 13px; color: var(--muted); margin: 0; padding: 4px 0 6px; }
 
+/* ---------- 底部「返回上一级」栏 ---------- */
+.up-back {
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  margin-top: 28px; padding: 14px 16px;
+  background: var(--bg); border: 1px solid var(--border); border-radius: 12px;
+}
+.ub-main {
+  display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  font-weight: 600; font-size: 14.5px; color: var(--accent); text-decoration: none;
+  padding: 8px 16px; border: 1.5px solid var(--accent); border-radius: 10px; background: #fff;
+}
+.ub-main:hover { background: var(--accent); color: #fff; }
+.ub-main:hover .ub-sub { color: rgba(255, 255, 255, 0.85); }
+.ub-arrow { font-size: 16px; line-height: 1; }
+.ub-sub { font-weight: 400; font-size: 12.5px; color: var(--muted); }
+.ub-else { font-size: 13px; color: var(--muted); }
+.ub-else a { color: var(--muted); text-decoration: underline dotted; padding: 0 2px; }
+.ub-else a:hover { color: var(--accent); }
+
+/* ---------- 目录页「上次学到这」高亮 ---------- */
+.chapter-card.last-card { outline: 2px solid var(--accent); outline-offset: 2px; }
+.last-badge {
+  font-size: 11px; padding: 1px 9px; border-radius: 999px;
+  background: var(--accent); color: #fff; white-space: nowrap;
+}
+
 </style>
 </head>
 <body>
@@ -795,6 +822,10 @@ a:hover .tg-node { stroke-width: 2.4; }
 <div class="locate-bar" style="margin-top:36px">
   定位完还是不会做？去<a href="patterns.html">题型库</a>看这类题的「逆向解读」——它由哪几个知识点拼成，缺哪一环一眼就看得出来。
 </div>
+<nav class="up-back">
+  <a class="ub-main" href="index.html"><span class="ub-arrow">↩</span>返回本章目录<span class="ub-sub">高一上册 · 函数的概念与性质</span></a>
+  <span class="ub-else">或直达：<a href="patterns.html">本章题型库</a> · <a href="../index.html">课程目录</a></span>
+</nav>
 
 <script>
 window.__LOCATE_DATA__ = {"asks":[{"k":"函数概念","label":"同一函数判断、f(x±a) 求值"},{"k":"定义域","label":"分式、根式、对数叠加"},{"k":"值域","label":"闭区间二次函数、分段函数"},{"k":"分段函数","label":"分段求值、嵌套求值"},{"k":"单调性","label":"定义法证明、求参数范围"},{"k":"奇偶性","label":"判断、求解析式、求参数"},{"k":"幂函数","label":"由点求解析式、比较大小"},{"k":"图象识别","label":"给图象选解析式、给解析式选图象"}],"features":[{"k":"函数","words":["函数","定义域","值域","单调","奇函数","偶函数","奇偶","幂函数","分段","f(x)","递增","递减","对称轴"]}],"patterns":[{"id":"fc-b-domain","no":"基础 1","title":"求定义域","kind":"定义域","asks":["定义域"],"signals":["定义域","有意义","取值范围"],"route":["/function-concept/fc-domain"],"chain":[{"point":"fc-domain","role":"四条禁令取交集","title":"定义域：谁能进这个函数"}]},{"id":"fc-b-value","no":"基础 2","title":"二次函数在闭区间上的值域","kind":"值域","asks":["值域"],"signals":["值域","最大值","最小值","闭区间"],"route":["/function-concept/fc-value"],"chain":[{"point":"fc-value","role":"对称轴定位法","title":"值域与分段函数"}]},{"id":"fc-b-parity","no":"基础 3","title":"判断奇偶性","kind":"奇偶性","asks":["奇偶性"],"signals":["奇函数","偶函数","奇偶性","f(−x)"],"route":["/function-concept/fc-parity"],"chain":[{"point":"fc-parity","role":"先看定义域再看 f(−x)","title":"奇偶性：关于谁对称"}]},{"id":"fc-b-piece","no":"基础 4","title":"分段函数求值","kind":"分段函数","asks":["分段函数"],"signals":["分段","f(f(","x ≥ 0","x < 0"],"route":["/function-concept/fc-value"],"chain":[{"point":"fc-value","role":"先定段再代入","title":"值域与分段函数"}]},{"id":"fc-m-proof","no":"中档 1","title":"定义法证明单调性","kind":"单调性","asks":["单调性"],"signals":["证明","单调递增","单调递减","任取"],"route":["/function-concept/fc-mono"],"chain":[{"point":"fc-mono","role":"取值—作差—定号","title":"单调性：往上走还是往下走"}]},{"id":"fc-m-param","no":"中档 2","title":"由单调性求参数","kind":"单调性","asks":["单调性"],"signals":["单调","求取值范围","参数"],"route":["/function-concept/fc-mono","/function-concept/fc-value"],"chain":[{"point":"fc-mono","role":"单调区间与对称轴的关系","title":"单调性：往上走还是往下走"},{"point":"fc-value","role":"对称轴的位置决定单调分段","title":"值域与分段函数"}]},{"id":"fc-m-oddparse","no":"中档 3","title":"奇偶性求解析式","kind":"奇偶性","asks":["奇偶性"],"signals":["奇函数","x < 0 时","解析式","偶函数"],"route":["/function-concept/fc-parity","/function-concept/fc-def"],"chain":[{"point":"fc-parity","role":"f(x) = −f(−x) 转换","title":"奇偶性：关于谁对称"},{"point":"fc-def","role":"变量替换的合法性","title":"函数的概念与三要素"}]},{"id":"fc-m-compare","no":"中档 4","title":"利用单调性比较大小","kind":"单调性","asks":["单调性","幂函数"],"signals":["比较大小","递增","递减","f(","幂"],"route":["/function-concept/fc-mono","/function-concept/fc-power"],"chain":[{"point":"fc-mono","role":"单调性把函数值大小转成自变量大小","title":"单调性：往上走还是往下走"},{"point":"fc-power","role":"幂函数走势","title":"幂函数：五个基本图形"}]},{"id":"fc-h-abstract","no":"拔高 1","title":"抽象函数单调性","kind":"单调性","asks":["单调性","函数概念"],"signals":["对任意","f(x+y)","f(x)+f(y)","抽象函数"],"route":["/function-concept/fc-mono","/function-concept/fc-def","/function-concept/fc-parity"],"chain":[{"point":"fc-mono","role":"赋值法构造差","title":"单调性：往上走还是往下走"},{"point":"fc-def","role":"f(0) 与 f(−x) 的赋值技巧","title":"函数的概念与三要素"},{"point":"fc-parity","role":"由 f(−x) 关系判奇偶","title":"奇偶性：关于谁对称"}]}],"patternsUrl":"patterns.html","prefix":""};

@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>题目定位器 - 反比例函数 - 图知学堂</title>
 <meta name="description" content="回答两三个问题，快速判断一道反比例函数题属于哪类经典题型，以及第一步该做什么。">
+<script>try{localStorage.setItem('k12v-last',JSON.stringify({s:'junior',c:'inverse-function'}))}catch(e){}</script>
 <style>
 :root {
   --bg: #fafaf8;
@@ -750,6 +751,32 @@ a:hover .tg-node { stroke-width: 2.4; }
 .strand-ghosts { font-size: 12.5px; color: var(--muted); margin-top: 10px; }
 .grade-empty { font-size: 13px; color: var(--muted); margin: 0; padding: 4px 0 6px; }
 
+/* ---------- 底部「返回上一级」栏 ---------- */
+.up-back {
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  margin-top: 28px; padding: 14px 16px;
+  background: var(--bg); border: 1px solid var(--border); border-radius: 12px;
+}
+.ub-main {
+  display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  font-weight: 600; font-size: 14.5px; color: var(--accent); text-decoration: none;
+  padding: 8px 16px; border: 1.5px solid var(--accent); border-radius: 10px; background: #fff;
+}
+.ub-main:hover { background: var(--accent); color: #fff; }
+.ub-main:hover .ub-sub { color: rgba(255, 255, 255, 0.85); }
+.ub-arrow { font-size: 16px; line-height: 1; }
+.ub-sub { font-weight: 400; font-size: 12.5px; color: var(--muted); }
+.ub-else { font-size: 13px; color: var(--muted); }
+.ub-else a { color: var(--muted); text-decoration: underline dotted; padding: 0 2px; }
+.ub-else a:hover { color: var(--accent); }
+
+/* ---------- 目录页「上次学到这」高亮 ---------- */
+.chapter-card.last-card { outline: 2px solid var(--accent); outline-offset: 2px; }
+.last-badge {
+  font-size: 11px; padding: 1px 9px; border-radius: 999px;
+  background: var(--accent); color: #fff; white-space: nowrap;
+}
+
 </style>
 </head>
 <body>
@@ -795,6 +822,10 @@ a:hover .tg-node { stroke-width: 2.4; }
 <div class="locate-bar" style="margin-top:36px">
   定位完还是不会做？去<a href="patterns.html">题型库</a>看这类题的「逆向解读」——它由哪几个知识点拼成，缺哪一环一眼就看得出来。
 </div>
+<nav class="up-back">
+  <a class="ub-main" href="index.html"><span class="ub-arrow">↩</span>返回本章目录<span class="ub-sub">九年级下册 · 反比例函数</span></a>
+  <span class="ub-else">或直达：<a href="patterns.html">本章题型库</a> · <a href="../index.html">课程目录</a></span>
+</nav>
 
 <script>
 window.__LOCATE_DATA__ = {"asks":[{"k":"求解析式","label":"求函数解析式或 k 的值"},{"k":"判性质","label":"判断图象位置、增减性或比较大小"},{"k":"求面积","label":"求 k 或阴影面积（k 的几何意义）"},{"k":"解不等式","label":"由图象解不等式或求取值范围"},{"k":"实际应用","label":"反比例建模解决实际问题"},{"k":"综合","label":"压轴：含参、交点个数、面积综合"}],"features":[{"k":"双曲线","words":["双曲线","两支","象限","图象"]},{"k":"面积","words":["矩形","三角形","面积","阴影","垂线"]},{"k":"一次函数","words":["直线","一次函数","交点","正比例"]},{"k":"不等式","words":["不等式","解集","大于","取值范围","上方"]},{"k":"实际模型","words":["压强","电流","杠杆","工程","速度","面积固定","气压"]},{"k":"含参","words":["m","k 的取值","两个交点","只有一个交点","没有交点"]}],"patterns":[{"id":"concept-judge","no":1,"title":"概念辨析：是不是反比例函数","kind":"单一型","asks":["求解析式"],"signals":["下列函数","是反比例函数","求 m 的值","y = k/x"],"route":["把式子化成 y = k/x 的标准形（或判断能否化）","检查分母：只能是单个 x，不能是 x + 1、x²","检查分子：必须是常数","含参题：指数 = −1 且系数 ≠ 0，解出后回代检验"],"chain":[{"point":"inverse-concept","role":"用三条硬标准逐一比对，含参题联立两个条件","title":"反比例函数的概念"}]},{"id":"find-k","no":2,"title":"待定系数：一组对应值定 k","kind":"单一型","asks":["求解析式"],"signals":["y 与 x 成反比例","当 x = … 时 y = …","求解析式","求 k"],"route":["设 y = k/x（k ≠ 0）","把已知点坐标相乘得 k = xy","写出解析式，注明 x ≠ 0","若还要求某点的值，直接代入"],"chain":[{"point":"inverse-concept","role":"设 y = k/x，代入求 k；或用 xy = k 直接乘","title":"反比例函数的概念"}]},{"id":"graph-props","no":3,"title":"图象性质：象限、增减、比大小","kind":"单一型","asks":["判性质"],"signals":["图象位于","y 随 x 的增大","比较大小","在同一象限"],"route":["读出 k 的符号","k > 0 → 一、三象限，每支递减；k < 0 → 二、四象限，每支递增","比较大小：先代入算值（最保险），再用性质核对","跨支比较直接比正负，不要套增减性"],"chain":[{"point":"inverse-graph","role":"k 的符号 → 象限 + 增减；同支才可用增减性","title":"图象与性质：双曲线的两支"}]},{"id":"k-area-calc","no":4,"title":"k 的几何意义：面积一步出答案","kind":"单一型","asks":["求面积"],"signals":["矩形","三角形","垂线","面积为","求 k","阴影部分"],"route":["认出图形：矩形（两边贴轴）还是三角形（一边在轴上、一个顶点在原点）","矩形 → |k|；三角形 → |k|/2","已知面积反求 k：先算 |k|，再由象限定符号","多个图形拼合时，逐块算再加减"],"chain":[{"point":"k-meaning","role":"矩形面积 = |k|，三角形 = |k|/2，反解 k 时符号看象限","title":"k 的几何意义：一块面积"}]},{"id":"k-reverse","no":5,"title":"由面积 / 对称点反求解析式","kind":"组合型","asks":["求解析式","求面积"],"signals":["面积为","求这个函数的解析式","关于原点对称","另一个交点"],"route":["由面积算出 |k|","由图象所在象限（或已知点的坐标符号）确定 k 的正负","写出 y = k/x","若问另一交点：坐标取相反数，不必重新联立"],"chain":[{"point":"k-meaning","role":"面积反推 |k|","title":"k 的几何意义：一块面积"},{"point":"inverse-symmetry","role":"用关于原点对称定符号或求另一交点","title":"对称性：关于原点中心对称"}]},{"id":"cross-line","no":6,"title":"与一次函数：交点 + 不等式解集","kind":"组合型","asks":["解不等式","求解析式"],"signals":["直线与双曲线交于","不等式","解集","图象","两个交点"],"route":["求交点：联立 → ax² + bx − k = 0 → 解出 x → 代回求 y","求解析式：把一个交点坐标代进 y = k/x 得 k","解不等式：画图，找双曲线在直线上方（或下方）的 x 段","分段：以交点和 x = 0 分界，逐段验证一个测试点"],"chain":[{"point":"inverse-cross","role":"联立得一元二次，Δ 定个数，图象定解集","title":"与一次函数的综合：交点与不等式"},{"point":"inverse-graph","role":"确认两支位置，别漏掉负半轴那一段","title":"图象与性质：双曲线的两支"}]},{"id":"real-model","no":7,"title":"实际建模：乘积不变就成反比例","kind":"单一型","asks":["实际应用"],"signals":["压强","电流","杠杆","工作效率","速度","面积一定","函数关系"],"route":["找出题目里固定不变的量（路程、压力、总量、力矩）","写出乘积关系式，变形为 y = k/x","代入一组对应值求 k","代值求解，注明自变量范围与实际单位","检验结果是否符合常识"],"chain":[{"point":"inverse-use","role":"识别恒定乘积 → 设式求 k → 代值 + 取值范围","title":"实际问题：反比例建模"}]},{"id":"symmetry-use","no":8,"title":"对称性：一半算完，另一半抄","kind":"组合型","asks":["求解析式","求面积"],"signals":["关于原点对称","两个交点","正比例函数","中心对称"],"route":["确认对称关系：关于原点对称 ⇔ 坐标同时变号","由已知交点写出另一交点","求面积时左右两块相等，算一块乘 2","若要解析式，代任一点求 k"],"chain":[{"point":"inverse-symmetry","role":"中心对称把交点、图形翻倍搬运","title":"对称性：关于原点中心对称"},{"point":"k-meaning","role":"需要面积时用 |k| 或 |k|/2 逐块算","title":"k 的几何意义：一块面积"}]},{"id":"param-final","no":9,"title":"压轴：含参交点个数与面积综合","kind":"综合型","asks":["综合","解不等式"],"signals":["有两个交点","只有一个交点","求 k 的取值范围","面积最大","含参数"],"route":["联立两函数，整理成 ax² + bx − k = 0","按题意用 Δ 列不等式（>0 两个交点，=0 相切，<0 无交点）","注意隐含条件：k ≠ 0、二次项系数 ≠ 0","涉及面积时，用交点坐标表示底和高，或直接用 |k|","最后检验端点（Δ = 0 是否算「两个交点」）"],"chain":[{"point":"inverse-cross","role":"联立 + Δ 定交点个数，韦达定坐标关系","title":"与一次函数的综合：交点与不等式"},{"point":"k-meaning","role":"面积用 |k| 或三角形面积公式算","title":"k 的几何意义：一块面积"}]}],"patternsUrl":"patterns.html","prefix":""};

@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>题目定位器 - 勾股定理 - 图知学堂</title>
 <meta name="description" content="回答两三个问题，快速判断一道勾股定理题属于哪类经典题型，以及第一步该做什么。">
+<script>try{localStorage.setItem('k12v-last',JSON.stringify({s:'junior',c:'pythagorean'}))}catch(e){}</script>
 <style>
 :root {
   --bg: #fafaf8;
@@ -750,6 +751,32 @@ a:hover .tg-node { stroke-width: 2.4; }
 .strand-ghosts { font-size: 12.5px; color: var(--muted); margin-top: 10px; }
 .grade-empty { font-size: 13px; color: var(--muted); margin: 0; padding: 4px 0 6px; }
 
+/* ---------- 底部「返回上一级」栏 ---------- */
+.up-back {
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  margin-top: 28px; padding: 14px 16px;
+  background: var(--bg); border: 1px solid var(--border); border-radius: 12px;
+}
+.ub-main {
+  display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  font-weight: 600; font-size: 14.5px; color: var(--accent); text-decoration: none;
+  padding: 8px 16px; border: 1.5px solid var(--accent); border-radius: 10px; background: #fff;
+}
+.ub-main:hover { background: var(--accent); color: #fff; }
+.ub-main:hover .ub-sub { color: rgba(255, 255, 255, 0.85); }
+.ub-arrow { font-size: 16px; line-height: 1; }
+.ub-sub { font-weight: 400; font-size: 12.5px; color: var(--muted); }
+.ub-else { font-size: 13px; color: var(--muted); }
+.ub-else a { color: var(--muted); text-decoration: underline dotted; padding: 0 2px; }
+.ub-else a:hover { color: var(--accent); }
+
+/* ---------- 目录页「上次学到这」高亮 ---------- */
+.chapter-card.last-card { outline: 2px solid var(--accent); outline-offset: 2px; }
+.last-badge {
+  font-size: 11px; padding: 1px 9px; border-radius: 999px;
+  background: var(--accent); color: #fff; white-space: nowrap;
+}
+
 </style>
 </head>
 <body>
@@ -795,6 +822,10 @@ a:hover .tg-node { stroke-width: 2.4; }
 <div class="locate-bar" style="margin-top:36px">
   定位完还是不会做？去<a href="patterns.html">题型库</a>看这类题的「逆向解读」——它由哪几个知识点拼成，缺哪一环一眼就看得出来。
 </div>
+<nav class="up-back">
+  <a class="ub-main" href="index.html"><span class="ub-arrow">↩</span>返回本章目录<span class="ub-sub">八年级下册 · 勾股定理</span></a>
+  <span class="ub-else">或直达：<a href="patterns.html">本章题型库</a> · <a href="../index.html">课程目录</a></span>
+</nav>
 
 <script>
 window.__LOCATE_DATA__ = {"asks":[{"k":"求第三边","label":"已知两边求第三边（加法/减法选式）"},{"k":"折叠方程","label":"折叠/图形中的未知线段，设未知数勾股方程"},{"k":"验直角","label":"逆定理判断直角/锐角/钝角"},{"k":"实际测量","label":"梯子、旗杆、拉线、坡面等实际模型计算"},{"k":"最短路径","label":"展开侧面/表面，勾股算两点最短距离"},{"k":"综合计算","label":"与等腰/面积/坐标系结合的勾股计算"}],"features":{"k":"勾股","words":["勾股定理","勾股","直角边","斜边","梯子","旗杆","折断","最短","爬行","蚂蚁","ab2c2","a2b2c2","345","勾股数"]},"patterns":[{"id":"pythag-direct-calc","no":1,"title":"知二求一：勾股定理直接计算","kind":"计算","asks":["求第三边"],"signals":["Rt△","∠C = 90°","直角边","斜边","求第三边"],"route":["/pythagorean/pythag-theorem","/pythagorean/pythag-calc"],"chain":[{"point":"pythag-theorem","role":"定理内容与斜边识别","title":"勾股定理：a² + b² = c²"},{"point":"pythag-calc","role":"加法/减法选式与精确值","title":"用勾股定理计算：知二求一"}]},{"id":"pythag-fold-equation","no":2,"title":"折叠问题：勾股定理 + 一元一次方程","kind":"综合","asks":["折叠方程"],"signals":["折叠","翻折","落在","重合","折痕"],"route":["/pythagorean/pythag-calc"],"chain":[{"point":"pythag-calc","role":"在含 x 的直角三角形里勾股列方程","title":"用勾股定理计算：知二求一"},{"point":"pythag-theorem","role":"折叠全等给等长线段、认斜边","title":"勾股定理：a² + b² = c²"}]},{"id":"pythag-inverse-judge","no":3,"title":"逆定理：验直角与形状判定","kind":"判定","asks":["验直角"],"signals":["判断形状","是不是直角三角形","勾股数","三边长分别为"],"route":["/pythagorean/pythag-inverse"],"chain":[{"point":"pythag-inverse","role":"逆定理与锐钝角区分","title":"勾股定理的逆定理"}]},{"id":"pythag-ladder-flag","no":4,"title":"实际测量：梯子 / 旗杆 / 拉线","kind":"应用","asks":["实际测量"],"signals":["梯子","靠在墙上","旗杆","折断","拉线","风筝","缆绳"],"route":["/pythagorean/pythag-application","/pythagorean/pythag-calc"],"chain":[{"point":"pythag-application","role":"梯子/旗杆模型","title":"勾股定理的应用"},{"point":"pythag-calc","role":"两问之间不变量是桥","title":"用勾股定理计算：知二求一"}]},{"id":"pythag-shortest-path","no":5,"title":"最短路径：展开 + 勾股","kind":"应用","asks":["最短路径"],"signals":["最短","爬行","蚂蚁","蜘蛛","绕","侧面展开","表面"],"route":["/pythagorean/pythag-application","/pythagorean/pythag-calc"],"chain":[{"point":"pythag-application","role":"圆柱/长方体展开","title":"勾股定理的应用"},{"point":"pythag-calc","role":"勾股算对角线","title":"用勾股定理计算：知二求一"}]},{"id":"pythag-isosceles-height","no":6,"title":"等腰三角形 + 勾股：作高计算","kind":"计算","asks":["综合计算"],"signals":["等腰","腰长","底边","求高","求面积"],"route":["/pythagorean/pythag-calc"],"chain":[{"point":"pythag-calc","role":"半底 + 高 + 腰的直角三角形","title":"用勾股定理计算：知二求一"},{"point":"pythag-theorem","role":"三线合一构造直角与斜边识别","title":"勾股定理：a² + b² = c²"}]},{"id":"pythag-coordinate","no":7,"title":"坐标系中的勾股：两点间距离","kind":"综合","asks":["综合计算","求第三边"],"signals":["平面直角坐标系","点 A(…)","距离","AB 的长"],"route":["/pythagorean/pythag-calc"],"chain":[{"point":"pythag-calc","role":"水平差与竖直差是两直角边","title":"用勾股定理计算：知二求一"}]},{"id":"pythag-composite-figure","no":8,"title":"复杂图形中找直角三角形","kind":"综合","asks":["综合计算","求第三边"],"signals":["如图","组合图形","求 CD","连接","延长"],"route":["/pythagorean/pythag-calc","/pythagorean/pythag-theorem"],"chain":[{"point":"pythag-calc","role":"多次勾股接力","title":"用勾股定理计算：知二求一"},{"point":"pythag-theorem","role":"斜边识别","title":"勾股定理：a² + b² = c²"}]},{"id":"pythag-string-figure","no":9,"title":"弦图型计算题","kind":"综合","asks":["综合计算"],"signals":["弦图","四个全等","大正方形","小正方形","2002 年会标"],"route":["/pythagorean/pythag-theorem"],"chain":[{"point":"pythag-theorem","role":"弦图的面积恒等式","title":"勾股定理：a² + b² = c²"}]}],"patternsUrl":"patterns.html","prefix":""};

@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>题目定位器 - 平面向量及其应用 - 图知学堂</title>
 <meta name="description" content="回答两三个问题，快速判断一道平面向量及其应用题属于哪类经典题型，以及第一步该做什么。">
+<script>try{localStorage.setItem('k12v-last',JSON.stringify({s:'senior',c:'vectors'}))}catch(e){}</script>
 <style>
 :root {
   --bg: #fafaf8;
@@ -750,6 +751,32 @@ a:hover .tg-node { stroke-width: 2.4; }
 .strand-ghosts { font-size: 12.5px; color: var(--muted); margin-top: 10px; }
 .grade-empty { font-size: 13px; color: var(--muted); margin: 0; padding: 4px 0 6px; }
 
+/* ---------- 底部「返回上一级」栏 ---------- */
+.up-back {
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  margin-top: 28px; padding: 14px 16px;
+  background: var(--bg); border: 1px solid var(--border); border-radius: 12px;
+}
+.ub-main {
+  display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  font-weight: 600; font-size: 14.5px; color: var(--accent); text-decoration: none;
+  padding: 8px 16px; border: 1.5px solid var(--accent); border-radius: 10px; background: #fff;
+}
+.ub-main:hover { background: var(--accent); color: #fff; }
+.ub-main:hover .ub-sub { color: rgba(255, 255, 255, 0.85); }
+.ub-arrow { font-size: 16px; line-height: 1; }
+.ub-sub { font-weight: 400; font-size: 12.5px; color: var(--muted); }
+.ub-else { font-size: 13px; color: var(--muted); }
+.ub-else a { color: var(--muted); text-decoration: underline dotted; padding: 0 2px; }
+.ub-else a:hover { color: var(--accent); }
+
+/* ---------- 目录页「上次学到这」高亮 ---------- */
+.chapter-card.last-card { outline: 2px solid var(--accent); outline-offset: 2px; }
+.last-badge {
+  font-size: 11px; padding: 1px 9px; border-radius: 999px;
+  background: var(--accent); color: #fff; white-space: nowrap;
+}
+
 </style>
 </head>
 <body>
@@ -795,6 +822,10 @@ a:hover .tg-node { stroke-width: 2.4; }
 <div class="locate-bar" style="margin-top:36px">
   定位完还是不会做？去<a href="patterns.html">题型库</a>看这类题的「逆向解读」——它由哪几个知识点拼成，缺哪一环一眼就看得出来。
 </div>
+<nav class="up-back">
+  <a class="ub-main" href="index.html"><span class="ub-arrow">↩</span>返回本章目录<span class="ub-sub">高一上册 · 平面向量及其应用</span></a>
+  <span class="ub-else">或直达：<a href="patterns.html">本章题型库</a> · <a href="../index.html">课程目录</a></span>
+</nav>
 
 <script>
 window.__LOCATE_DATA__ = {"asks":[{"k":"概念判断","label":"零向量、单位向量、共线与相等"},{"k":"线性运算","label":"首尾相接化简、用基底表示"},{"k":"坐标运算","label":"加减数乘、求模、共线求参"},{"k":"数量积","label":"求夹角、垂直判定、投影"},{"k":"解三角形","label":"正余弦定理、形状判断"},{"k":"应用建模","label":"测距、力的合成、实际背景"}],"features":[{"k":"字母化简","desc":"式子里全是 AB、BC 这类有向线段，找首尾相接"},{"k":"坐标给出","desc":"题目给出 (x, y) 形式，优先坐标法"},{"k":"夹角或垂直","desc":"出现「夹角」「垂直」「投影」→ 数量积"},{"k":"两边一角","desc":"知三求其余 → 判断用正弦还是余弦"},{"k":"实际测量","desc":"有距离、仰角、方位角 → 画图后解三角形"}],"patterns":[{"id":"pv-b-concept","no":"基础 1","title":"向量概念辨析","kind":"概念","asks":["概念判断"],"signals":["零向量","单位向量","共线","相等"],"route":["/vectors/pv-concept"],"chain":[{"point":"pv-concept","role":"零向量与单位向量的定义边界","title":"向量的概念与表示"}]},{"id":"pv-b-linear","no":"基础 2","title":"线性运算化简","kind":"计算","asks":["线性运算"],"signals":["化简","AB+BC","首尾"],"route":["/vectors/pv-add"],"chain":[{"point":"pv-add","role":"首尾相接字母相消","title":"向量的加减法"}]},{"id":"pv-b-coord","no":"基础 3","title":"坐标运算与求模","kind":"计算","asks":["坐标运算"],"signals":["(x, y)","求模","2a−b"],"route":["/vectors/pv-coord"],"chain":[{"point":"pv-coord","role":"分坐标运算与模公式","title":"坐标表示与线性运算"}]},{"id":"pv-i-collinear","no":"提升 1","title":"共线求参数","kind":"计算","asks":["坐标运算"],"signals":["共线","平行","求 m"],"route":["/vectors/pv-coord"],"chain":[{"point":"pv-coord","role":"行列式共线条件","title":"坐标表示与线性运算"}]},{"id":"pv-i-angle","no":"提升 2","title":"数量积求夹角","kind":"计算","asks":["数量积"],"signals":["夹角","cosθ","a·b"],"route":["/vectors/pv-dot"],"chain":[{"point":"pv-dot","role":"cosθ = (a·b)/(|a||b|)","title":"数量积与夹角"}]},{"id":"pv-i-perp","no":"提升 3","title":"垂直求参数","kind":"组合","asks":["数量积"],"signals":["垂直","⊥","求 k"],"route":["/vectors/pv-dot","/vectors/pv-coord"],"chain":[{"point":"pv-dot","role":"垂直 ⇔ 点积为 0","title":"数量积与夹角"},{"point":"pv-coord","role":"坐标点积展开","title":"坐标表示与线性运算"}]},{"id":"pv-a-sine","no":"综合 1","title":"正弦定理解三角形","kind":"综合","asks":["解三角形"],"signals":["两角一边","外接圆","求边"],"route":["/vectors/pv-sine"],"chain":[{"point":"pv-sine","role":"边角成正比，缺角先补","title":"正弦定理"}]},{"id":"pv-a-app","no":"综合 2","title":"实际测距建模","kind":"应用","asks":["应用建模"],"signals":["测距","隔湖","方位角"],"route":["/vectors/pv-cosine","/vectors/pv-sine"],"chain":[{"point":"pv-cosine","role":"两边夹角求第三边","title":"余弦定理"},{"point":"pv-sine","role":"已知三边后可再求角","title":"正弦定理"}]}],"patternsUrl":"patterns.html","prefix":""};

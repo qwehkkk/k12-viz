@@ -140,6 +140,17 @@ function kindClass(k) { return kindGroup(k) === '组合型' ? 'combo' : (kindGro
 // 题型编号两种形态：数字（初中/高中，补零成 01）或「基础 1」这类文字（小学，直接用，不塞进 22px 的编号格）
 function padNo(no) { return /^\d+$/.test(String(no)) ? String(no).padStart(2, '0') : ''; }
 function noPrefix(no) { return padNo(no) ? '' : esc(no) + ' · '; }
+
+/* 底部「返回上一级」栏：第一项是大按钮（上一级去哪），后面是平级直达链接 */
+function upBack(main, elseLinks) {
+  const els = elseLinks && elseLinks.length
+    ? `<span class="ub-else">或直达：${elseLinks.map(l => `<a href="${l.href}">${l.label}</a>`).join(' · ')}</span>`
+    : '';
+  return `<nav class="up-back">
+  <a class="ub-main" href="${main.href}"><span class="ub-arrow">↩</span>返回${main.label}<span class="ub-sub">${main.sub || ''}</span></a>
+  ${els}
+</nav>`;
+}
 /* 题型归类：数据里的 kind 写法很杂（计算/证明/应用型/综合…），
    统一归到三档，避免有题型因为 kind 写法不在白名单里而从列表消失 */
 function kindGroup(k) {
@@ -161,6 +172,14 @@ const COMMENTSJS = fs.readFileSync(path.join(ROOT, 'assets/comments.js'), 'utf8'
  * cur：当前页类型 points|patterns|locate|home
  */
 function head(title, desc, root, ch, cur) {
+  // 记录「上次学到哪」：任何章内页面都把学段 + 章写进 localStorage，
+  // 课程目录页据此自动切到对应学段页签并高亮该章。
+  let store = '';
+  if (ch) {
+    const gi = GRADE_TERMS.indexOf(ch.meta.grade);
+    const stage = gi < 12 ? 'primary' : gi < 18 ? 'junior' : 'senior';
+    store = `<script>try{localStorage.setItem('k12v-last',JSON.stringify({s:'${stage}',c:'${ch.meta.id}'}))}catch(e){}</script>`;
+  }
   let nav;
   if (ch) {
     const base = root + ch.meta.id + '/';
@@ -184,6 +203,7 @@ function head(title, desc, root, ch, cur) {
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>${esc(title)}</title>
 <meta name="description" content="${esc(desc)}">
+${store}
 <style>
 ${CSS}
 </style>
@@ -352,6 +372,28 @@ ${strandHtml}
     <p>用题目定位器。回答两三个问题，直接告诉你最可能是哪类题、第一步该做什么。</p>
   </div>
 </div>
+<script>
+/* 从站内回到目录时：切到上次所在的学段页签，高亮并滚动到上次学的章节 */
+(function () {
+  try {
+    var d = JSON.parse(localStorage.getItem('k12v-last') || 'null');
+    if (!d) return;
+    var tab = document.getElementById('tab-' + d.s);
+    if (tab) tab.checked = true;
+    var card = document.querySelector('.chapter-card[href="' + d.c + '/index.html"]');
+    if (!card) return;
+    card.classList.add('last-card');
+    var h = card.querySelector('.cc-head');
+    if (h) {
+      var b = document.createElement('span');
+      b.className = 'last-badge';
+      b.textContent = '上次学到这';
+      h.appendChild(b);
+    }
+    setTimeout(function () { card.scrollIntoView({ block: 'center' }); }, 60);
+  } catch (e) {}
+})();
+</script>
 ${foot()}`;
 }
 
@@ -434,6 +476,10 @@ ${labHtml}
     <div class="meta"><span class="badge">定位器</span></div>
   </a>
 </div>
+${upBack(
+  { href: '../index.html', label: '课程目录', sub: '按学段选册次，会自动定位到你上次学的位置' },
+  [{ href: 'patterns.html', label: '本章题型库' }, { href: 'locate.html', label: '题目定位器' }]
+)}
 ${foot()}`;
 }
 
@@ -528,6 +574,10 @@ function renderPoint(ch, p, idx) {
   <p class="back-links">
     <a href="index.html">本章知识点</a>·<a href="patterns.html">题型库</a>·<a href="../index.html">课程目录</a>
   </p>
+  ${upBack(
+    { href: 'index.html', label: '本章目录', sub: esc(ch.meta.grade) + ' · ' + esc(ch.meta.title) },
+    [{ href: 'patterns.html', label: '本章题型库' }, { href: '../index.html', label: '课程目录' }]
+  )}
 </article>
 ${foot()}`;
 }
@@ -632,6 +682,10 @@ ${pairsHtml}
 <div class="locate-bar" style="margin-top:32px">
   <b>还是不知道一道题属于哪类？</b>把题面特征告诉我，<a href="locate.html">用题目定位器</a>——回答两三个问题，直接给出最可能的题型和第一步动作。
 </div>
+${upBack(
+  { href: 'index.html', label: '本章目录', sub: esc(ch.meta.grade) + ' · ' + esc(ch.meta.title) },
+  [{ href: '../index.html', label: '课程目录' }]
+)}
 ${foot()}`;
 }
 
@@ -732,6 +786,10 @@ ${chainHtml}
   <p class="back-links">
     <a href="../patterns.html">题型库</a>·<a href="../index.html">本章知识点</a>·<a href="../../index.html">课程目录</a>
   </p>
+  ${upBack(
+    { href: '../patterns.html', label: '本章题型库', sub: esc(ch.meta.title) + ' · ' + ch.patterns.length + ' 类题型' },
+    [{ href: '../index.html', label: '本章知识点' }, { href: '../../index.html', label: '课程目录' }]
+  )}
 </article>
 ${foot()}`;
 }
@@ -785,6 +843,10 @@ function renderLocate(ch) {
 <div class="locate-bar" style="margin-top:36px">
   定位完还是不会做？去<a href="patterns.html">题型库</a>看这类题的「逆向解读」——它由哪几个知识点拼成，缺哪一环一眼就看得出来。
 </div>
+${upBack(
+  { href: 'index.html', label: '本章目录', sub: esc(ch.meta.grade) + ' · ' + esc(ch.meta.title) },
+  [{ href: 'patterns.html', label: '本章题型库' }, { href: '../index.html', label: '课程目录' }]
+)}
 
 <script>
 window.__LOCATE_DATA__ = ${JSON.stringify(data)};
@@ -1006,6 +1068,9 @@ ${strandSections}
 <div class="guide-grid">
 ${learnPaths}
 </div>
+${upBack(
+  { href: UP + 'index.html', label: '课程目录', sub: '按学段选册次，会自动定位到你上次学的位置' }
+)}
 ${foot()}`;
 }
 

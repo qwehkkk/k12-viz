@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>题目定位器 - 条形统计图 - 图知学堂</title>
 <meta name="description" content="回答两三个问题，快速判断一道条形统计图题属于哪类经典题型，以及第一步该做什么。">
+<script>try{localStorage.setItem('k12v-last',JSON.stringify({s:'primary',c:'p4a-bar'}))}catch(e){}</script>
 <style>
 :root {
   --bg: #fafaf8;
@@ -750,6 +751,32 @@ a:hover .tg-node { stroke-width: 2.4; }
 .strand-ghosts { font-size: 12.5px; color: var(--muted); margin-top: 10px; }
 .grade-empty { font-size: 13px; color: var(--muted); margin: 0; padding: 4px 0 6px; }
 
+/* ---------- 底部「返回上一级」栏 ---------- */
+.up-back {
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  margin-top: 28px; padding: 14px 16px;
+  background: var(--bg); border: 1px solid var(--border); border-radius: 12px;
+}
+.ub-main {
+  display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  font-weight: 600; font-size: 14.5px; color: var(--accent); text-decoration: none;
+  padding: 8px 16px; border: 1.5px solid var(--accent); border-radius: 10px; background: #fff;
+}
+.ub-main:hover { background: var(--accent); color: #fff; }
+.ub-main:hover .ub-sub { color: rgba(255, 255, 255, 0.85); }
+.ub-arrow { font-size: 16px; line-height: 1; }
+.ub-sub { font-weight: 400; font-size: 12.5px; color: var(--muted); }
+.ub-else { font-size: 13px; color: var(--muted); }
+.ub-else a { color: var(--muted); text-decoration: underline dotted; padding: 0 2px; }
+.ub-else a:hover { color: var(--accent); }
+
+/* ---------- 目录页「上次学到这」高亮 ---------- */
+.chapter-card.last-card { outline: 2px solid var(--accent); outline-offset: 2px; }
+.last-badge {
+  font-size: 11px; padding: 1px 9px; border-radius: 999px;
+  background: var(--accent); color: #fff; white-space: nowrap;
+}
+
 </style>
 </head>
 <body>
@@ -795,6 +822,10 @@ a:hover .tg-node { stroke-width: 2.4; }
 <div class="locate-bar" style="margin-top:36px">
   定位完还是不会做？去<a href="patterns.html">题型库</a>看这类题的「逆向解读」——它由哪几个知识点拼成，缺哪一环一眼就看得出来。
 </div>
+<nav class="up-back">
+  <a class="ub-main" href="index.html"><span class="ub-arrow">↩</span>返回本章目录<span class="ub-sub">四年级上册 · 条形统计图</span></a>
+  <span class="ub-else">或直达：<a href="patterns.html">本章题型库</a> · <a href="../index.html">课程目录</a></span>
+</nav>
 
 <script>
 window.__LOCATE_DATA__ = {"asks":[{"k":"定每格数量","desc":"最大数据 ÷ 纵轴格数，向上取好数"},{"k":"读图换算","desc":"格数 × 每格数量；半格算一半"},{"k":"画条","desc":"数量 ÷ 每格数量 = 占几格"},{"k":"比较分析","desc":"最多最少、相差、合计"}],"features":["读图第一步看**纵轴刻度**——每格代表几决定一切","奇数配「一格代表 2」会出半格，别四舍五入成整格","画条和读数互为逆运算：乘与除","比较类问题先各自换算成真实数量再加减"],"patterns":[{"id":"p4a-bar-t-read","no":"基础 1","title":"整格读数","kind":"读图","asks":["读图换算"],"signals":["一格代表","是多少"],"route":["/p4a-bar/p4a-bar-read"],"chain":[{"point":"p4a-bar-read","role":"格数 × 每格数量","title":"读一格代表多个的条形图"}]},{"id":"p4a-bar-t-half","no":"基础 2","title":"半格读数","kind":"读图","asks":["读图换算"],"signals":["一格代表 2","半格"],"route":["/p4a-bar/p4a-bar-read"],"chain":[{"point":"p4a-bar-read","role":"半格 = 一半","title":"读一格代表多个的条形图"}]},{"id":"p4a-bar-t-choose","no":"中档 1","title":"选每格代表的数","kind":"设计","asks":["定每格数量"],"signals":["一格代表几比较合适"],"route":["/p4a-bar/p4a-bar-choose"],"chain":[{"point":"p4a-bar-choose","role":"最大值 ÷ 格数取好数","title":"选择合适的每格数量"}]},{"id":"p4a-bar-t-draw","no":"中档 2","title":"按数量画条","kind":"画图","asks":["画条"],"signals":["补画","画出"],"route":["/p4a-bar/p4a-bar-read"],"chain":[{"point":"p4a-bar-read","role":"数量 ÷ 身价 = 格数","title":"读一格代表多个的条形图"}]},{"id":"p4a-bar-t-ana","no":"提升 1","title":"综合分析并提问","kind":"分析","asks":["比较分析"],"signals":["相差","一共","提出问题"],"route":["/p4a-bar/p4a-bar-read","/p4a-bar/p4a-bar-use"],"chain":[{"point":"p4a-bar-read","role":"换算真实数量","title":"读一格代表多个的条形图"},{"point":"p4a-bar-use","role":"比较与合计","title":"用条形图分析数据"}]}],"patternsUrl":"patterns.html","prefix":""};

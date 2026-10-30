@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>题目定位器 - 平行四边形 - 图知学堂</title>
 <meta name="description" content="回答两三个问题，快速判断一道平行四边形题属于哪类经典题型，以及第一步该做什么。">
+<script>try{localStorage.setItem('k12v-last',JSON.stringify({s:'junior',c:'parallelogram'}))}catch(e){}</script>
 <style>
 :root {
   --bg: #fafaf8;
@@ -750,6 +751,32 @@ a:hover .tg-node { stroke-width: 2.4; }
 .strand-ghosts { font-size: 12.5px; color: var(--muted); margin-top: 10px; }
 .grade-empty { font-size: 13px; color: var(--muted); margin: 0; padding: 4px 0 6px; }
 
+/* ---------- 底部「返回上一级」栏 ---------- */
+.up-back {
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  margin-top: 28px; padding: 14px 16px;
+  background: var(--bg); border: 1px solid var(--border); border-radius: 12px;
+}
+.ub-main {
+  display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  font-weight: 600; font-size: 14.5px; color: var(--accent); text-decoration: none;
+  padding: 8px 16px; border: 1.5px solid var(--accent); border-radius: 10px; background: #fff;
+}
+.ub-main:hover { background: var(--accent); color: #fff; }
+.ub-main:hover .ub-sub { color: rgba(255, 255, 255, 0.85); }
+.ub-arrow { font-size: 16px; line-height: 1; }
+.ub-sub { font-weight: 400; font-size: 12.5px; color: var(--muted); }
+.ub-else { font-size: 13px; color: var(--muted); }
+.ub-else a { color: var(--muted); text-decoration: underline dotted; padding: 0 2px; }
+.ub-else a:hover { color: var(--accent); }
+
+/* ---------- 目录页「上次学到这」高亮 ---------- */
+.chapter-card.last-card { outline: 2px solid var(--accent); outline-offset: 2px; }
+.last-badge {
+  font-size: 11px; padding: 1px 9px; border-radius: 999px;
+  background: var(--accent); color: #fff; white-space: nowrap;
+}
+
 </style>
 </head>
 <body>
@@ -795,6 +822,10 @@ a:hover .tg-node { stroke-width: 2.4; }
 <div class="locate-bar" style="margin-top:36px">
   定位完还是不会做？去<a href="patterns.html">题型库</a>看这类题的「逆向解读」——它由哪几个知识点拼成，缺哪一环一眼就看得出来。
 </div>
+<nav class="up-back">
+  <a class="ub-main" href="index.html"><span class="ub-arrow">↩</span>返回本章目录<span class="ub-sub">八年级下册 · 平行四边形</span></a>
+  <span class="ub-else">或直达：<a href="patterns.html">本章题型库</a> · <a href="../index.html">课程目录</a></span>
+</nav>
 
 <script>
 window.__LOCATE_DATA__ = {"asks":[{"k":"求边求角","label":"用性质求边长、角度、周长"},{"k":"证线段相等","label":"用性质证线段或角相等（连对角线）"},{"k":"证平行四边形","label":"判定：证一个四边形是平行四边形"},{"k":"对角线","label":"对角线互相平分、过交点直线平分面积"},{"k":"中位线","label":"中位线求长度、证平行"},{"k":"中点四边形","label":"多个中点连成的四边形形状"},{"k":"斜边中线","label":"直角三角形斜边中线等于斜边一半"},{"k":"矩形折叠","label":"折叠 + 勾股方程求线段"},{"k":"菱形面积","label":"菱形对角线求面积、周长"},{"k":"正方形旋转","label":"正方形中的旋转、半角模型"},{"k":"面积","label":"底 × 高、等积变形、面积的一半关系"}],"features":{"k":"四边形","words":["平行四边形","矩形","菱形","正方形","对角线","对边","对角","邻边","中位线","中点","互相平分","互相垂直","折叠","面积","底乘高","half","d1d2","abcd"]},"patterns":[{"id":"pg-prop-calc","no":1,"title":"用性质求边、角、周长","kind":"计算","asks":["求边求角"],"signals":["▱ABCD","周长","∠A = …°","求 BC","∠A : ∠B"],"route":["/parallelogram/pg-prop"],"chain":[{"point":"pg-prop","role":"对边相等、对角相等、邻角互补","title":"平行四边形的性质：对边相等、对角相等"}]},{"id":"pg-prop-equ","no":2,"title":"连对角线证线段（或角）相等","kind":"证明","asks":["证线段相等"],"signals":["求证 AB = CD","求证 ∠… = ∠…","平行四边形中的线段","E、F 在边上"],"route":["/parallelogram/pg-prop","/parallelogram/pg-diag"],"chain":[{"point":"pg-prop","role":"对边平行 → 内错角","title":"平行四边形的性质：对边相等、对角相等"},{"point":"pg-diag","role":"对角线被平分 → 再凑一组全等","title":"对角线互相平分"}]},{"id":"pg-diag-calc","no":3,"title":"对角线互相平分求线段","kind":"计算","asks":["对角线"],"signals":["对角线交于点 O","AC = …，BD = …","求 △AOB 的周长","OA = OC"],"route":["/parallelogram/pg-diag"],"chain":[{"point":"pg-diag","role":"对角线互相平分","title":"对角线互相平分"}]},{"id":"pg-diag-bisect","no":4,"title":"过交点 O 的直线：平分线段与面积","kind":"组合型","asks":["对角线","面积"],"signals":["过 O 的直线交 AD 于 E","交 BC 于 F","求证 OE = OF","面积相等 / 平分","中心对称"],"route":["/parallelogram/pg-diag","/parallelogram/pg-prop"],"chain":[{"point":"pg-diag","role":"过 O 的直线被平分","title":"对角线互相平分"},{"point":"pg-prop","role":"内错角 + 对边平行造全等","title":"平行四边形的性质：对边相等、对角相等"}]},{"id":"pg-judge-one","no":5,"title":"一组对边平行且相等证平行四边形","kind":"证明","asks":["证平行四边形"],"signals":["求证四边形 … 是平行四边形","E、F 分别在 BC、AD 上","BE = DF","平移得到的线段"],"route":["/parallelogram/pg-judge","/parallelogram/pg-prop"],"chain":[{"point":"pg-judge","role":"判定③：一组对边平行且相等","title":"判定的五条路"},{"point":"pg-prop","role":"对边相等用于等量代换","title":"平行四边形的性质：对边相等、对角相等"}]},{"id":"pg-judge-diag","no":6,"title":"对角线互相平分证平行四边形","kind":"组合型","asks":["证平行四边形","对角线"],"signals":["对角线交于点 O","OA = OC","OB = OD","O 是两线段的中点","中点 + 中点"],"route":["/parallelogram/pg-judge","/parallelogram/pg-diag"],"chain":[{"point":"pg-judge","role":"判定⑤：对角线互相平分","title":"判定的五条路"},{"point":"pg-diag","role":"中点即被平分","title":"对角线互相平分"}]},{"id":"pg-midline-calc","no":7,"title":"中位线求长度、算周长","kind":"计算","asks":["中位线"],"signals":["D、E 分别是 AB、AC 的中点","DE","求 BC","中点三角形","周长"],"route":["/parallelogram/pg-midline"],"chain":[{"point":"pg-midline","role":"DE = ½BC 且 DE ∥ BC","title":"三角形中位线"}]},{"id":"pg-midquad","no":8,"title":"中点四边形：形状由对角线决定","kind":"组合型","asks":["中点四边形","中位线","证平行四边形"],"signals":["E、F、G、H 分别是各边中点","四边形 EFGH","AC = BD","AC ⊥ BD","判断形状"],"route":["/parallelogram/pg-midline","/parallelogram/pg-judge"],"chain":[{"point":"pg-midline","role":"两次中位线 → 平行且相等","title":"三角形中位线"},{"point":"pg-judge","role":"一组对边平行且相等 → 平行四边形","title":"判定的五条路"}]},{"id":"pg-rect-slant","no":9,"title":"斜边中线：见直角 + 斜边中点就连","kind":"组合型","asks":["斜边中线","求边求角"],"signals":["矩形","∠ACB = 90°","D 是 AB 的中点","求 CD","对角线交点 O"],"route":["/parallelogram/pg-rect","/parallelogram/pg-prop"],"chain":[{"point":"pg-rect","role":"对角线相等 → 中线 = ½ 斜边","title":"矩形：四个直角与斜边中线"},{"point":"pg-prop","role":"对边相等、直角条件","title":"平行四边形的性质：对边相等、对角相等"}]},{"id":"pg-rect-fold","no":10,"title":"矩形折叠：设未知数 + 勾股方程","kind":"综合型","asks":["矩形折叠"],"signals":["沿 AE 折叠","点 D 落在 BC 上的 F 处","求 CE","折痕","矩形 ABCD"],"route":["/parallelogram/pg-rect","/parallelogram/pg-prop"],"chain":[{"point":"pg-rect","role":"四个直角 → 两处可用勾股","title":"矩形：四个直角与斜边中线"},{"point":"pg-prop","role":"对边相等把已知长度搬到对边","title":"平行四边形的性质：对边相等、对角相等"}]},{"id":"pg-rhombus-calc","no":11,"title":"菱形：对角线 + 勾股，两套公式互验","kind":"组合型","asks":["菱形面积","求边求角"],"signals":["菱形","对角线 AC = …，BD = …","周长","面积","高"],"route":["/parallelogram/pg-rhombus","/parallelogram/pg-prop"],"chain":[{"point":"pg-rhombus","role":"对角线垂直平分 + ½d₁d₂","title":"菱形：四边相等与 ½d₁d₂"},{"point":"pg-prop","role":"平行四边形面积 = 底 × 高","title":"平行四边形的性质：对边相等、对角相等"}]},{"id":"pg-square-rot","no":12,"title":"正方形中的旋转与半角模型","kind":"综合型","asks":["正方形旋转","证线段相等"],"signals":["正方形 ABCD","∠EAF = 45°","E 在 BC 上，F 在 CD 上","求证 EF = BE + DF","旋转 90°"],"route":["/parallelogram/pg-square","/parallelogram/pg-judge"],"chain":[{"point":"pg-square","role":"四边相等 + 四个直角，可绕顶点旋转 90°","title":"正方形：两条来路的汇合"},{"point":"pg-judge","role":"构造出平行四边形/全等后收尾","title":"判定的五条路"}]},{"id":"pg-area-eq","no":13,"title":"面积：底 × 高与等积变形","kind":"计算","asks":["面积"],"signals":["面积","高","底","点 E 在 AD 上","两平行线之间","阴影部分面积"],"route":["/parallelogram/pg-area"],"chain":[{"point":"pg-area","role":"底 × 高、同底等高、一半关系","title":"面积与等积变形"}]}],"patternsUrl":"patterns.html","prefix":""};

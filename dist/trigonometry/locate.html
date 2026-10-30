@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>题目定位器 - 锐角三角函数 - 图知学堂</title>
 <meta name="description" content="回答两三个问题，快速判断一道锐角三角函数题属于哪类经典题型，以及第一步该做什么。">
+<script>try{localStorage.setItem('k12v-last',JSON.stringify({s:'junior',c:'trigonometry'}))}catch(e){}</script>
 <style>
 :root {
   --bg: #fafaf8;
@@ -750,6 +751,32 @@ a:hover .tg-node { stroke-width: 2.4; }
 .strand-ghosts { font-size: 12.5px; color: var(--muted); margin-top: 10px; }
 .grade-empty { font-size: 13px; color: var(--muted); margin: 0; padding: 4px 0 6px; }
 
+/* ---------- 底部「返回上一级」栏 ---------- */
+.up-back {
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  margin-top: 28px; padding: 14px 16px;
+  background: var(--bg); border: 1px solid var(--border); border-radius: 12px;
+}
+.ub-main {
+  display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  font-weight: 600; font-size: 14.5px; color: var(--accent); text-decoration: none;
+  padding: 8px 16px; border: 1.5px solid var(--accent); border-radius: 10px; background: #fff;
+}
+.ub-main:hover { background: var(--accent); color: #fff; }
+.ub-main:hover .ub-sub { color: rgba(255, 255, 255, 0.85); }
+.ub-arrow { font-size: 16px; line-height: 1; }
+.ub-sub { font-weight: 400; font-size: 12.5px; color: var(--muted); }
+.ub-else { font-size: 13px; color: var(--muted); }
+.ub-else a { color: var(--muted); text-decoration: underline dotted; padding: 0 2px; }
+.ub-else a:hover { color: var(--accent); }
+
+/* ---------- 目录页「上次学到这」高亮 ---------- */
+.chapter-card.last-card { outline: 2px solid var(--accent); outline-offset: 2px; }
+.last-badge {
+  font-size: 11px; padding: 1px 9px; border-radius: 999px;
+  background: var(--accent); color: #fff; white-space: nowrap;
+}
+
 </style>
 </head>
 <body>
@@ -795,6 +822,10 @@ a:hover .tg-node { stroke-width: 2.4; }
 <div class="locate-bar" style="margin-top:36px">
   定位完还是不会做？去<a href="patterns.html">题型库</a>看这类题的「逆向解读」——它由哪几个知识点拼成，缺哪一环一眼就看得出来。
 </div>
+<nav class="up-back">
+  <a class="ub-main" href="index.html"><span class="ub-arrow">↩</span>返回本章目录<span class="ub-sub">九年级下册 · 锐角三角函数</span></a>
+  <span class="ub-else">或直达：<a href="patterns.html">本章题型库</a> · <a href="../index.html">课程目录</a></span>
+</nav>
 
 <script>
 window.__LOCATE_DATA__ = {"asks":[{"k":"求函数值","label":"求某个角的三角函数值，或由函数值求边"},{"k":"化简求值","label":"特殊角的混合运算、化简求值"},{"k":"解三角形","label":"解直角三角形，求边或求角"},{"k":"实际测量","label":"测高、坡度、方位等实际问题"},{"k":"综合","label":"压轴：非直角三角形、四边形、网格综合"}],"features":[{"k":"直角三角形","words":["直角","斜边","对边","邻边","Rt△"]},{"k":"特殊角","words":["30°","45°","60°","√3","√2","tan"]},{"k":"仰角俯角","words":["仰角","俯角","塔","楼","视线","眼睛","测角仪"]},{"k":"坡度","words":["坡","坡度","坡角","斜坡","坡面","铅直"]},{"k":"非直角","words":["作高","四边形","钝角","梯形","面积","△ABC"]},{"k":"网格坐标","words":["网格","方格","坐标","正方形网格"]}],"patterns":[{"id":"trig-def-read","no":1,"title":"定义直读：已知三边求三个函数值","kind":"单一型","asks":["求函数值"],"signals":["Rt△","∠C = 90°","求 sinA","AB =","BC ="],"route":["画图，标出直角和所求的角","缺哪条边就用勾股定理补出来","把三条边分别贴到「对边 / 邻边 / 斜边」上","按定义写三个比值并约分"],"chain":[{"point":"trig-concept","role":"认对边、邻边、斜边，套三个比值","title":"锐角三角函数的定义"}]},{"id":"trig-value-to-side","no":2,"title":"已知一个函数值，求边或求另一个函数值","kind":"变式型","asks":["求函数值"],"signals":["sinA = 3/5","求 BC","求 tanA","正方形网格"],"route":["按比值设边：sinA = 3/5 → 对边 3k、斜边 5k","用勾股定理补齐第三条边（这里是 4k）","用题给的实边定出 k","其余所有量代入即可；网格题则直接数格子算三条边"],"chain":[{"point":"trig-concept","role":"比值就是两条边的比，可设 k 还原","title":"锐角三角函数的定义"},{"point":"trig-ratio-const","role":"同角的三角形可任意放大缩小，所以设 k 合法","title":"比值只由角决定"}]},{"id":"trig-special-calc","no":3,"title":"特殊角的混合运算","kind":"计算型","asks":["化简求值"],"signals":["sin30°","tan60°","计算","0 次幂","绝对值"],"route":["逐个把三角函数换成最简根式","处理零指数幂 (a)⁰ = 1（a ≠ 0）、负指数、绝对值","合并同类二次根式","结果保留根号，不写近似值"],"chain":[{"point":"trig-special","role":"把每个三角函数换成准确值，不取近似","title":"30°、45°、60° 的函数值"}]},{"id":"trig-value-to-angle","no":4,"title":"由函数值反求角","kind":"单一型","asks":["求函数值"],"signals":["tanA = √3","∠A =","锐角","sinA = 1/2"],"route":["在特殊值表里定位这个数落在哪个角上","若同时要别的函数值，直接读同一行的数","非特殊值时用计算器反三角函数，注意题目要求的精确度","检查「锐角」条件是否满足唯一性"],"chain":[{"point":"trig-special","role":"特殊值表反查","title":"30°、45°、60° 的函数值"},{"point":"trig-concept","role":"需要别的函数值时，画三角形或查同角关系","title":"锐角三角函数的定义"}]},{"id":"trig-solve-one-angle","no":5,"title":"知一边一角解直角三角形","kind":"计算型","asks":["解三角形"],"signals":["∠A = 35°","AB = 10","求 BC","精确到"],"route":["画图，标出已知角与已知边","判断已知边是斜边、对边还是邻边","选出同时含已知边和所求边的函数，列出方程","解出后用勾股定理检验"],"chain":[{"point":"trig-solve","role":"按「已知什么、求什么」挑选 sin / cos / tan，列方程","title":"解直角三角形"}]},{"id":"trig-solve-two-sides","no":6,"title":"知两边解直角三角形","kind":"计算型","asks":["解三角形"],"signals":["AC = 8","BC = 6","求 ∠A","求 AB"],"route":["勾股定理求第三边","用两条已知边对应的函数求角（直角边配 tan 最稳）","另一角用互余一步得出","按题目要求取精确度"],"chain":[{"point":"trig-solve","role":"勾股求边 + 三角比求角","title":"解直角三角形"}]},{"id":"trig-height-single","no":7,"title":"仰角测高（单观测点）","kind":"应用型","asks":["实际测量"],"signals":["仰角","塔高","楼高","眼睛","测角仪","水平距离"],"route":["画图：水平视线、视线、塔身，三段构成直角三角形","水平距离放在邻边，(H − 仪器高) 放在对边","tanα = (H − 眼高) / d，解出 H","检查题目问的是塔高还是「塔顶比眼睛高多少」"],"chain":[{"point":"trig-elevation","role":"仰角以水平线为基准，俯角 = 仰角","title":"仰角、俯角与测高"},{"point":"trig-solve","role":"用 tan 把水平距离换算成高度差","title":"解直角三角形"}]},{"id":"trig-height-double","no":8,"title":"双观测点测高（底部不可达）","kind":"应用型","asks":["实际测量"],"signals":["前进","后退","两次仰角","相距","不可到达"],"route":["设近点到目标底部的水平距离为 x，高为 h","近点：h = x·tanβ","远点：h = (x + a)·tanα","联立解 x，再回代求 h（也可直接用公式 h = a·tanα·tanβ/(tanβ − tanα)）"],"chain":[{"point":"trig-elevation","role":"双点测高公式的由来","title":"仰角、俯角与测高"},{"point":"trig-solve","role":"两个直角三角形各列一个方程，联立求解","title":"解直角三角形"}]},{"id":"trig-slope-calc","no":9,"title":"坡度与坡角","kind":"应用型","asks":["实际测量"],"signals":["坡度","坡角","斜坡","i = 1:","铅直高度","坡面"],"route":["把 i 写成 tanα（i = 1 : m 时 tanα = 1/m）","判断题目给的是水平宽度、铅直高度还是坡面长度","按「对边 / 邻边 / 斜边」选函数","求角时用反三角函数，注意精确度与单位"],"chain":[{"point":"trig-slope","role":"i = h/l = tanα，分清高、水平宽、坡长","title":"坡度与坡角"},{"point":"trig-solve","role":"用 tan / sin / cos 求其余量","title":"解直角三角形"}]},{"id":"trig-altitude-split","no":10,"title":"非直角三角形：作高转化","kind":"综合型","asks":["综合"],"signals":["△ABC","∠B = 45°","∠C = 30°","求面积","求 AB","四边形"],"route":["选一条边作底，从对面顶点向它作高（钝角时延长底边）","设高为 h，把底边分成两段，分别用特殊角表示成 h 的倍数","两段之和（或差）等于底边，解出 h","回到某个直角三角形求其余边；求面积用 ½ × 底 × h"],"chain":[{"point":"trig-altitude","role":"作高把图形拆成两个直角三角形","title":"作高：非直角三角形怎么办"},{"point":"trig-special","role":"45°、30° 的比值直接给出两段的比例","title":"30°、45°、60° 的函数值"},{"point":"trig-solve","role":"设高为 h，两个三角形各写一式联立","title":"解直角三角形"}]}],"patternsUrl":"patterns.html","prefix":""};

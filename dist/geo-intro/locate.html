@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>题目定位器 - 几何图形初步 - 图知学堂</title>
 <meta name="description" content="回答两三个问题，快速判断一道几何图形初步题属于哪类经典题型，以及第一步该做什么。">
+<script>try{localStorage.setItem('k12v-last',JSON.stringify({s:'junior',c:'geo-intro'}))}catch(e){}</script>
 <style>
 :root {
   --bg: #fafaf8;
@@ -750,6 +751,32 @@ a:hover .tg-node { stroke-width: 2.4; }
 .strand-ghosts { font-size: 12.5px; color: var(--muted); margin-top: 10px; }
 .grade-empty { font-size: 13px; color: var(--muted); margin: 0; padding: 4px 0 6px; }
 
+/* ---------- 底部「返回上一级」栏 ---------- */
+.up-back {
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  margin-top: 28px; padding: 14px 16px;
+  background: var(--bg); border: 1px solid var(--border); border-radius: 12px;
+}
+.ub-main {
+  display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  font-weight: 600; font-size: 14.5px; color: var(--accent); text-decoration: none;
+  padding: 8px 16px; border: 1.5px solid var(--accent); border-radius: 10px; background: #fff;
+}
+.ub-main:hover { background: var(--accent); color: #fff; }
+.ub-main:hover .ub-sub { color: rgba(255, 255, 255, 0.85); }
+.ub-arrow { font-size: 16px; line-height: 1; }
+.ub-sub { font-weight: 400; font-size: 12.5px; color: var(--muted); }
+.ub-else { font-size: 13px; color: var(--muted); }
+.ub-else a { color: var(--muted); text-decoration: underline dotted; padding: 0 2px; }
+.ub-else a:hover { color: var(--accent); }
+
+/* ---------- 目录页「上次学到这」高亮 ---------- */
+.chapter-card.last-card { outline: 2px solid var(--accent); outline-offset: 2px; }
+.last-badge {
+  font-size: 11px; padding: 1px 9px; border-radius: 999px;
+  background: var(--accent); color: #fff; white-space: nowrap;
+}
+
 </style>
 </head>
 <body>
@@ -795,6 +822,10 @@ a:hover .tg-node { stroke-width: 2.4; }
 <div class="locate-bar" style="margin-top:36px">
   定位完还是不会做？去<a href="patterns.html">题型库</a>看这类题的「逆向解读」——它由哪几个知识点拼成，缺哪一环一眼就看得出来。
 </div>
+<nav class="up-back">
+  <a class="ub-main" href="index.html"><span class="ub-arrow">↩</span>返回本章目录<span class="ub-sub">七年级上册 · 几何图形初步</span></a>
+  <span class="ub-else">或直达：<a href="patterns.html">本章题型库</a> · <a href="../index.html">课程目录</a></span>
+</nav>
 
 <script>
 window.__LOCATE_DATA__ = {"asks":[{"k":"识别立体图形","label":"数面棱顶点、识别立体与平面图形"},{"k":"点线面体","label":"用点线面体的运动关系解释图形形成"},{"k":"三视图直觉","label":"判断从某方向看到的图形"},{"k":"直线射线线段","label":"三种线的表示、区别与基本事实"},{"k":"线段计算","label":"中点与线段的和差倍分"},{"k":"角的度量","label":"度分秒换算与角的表示"},{"k":"角平分线","label":"用角平分线做角的和差倍分"},{"k":"余角补角","label":"互余互补的计算与性质说理"}],"features":{"k":"几何图形初步","words":["立体图形","平面图形","棱","顶点","曲面","点动成线","线动成面","面动成体","旋转","圆柱","圆锥","三视图","从正面看","从上面看","直线","射线","线段","两点确定一条直线","两点之间线段最短","中点","叠合","延长线","角","度分秒","角平分线","余角","补角","互余","互补"]},"patterns":[{"id":"geo-solid-count","no":1,"title":"数立体图形的面、棱、顶点","kind":"概念","asks":["识别立体图形"],"signals":["有几个面","几条棱","几个顶点","n 棱柱","n 棱锥"],"route":["/geo-intro/geo-shapes"],"chain":[{"point":"geo-shapes","role":"体由面围成，面面交成线，线线交成点","title":"立体图形与平面图形"}]},{"id":"geo-motion-idea","no":2,"title":"点线面体的运动关系判断","kind":"概念","asks":["点线面体"],"signals":["点动成线","线动成面","面动成体","旋转一周","雨刷","笔尖"],"route":["/geo-intro/geo-motion"],"chain":[{"point":"geo-motion","role":"点→线→面→体的四级运动","title":"点、线、面、体"}]},{"id":"geo-view-pick","no":3,"title":"判断从某个方向看到的图形","kind":"应用","asks":["三视图直觉"],"signals":["从正面看","从左面看","从上面看","看到的图形","主视图","俯视图"],"route":["/geo-intro/geo-view"],"chain":[{"point":"geo-view","role":"换方向观察，被挡的也算层数","title":"从不同方向看立体图形"}]},{"id":"geo-line-fact","no":4,"title":"直线、射线、线段的表示与基本事实","kind":"概念","asks":["直线射线线段"],"signals":["射线 AB","直线 AB","端点","两点确定","钉子","墨线"],"route":["/geo-intro/geo-lines"],"chain":[{"point":"geo-lines","role":"三种线的区别 + 两点确定一条直线","title":"直线、射线、线段"}]},{"id":"geo-seg-mid","no":5,"title":"用中点求线段长","kind":"计算","asks":["线段计算"],"signals":["中点","平分","AM = MB","½AB"],"route":["/geo-intro/geo-seg-cmp"],"chain":[{"point":"geo-seg-cmp","role":"中点定义 AM = MB = ½AB","title":"线段的比较与运算"}]},{"id":"geo-seg-case","no":6,"title":"线段计算中的分类讨论","kind":"计算","asks":["线段计算"],"signals":["直线 AB 上","延长线","或在","两种情况"],"route":["/geo-intro/geo-seg-cmp"],"chain":[{"point":"geo-seg-cmp","role":"和差关系 + 位置不确定要分类","title":"线段的比较与运算"}]},{"id":"geo-degree-change","no":7,"title":"度分秒的换算","kind":"计算","asks":["角的度量"],"signals":["化成度分秒","多少度多少分","60 进制","°′″"],"route":["/geo-intro/geo-angle"],"chain":[{"point":"geo-angle","role":"1° = 60′，1′ = 60″","title":"角与角的平分线"}]},{"id":"geo-bisect-calc","no":8,"title":"用角平分线做角的计算","kind":"计算","asks":["角平分线"],"signals":["平分","∠AOC = ∠BOC","OD 平分","½∠"],"route":["/geo-intro/geo-angle"],"chain":[{"point":"geo-angle","role":"角平分线 ⟺ ½∠","title":"角与角的平分线"}]},{"id":"geo-comp-calc","no":9,"title":"余角补角的计算与性质","kind":"计算","asks":["余角补角"],"signals":["余角","补角","互余","互补","90° − ","180° − "],"route":["/geo-intro/geo-complement"],"chain":[{"point":"geo-complement","role":"余角 = 90° − ∠α，补角 = 180° − ∠α","title":"余角和补角"}]}],"patternsUrl":"patterns.html","prefix":""};

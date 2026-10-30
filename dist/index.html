@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>初中高中数学可视化学习 - 图知学堂</title>
 <meta name="description" content="初中高中数学可视化学习：138 章、641 个知识点，每个知识点都有可拖动的交互演示、分步题解、经典题型拆解和现实应用场景。">
+
 <style>
 :root {
   --bg: #fafaf8;
@@ -749,6 +750,32 @@ a:hover .tg-node { stroke-width: 2.4; }
 .strand-ch-card .num { color: var(--sc, var(--accent)); }
 .strand-ghosts { font-size: 12.5px; color: var(--muted); margin-top: 10px; }
 .grade-empty { font-size: 13px; color: var(--muted); margin: 0; padding: 4px 0 6px; }
+
+/* ---------- 底部「返回上一级」栏 ---------- */
+.up-back {
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  margin-top: 28px; padding: 14px 16px;
+  background: var(--bg); border: 1px solid var(--border); border-radius: 12px;
+}
+.ub-main {
+  display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  font-weight: 600; font-size: 14.5px; color: var(--accent); text-decoration: none;
+  padding: 8px 16px; border: 1.5px solid var(--accent); border-radius: 10px; background: #fff;
+}
+.ub-main:hover { background: var(--accent); color: #fff; }
+.ub-main:hover .ub-sub { color: rgba(255, 255, 255, 0.85); }
+.ub-arrow { font-size: 16px; line-height: 1; }
+.ub-sub { font-weight: 400; font-size: 12.5px; color: var(--muted); }
+.ub-else { font-size: 13px; color: var(--muted); }
+.ub-else a { color: var(--muted); text-decoration: underline dotted; padding: 0 2px; }
+.ub-else a:hover { color: var(--accent); }
+
+/* ---------- 目录页「上次学到这」高亮 ---------- */
+.chapter-card.last-card { outline: 2px solid var(--accent); outline-offset: 2px; }
+.last-badge {
+  font-size: 11px; padding: 1px 9px; border-radius: 999px;
+  background: var(--accent); color: #fff; white-space: nowrap;
+}
 
 </style>
 </head>
@@ -2777,6 +2804,28 @@ a:hover .tg-node { stroke-width: 2.4; }
     <p>用题目定位器。回答两三个问题，直接告诉你最可能是哪类题、第一步该做什么。</p>
   </div>
 </div>
+<script>
+/* 从站内回到目录时：切到上次所在的学段页签，高亮并滚动到上次学的章节 */
+(function () {
+  try {
+    var d = JSON.parse(localStorage.getItem('k12v-last') || 'null');
+    if (!d) return;
+    var tab = document.getElementById('tab-' + d.s);
+    if (tab) tab.checked = true;
+    var card = document.querySelector('.chapter-card[href="' + d.c + '/index.html"]');
+    if (!card) return;
+    card.classList.add('last-card');
+    var h = card.querySelector('.cc-head');
+    if (h) {
+      var b = document.createElement('span');
+      b.className = 'last-badge';
+      b.textContent = '上次学到这';
+      h.appendChild(b);
+    }
+    setTimeout(function () { card.scrollIntoView({ block: 'center' }); }, 60);
+  } catch (e) {}
+})();
+</script>
 </div></main>
 <footer class="site"><div class="container">
   图知学堂 · 初中·高中数学可视化学习 · 知识点图谱 + 题型层 + 交互组件

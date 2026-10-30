@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>题目定位器 - 数学广角——找次品 - 图知学堂</title>
 <meta name="description" content="回答两三个问题，快速判断一道数学广角——找次品题属于哪类经典题型，以及第一步该做什么。">
+<script>try{localStorage.setItem('k12v-last',JSON.stringify({s:'primary',c:'p5b-find'}))}catch(e){}</script>
 <style>
 :root {
   --bg: #fafaf8;
@@ -750,6 +751,32 @@ a:hover .tg-node { stroke-width: 2.4; }
 .strand-ghosts { font-size: 12.5px; color: var(--muted); margin-top: 10px; }
 .grade-empty { font-size: 13px; color: var(--muted); margin: 0; padding: 4px 0 6px; }
 
+/* ---------- 底部「返回上一级」栏 ---------- */
+.up-back {
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  margin-top: 28px; padding: 14px 16px;
+  background: var(--bg); border: 1px solid var(--border); border-radius: 12px;
+}
+.ub-main {
+  display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  font-weight: 600; font-size: 14.5px; color: var(--accent); text-decoration: none;
+  padding: 8px 16px; border: 1.5px solid var(--accent); border-radius: 10px; background: #fff;
+}
+.ub-main:hover { background: var(--accent); color: #fff; }
+.ub-main:hover .ub-sub { color: rgba(255, 255, 255, 0.85); }
+.ub-arrow { font-size: 16px; line-height: 1; }
+.ub-sub { font-weight: 400; font-size: 12.5px; color: var(--muted); }
+.ub-else { font-size: 13px; color: var(--muted); }
+.ub-else a { color: var(--muted); text-decoration: underline dotted; padding: 0 2px; }
+.ub-else a:hover { color: var(--accent); }
+
+/* ---------- 目录页「上次学到这」高亮 ---------- */
+.chapter-card.last-card { outline: 2px solid var(--accent); outline-offset: 2px; }
+.last-badge {
+  font-size: 11px; padding: 1px 9px; border-radius: 999px;
+  background: var(--accent); color: #fff; white-space: nowrap;
+}
+
 </style>
 </head>
 <body>
@@ -795,6 +822,10 @@ a:hover .tg-node { stroke-width: 2.4; }
 <div class="locate-bar" style="margin-top:36px">
   定位完还是不会做？去<a href="patterns.html">题型库</a>看这类题的「逆向解读」——它由哪几个知识点拼成，缺哪一环一眼就看得出来。
 </div>
+<nav class="up-back">
+  <a class="ub-main" href="index.html"><span class="ub-arrow">↩</span>返回本章目录<span class="ub-sub">五年级下册 · 数学广角——找次品</span></a>
+  <span class="ub-else">或直达：<a href="patterns.html">本章题型库</a> · <a href="../index.html">课程目录</a></span>
+</nav>
 
 <script>
 window.__LOCATE_DATA__ = {"asks":[{"k":"最少次数","desc":"3 个 1 次、9 个 2 次、27 个 3 次"},{"k":"设计方案","desc":"尽量平均分 3 份，画树枝图"},{"k":"说明道理","desc":"天平一次 3 种结果，3 份才不浪费"},{"k":"容量反求","desc":"k 次最多 3ᵏ 个"}],"features":["先分份再称：尽量平均分成 3 份","每次称完问「最坏还剩几个」","3ⁿ 天梯背熟：3、9、27、81","「保证找到」按最不利情况数步数"],"patterns":[{"id":"p5b-find-t-3","no":"基础 1","title":"三选一","kind":"方案","asks":["最少次数"],"signals":["3 个","至少","几次"],"route":["/p5b-find/p5b-find-3"],"chain":[{"point":"p5b-find-3","role":"(1,1,1) 称 1 次","title":"3 个里找 1 次"}]},{"id":"p5b-find-t-div","no":"基础 2","title":"9 个的分组","kind":"方案","asks":["设计方案"],"signals":["9 个","怎样称"],"route":["/p5b-find/p5b-find-div3"],"chain":[{"point":"p5b-find-div3","role":"平均分 (3,3,3)","title":"平均分 3 份最省"}]},{"id":"p5b-find-t-power","no":"中档 1","title":"3ⁿ 容量","kind":"计算","asks":["最少次数","设计方案"],"signals":["最多","能保证"],"route":["/p5b-find/p5b-find-plan"],"chain":[{"point":"p5b-find-plan","role":"k 次 → 3ᵏ 个","title":"画方案图与 3ⁿ 规律"}]},{"id":"p5b-find-t-why","no":"中档 2","title":"说清为什么分 3 份","kind":"说理","asks":["说明道理"],"signals":["为什么","平均分成"],"route":["/p5b-find/p5b-find-div3"],"chain":[{"point":"p5b-find-div3","role":"三种结果对应三份","title":"平均分 3 份最省"}]},{"id":"p5b-find-t-12","no":"提升 1","title":"12 个的完整方案","kind":"综合","asks":["设计方案","最少次数"],"signals":["12 个","写出方案"],"route":["/p5b-find/p5b-find-worst","/p5b-find/p5b-find-plan"],"chain":[{"point":"p5b-find-worst","role":"最不利缩圈","title":"最不利原则"},{"point":"p5b-find-plan","role":"3 次容量 27","title":"画方案图与 3ⁿ 规律"}]}],"patternsUrl":"patterns.html","prefix":""};

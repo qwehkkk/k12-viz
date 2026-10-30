@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>题目定位器 - 概率初步 - 图知学堂</title>
 <meta name="description" content="回答两三个问题，快速判断一道概率初步题属于哪类经典题型，以及第一步该做什么。">
+<script>try{localStorage.setItem('k12v-last',JSON.stringify({s:'junior',c:'probability'}))}catch(e){}</script>
 <style>
 :root {
   --bg: #fafaf8;
@@ -750,6 +751,32 @@ a:hover .tg-node { stroke-width: 2.4; }
 .strand-ghosts { font-size: 12.5px; color: var(--muted); margin-top: 10px; }
 .grade-empty { font-size: 13px; color: var(--muted); margin: 0; padding: 4px 0 6px; }
 
+/* ---------- 底部「返回上一级」栏 ---------- */
+.up-back {
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  margin-top: 28px; padding: 14px 16px;
+  background: var(--bg); border: 1px solid var(--border); border-radius: 12px;
+}
+.ub-main {
+  display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  font-weight: 600; font-size: 14.5px; color: var(--accent); text-decoration: none;
+  padding: 8px 16px; border: 1.5px solid var(--accent); border-radius: 10px; background: #fff;
+}
+.ub-main:hover { background: var(--accent); color: #fff; }
+.ub-main:hover .ub-sub { color: rgba(255, 255, 255, 0.85); }
+.ub-arrow { font-size: 16px; line-height: 1; }
+.ub-sub { font-weight: 400; font-size: 12.5px; color: var(--muted); }
+.ub-else { font-size: 13px; color: var(--muted); }
+.ub-else a { color: var(--muted); text-decoration: underline dotted; padding: 0 2px; }
+.ub-else a:hover { color: var(--accent); }
+
+/* ---------- 目录页「上次学到这」高亮 ---------- */
+.chapter-card.last-card { outline: 2px solid var(--accent); outline-offset: 2px; }
+.last-badge {
+  font-size: 11px; padding: 1px 9px; border-radius: 999px;
+  background: var(--accent); color: #fff; white-space: nowrap;
+}
+
 </style>
 </head>
 <body>
@@ -795,6 +822,10 @@ a:hover .tg-node { stroke-width: 2.4; }
 <div class="locate-bar" style="margin-top:36px">
   定位完还是不会做？去<a href="patterns.html">题型库</a>看这类题的「逆向解读」——它由哪几个知识点拼成，缺哪一环一眼就看得出来。
 </div>
+<nav class="up-back">
+  <a class="ub-main" href="index.html"><span class="ub-arrow">↩</span>返回本章目录<span class="ub-sub">九年级上册 · 概率初步</span></a>
+  <span class="ub-else">或直达：<a href="patterns.html">本章题型库</a> · <a href="../index.html">课程目录</a></span>
+</nav>
 
 <script>
 window.__LOCATE_DATA__ = {"asks":[{"k":"判类型","label":"判断必然 / 不可能 / 随机事件"},{"k":"求概率","label":"求某一事件的概率（单步或两步）"},{"k":"判公平","label":"判断游戏规则是否公平"},{"k":"估概率","label":"用频率估计概率并做预测"},{"k":"反推","label":"由概率（频率）反推数量"},{"k":"设计","label":"设计公平的规则或试验方案"},{"k":"综合","label":"压轴：概率与方程 / 统计综合"}],"features":[{"k":"摸球","words":["摸球","口袋","布袋","红球","白球","不放回","有放回"]},{"k":"骰子","words":["骰子","掷骰","投掷","点数"]},{"k":"硬币","words":["硬币","正面朝上","反面","抛"]},{"k":"转盘","words":["转盘","指针","扇形","圆心角"]},{"k":"频率表","words":["频率","大量重复","估计","成活率","次品率","命中率","稳定"]},{"k":"图形面积","words":["飞镖","靶","面积","区域","撒","落在"]}],"patterns":[{"id":"classify-events","no":1,"title":"事件三分类：一句话判断必然、不可能、随机","kind":"单一型","asks":["判类型"],"signals":["必然","不可能","一定","可能发生","判断事件类型"],"route":["逐条读题，锁定每句话描述的事件","先问「一定发生吗」→ 是则必然事件","再问「一定不发生吗」→ 是则不可能事件","两问都不是 → 随机事件","检查题给条件（大气压、骰子是否均匀、球的构成）是否影响分类"],"chain":[{"point":"random-event","role":"用三分类口诀逐条判断，别忘了条件性","title":"必然事件、不可能事件与随机事件"}]},{"id":"single-step-prob","no":2,"title":"单步等可能试验：数 n、数 m、作比","kind":"单一型","asks":["求概率"],"signals":["任意摸出","随机抽取","搅匀后","求……的概率","转盘","掷一枚"],"route":["确认「单步 + 有限 + 等可能」三个条件","列出（或数出）所有等可能结果，得 n","数出事件 A 包含的结果个数 m","P(A) = m/n，约分化简","验算：各互斥事件概率之和为 1"],"chain":[{"point":"equally-likely","role":"确认等可能前提 → P(A) = m/n 三步走","title":"等可能事件与概率公式 P(A) = m/n"}]},{"id":"dice-basic","no":3,"title":"掷骰子单步概率：「且 / 或」条件的拆解","kind":"单一型","asks":["求概率"],"signals":["掷骰子","点数","偶数","不小于","小于","且","或"],"route":["写出全部等可能结果：1、2、3、4、5、6，n = 6","把文字条件（小于、不小于、且、或）翻译成点数清单","数出 m，P = m/6","「且」取交集、「或」取并集，别把两个方向混在一起"],"chain":[{"point":"equally-likely","role":"n = 6 等可能，把文字条件翻译成点数集合","title":"等可能事件与概率公式 P(A) = m/n"}]},{"id":"sum-list","no":4,"title":"列表法：两枚骰子的点数和","kind":"组合型","asks":["求概率"],"signals":["同时掷两枚","两枚骰子","点数和","两次","有放回"],"route":["判断试验类型：两步、互不影响 → 列表法","行标第一枚、列标第二枚，填入每格结果（通常是和或差）","确认 n = 36","数出符合条件（如和为 7）的格子数 m","P = m/36，约分"],"chain":[{"point":"equally-likely","role":"确认两步各自等可能，总结果 36 个","title":"等可能事件与概率公式 P(A) = m/n"},{"point":"list-method","role":"列表铺格子，数符合条件的格子数","title":"列表法：两步试验求概率"}]},{"id":"tree-no-replace","no":5,"title":"树状图：不放回摸球求同色","kind":"组合型","asks":["求概率"],"signals":["不放回","依次摸出","先后摸出","剩下","两次"],"route":["画第一层：各颜色分支标概率（分母为总球数 n）","画第二层：不放回 → 分母一律为 n − 1，分支数按剩余球组成标","每条末端路径概率 = 沿途相乘","把题目要求的末端概率相加（如同色 = 两红 + 两白）","验算：全部末端概率之和为 1"],"chain":[{"point":"equally-likely","role":"确认每一步内部等可能（虽然两步之间不等可能）","title":"等可能事件与概率公式 P(A) = m/n"},{"point":"tree-method","role":"画两层树状图，第二步分母减一，末端相乘","title":"树状图法：放回与不放回"}]},{"id":"game-fair","no":6,"title":"游戏公平性：双方概率相等才公平","kind":"组合型","asks":["判公平","设计"],"signals":["游戏是否公平","对双方公平","设计规则","修改规则","谁获胜的概率大"],"route":["明确双方各自的获胜事件是什么","列表或树状图求出 P(甲胜)、P(乙胜)（注意可能存在平局）","比较两个概率：相等 → 公平；不等 → 不公平，指出谁占优","改规则：调整获胜事件的划分，使 P(甲胜) = P(乙胜)"],"chain":[{"point":"equally-likely","role":"各自算出双方获胜概率","title":"等可能事件与概率公式 P(A) = m/n"},{"point":"list-method","role":"两步试验用列表/树状图铺开所有结果","title":"列表法：两步试验求概率"}]},{"id":"freq-table","no":7,"title":"频率表估计概率：找稳定值，再乘总数","kind":"单一型","asks":["估概率"],"signals":["频率","大量重复","估计","成活率","次品率","命中率","稳定在"],"route":["观察频率表：试验次数从小到大排列","忽略前几次的波动，找出后面稳定不变的值 P̂","P̂ 就是概率的估计值","要预测 n 个个体时：估计量 = n × P̂","结论用语：「大约」「约为」——频率估计带不确定性"],"chain":[{"point":"frequency-estimate","role":"从频率表读稳定值 → 估计概率 → 预测总数","title":"用频率估计概率"}]},{"id":"prob-reverse","no":8,"title":"反推数量：由频率（概率）求球数","kind":"组合型","asks":["反推"],"signals":["频率稳定在","求红球的个数","白球有","估计袋中","次品率为"],"route":["把稳定频率翻译为概率：P ≈ 0.4","设未知球数，列出 P = m/n（分子分母都要含未知数或已知数）","解分式方程（去分母），求出未知数","检验：球数必须为正整数，代回验证概率","作答"],"chain":[{"point":"frequency-estimate","role":"把「频率稳定在 0.4」读成概率的估计值","title":"用频率估计概率"},{"point":"equally-likely","role":"列 P = m/n 方程反解未知球数","title":"等可能事件与概率公式 P(A) = m/n"}]},{"id":"area-dart","no":9,"title":"面积型概率：打靶与转盘","kind":"单一型","asks":["求概率"],"signals":["飞镖","随机投掷","靶","转盘","指针","落在","区域","环形"],"route":["确认「随机/任意」落点 → 等可能成立","写出 P = S(事件区域) / S(总区域)","圆套圆：约掉 π，得 (r/R)² —— 半径比要平方","转盘：P = 圆心角/360","「环形/以外」用对立事件 1 − P 更快"],"chain":[{"point":"area-probability","role":"P = 面积比；圆套圆 (r/R)²，转盘用角度比","title":"面积型概率"}]},{"id":"prob-param","no":10,"title":"压轴：概率含参 + 一元二次方程","kind":"综合型","asks":["综合"],"signals":["含有 m 个","概率为","求 m","颜色相同","不放回"],"route":["设红球 m 个，总数 m + 3","树状图列 P(同色) = P(两红) + P(两白)，含 m 的分式","由题给概率列方程，去分母整理成一元二次方程","解方程，得两个根","逐根检验：球数必须为正整数且符合题意（分母不为 0、分支有意义）","写出最终答案"],"chain":[{"point":"equally-likely","role":"用 m/n 框架搭起含参概率式","title":"等可能事件与概率公式 P(A) = m/n"},{"point":"tree-method","role":"不放回两步的末端概率相乘，得到含 m 的分子分母","title":"树状图法：放回与不放回"}]}],"patternsUrl":"patterns.html","prefix":""};

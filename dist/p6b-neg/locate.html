@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>题目定位器 - 负数 - 图知学堂</title>
 <meta name="description" content="回答两三个问题，快速判断一道负数题属于哪类经典题型，以及第一步该做什么。">
+<script>try{localStorage.setItem('k12v-last',JSON.stringify({s:'primary',c:'p6b-neg'}))}catch(e){}</script>
 <style>
 :root {
   --bg: #fafaf8;
@@ -750,6 +751,32 @@ a:hover .tg-node { stroke-width: 2.4; }
 .strand-ghosts { font-size: 12.5px; color: var(--muted); margin-top: 10px; }
 .grade-empty { font-size: 13px; color: var(--muted); margin: 0; padding: 4px 0 6px; }
 
+/* ---------- 底部「返回上一级」栏 ---------- */
+.up-back {
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  margin-top: 28px; padding: 14px 16px;
+  background: var(--bg); border: 1px solid var(--border); border-radius: 12px;
+}
+.ub-main {
+  display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  font-weight: 600; font-size: 14.5px; color: var(--accent); text-decoration: none;
+  padding: 8px 16px; border: 1.5px solid var(--accent); border-radius: 10px; background: #fff;
+}
+.ub-main:hover { background: var(--accent); color: #fff; }
+.ub-main:hover .ub-sub { color: rgba(255, 255, 255, 0.85); }
+.ub-arrow { font-size: 16px; line-height: 1; }
+.ub-sub { font-weight: 400; font-size: 12.5px; color: var(--muted); }
+.ub-else { font-size: 13px; color: var(--muted); }
+.ub-else a { color: var(--muted); text-decoration: underline dotted; padding: 0 2px; }
+.ub-else a:hover { color: var(--accent); }
+
+/* ---------- 目录页「上次学到这」高亮 ---------- */
+.chapter-card.last-card { outline: 2px solid var(--accent); outline-offset: 2px; }
+.last-badge {
+  font-size: 11px; padding: 1px 9px; border-radius: 999px;
+  background: var(--accent); color: #fff; white-space: nowrap;
+}
+
 </style>
 </head>
 <body>
@@ -795,6 +822,10 @@ a:hover .tg-node { stroke-width: 2.4; }
 <div class="locate-bar" style="margin-top:36px">
   定位完还是不会做？去<a href="patterns.html">题型库</a>看这类题的「逆向解读」——它由哪几个知识点拼成，缺哪一环一眼就看得出来。
 </div>
+<nav class="up-back">
+  <a class="ub-main" href="index.html"><span class="ub-arrow">↩</span>返回本章目录<span class="ub-sub">六年级下册 · 负数</span></a>
+  <span class="ub-else">或直达：<a href="patterns.html">本章题型库</a> · <a href="../index.html">课程目录</a></span>
+</nav>
 
 <script>
 window.__LOCATE_DATA__ = {"asks":[{"k":"正负表示","desc":"用正负数表示相反意义的量"},{"k":"数轴标点","desc":"在数轴上表示或读数"},{"k":"负数比较","desc":"比较两个负数的大小"},{"k":"相反数","desc":"求相反数或判断"},{"k":"实际应用","desc":"海拔、收支、盈亏的计算"}],"features":["出现「相反、零下、亏损、地下、支出」就要想到负数","看到 0 先问一句：它在这里是分界还是数量","负数比大小直接画数轴，别用「数字大就大」","答语必须带基准与单位"],"patterns":[{"id":"p6b-neg-t-sign","no":"基础 1","title":"用正负数表示","kind":"概念","asks":["正负表示"],"signals":["记作","相反"],"route":["/p6b-neg/p6b-neg-mean"],"chain":[{"point":"p6b-neg-mean","role":"先定基准，再定方向","title":"负数的意义"}]},{"id":"p6b-neg-t-axis","no":"基础 2","title":"数轴上的点","kind":"作图","asks":["数轴标点"],"signals":["数轴","表示"],"route":["/p6b-neg/p6b-neg-axis"],"chain":[{"point":"p6b-neg-axis","role":"0 左负右正","title":"数轴上的正负数"}]},{"id":"p6b-neg-t-cmp","no":"中档 1","title":"负数比大小","kind":"计算","asks":["负数比较"],"signals":["比较","<",">"],"route":["/p6b-neg/p6b-neg-cmp"],"chain":[{"point":"p6b-neg-cmp","role":"数轴上右大左小","title":"负数比大小"}]},{"id":"p6b-neg-t-opp","no":"中档 2","title":"相反数","kind":"概念","asks":["相反数"],"signals":["相反数"],"route":["/p6b-neg/p6b-neg-axis"],"chain":[{"point":"p6b-neg-axis","role":"0 两侧等距","title":"数轴上的正负数"}]},{"id":"p6b-neg-t-life","no":"提升 1","title":"海拔与温差","kind":"应用","asks":["实际应用"],"signals":["海拔","温差","高低"],"route":["/p6b-neg/p6b-neg-life","/p6b-neg/p6b-neg-cmp"],"chain":[{"point":"p6b-neg-life","role":"定基准、辨方向","title":"负数在生活中的应用"},{"point":"p6b-neg-cmp","role":"比较两地高低","title":"负数比大小"}]}],"patternsUrl":"patterns.html","prefix":""};

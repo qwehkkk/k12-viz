@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>题目定位器 - 百分数（一） - 图知学堂</title>
 <meta name="description" content="回答两三个问题，快速判断一道百分数（一）题属于哪类经典题型，以及第一步该做什么。">
+<script>try{localStorage.setItem('k12v-last',JSON.stringify({s:'primary',c:'p6a-pct'}))}catch(e){}</script>
 <style>
 :root {
   --bg: #fafaf8;
@@ -750,6 +751,32 @@ a:hover .tg-node { stroke-width: 2.4; }
 .strand-ghosts { font-size: 12.5px; color: var(--muted); margin-top: 10px; }
 .grade-empty { font-size: 13px; color: var(--muted); margin: 0; padding: 4px 0 6px; }
 
+/* ---------- 底部「返回上一级」栏 ---------- */
+.up-back {
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  margin-top: 28px; padding: 14px 16px;
+  background: var(--bg); border: 1px solid var(--border); border-radius: 12px;
+}
+.ub-main {
+  display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  font-weight: 600; font-size: 14.5px; color: var(--accent); text-decoration: none;
+  padding: 8px 16px; border: 1.5px solid var(--accent); border-radius: 10px; background: #fff;
+}
+.ub-main:hover { background: var(--accent); color: #fff; }
+.ub-main:hover .ub-sub { color: rgba(255, 255, 255, 0.85); }
+.ub-arrow { font-size: 16px; line-height: 1; }
+.ub-sub { font-weight: 400; font-size: 12.5px; color: var(--muted); }
+.ub-else { font-size: 13px; color: var(--muted); }
+.ub-else a { color: var(--muted); text-decoration: underline dotted; padding: 0 2px; }
+.ub-else a:hover { color: var(--accent); }
+
+/* ---------- 目录页「上次学到这」高亮 ---------- */
+.chapter-card.last-card { outline: 2px solid var(--accent); outline-offset: 2px; }
+.last-badge {
+  font-size: 11px; padding: 1px 9px; border-radius: 999px;
+  background: var(--accent); color: #fff; white-space: nowrap;
+}
+
 </style>
 </head>
 <body>
@@ -795,6 +822,10 @@ a:hover .tg-node { stroke-width: 2.4; }
 <div class="locate-bar" style="margin-top:36px">
   定位完还是不会做？去<a href="patterns.html">题型库</a>看这类题的「逆向解读」——它由哪几个知识点拼成，缺哪一环一眼就看得出来。
 </div>
+<nav class="up-back">
+  <a class="ub-main" href="index.html"><span class="ub-arrow">↩</span>返回本章目录<span class="ub-sub">六年级上册 · 百分数（一）</span></a>
+  <span class="ub-else">或直达：<a href="patterns.html">本章题型库</a> · <a href="../index.html">课程目录</a></span>
+</nav>
 
 <script>
 window.__LOCATE_DATA__ = {"asks":[{"k":"意义读写","desc":"表示一个数是另一个数的百分之几"},{"k":"互化","desc":"小数点搬家两位"},{"k":"求百分率","desc":"部分 ÷ 总数"},{"k":"多百分之几","desc":"差 ÷ 基准"},{"k":"单位1","desc":"「比」字后面是基准"}],"features":["百分数不带单位，是关系不是量","互化只动小数点，不改大小","所有「率」都是部分除以总数","多（少）百分之几的分母是「比」字后的量"],"patterns":[{"id":"p6a-pct-t-conv","no":"基础 1","title":"互化","kind":"计算","asks":["互化"],"signals":["化成百分数","化成小数"],"route":["/p6a-pct/p6a-pct-conv"],"chain":[{"point":"p6a-pct-conv","role":"小数点右移左移两位","title":"百分数与分数、小数互化"}]},{"id":"p6a-pct-t-rate","no":"基础 2","title":"求百分率","kind":"计算","asks":["求百分率"],"signals":["率","占"],"route":["/p6a-pct/p6a-pct-rate"],"chain":[{"point":"p6a-pct-rate","role":"部分 ÷ 总数","title":"求百分率"}]},{"id":"p6a-pct-t-more","no":"中档 1","title":"多百分之几","kind":"应用","asks":["多百分之几"],"signals":["比","多","增加了"],"route":["/p6a-pct/p6a-pct-change"],"chain":[{"point":"p6a-pct-change","role":"差 ÷ 基准","title":"多（少）百分之几"}]},{"id":"p6a-pct-t-less","no":"中档 2","title":"少百分之几","kind":"应用","asks":["多百分之几","单位1"],"signals":["降低","节约","减少了"],"route":["/p6a-pct/p6a-pct-change"],"chain":[{"point":"p6a-pct-change","role":"降低率 = 差 ÷ 原量","title":"多（少）百分之几"}]},{"id":"p6a-pct-t-both","no":"提升 1","title":"来回两个百分比","kind":"综合","asks":["多百分之几","单位1"],"signals":["多","少","分别是"],"route":["/p6a-pct/p6a-pct-change","/p6a-pct/p6a-pct-mean"],"chain":[{"point":"p6a-pct-change","role":"两次分母不同","title":"多（少）百分之几"},{"point":"p6a-pct-mean","role":"百分数表示关系","title":"百分数的意义"}]}],"patternsUrl":"patterns.html","prefix":""};

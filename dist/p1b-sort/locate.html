@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>题目定位器 - 分类与整理 - 图知学堂</title>
 <meta name="description" content="回答两三个问题，快速判断一道分类与整理题属于哪类经典题型，以及第一步该做什么。">
+<script>try{localStorage.setItem('k12v-last',JSON.stringify({s:'primary',c:'p1b-sort'}))}catch(e){}</script>
 <style>
 :root {
   --bg: #fafaf8;
@@ -750,6 +751,32 @@ a:hover .tg-node { stroke-width: 2.4; }
 .strand-ghosts { font-size: 12.5px; color: var(--muted); margin-top: 10px; }
 .grade-empty { font-size: 13px; color: var(--muted); margin: 0; padding: 4px 0 6px; }
 
+/* ---------- 底部「返回上一级」栏 ---------- */
+.up-back {
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  margin-top: 28px; padding: 14px 16px;
+  background: var(--bg); border: 1px solid var(--border); border-radius: 12px;
+}
+.ub-main {
+  display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  font-weight: 600; font-size: 14.5px; color: var(--accent); text-decoration: none;
+  padding: 8px 16px; border: 1.5px solid var(--accent); border-radius: 10px; background: #fff;
+}
+.ub-main:hover { background: var(--accent); color: #fff; }
+.ub-main:hover .ub-sub { color: rgba(255, 255, 255, 0.85); }
+.ub-arrow { font-size: 16px; line-height: 1; }
+.ub-sub { font-weight: 400; font-size: 12.5px; color: var(--muted); }
+.ub-else { font-size: 13px; color: var(--muted); }
+.ub-else a { color: var(--muted); text-decoration: underline dotted; padding: 0 2px; }
+.ub-else a:hover { color: var(--accent); }
+
+/* ---------- 目录页「上次学到这」高亮 ---------- */
+.chapter-card.last-card { outline: 2px solid var(--accent); outline-offset: 2px; }
+.last-badge {
+  font-size: 11px; padding: 1px 9px; border-radius: 999px;
+  background: var(--accent); color: #fff; white-space: nowrap;
+}
+
 </style>
 </head>
 <body>
@@ -795,6 +822,10 @@ a:hover .tg-node { stroke-width: 2.4; }
 <div class="locate-bar" style="margin-top:36px">
   定位完还是不会做？去<a href="patterns.html">题型库</a>看这类题的「逆向解读」——它由哪几个知识点拼成，缺哪一环一眼就看得出来。
 </div>
+<nav class="up-back">
+  <a class="ub-main" href="index.html"><span class="ub-arrow">↩</span>返回本章目录<span class="ub-sub">一年级下册 · 分类与整理</span></a>
+  <span class="ub-else">或直达：<a href="patterns.html">本章题型库</a> · <a href="../index.html">课程目录</a></span>
+</nav>
 
 <script>
 window.__LOCATE_DATA__ = {"asks":[{"k":"按标准分","desc":"给定标准分类"},{"k":"换标准","desc":"不同标准的不同结果"},{"k":"填表","desc":"整理成统计表"},{"k":"读表","desc":"从表中读信息比较"},{"k":"自定标准","desc":"开放分类并说理"}],"features":["一次分类只用一个标准","换标准总数不变","表中比大小看数字","自定标准要说理由"],"patterns":[{"id":"p1b-sort-t-std","no":"基础 1","title":"按标准分类","kind":"应用","asks":["按标准分"],"signals":["按…分类"],"route":["/p1b-sort/p1b-sort-std"],"chain":[{"point":"p1b-sort-std","role":"依标准归堆","title":"按标准分类"}]},{"id":"p1b-sort-t-multi","no":"基础 2","title":"换标准","kind":"概念","asks":["换标准"],"signals":["还可以怎样分"],"route":["/p1b-sort/p1b-sort-multi"],"chain":[{"point":"p1b-sort-multi","role":"换标准","title":"不同标准，不同结果"}]},{"id":"p1b-sort-t-table","no":"中档 1","title":"填表","kind":"应用","asks":["填表"],"signals":["统计表","整理"],"route":["/p1b-sort/p1b-sort-table"],"chain":[{"point":"p1b-sort-table","role":"结果入表","title":"整理成简单的统计表"}]},{"id":"p1b-sort-t-read","no":"中档 2","title":"读表比较","kind":"应用","asks":["读表"],"signals":["比…多","最多"],"route":["/p1b-sort/p1b-sort-table"],"chain":[{"point":"p1b-sort-table","role":"读数比较","title":"整理成简单的统计表"}]},{"id":"p1b-sort-t-open","no":"提升 1","title":"开放分类","kind":"综合","asks":["自定标准"],"signals":["你想怎样","自己分"],"route":["/p1b-sort/p1b-sort-group"],"chain":[{"point":"p1b-sort-group","role":"定标准 + 说理","title":"自己定标准整理"}]}],"patternsUrl":"patterns.html","prefix":""};

@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>题目定位器 - 一元二次方程 - 图知学堂</title>
 <meta name="description" content="回答两三个问题，快速判断一道一元二次方程题属于哪类经典题型，以及第一步该做什么。">
+<script>try{localStorage.setItem('k12v-last',JSON.stringify({s:'junior',c:'quadratic-equation'}))}catch(e){}</script>
 <style>
 :root {
   --bg: #fafaf8;
@@ -750,6 +751,32 @@ a:hover .tg-node { stroke-width: 2.4; }
 .strand-ghosts { font-size: 12.5px; color: var(--muted); margin-top: 10px; }
 .grade-empty { font-size: 13px; color: var(--muted); margin: 0; padding: 4px 0 6px; }
 
+/* ---------- 底部「返回上一级」栏 ---------- */
+.up-back {
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  margin-top: 28px; padding: 14px 16px;
+  background: var(--bg); border: 1px solid var(--border); border-radius: 12px;
+}
+.ub-main {
+  display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  font-weight: 600; font-size: 14.5px; color: var(--accent); text-decoration: none;
+  padding: 8px 16px; border: 1.5px solid var(--accent); border-radius: 10px; background: #fff;
+}
+.ub-main:hover { background: var(--accent); color: #fff; }
+.ub-main:hover .ub-sub { color: rgba(255, 255, 255, 0.85); }
+.ub-arrow { font-size: 16px; line-height: 1; }
+.ub-sub { font-weight: 400; font-size: 12.5px; color: var(--muted); }
+.ub-else { font-size: 13px; color: var(--muted); }
+.ub-else a { color: var(--muted); text-decoration: underline dotted; padding: 0 2px; }
+.ub-else a:hover { color: var(--accent); }
+
+/* ---------- 目录页「上次学到这」高亮 ---------- */
+.chapter-card.last-card { outline: 2px solid var(--accent); outline-offset: 2px; }
+.last-badge {
+  font-size: 11px; padding: 1px 9px; border-radius: 999px;
+  background: var(--accent); color: #fff; white-space: nowrap;
+}
+
 </style>
 </head>
 <body>
@@ -795,6 +822,10 @@ a:hover .tg-node { stroke-width: 2.4; }
 <div class="locate-bar" style="margin-top:36px">
   定位完还是不会做？去<a href="patterns.html">题型库</a>看这类题的「逆向解读」——它由哪几个知识点拼成，缺哪一环一眼就看得出来。
 </div>
+<nav class="up-back">
+  <a class="ub-main" href="index.html"><span class="ub-arrow">↩</span>返回本章目录<span class="ub-sub">九年级上册 · 一元二次方程</span></a>
+  <span class="ub-else">或直达：<a href="patterns.html">本章题型库</a> · <a href="../index.html">课程目录</a></span>
+</nav>
 
 <script>
 window.__LOCATE_DATA__ = {"asks":[{"k":"解方程","label":"解这个方程"},{"k":"判根","label":"判断根的情况 / 有几个根"},{"k":"参数","label":"求参数的值或取值范围"},{"k":"根关系","label":"求两根的和 / 积 / 平方和"},{"k":"实际量","label":"求实际量（增长率、边长、售价…）"},{"k":"证","label":"证明某个结论恒成立"}],"features":[{"k":"无一次项","label":"形如 x² = a 或 (x+m)² = a","words":["开平方","平方","x² = "]},{"k":"判别式","label":"出现「Δ」「b² − 4ac」「有几个根」","words":["Δ","判别式","b²","有实数根","有两个"]},{"k":"系数非1","label":"二次项系数不是 1","words":["配方法","二次项系数"]},{"k":"可分解","label":"系数小、看起来能拆成两个整式相乘","words":["因式分解","十字","分解"]},{"k":"两根已知","label":"题目给出两个根，或问两根的关系式","words":["两根","韦达","x₁","根与系数"]},{"k":"参数","label":"式子里带着字母参数","words":["参数","m 为","k 为","求证","取值范围"]},{"k":"增长","label":"有「连续两次」「增长率」「降价率」","words":["增长率","百分率","连续","两次"]},{"k":"几何","label":"有面积、围栏、小路、剪角","words":["面积","围栏","小路","矩形","正方形"]},{"k":"利润","label":"有进价、售价、销量","words":["利润","进价","售价","销量","成本"]}],"patterns":[{"id":"judge-form","no":1,"title":"判断是不是一元二次方程 / 化成一般形式","kind":"单一型","asks":["解方程"],"signals":["判断","一般形式","二次项系数","常数项","是不是"],"route":["有括号先展开，有分母先乘掉","把所有项移到等号左边，让右边变成 0","合并同类项，按 x²、x、常数项的顺序排好","对照 a、b、c 逐个读出，注意带符号"],"chain":[{"point":"definition","role":"认出这是要化成 ax² + bx + c = 0 的标准动作","title":"一元二次方程的定义与一般形式"},{"point":"definition","role":"展开、合并、移项，最后带符号读出 a、b、c","title":"一元二次方程的定义与一般形式"}]},{"id":"square-root-method","no":2,"title":"直接开平方：整体平方等于一个数","kind":"单一型","asks":["解方程"],"signals":["开平方","(x + m)²","x² = ","解方程"],"route":["先把式子整理成 (某式)² = 常数 的形状","两边直接开平方，右边一定带 ±","把括号里的式子分别等于正、负两个值，解出一元一次方程","得到两个根"],"chain":[{"point":"square-root","role":"把括号整体当成一个数，两边开平方","title":"直接开平方法"},{"point":"definition","role":"确认它属于一元二次方程，有两个根是正常的","title":"一元二次方程的定义与一般形式"}]},{"id":"completing-square-method","no":3,"title":"配方法解方程","kind":"单一型","asks":["解方程"],"signals":["配方法","二次项系数","解方程"],"route":["二次项系数不为 1 时，整条方程先除以它","常数项移到等号右边","两边同时加上 (一次项系数 ÷ 2)²","左边写成完全平方，右边算成一个数","开平方，解出两个根"],"chain":[{"point":"completing-square","role":"核心动作：加上一次项系数一半的平方","title":"配方法：把方程补成一个正方形"},{"point":"square-root","role":"配成完全平方后，最后一步靠开平方收尾","title":"直接开平方法"}]},{"id":"formula-method","no":4,"title":"公式法：套求根公式一步到位","kind":"单一型","asks":["解方程"],"signals":["公式法","求根公式","Δ","解方程"],"route":["化成一般形式，读出 a、b、c（带符号）","先算 Δ = b² − 4ac","Δ < 0 直接写「无实数根」，结束","Δ ≥ 0 时代入求根公式，化简结果"],"chain":[{"point":"formula","role":"求根公式：x = (−b ± √Δ) / 2a","title":"公式法与根的判别式"},{"point":"formula","role":"先用 Δ 判断有没有根，再代公式","title":"公式法与根的判别式"}]},{"id":"factoring-method","no":5,"title":"因式分解法：拆成两个因式相乘","kind":"单一型","asks":["解方程"],"signals":["因式分解","十字","分解","解方程"],"route":["确认右边为 0，不是 0 先移项","拆二次项和常数项，用十字相乘凑一次项","写成两个一次式的乘积 = 0","分别令每个因式为 0，解出两根"],"chain":[{"point":"factoring","role":"A × B = 0 → A = 0 或 B = 0，这是全部原理","title":"因式分解法"},{"point":"definition","role":"确保右边已经是 0，否则先移项","title":"一元二次方程的定义与一般形式"}]},{"id":"delta-discussion","no":6,"title":"不解方程，判断根的情况","kind":"单一型","asks":["判根"],"signals":["判断","有几个根","根的情况","Δ","有实数根"],"route":["化成一般形式，读出 a、b、c","计算 Δ = b² − 4ac","Δ > 0 两个不等根；Δ = 0 两个相等根；Δ < 0 无实数根","按题目要求写结论"],"chain":[{"point":"formula","role":"Δ 的符号直接对应三种根的情况","title":"公式法与根的判别式"},{"point":"definition","role":"先确认二次项系数不为 0，否则谈不上判别式","title":"一元二次方程的定义与一般形式"}]},{"id":"vieta-value","no":7,"title":"用韦达定理求两根的对称式","kind":"组合型","asks":["根关系"],"signals":["两根","x₁ + x₂","x₁²","韦达","根与系数"],"route":["读出 a、b、c，写出两根之和与两根之积","把待求的式子用 (x₁ + x₂) 和 (x₁x₂) 表示出来","代入数值计算","若题目含参数，先验证 Δ ≥ 0"],"chain":[{"point":"vieta","role":"直接读出 x₁ + x₂ = −b/a，x₁x₂ = c/a","title":"根与系数的关系（韦达定理）"},{"point":"formula","role":"先确认 Δ ≥ 0，保证根真的存在","title":"公式法与根的判别式"},{"point":"vieta","role":"用完全平方变形把待求式换成和与积","title":"根与系数的关系（韦达定理）"}]},{"id":"growth-model","no":8,"title":"增长率问题：连续两次变化","kind":"综合型","asks":["实际量"],"signals":["增长率","百分率","连续","两次","下降到","提高到"],"route":["设增长（降低）率为 x","按「原值 × (1 ± x)² = 新值」列方程","两边除以原值，直接开平方","解出两个值，按实际意义取舍"],"chain":[{"point":"growth","role":"建模：a(1 + x)² = b","title":"增长率问题：连续两次变化"},{"point":"square-root","role":"解法：两边除以 a 后直接开平方","title":"直接开平方法"},{"point":"growth","role":"检验：增长率要符合实际意义，负得离谱的舍去","title":"增长率问题：连续两次变化"}]},{"id":"area-model","no":9,"title":"面积问题：把图形翻译成方程","kind":"综合型","asks":["实际量"],"signals":["面积","围栏","小路","矩形","正方形","剪去"],"route":["画草图，标出所有能用 x 表示的边","套面积公式列方程","整理成一般形式并求解","两个根都代回实际条件检验，舍去不合理的"],"chain":[{"point":"area","role":"设宽为 x，用总长把长表示出来","title":"几何面积问题"},{"point":"definition","role":"套面积公式，整理成一般形式","title":"一元二次方程的定义与一般形式"},{"point":"factoring","role":"分解或套公式解出两个根","title":"因式分解法"},{"point":"area","role":"检验：边长必须为正，不合理的根舍去","title":"几何面积问题"}]},{"id":"profit-equation","no":10,"title":"利润问题：给定目标利润求售价","kind":"综合型","asks":["实际量"],"signals":["利润","进价","售价","销量","定价"],"route":["设涨价（降价）为 x 元","写出单件利润和销量各自关于 x 的表达式","相乘，令其等于目标利润","整理求解，按实际条件取舍","把 x 换算回题目问的定价"],"chain":[{"point":"profit","role":"建模：利润 =（售价 − 成本）× 销量","title":"销售利润问题"},{"point":"definition","role":"展开整理成一般形式","title":"一元二次方程的定义与一般形式"},{"point":"factoring","role":"解出两个根","title":"因式分解法"},{"point":"profit","role":"按实际条件取舍，并回答题目真正问的量","title":"销售利润问题"}]},{"id":"parameter-roots","no":11,"title":"含参数方程：讨论根的情况","kind":"综合型","asks":["参数","判根"],"signals":["参数","m 为","k 的取值","取值范围","有两个实数根","求证"],"route":["先写二次项系数 ≠ 0 的条件","算出含参数的 Δ 表达式","按题目对根的要求列不等式（≥ 0 或 > 0）","两个条件取交集，注意端点是开还是闭"],"chain":[{"point":"definition","role":"确认二次项系数不为 0，否则它根本不是二次方程","title":"一元二次方程的定义与一般形式"},{"point":"formula","role":"算含参数的 Δ，按「有两个实数根」列 Δ ≥ 0","title":"公式法与根的判别式"},{"point":"parameter","role":"两个条件取交集，写出完整范围","title":"含参数方程与根的讨论"}]},{"id":"parameter-proof","no":12,"title":"证明题：判别式化成完全平方","kind":"综合型","asks":["证"],"signals":["求证","无论","总有实数根","恒成立","参数"],"route":["写出 Δ 的表达式","展开、合并，尽量化成完全平方","指出平方数恒非负","由 Δ ≥ 0 得出「总有实数根」"],"chain":[{"point":"formula","role":"写出 Δ 的表达式，这是全部工作的起点","title":"公式法与根的判别式"},{"point":"formula","role":"把 Δ 化简，目标是化成平方形式","title":"公式法与根的判别式"},{"point":"parameter","role":"说明平方恒非负，从而 Δ ≥ 0，结论成立","title":"含参数方程与根的讨论"}]}],"patternsUrl":"patterns.html","prefix":""};

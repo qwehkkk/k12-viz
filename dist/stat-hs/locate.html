@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>题目定位器 - 统计 - 图知学堂</title>
 <meta name="description" content="回答两三个问题，快速判断一道统计题属于哪类经典题型，以及第一步该做什么。">
+<script>try{localStorage.setItem('k12v-last',JSON.stringify({s:'senior',c:'stat-hs'}))}catch(e){}</script>
 <style>
 :root {
   --bg: #fafaf8;
@@ -750,6 +751,32 @@ a:hover .tg-node { stroke-width: 2.4; }
 .strand-ghosts { font-size: 12.5px; color: var(--muted); margin-top: 10px; }
 .grade-empty { font-size: 13px; color: var(--muted); margin: 0; padding: 4px 0 6px; }
 
+/* ---------- 底部「返回上一级」栏 ---------- */
+.up-back {
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  margin-top: 28px; padding: 14px 16px;
+  background: var(--bg); border: 1px solid var(--border); border-radius: 12px;
+}
+.ub-main {
+  display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  font-weight: 600; font-size: 14.5px; color: var(--accent); text-decoration: none;
+  padding: 8px 16px; border: 1.5px solid var(--accent); border-radius: 10px; background: #fff;
+}
+.ub-main:hover { background: var(--accent); color: #fff; }
+.ub-main:hover .ub-sub { color: rgba(255, 255, 255, 0.85); }
+.ub-arrow { font-size: 16px; line-height: 1; }
+.ub-sub { font-weight: 400; font-size: 12.5px; color: var(--muted); }
+.ub-else { font-size: 13px; color: var(--muted); }
+.ub-else a { color: var(--muted); text-decoration: underline dotted; padding: 0 2px; }
+.ub-else a:hover { color: var(--accent); }
+
+/* ---------- 目录页「上次学到这」高亮 ---------- */
+.chapter-card.last-card { outline: 2px solid var(--accent); outline-offset: 2px; }
+.last-badge {
+  font-size: 11px; padding: 1px 9px; border-radius: 999px;
+  background: var(--accent); color: #fff; white-space: nowrap;
+}
+
 </style>
 </head>
 <body>
@@ -795,6 +822,10 @@ a:hover .tg-node { stroke-width: 2.4; }
 <div class="locate-bar" style="margin-top:36px">
   定位完还是不会做？去<a href="patterns.html">题型库</a>看这类题的「逆向解读」——它由哪几个知识点拼成，缺哪一环一眼就看得出来。
 </div>
+<nav class="up-back">
+  <a class="ub-main" href="index.html"><span class="ub-arrow">↩</span>返回本章目录<span class="ub-sub">高一下册 · 统计</span></a>
+  <span class="ub-else">或直达：<a href="patterns.html">本章题型库</a> · <a href="../index.html">课程目录</a></span>
+</nav>
 
 <script>
 window.__LOCATE_DATA__ = {"asks":[{"k":"抽样方法","label":"简单随机、分层、系统抽样与名额分配"},{"k":"直方图","label":"读频率、求样本容量、估众数中位数"},{"k":"集中趋势","label":"平均数、加权平均、中位数、众数"},{"k":"离散程度","label":"方差、标准差、极差、百分位数"},{"k":"相关回归","label":"散点图、相关系数、回归方程预测"}],"features":[{"k":"分层/比例","desc":"出现「按比例抽取」→ 抽样比 = n/N"},{"k":"频率/组距","desc":"直方图纵轴是密度，频率要乘组距"},{"k":"平均/中位","desc":"有极端值就问该用哪个指标"},{"k":"方差/稳定","desc":"「谁更稳定」「波动」→ 比方差或标准差"},{"k":"预测","desc":"给回归方程求 ŷ，或反求参数"}],"patterns":[{"id":"sh-b-sample","no":"基础 1","title":"分层抽样名额","kind":"计算","asks":["抽样方法"],"signals":["分层","按比例","各抽多少"],"route":["/stat-hs/sh-sample"],"chain":[{"point":"sh-sample","role":"抽样比相同","title":"随机抽样：简单随机与分层"}]},{"id":"sh-b-hist","no":"基础 2","title":"直方图读频率","kind":"计算","asks":["直方图"],"signals":["频率/组距","直方图","组距"],"route":["/stat-hs/sh-hist"],"chain":[{"point":"sh-hist","role":"面积 = 频率","title":"频率分布直方图"}]},{"id":"sh-b-mean","no":"基础 3","title":"平均数与加权平均","kind":"计算","asks":["集中趋势"],"signals":["平均数","平均分","加权"],"route":["/stat-hs/sh-central"],"chain":[{"point":"sh-central","role":"加权平均按人数加权","title":"集中趋势：平均数、中位数、众数"}]},{"id":"sh-i-var","no":"提升 1","title":"方差计算与比较","kind":"计算","asks":["离散程度"],"signals":["方差","稳定","波动"],"route":["/stat-hs/sh-spread"],"chain":[{"point":"sh-spread","role":"偏差平方的平均","title":"离散程度：方差、标准差与百分位数"}]},{"id":"sh-i-pct","no":"提升 2","title":"百分位数与排名","kind":"计算","asks":["离散程度"],"signals":["百分位数","排名","超过"],"route":["/stat-hs/sh-spread"],"chain":[{"point":"sh-spread","role":"百分位数定义","title":"离散程度：方差、标准差与百分位数"}]},{"id":"sh-i-reg","no":"提升 3","title":"回归方程求参数与预测","kind":"计算","asks":["相关回归"],"signals":["回归方程","预测","ŷ"],"route":["/stat-hs/sh-corr"],"chain":[{"point":"sh-corr","role":"回归线过样本中心点","title":"相关关系与回归直线"}]},{"id":"sh-a-hist","no":"综合 1","title":"直方图综合估计","kind":"综合","asks":["直方图","集中趋势"],"signals":["直方图","估计平均数","求中位数"],"route":["/stat-hs/sh-hist","/stat-hs/sh-central"],"chain":[{"point":"sh-hist","role":"面积即频率","title":"频率分布直方图"},{"point":"sh-central","role":"组中值加权","title":"集中趋势：平均数、中位数、众数"}]},{"id":"sh-a-decide","no":"综合 2","title":"用统计量作决策","kind":"应用","asks":["集中趋势","离散程度"],"signals":["选谁","更稳定","比较"],"route":["/stat-hs/sh-spread","/stat-hs/sh-central"],"chain":[{"point":"sh-spread","role":"方差衡量稳定性","title":"离散程度：方差、标准差与百分位数"},{"point":"sh-central","role":"均值衡量水平","title":"集中趋势：平均数、中位数、众数"}]}],"patternsUrl":"patterns.html","prefix":""};
