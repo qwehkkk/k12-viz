@@ -156,7 +156,7 @@ ol.steps li::before {
 }
 .ex-answer {
   margin-top: 10px; padding: 10px 14px; border-radius: 8px;
-  background: var(--green-soft); color: #085041; font-size: 14px;
+  background: var(--green-soft); color: var(--green); font-size: 14px;
 }
 .ex-answer::before { content: "答案　"; font-weight: 500; }
 
@@ -336,7 +336,7 @@ ol.route li::before {
 .loc-card .lc-why { font-size: 13px; color: var(--muted); margin-top: 6px; }
 .loc-card .lc-first {
   font-size: 13px; margin-top: 8px; padding: 8px 12px; border-radius: 8px;
-  background: var(--green-soft); color: #085041;
+  background: var(--green-soft); color: var(--green);
 }
 .loc-card .lc-first b { font-weight: 500; }
 .score {
@@ -887,7 +887,14 @@ a:hover .tg-node { stroke-width: 2.4; }
 [data-theme="dark"] .fb-badge.ok { color: var(--green); border-color: #2a4a40; }
 [data-theme="dark"] .fb-badge.warn { background: #2b2418; color: #d9a441; border-color: #4a3d20; }
 [data-theme="dark"] .fav-star.on { background: #2b2418; border-color: #4a3d20; color: #d9a441; }
+[data-theme="dark"] .apply-card { background: #2b2418; border-color: #4a3d20; }
+[data-theme="dark"] .apply-head { color: #d9a441; }
+[data-theme="dark"] .apply-text { color: #c4b18a; }
 [data-theme="dark"] .st-row.st-done-no .st-no { background: #332022; }
 [data-theme="dark"] #search-ov { background: rgba(0, 0, 0, 0.6); }
 [data-theme="dark"] .viz-box,
 [data-theme="dark"] .tg-pz { border-radius: 10px; overflow: hidden; }
+/* canvas 底色是组件里硬编码的白填充，暗色下用滤镜反转明度、保留色相 */
+[data-theme="dark"] .viz-canvas {
+  filter: invert(0.9) hue-rotate(180deg);
+}
