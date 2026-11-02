@@ -24,8 +24,15 @@ const SITE = {
   tagline: '把知识点画出来',
   base: 'https://teach.toolona.com',
   // 留言接口：部署 Cloudflare Pages Functions + D1 后改为 '/api/comments'
-  commentApi: '/api/comments'
+  commentApi: '/api/comments',
+  // Cloudflare Web Analytics 站点 token（留空则不注入统计脚本）
+  cfBeacon: '012d1b2ea4ec44e8b1aa4c114f2a96ed'
 };
+
+/* 统计脚本（无 cookie、不采集个人信息，仅 PV/来源/地区） */
+const CF_BEACON = SITE.cfBeacon
+  ? `<!-- Cloudflare Web Analytics -->
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "${SITE.cfBeacon}"}'></script>` : '';
 
 /* 年级学期顺序（人教版目录分组用） */
 const GRADE_TERMS = ['一年级上册', '一年级下册', '二年级上册', '二年级下册', '三年级上册', '三年级下册', '四年级上册', '四年级下册', '五年级上册', '五年级下册', '六年级上册', '六年级下册', '七年级上册', '七年级下册', '八年级上册', '八年级下册', '九年级上册', '九年级下册', '高一上册', '高一下册', '高二上册', '高二下册', '高三上册', '高三下册'];
@@ -230,7 +237,7 @@ ${CSS}
 function foot() {
   return `</div></main>
 <footer class="site"><div class="container">
-  ${SITE.name} · 初中·高中数学可视化学习 · 知识点图谱 + 题型层 + 交互组件
+  ${SITE.name} · 小学·初中·高中数学可视化学习 · 知识点图谱 + 题型层 + 交互组件
 </div></footer>
 <script>
 ${VIZJS}
@@ -246,6 +253,8 @@ ${COMMENTSJS}
 window.__PAGE_CTX__ = ${JSON.stringify(PAGE_CTX)};
 ${EXTRASJS}
 </script>
+<!-- Cloudflare Web Analytics -->
+${CF_BEACON}
 </body>
 </html>`;
 }

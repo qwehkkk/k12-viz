@@ -59,4 +59,5 @@ node indexnow.js                             # push 部署完成后提交搜索�
 
 - Cloudflare Pages 直连仓库，push 即上线；`assets/*.js/css` 边缘缓存 max-age=14400，改完部署后几分钟内刷新，验证线上用 `curl -o` 落盘 + `cmp`。
 - sitemap 已提交 GSC；IndexNow key 在 `site.json`。
+- 访问统计用 Cloudflare Web Analytics（无 cookie、不采集个人信息）：token 在 `build.js` 的 `SITE.cfBeacon`，`foot()` 统一注入全站 1923 个页面；改成空字符串即关闭。数据在 Cloudflare 后台「Web Analytics」看 PV / 来源 / 地区 / 访问页面。
 - 留言存 D1，管理端拉取需 `ADMIN_TOKEN`（Pages 环境变量）。
