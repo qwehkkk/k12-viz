@@ -351,7 +351,7 @@ ${t.sg.grades.map(gradeBlock).join('\n')}
 </a>`;
   }).join('\n');
 
-  return `${head(`初中高中数学可视化学习 - ${SITE.name}`, `初中高中数学可视化学习：${chapters.length} 章、${totalPoints} 个知识点，每个知识点都有可拖动的交互演示、分步题解、经典题型拆解和现实应用场景。`, '', null, 'home')}
+  return `${head(`小学数学·初中数学·高中数学可视化学习 - ${SITE.name}`, `小学、初中、高中数学可视化学习：${chapters.length} 章、${totalPoints} 个知识点，每个知识点都有可拖动的交互演示、分步题解、经典题型拆解和现实应用场景。`, '', null, 'home')}
 <div class="hero">
   <h1>数学 · 可视化学习</h1>
   <p>把知识点画出来、把过程动起来、把题型拆开来看。不是又一份知识点总结，而是让你看见「这个式子是怎么长出来的、这类题是由哪几块拼起来的」。</p>
